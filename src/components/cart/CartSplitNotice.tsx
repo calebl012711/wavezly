@@ -1,10 +1,11 @@
 /**
- * FORMGRID SPLIT-FULFILLMENT TRANSPARENCY NOTICE
- * Eliminates delivery mismatch complaints by clarifying multi-origin dispatch
+ * FORMGRID CONSUMER SPLIT-FULFILLMENT NOTICE
+ * Eliminates delivery confusion with transparent package timelines
+ * Prioritized Light Mode
  */
 
 import React from 'react';
-import { Truck, Cpu, Layers } from 'lucide-react';
+import { Truck, Box, Layers } from 'lucide-react';
 
 interface CartSplitNoticeProps {
   hasCustom3D: boolean;
@@ -18,34 +19,34 @@ export const CartSplitNotice: React.FC<CartSplitNoticeProps> = ({
   if (!hasCustom3D || !hasDropship) return null;
 
   return (
-    <div className="p-3.5 bg-surface rounded-lg border border-signal-orange/40 bg-gradient-to-r from-signal-orange/5 to-transparent text-xs font-mono space-y-2">
-      <div className="flex items-center space-x-2 text-signal-orange font-semibold tracking-wider uppercase text-[11px]">
+    <div className="p-3.5 rounded-xl bg-orange-50/70 dark:bg-orange-950/20 border border-orange-200/90 dark:border-orange-800/60 font-sans space-y-2">
+      <div className="flex items-center space-x-1.5 text-orange-700 dark:text-orange-400 font-semibold text-xs">
         <Layers className="w-4 h-4" />
-        <span>Dual-Facility Split Dispatch</span>
+        <span>Two Dedicated Packages</span>
       </div>
 
-      <p className="text-zinc-300 text-[11px] leading-relaxed">
-        Your order contains items from two dedicated facilities. Products are fabricated and dispatched in separate tracked packages with zero delivery confusion:
+      <p className="text-zinc-600 dark:text-zinc-400 text-xs leading-relaxed">
+        Your order includes custom pieces and in-stock accessories. Each package will ship as soon as it's ready:
       </p>
 
       <div className="grid grid-cols-2 gap-2 pt-1">
-        <div className="p-2 rounded bg-black/60 border border-zinc-800">
-          <div className="flex items-center space-x-1.5 text-zinc-300 font-medium text-[10px] mb-1">
-            <Cpu className="w-3.5 h-3.5 text-signal-orange" />
-            <span>PACKAGE A: 3D FARM</span>
+        <div className="p-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-orange-200/60 dark:border-zinc-800 shadow-2xs">
+          <div className="flex items-center space-x-1.5 text-zinc-900 dark:text-white font-medium text-xs mb-0.5">
+            <Box className="w-3.5 h-3.5 text-orange-600" />
+            <span>Custom Made</span>
           </div>
-          <p className="text-[10px] text-zinc-400">
-            Fabricated on-demand. Dispatched in 2–4 business days via Bambu/Slant3D farm.
+          <p className="text-[11px] text-zinc-500 leading-tight">
+            Crafted on demand. Dispatched in 2–4 days.
           </p>
         </div>
 
-        <div className="p-2 rounded bg-black/60 border border-zinc-800">
-          <div className="flex items-center space-x-1.5 text-zinc-300 font-medium text-[10px] mb-1">
-            <Truck className="w-3.5 h-3.5 text-signal-cyan" />
-            <span>PACKAGE B: US HUB</span>
+        <div className="p-2.5 rounded-lg bg-white dark:bg-zinc-900 border border-orange-200/60 dark:border-zinc-800 shadow-2xs">
+          <div className="flex items-center space-x-1.5 text-zinc-900 dark:text-white font-medium text-xs mb-0.5">
+            <Truck className="w-3.5 h-3.5 text-sky-600" />
+            <span>Fast-Ship</span>
           </div>
-          <p className="text-[10px] text-zinc-400">
-            In-stock accessories. Dispatched within 24h via Domestic Priority (2–4 days).
+          <p className="text-[11px] text-zinc-500 leading-tight">
+            In-stock item. Dispatched in 24 hours.
           </p>
         </div>
       </div>

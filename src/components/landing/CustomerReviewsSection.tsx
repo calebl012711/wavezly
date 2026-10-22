@@ -1,11 +1,12 @@
 /**
- * FORMGRID VERIFIED PRODUCTION REVIEWS & CASE STUDIES
- * Real customer desk setups, tolerance verification scores, and split-shipping testimonials
+ * FORMGRID CONSUMER REVIEWS & TESTIMONIALS
+ * Prioritized Light Mode, 5-star customer reviews, verified buyer badges, and real workspace stories
  */
 
 import React, { useState } from 'react';
 import { SEED_REVIEWS } from '../../db/seed';
-import { Star, CheckCircle2, MessageSquare } from 'lucide-react';
+import { Star, CheckCircle2, Sparkles } from 'lucide-react';
+import { playClickSound } from '../../lib/soundEffects';
 
 export const CustomerReviewsSection: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'custom_3d' | 'dropship'>('all');
@@ -16,99 +17,110 @@ export const CustomerReviewsSection: React.FC = () => {
   });
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-surface-border font-mono">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-200 dark:border-zinc-800 font-sans">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-surface-border gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-zinc-200/80 dark:border-zinc-800 gap-4">
         <div>
-          <div className="flex items-center space-x-2 text-xs text-signal-orange uppercase tracking-wider mb-1">
-            <MessageSquare className="w-4 h-4" />
-            <span>FIELD TELEMETRY // VERIFIED CLIENTS</span>
+          <div className="inline-flex items-center space-x-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 uppercase tracking-wider mb-2">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>COMMUNITY TESTIMONIALS</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-precision-white font-sans">
-            Client Verification & Tolerance Reports
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white">
+            Loved by 1,840+ Creators & Designers
           </h2>
-          <p className="text-xs text-zinc-400 mt-1">
-            Real desk setups fabricated to precision millimeter drawer footprints.
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1.5 max-w-2xl">
+            See how designers, engineers, and creators are transforming their desks with tailor-made trays and studio hardware.
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center space-x-1.5 p-1 bg-surface rounded-lg border border-surface-border text-xs">
+        <div className="flex items-center space-x-1.5 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 text-xs font-medium">
           <button
             type="button"
-            onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded transition ${
+            onClick={() => {
+              playClickSound('snap');
+              setFilter('all');
+            }}
+            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
               filter === 'all'
-                ? 'bg-zinc-800 text-precision-white shadow-tactile'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
-            All Reports [{SEED_REVIEWS.length}]
+            All Reviews ({SEED_REVIEWS.length})
           </button>
           <button
             type="button"
-            onClick={() => setFilter('custom_3d')}
-            className={`px-3 py-1.5 rounded transition ${
+            onClick={() => {
+              playClickSound('snap');
+              setFilter('custom_3d');
+            }}
+            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
               filter === 'custom_3d'
-                ? 'bg-signal-orange/15 text-signal-orange border border-signal-orange/30'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-orange-600 dark:text-orange-400 shadow-sm font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
-            Custom 3D Prints
+            Custom 3D Trays
           </button>
           <button
             type="button"
-            onClick={() => setFilter('dropship')}
-            className={`px-3 py-1.5 rounded transition ${
+            onClick={() => {
+              playClickSound('snap');
+              setFilter('dropship');
+            }}
+            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
               filter === 'dropship'
-                ? 'bg-signal-cyan/15 text-signal-cyan border border-signal-cyan/30'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-sky-600 dark:text-sky-400 shadow-sm font-semibold'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
-            Fast-Ship Hardware
+            Studio Accessories
           </button>
         </div>
       </div>
 
-      {/* Reviews Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredReviews.map((rev) => (
+      {/* Reviews Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {filteredReviews.map((review) => (
           <div
-            key={rev.id}
-            className="p-5 rounded-xl bg-surface border border-surface-border space-y-3.5 shadow-tactile hover:border-zinc-700 transition"
+            key={review.id}
+            className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
           >
-            {/* Review Card Top */}
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="flex items-center space-x-1.5 text-signal-amber mb-1">
-                  {Array.from({ length: rev.rating }).map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-current" />
+            <div className="space-y-3">
+              {/* Star Rating & Verified Badge */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-1 text-amber-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < review.rating ? 'fill-current' : 'text-zinc-300 dark:text-zinc-700'
+                      }`}
+                    />
                   ))}
                 </div>
-                <h4 className="text-sm font-bold text-zinc-100 font-sans">
-                  {rev.reviewTitle}
-                </h4>
+
+                <span className="inline-flex items-center space-x-1 text-[11px] text-emerald-700 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/60">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Verified Purchase</span>
+                </span>
               </div>
 
-              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded bg-signal-lime/10 border border-signal-lime/30 text-[10px] text-signal-lime font-semibold">
-                <CheckCircle2 className="w-3 h-3" />
-                <span>VERIFIED PRODUCTION</span>
-              </span>
+              {/* Review Text */}
+              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+                "{review.comment}"
+              </p>
             </div>
 
-            {/* Comment Body */}
-            <p className="text-xs text-zinc-300 font-sans leading-relaxed">
-              "{rev.comment}"
-            </p>
-
-            {/* Tolerance Score Badge */}
-            <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-500">
-              <span className="text-zinc-400">
-                {rev.author} // <span className="text-zinc-500">{rev.location}</span>
-              </span>
-              <span className="px-2 py-0.5 rounded bg-black/60 border border-zinc-800 text-signal-orange">
-                {rev.fitToleranceScore}
-              </span>
+            {/* Author & Product Info */}
+            <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 text-xs">
+              <div className="font-semibold text-zinc-950 dark:text-white">
+                {review.author}
+              </div>
+              <div className="text-zinc-500 text-[11px] mt-0.5">
+                {review.reviewTitle}
+              </div>
             </div>
           </div>
         ))}

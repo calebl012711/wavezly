@@ -1,12 +1,14 @@
 /**
- * FORMGRID INDUSTRIAL CART ITEM CARD
- * Detailed component breakdown, parametric telemetry tags, and quantity steppers
+ * FORMGRID CONSUMER CART ITEM CARD
+ * Clear product title, tailored millimeter specs, and quantity controls
+ * Prioritized Light Mode
  */
 
 import React from 'react';
 import { CartItem } from '../../types';
 import { useCartStore } from '../../store/useCartStore';
-import { Minus, Plus, Trash2, Cpu, PackageCheck, Droplets } from 'lucide-react';
+import { Minus, Plus, Trash2, Box, PackageCheck, Droplets } from 'lucide-react';
+import { playClickSound } from '../../lib/soundEffects';
 
 interface CartItemCardProps {
   item: CartItem;
@@ -18,33 +20,36 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
   const specs = item.customSpecs;
 
   return (
-    <div className="p-3 bg-surface rounded-lg border border-surface-border space-y-2.5">
+    <div className="p-3.5 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-2xs space-y-2.5 font-sans">
       {/* Header & Origin Badge */}
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center space-x-1.5 mb-1">
             {isCustom ? (
-              <span className="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded bg-signal-orange/10 border border-signal-orange/30 text-[10px] font-mono text-signal-orange font-semibold">
-                <Cpu className="w-3 h-3" />
-                <span>ON-DEMAND 3D PRINT</span>
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/50 text-[10px] text-orange-700 dark:text-orange-300 font-medium">
+                <Box className="w-3 h-3" />
+                <span>Custom Made</span>
               </span>
             ) : (
-              <span className="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded bg-signal-cyan/10 border border-signal-cyan/30 text-[10px] font-mono text-signal-cyan font-semibold">
+              <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-sky-50 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/50 text-[10px] text-sky-700 dark:text-sky-300 font-medium">
                 <PackageCheck className="w-3 h-3" />
-                <span>FAST-SHIP US DOMESTIC</span>
+                <span>In-Stock US</span>
               </span>
             )}
           </div>
 
-          <h3 className="text-sm font-bold text-zinc-100 tracking-tight">
+          <h3 className="text-sm font-semibold text-zinc-950 dark:text-white tracking-tight">
             {item.product.title}
           </h3>
         </div>
 
         <button
           type="button"
-          onClick={() => removeItem(item.cartItemId)}
-          className="text-zinc-500 hover:text-red-400 p-1 transition"
+          onClick={() => {
+            playClickSound('snap');
+            removeItem(item.cartItemId);
+          }}
+          className="text-zinc-400 hover:text-red-500 p-1 transition cursor-pointer"
           aria-label="Remove item"
         >
           <Trash2 className="w-3.5 h-3.5" />
@@ -53,19 +58,19 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
 
       {/* Parametric Specs Details (if custom_3d) */}
       {isCustom && specs && (
-        <div className="p-2 rounded bg-black/50 border border-zinc-800/80 font-mono text-[11px] space-y-1 text-zinc-400">
+        <div className="p-2.5 rounded-lg bg-zinc-50 dark:bg-black/40 border border-zinc-200/70 dark:border-zinc-800 text-[11px] space-y-1 text-zinc-600 dark:text-zinc-400">
           <div className="flex justify-between">
-            <span>Dimensions:</span>
-            <span className="text-zinc-200">
+            <span className="text-zinc-500">Dimensions:</span>
+            <span className="font-medium text-zinc-900 dark:text-zinc-200">
               {specs.dimensions.length}×{specs.dimensions.width}×{specs.dimensions.height}mm ({specs.dimensions.rows}×{specs.dimensions.cols} Grid)
             </span>
           </div>
 
           <div className="flex items-center justify-between">
-            <span>Material:</span>
-            <div className="flex items-center space-x-1.5 text-zinc-200">
+            <span className="text-zinc-500">Material & Color:</span>
+            <div className="flex items-center space-x-1.5 text-zinc-900 dark:text-zinc-200 font-medium">
               <span
-                className="w-2.5 h-2.5 rounded-full border border-white/20 inline-block"
+                className="w-2.5 h-2.5 rounded-full border border-black/10 inline-block"
                 style={{ backgroundColor: specs.material.hexColor }}
               />
               <span>{specs.material.name}</span>
@@ -73,63 +78,50 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
           </div>
 
           {specs.resinInlay && (
-            <div className="flex items-center justify-between text-signal-cyan">
-              <span className="flex items-center gap-1">
-                <Droplets className="w-3 h-3" /> Resin Inlay:
+            <div className="flex items-center justify-between text-sky-600 dark:text-sky-400">
+              <span className="flex items-center gap-1 font-medium">
+                <Droplets className="w-3 h-3" /> Acoustic Resin:
               </span>
               <span>{specs.resinInlay.name}</span>
             </div>
           )}
-
-          <div className="flex justify-between text-[10px] text-zinc-500 pt-0.5 border-t border-zinc-800/60">
-            <span>Weight: ~{specs.estimatedGrams}g</span>
-            <span>Print: ~{specs.estimatedPrintHours}h</span>
-          </div>
         </div>
       )}
 
-      {/* Fast Ship Dropship Specs */}
-      {!isCustom && item.product.supplierMeta && (
-        <div className="font-mono text-[11px] text-zinc-400 space-y-0.5">
-          <div className="text-zinc-300">
-            {item.product.supplierMeta.warehouseOrigin}
-          </div>
-          <div className="text-[10px] text-zinc-500">
-            Transit ETA: {item.product.supplierMeta.estimatedTransitDays}
-          </div>
-        </div>
-      )}
-
-      {/* Quantity Stepper & Price */}
+      {/* Price & Quantity Controls */}
       <div className="flex items-center justify-between pt-1">
-        <div className="flex items-center space-x-2 bg-black/60 px-2 py-1 rounded border border-zinc-800 font-mono text-xs">
+        <div className="flex items-center space-x-2 border border-zinc-200 dark:border-zinc-700 rounded-lg p-0.5 bg-zinc-50 dark:bg-zinc-800">
           <button
             type="button"
-            onClick={() => updateQuantity(item.cartItemId, -1)}
-            className="text-zinc-400 hover:text-white p-0.5 disabled:opacity-40"
-            disabled={item.quantity <= 1}
+            onClick={() => {
+              playClickSound('tick');
+              updateQuantity(item.cartItemId, item.quantity - 1);
+            }}
+            className="p-1 hover:bg-white dark:hover:bg-zinc-700 rounded text-zinc-600 dark:text-zinc-300 transition cursor-pointer"
+            aria-label="Decrease quantity"
           >
             <Minus className="w-3 h-3" />
           </button>
-          <span className="text-zinc-200 px-1">{item.quantity}</span>
+          <span className="px-1.5 text-xs font-semibold text-zinc-900 dark:text-white">
+            {item.quantity}
+          </span>
           <button
             type="button"
-            onClick={() => updateQuantity(item.cartItemId, 1)}
-            className="text-zinc-400 hover:text-white p-0.5"
+            onClick={() => {
+              playClickSound('tick');
+              updateQuantity(item.cartItemId, item.quantity + 1);
+            }}
+            className="p-1 hover:bg-white dark:hover:bg-zinc-700 rounded text-zinc-600 dark:text-zinc-300 transition cursor-pointer"
+            aria-label="Increase quantity"
           >
             <Plus className="w-3 h-3" />
           </button>
         </div>
 
         <div className="text-right">
-          <span className="font-mono text-sm font-bold text-precision-white">
-            ${(item.calculatedPrice * item.quantity).toFixed(2)}
+          <span className="text-sm font-bold text-zinc-950 dark:text-white">
+            ${(item.calculatedPrice * item.quantity).toFixed(2)} USD
           </span>
-          {item.quantity > 1 && (
-            <div className="font-mono text-[10px] text-zinc-500">
-              ${item.calculatedPrice.toFixed(2)} each
-            </div>
-          )}
         </div>
       </div>
     </div>

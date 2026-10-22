@@ -15,6 +15,7 @@ import { CustomizerPage } from './pages/CustomizerPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { SuccessPage } from './pages/SuccessPage';
 import { OrderTrackingPage } from './pages/OrderTrackingPage';
+import { DeskPlannerModal } from './components/planner/DeskPlannerModal';
 import { Product } from './types';
 import { useCustomizerStore } from './store/useCustomizerStore';
 import {
@@ -30,6 +31,7 @@ export type AppRoute = 'home' | 'customizer' | 'checkout' | 'success' | 'trackin
 export const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<AppRoute>('home');
   const [activeOrderNumber, setActiveOrderNumber] = useState<string>('FG-849201-B3X');
+  const [isDeskPlannerOpen, setIsDeskPlannerOpen] = useState<boolean>(false);
   const { currentProduct, setProduct } = useCustomizerStore();
 
   // Listen to browser URL or query params on mount
@@ -38,6 +40,11 @@ export const App: React.FC = () => {
     const routeParam = params.get('route');
     const orderNum = params.get('order_number');
     const sessionId = params.get('session_id');
+    const plannerParam = params.get('planner');
+
+    if (plannerParam === 'true' || plannerParam === '1') {
+      setIsDeskPlannerOpen(true);
+    }
 
     if (sessionId || orderNum) {
       if (orderNum) setActiveOrderNumber(orderNum);
@@ -160,7 +167,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-zinc-100 selection:bg-signal-orange selection:text-black">
+    <div className="min-h-screen flex flex-col bg-[#fafafc] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 selection:bg-signal-orange selection:text-white transition-colors">
       {/* Schema.org In-DOM JSON-LD Script Tag */}
       <script
         id="formgrid-schema-vdom"
@@ -179,6 +186,7 @@ export const App: React.FC = () => {
             : 'home'
         }
         onNavigate={(r) => handleNavigate(r)}
+        onOpenDeskPlanner={() => setIsDeskPlannerOpen(true)}
       />
 
       {/* Main Viewport Enclave */}
@@ -196,6 +204,7 @@ export const App: React.FC = () => {
               <HomePage
                 onNavigateToCustomizer={() => handleNavigate('customizer')}
                 onCustomizeProduct={handleCustomizeProduct}
+                onOpenDeskPlanner={() => setIsDeskPlannerOpen(true)}
               />
             )}
 
@@ -222,6 +231,12 @@ export const App: React.FC = () => {
           </Suspense>
         </ErrorBoundary>
       </main>
+
+      {/* Spatial Workplace Architect: 2D Desk Planner Modal */}
+      <DeskPlannerModal
+        isOpen={isDeskPlannerOpen}
+        onClose={() => setIsDeskPlannerOpen(false)}
+      />
 
       {/* Global Slide-Out Split-Cart Drawer */}
       <CartDrawer onCheckout={() => handleNavigate('checkout')} />

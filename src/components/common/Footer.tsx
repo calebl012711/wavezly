@@ -1,6 +1,6 @@
 /**
- * FORMGRID INDUSTRIAL FOOTER
- * Engineering tolerances, Dieter Rams design philosophy credit, and split-logistics policy links
+ * FORMGRID CONSUMER FOOTER
+ * Prioritized Light Mode, clean luxury typography, customer guarantees, and studio links
  */
 
 import React from 'react';
@@ -8,77 +8,77 @@ import { ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full bg-background border-t border-surface-border py-12 px-4 sm:px-6 lg:px-8 font-mono text-xs text-zinc-500">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-zinc-900">
+    <footer className="w-full bg-white dark:bg-[#09090b] border-t border-zinc-200 dark:border-zinc-800 py-14 px-4 sm:px-6 lg:px-8 font-sans text-xs text-zinc-500">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-zinc-200 dark:border-zinc-800">
         {/* Brand & Ethos */}
         <div className="space-y-3 md:col-span-1">
-          <div className="flex items-center space-x-2 text-zinc-200 font-bold">
+          <div className="flex items-center space-x-2 text-zinc-900 dark:text-white font-bold text-sm">
             <div className="w-2.5 h-2.5 bg-signal-orange rounded-sm" />
-            <span>FORMGRID ARCHITECTURE</span>
+            <span>FORMGRID</span>
           </div>
-          <p className="font-sans text-xs text-zinc-400 leading-relaxed">
-            Form following function. High-tolerance parametric physical desktop objects synthesized on-demand with zero surplus warehouse inventory.
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+            Minimal, purposeful desk architecture. Custom 3D-crafted organizers made to your exact millimeter, paired with curated studio accessories.
           </p>
-          <div className="text-[10px] text-zinc-600">
-            HOMAGE: DIETER RAMS & TEENAGE ENGINEERING
+          <div className="text-[11px] text-zinc-400">
+            Crafted with pride in the United States.
           </div>
         </div>
 
-        {/* Manufacturing & Slicing */}
-        <div className="space-y-2">
-          <h4 className="text-zinc-300 font-semibold uppercase tracking-wider text-[11px]">
-            Fabrication
+        {/* Studio Products */}
+        <div className="space-y-2.5">
+          <h4 className="text-zinc-900 dark:text-white font-semibold uppercase tracking-wider text-[11px]">
+            Custom 3D Studio
           </h4>
-          <ul className="space-y-1.5 text-zinc-400 text-[11px]">
-            <li>Manifold Binary STL Export</li>
-            <li>0.20mm High-Detail Slicing</li>
-            <li>18% Gyroid High-Shear Core</li>
-            <li>Optical Resin Cast Inlays</li>
-            <li>Bambu Farm API Integration</li>
+          <ul className="space-y-2 text-zinc-600 dark:text-zinc-400 text-xs">
+            <li>Bespoke Desk Valet Pro</li>
+            <li>Modular Workbench Drawer Matrix</li>
+            <li>Audiophile Headphone Plinth</li>
+            <li>Hex Bit & Fastener Organizer</li>
+            <li>Cable Management Rail</li>
           </ul>
         </div>
 
-        {/* Dual Logistics */}
-        <div className="space-y-2">
-          <h4 className="text-zinc-300 font-semibold uppercase tracking-wider text-[11px]">
-            Split Logistics
+        {/* Studio Accessories */}
+        <div className="space-y-2.5">
+          <h4 className="text-zinc-900 dark:text-white font-semibold uppercase tracking-wider text-[11px]">
+            Fast-Ship Accessories
           </h4>
-          <ul className="space-y-1.5 text-zinc-400 text-[11px]">
-            <li>Package A: 3D Farm (2–4 Days)</li>
-            <li>Package B: US Domestic Hub (2–4 Days)</li>
-            <li>Automated DSers/AutoDS Hook</li>
-            <li>USPS Priority Ground Tracking</li>
-            <li>Zero-Mismatch Delivery HUD</li>
+          <ul className="space-y-2 text-zinc-600 dark:text-zinc-400 text-xs">
+            <li>Asymmetric ScreenBar Luminaire</li>
+            <li>High-Density Merino Wool Desk Mat</li>
+            <li>Solid Titanium Pen Stand</li>
+            <li>Solid Brass Heavyweight Dock</li>
+            <li>Aviation Aluminum Laptop Riser</li>
           </ul>
         </div>
 
         {/* Guarantees & Tolerances */}
-        <div className="space-y-2">
-          <h4 className="text-zinc-300 font-semibold uppercase tracking-wider text-[11px]">
-            Quality Standards
+        <div className="space-y-2.5">
+          <h4 className="text-zinc-900 dark:text-white font-semibold uppercase tracking-wider text-[11px]">
+            Our Guarantee
           </h4>
-          <div className="p-2.5 rounded bg-surface border border-zinc-800 text-[10px] text-zinc-400 space-y-1">
-            <div className="flex items-center space-x-1 text-signal-lime">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>±0.25mm Dimensional Guarantee</span>
+          <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 space-y-1.5 shadow-2xs">
+            <div className="flex items-center space-x-1.5 text-emerald-600 font-semibold">
+              <ShieldCheck className="w-4 h-4" />
+              <span>100% Guaranteed Fit</span>
             </div>
-            <p>
-              If your custom print fails to fit your drawer or desktop coordinates, our farm will re-slice and reprint at zero cost.
+            <p className="leading-relaxed text-[11px]">
+              If your custom organizer fails to fit your drawer or workspace perfectly, we’ll re-craft and dispatch a replacement at zero charge.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-600 gap-3">
+      <div className="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-3">
         <div>
-          © {new Date().getFullYear()} FORMGRID TECHNOLOGIES INC. ALL RIGHTS RESERVED.
+          © {new Date().getFullYear()} Formgrid Technologies Inc. All rights reserved.
         </div>
         <div className="flex items-center space-x-4">
-          <span>TERMS OF SPECIFICATION</span>
+          <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Terms of Service</span>
           <span>•</span>
-          <span>PRIVACY ENCLAVE</span>
+          <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Privacy Policy</span>
           <span>•</span>
-          <span>SYSTEM SITEMAP</span>
+          <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Shipping & Returns</span>
         </div>
       </div>
     </footer>

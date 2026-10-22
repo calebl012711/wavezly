@@ -23,7 +23,20 @@ import {
   Volume2,
   VolumeX,
   Layers,
+  FileCode,
+  ChevronDown,
+  Cpu,
+  Sun,
 } from 'lucide-react';
+import {
+  LIGHTING_PRESETS_METADATA,
+  LIGHTING_PRESET_KEYS,
+} from '../canvas/StudioEnvironment';
+import {
+  downloadSlicerProfile,
+  SlicerProfileContext,
+  SlicerEcosystem,
+} from '../../lib/slicerProfileGenerator';
 
 interface CustomizerDrawerProps {
   onAddToCart?: () => void;
@@ -32,6 +45,8 @@ interface CustomizerDrawerProps {
 export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart }) => {
   const [activeTab, setActiveTab] = useState<'dimensions' | 'grid' | 'materials' | 'inspect' | 'presets'>('dimensions');
   const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [slicerSuccess, setSlicerSuccess] = useState(false);
+  const [showSlicerMenu, setShowSlicerMenu] = useState(false);
   const [muted, setMuted] = useState(isSoundMuted());
 
   useEffect(() => {
@@ -43,6 +58,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
     dimensions,
     selectedMaterial,
     selectedResin,
+    lightingPreset,
     telemetry,
     wireframe,
     engravedText,
@@ -51,6 +67,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
     setDimension,
     setMaterial,
     setResin,
+    setLightingPreset,
     setSliceHeight,
     setExplodedOffset,
     resetDefaults,
@@ -88,16 +105,45 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
     }
   };
 
+  const handleExportSlicer = (ecosystem: SlicerEcosystem = 'all') => {
+    try {
+      playClickSound('snap');
+      const slicerCtx: SlicerProfileContext = {
+        productTitle: currentProduct.title,
+        productSlug: currentProduct.slug,
+        dimensions,
+        material: selectedMaterial,
+        estimatedGrams: telemetry.totalWeightGrams,
+        estimatedHours: telemetry.estimatedPrintHours,
+        nozzleDiameterMm: 0.4,
+        layerHeightMm: 0.2,
+        infillDensityPercent: 18,
+        perimeters: 3,
+        flowRatio: 0.98,
+        nozzleTempC: 215,
+        bedTempC: 55,
+      };
+
+      downloadSlicerProfile(slicerCtx, ecosystem);
+      playClickSound('success');
+      setSlicerSuccess(true);
+      setShowSlicerMenu(false);
+      setTimeout(() => setSlicerSuccess(false), 3000);
+    } catch (err) {
+      console.error('Failed to export slicer profile:', err);
+    }
+  };
+
   return (
-    <div className="w-full lg:w-96 bg-surface/90 backdrop-blur-md border border-surface-border rounded-xl p-4 flex flex-col justify-between shadow-2xl font-mono">
+    <div className="w-full lg:w-96 bg-white dark:bg-[#121214] border border-zinc-200/90 dark:border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-lg font-sans">
       {/* Drawer Top Header & Quick Reset */}
       <div>
-        <div className="flex items-center justify-between pb-3 border-b border-surface-border">
+        <div className="flex items-center justify-between pb-3 border-b border-zinc-200/80 dark:border-zinc-800">
           <div>
-            <span className="font-mono text-[10px] text-signal-orange uppercase tracking-widest font-semibold">
-              SPECIFICATION PANEL
+            <span className="text-[10px] text-orange-600 dark:text-orange-400 uppercase tracking-widest font-semibold block">
+              CUSTOM SPECIFICATIONS
             </span>
-            <h2 className="text-sm font-bold text-zinc-100 tracking-tight font-sans">
+            <h2 className="text-base font-semibold text-zinc-950 dark:text-white tracking-tight">
               {currentProduct.title}
             </h2>
           </div>
@@ -359,6 +405,109 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                 }}
               />
 
+              {/* Interactive Lighting Rig Switcher */}
+              <div className="p-3 bg-surface rounded-lg border border-surface-border space-y-2.5">
+                <div className="flex items-center justify-between text-zinc-300 text-xs">
+                  <span className="flex items-center gap-1.5 font-semibold text-zinc-200">
+                    <Sun className="w-3.5 h-3.5 text-signal-orange" />
+                    <span>Studio Lighting Rig</span>
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700/80 text-[9px] font-mono text-signal-orange font-bold uppercase tracking-wider">
+                    {LIGHTING_PRESETS_METADATA[lightingPreset].badge}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-1.5">
+                  {LIGHTING_PRESET_KEYS.map((key) => {
+                    const preset = LIGHTING_PRESETS_METADATA[key];
+                    const isSelected = lightingPreset === key;
+                    return (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => {
+                          playClickSound('snap');
+                          setLightingPreset(preset.id);
+                        }}
+                        className={`w-full text-left p-2 rounded-lg border transition-all flex items-center justify-between group ${
+                          isSelected
+                            ? 'bg-zinc-800/90 border-signal-orange shadow-tactile text-precision-white'
+                            : 'bg-black/40 border-zinc-800/90 hover:border-zinc-700 hover:bg-zinc-900/60 text-zinc-400'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-2.5 min-w-0">
+                          {/* Tactile Dual-Spectrum Swatch Indicator */}
+                          <div
+                            className={`w-5 h-5 rounded-full flex-shrink-0 border p-0.5 overflow-hidden flex items-center justify-center transition-transform ${
+                              isSelected
+                                ? 'border-signal-orange scale-110 shadow-glow-orange'
+                                : 'border-zinc-700 group-hover:scale-105'
+                            }`}
+                          >
+                            <div className="w-full h-full rounded-full flex overflow-hidden">
+                              <div
+                                className="w-1/2 h-full"
+                                style={{ backgroundColor: preset.primaryColor }}
+                              />
+                              <div
+                                className="w-1/2 h-full"
+                                style={{ backgroundColor: preset.accentColor }}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="min-w-0">
+                            <div className="flex items-center space-x-1.5">
+                              <span
+                                className={`text-xs font-bold truncate ${
+                                  isSelected
+                                    ? 'text-precision-white'
+                                    : 'text-zinc-300 group-hover:text-zinc-100'
+                                }`}
+                              >
+                                {preset.name}
+                              </span>
+                            </div>
+                            <p className="text-[10px] text-zinc-500 font-sans truncate">
+                              {preset.subtitle}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-1.5 pl-2 flex-shrink-0">
+                          <span
+                            className={`text-[9px] font-mono px-1 py-0.5 rounded ${
+                              isSelected
+                                ? 'bg-signal-orange/15 text-signal-orange font-semibold'
+                                : 'text-zinc-500 bg-zinc-900'
+                            }`}
+                          >
+                            {preset.cct}
+                          </span>
+                          {isSelected && (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-signal-orange flex-shrink-0" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Live Viewport Reflection Technical Readout */}
+                <div className="p-2 rounded bg-black/40 border border-zinc-800/60 text-[10px] text-zinc-400 font-mono space-y-1">
+                  <div className="flex items-center justify-between text-zinc-500 text-[9px]">
+                    <span className="flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-signal-lime animate-pulse" />
+                      LIVE PBR REFLECTION ENGINE
+                    </span>
+                    <span>REALTIME CUBEMAP</span>
+                  </div>
+                  <p className="text-zinc-400 text-[10px] leading-tight font-sans">
+                    {LIGHTING_PRESETS_METADATA[lightingPreset].description}
+                  </p>
+                </div>
+              </div>
+
               {/* Custom Laser Engraving Input */}
               <div className="p-3 bg-surface rounded-lg border border-surface-border space-y-1.5">
                 <div className="flex items-center justify-between text-zinc-300 text-xs">
@@ -611,26 +760,149 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
-          {/* Direct Binary STL Download */}
-          <button
-            type="button"
-            onClick={handleExportStl}
-            disabled={isExportingStl}
-            className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-lg border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 font-mono text-xs font-medium transition disabled:opacity-50"
-          >
-            {downloadSuccess ? (
-              <>
-                <CheckCircle2 className="w-4 h-4 text-signal-lime" />
-                <span className="text-signal-lime">STL SAVED</span>
-              </>
-            ) : (
-              <>
-                <Download className="w-4 h-4 text-zinc-400" />
-                <span>{isExportingStl ? 'SLICING...' : 'EXPORT STL'}</span>
-              </>
-            )}
-          </button>
+        <div className="space-y-2">
+          {/* CAM Export Action Triggers */}
+          <div className="grid grid-cols-2 gap-2 relative">
+            {/* Direct Binary STL Download */}
+            <button
+              type="button"
+              onClick={handleExportStl}
+              disabled={isExportingStl}
+              className="flex items-center justify-center space-x-1.5 py-2.5 px-2 rounded-lg border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 font-mono text-[11px] font-medium transition disabled:opacity-50"
+              title="Download IEEE 754 Binary STL"
+            >
+              {downloadSuccess ? (
+                <>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-signal-lime shrink-0" />
+                  <span className="text-signal-lime truncate">STL SAVED</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                  <span className="truncate">{isExportingStl ? 'SLICING...' : 'EXPORT STL'}</span>
+                </>
+              )}
+            </button>
+
+            {/* Export Slicer Profile (Bambu / Prusa / Klipper) */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => {
+                  playClickSound('snap');
+                  setShowSlicerMenu((prev) => !prev);
+                }}
+                className={`w-full flex items-center justify-between space-x-1 py-2.5 px-2.5 rounded-lg border transition font-mono text-[11px] font-semibold ${
+                  slicerSuccess
+                    ? 'border-signal-lime/50 bg-signal-lime/10 text-signal-lime'
+                    : showSlicerMenu
+                    ? 'border-signal-orange bg-signal-orange/20 text-signal-orange shadow-glow-orange'
+                    : 'border-signal-orange/40 bg-signal-orange/10 hover:bg-signal-orange/20 text-signal-orange'
+                }`}
+                title="Export Slicer Profile (Bambu / Prusa / Klipper)"
+              >
+                <div className="flex items-center space-x-1.5 truncate">
+                  {slicerSuccess ? (
+                    <CheckCircle2 className="w-3.5 h-3.5 text-signal-lime shrink-0" />
+                  ) : (
+                    <FileCode className="w-3.5 h-3.5 text-signal-orange shrink-0" />
+                  )}
+                  <span className="truncate">
+                    {slicerSuccess ? 'CAM SAVED' : 'SLICER PROFILES'}
+                  </span>
+                </div>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
+                    showSlicerMenu ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {/* Slicer Profile Ecosystem Flyout / Dropdown Menu */}
+              {showSlicerMenu && (
+                <div className="absolute right-0 bottom-full mb-2 w-80 bg-zinc-950/95 backdrop-blur-xl border border-zinc-700/80 rounded-xl p-3 shadow-2xl z-50 font-mono space-y-2.5 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                    <span className="text-[10px] uppercase font-bold text-signal-orange tracking-wider flex items-center gap-1.5">
+                      <Cpu className="w-3.5 h-3.5" /> 3D Slicer CAM Presets
+                    </span>
+                    <span className="text-[9px] text-zinc-400">0.4mm Nozzle // 0.20mm</span>
+                  </div>
+
+                  <div className="space-y-1.5 text-xs">
+                    {/* Complete Bundle ZIP */}
+                    <button
+                      type="button"
+                      onClick={() => handleExportSlicer('all')}
+                      className="w-full text-left p-2 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-signal-orange/60 transition group"
+                    >
+                      <div className="flex items-center justify-between text-zinc-200 font-bold group-hover:text-signal-orange">
+                        <span className="flex items-center gap-1.5">
+                          <Download className="w-3.5 h-3.5 text-signal-orange" />
+                          Complete CAM Archive (.zip)
+                        </span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-signal-orange/20 text-signal-orange font-normal">
+                          All In One
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                        Bambu JSON, Prusa INI, Voron Klipper cfg, & CAM print instructions.
+                      </p>
+                    </button>
+
+                    {/* Bambu Lab Profile */}
+                    <button
+                      type="button"
+                      onClick={() => handleExportSlicer('bambu')}
+                      className="w-full text-left p-2 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800/80 hover:border-emerald-500/60 transition group"
+                    >
+                      <div className="flex items-center justify-between text-zinc-200 font-semibold group-hover:text-emerald-400">
+                        <span>Bambu Lab (X1C / P1S / A1)</span>
+                        <span className="text-[9px] text-zinc-500">.json</span>
+                      </div>
+                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                        0.20mm Standard, 18% gyroid, 3 perimeters, flow 0.98.
+                      </p>
+                    </button>
+
+                    {/* PrusaSlicer Profile */}
+                    <button
+                      type="button"
+                      onClick={() => handleExportSlicer('prusa')}
+                      className="w-full text-left p-2 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800/80 hover:border-orange-500/60 transition group"
+                    >
+                      <div className="flex items-center justify-between text-zinc-200 font-semibold group-hover:text-orange-400">
+                        <span>PrusaSlicer (MK4 / XL / CoreXY)</span>
+                        <span className="text-[9px] text-zinc-500">.ini (IS)</span>
+                      </div>
+                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                        Input Shaping structural profile, 215°C PLA / 55°C bed.
+                      </p>
+                    </button>
+
+                    {/* Voron / RatRig Klipper Profile */}
+                    <button
+                      type="button"
+                      onClick={() => handleExportSlicer('voron')}
+                      className="w-full text-left p-2 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800/80 hover:border-cyan-500/60 transition group"
+                    >
+                      <div className="flex items-center justify-between text-zinc-200 font-semibold group-hover:text-cyan-400">
+                        <span>Voron 2.4 / RatRig (Klipper)</span>
+                        <span className="text-[9px] text-zinc-500">.ini</span>
+                      </div>
+                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                        High-speed CoreXY speeds, tuned pressure advance & fan curves.
+                      </p>
+                    </button>
+                  </div>
+
+                  <div className="pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-400 flex items-center justify-between">
+                    <span>Est. Filament: <strong className="text-zinc-200">{telemetry.totalWeightGrams.toFixed(1)}g</strong></span>
+                    <span>Nozzle: <strong className="text-zinc-200">215°C</strong> | Bed: <strong className="text-zinc-200">55°C</strong></span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
 
           {/* Add to Unified Cart */}
           <button
@@ -639,10 +911,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               playClickSound('success');
               if (onAddToCart) onAddToCart();
             }}
-            className="flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-lg bg-signal-orange hover:bg-orange-600 text-black font-mono text-xs font-bold tracking-wider shadow-glow-orange transition"
+            className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-signal-orange hover:bg-orange-600 text-white font-sans text-xs font-semibold tracking-wide shadow-md hover:shadow-lg transition cursor-pointer"
           >
             <ShoppingCart className="w-4 h-4" />
-            <span>DISPATCH JOB</span>
+            <span>Add Custom Tray to Bag</span>
           </button>
         </div>
       </div>

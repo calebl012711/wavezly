@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { HeroSection } from '../components/landing/HeroSection';
+import { DeskSetupGallery } from '../components/landing/DeskSetupGallery';
 import { ProductGrid } from '../components/landing/ProductGrid';
 import { ManufacturingSpecs } from '../components/landing/ManufacturingSpecs';
 import { CustomerReviewsSection } from '../components/landing/CustomerReviewsSection';
@@ -16,11 +17,13 @@ import { Product } from '../types';
 interface HomePageProps {
   onNavigateToCustomizer: () => void;
   onCustomizeProduct: (product: Product) => void;
+  onOpenDeskPlanner?: () => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
   onNavigateToCustomizer,
   onCustomizeProduct,
+  onOpenDeskPlanner,
 }) => {
   const handleExploreCatalog = () => {
     const el = document.getElementById('catalog-section');
@@ -35,21 +38,28 @@ export const HomePage: React.FC<HomePageProps> = ({
       <HeroSection
         onLaunchStudio={onNavigateToCustomizer}
         onExploreCatalog={handleExploreCatalog}
+        onOpenDeskPlanner={onOpenDeskPlanner}
       />
 
-      {/* 2. Expanded 10-Product Catalog with 5-Image PDP */}
+      {/* 2. Curated Creator Workspaces with Interactive Hotspot Pins */}
+      <DeskSetupGallery
+        onCustomizeProduct={onCustomizeProduct}
+        onNavigateToCustomizer={onNavigateToCustomizer}
+      />
+
+      {/* 3. Expanded 10-Product Catalog with 5-Image PDP */}
       <ProductGrid onCustomizeProduct={onCustomizeProduct} />
 
-      {/* 3. Verified Field Reviews & Tolerance Reports */}
+      {/* 4. Verified Field Reviews & Tolerance Reports */}
       <CustomerReviewsSection />
 
-      {/* 4. Manufacturing Specifications */}
+      {/* 5. Manufacturing Specifications */}
       <ManufacturingSpecs />
 
-      {/* 5. Dieter Rams Manifesto & Zero-Inventory Calculator */}
+      {/* 6. Dieter Rams Manifesto & Zero-Inventory Calculator */}
       <IndustrialManifesto />
 
-      {/* 6. Headless API & Webhook Connection Enclave */}
+      {/* 7. Headless API & Webhook Connection Enclave */}
       <ApiDeveloperDrawer />
     </div>
   );

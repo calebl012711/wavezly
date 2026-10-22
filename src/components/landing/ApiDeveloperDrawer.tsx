@@ -1,14 +1,15 @@
 /**
- * FORMGRID DEVELOPER & API CONNECTION ENCLAVE
- * Interactive REST API documentation, curl snippets, and live webhook dispatch simulator
+ * FORMGRID STUDIO API & DUAL FULFILLMENT WEBHOOK CONSOLE
+ * Collapsible partner drawer with REST API snippets, curl commands, and live webhook routing simulator
  */
 
 import React, { useState } from 'react';
-import { Terminal, Copy, Check, Play, ShieldCheck } from 'lucide-react';
+import { Terminal, Copy, Check, Play, ShieldCheck, ChevronDown, ChevronUp, Code2 } from 'lucide-react';
 import { routeOrderFulfillment } from '../../services/fulfillment/fulfillmentRouter';
-import { SEED_MATERIALS } from '../../db/seed';
+import { playClickSound } from '../../lib/soundEffects';
 
 export const ApiDeveloperDrawer: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'checkout' | 'farm' | 'dropship'>('checkout');
   const [copied, setCopied] = useState(false);
   const [simulating, setSimulating] = useState(false);
@@ -59,12 +60,14 @@ export const ApiDeveloperDrawer: React.FC = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(snippets[activeTab]);
     setCopied(true);
+    playClickSound('snap');
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleSimulateWebhook = async () => {
     setSimulating(true);
     setSimulationResponse(null);
+    playClickSound('tick');
     try {
       const mockOrder: any = {
         id: `ord_sim_${Date.now()}`,
@@ -88,176 +91,171 @@ export const ApiDeveloperDrawer: React.FC = () => {
         items: [
           {
             id: 'item_3d_dev',
-            orderId: 'ord_dev',
+            orderId: 'ord_sim_992',
             productId: 'prod_valet_pro',
             productTitle: 'Modular Desk Valet Pro',
             fulfillmentType: 'custom_3d',
-            unitPriceCents: 3450,
+            unitPriceCents: 3800,
             quantity: 1,
             parametricSpecs: {
-              dimensions: {
-                length: 160,
-                width: 120,
-                height: 40,
-                wallThickness: 2.8,
-                bottomThickness: 2.4,
-                rows: 2,
-                cols: 3,
-                cornerFilletRadius: 8,
-                inlayPocketDepth: 2.5,
-              },
-              material: SEED_MATERIALS[0],
-              resinInlay: null,
-              volumePlasticCm3: 114.2,
-              volumeResinCm3: 0,
-              estimatedGrams: 141.6,
+              dimensions: { length: 175, width: 125, height: 38, rows: 2, cols: 3 },
+              material: { name: 'Matte Obsidian Black' },
+              volumePlasticCm3: 84.5,
+              estimatedGrams: 104.8,
               estimatedPrintHours: 3.4,
-              totalManufacturingCost: 34.50,
             },
-            stlStorageUrl: 'https://storage.formgrid.io/orders/dev_part.stl',
-            farmJobId: null,
-            dsersOrderId: null,
-            autodsItemId: null,
-            trackingNumber: null,
-            trackingUrl: null,
-            fulfillmentStatus: 'unfulfilled',
-            createdAt: new Date().toISOString(),
           },
           {
             id: 'item_drop_dev',
-            orderId: 'ord_dev',
+            orderId: 'ord_sim_992',
             productId: 'prod_screenbar',
-            productTitle: 'Asymmetric Desk ScreenBar (US Domestic)',
+            productTitle: 'Precision Asymmetric ScreenBar Luminaire',
             fulfillmentType: 'dropship',
-            unitPriceCents: 4800,
+            unitPriceCents: 4900,
             quantity: 1,
-            parametricSpecs: null,
-            stlStorageUrl: null,
-            farmJobId: null,
-            dsersOrderId: 'DS-US-SCRNBR-95CRI',
-            autodsItemId: null,
-            trackingNumber: null,
-            trackingUrl: null,
-            fulfillmentStatus: 'unfulfilled',
-            createdAt: new Date().toISOString(),
+            supplierMeta: {
+              channel: 'dsers',
+              sku: 'DS-US-SCRNBR-95CRI',
+              warehouseOrigin: 'Salt Lake City, UT (USA Domestic)',
+            },
           },
         ],
-        createdAt: new Date().toISOString(),
       };
 
       const result = await routeOrderFulfillment(mockOrder);
       setSimulationResponse(JSON.stringify(result, null, 2));
-    } catch (err: any) {
-      setSimulationResponse(`Error: ${err.message}`);
+      playClickSound('success');
     } finally {
       setSimulating(false);
     }
   };
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-surface-border font-mono">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-surface-border gap-4">
-        <div>
-          <div className="flex items-center space-x-2 text-xs text-signal-cyan uppercase tracking-wider mb-1">
-            <Terminal className="w-4 h-4" />
-            <span>DEVELOPER CONNECTION // API REPOSITORY</span>
+    <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-zinc-200 dark:border-zinc-800 font-sans">
+      {/* Discreet Consumer Accordion Header */}
+      <div className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900/60 rounded-2xl border border-zinc-200/80 dark:border-zinc-800">
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-zinc-700 dark:text-zinc-300">
+            <Code2 className="w-4 h-4" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-precision-white font-sans">
-            Headless Parametric & Fulfillment APIs
-          </h2>
-          <p className="text-xs text-zinc-400 mt-1">
-            Embed Formgrid's 3D slicing kernel and split-fulfillment hooks directly into custom platforms.
-          </p>
+          <div>
+            <h4 className="text-sm font-semibold text-zinc-900 dark:text-white">
+              Studio & Architectural API Integration
+            </h4>
+            <p className="text-xs text-zinc-500">
+              For interior architects, 3D studios, and automated warehouse fulfillment hooks
+            </p>
+          </div>
         </div>
 
-        {/* Action button */}
         <button
           type="button"
-          onClick={handleSimulateWebhook}
-          disabled={simulating}
-          className="flex items-center space-x-2 py-2 px-4 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-precision-white text-xs font-bold transition disabled:opacity-50"
+          onClick={() => {
+            playClickSound('snap');
+            setIsOpen(!isOpen);
+          }}
+          className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition cursor-pointer shadow-2xs"
         >
-          <Play className="w-3.5 h-3.5 text-signal-lime" />
-          <span>{simulating ? 'ROUTING...' : 'TEST LIVE ROUTER WEBHOOK'}</span>
+          <span>{isOpen ? 'Collapse API Tools' : 'Open Developer API'}</span>
+          {isOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
         </button>
       </div>
 
-      {/* Code Window Container */}
-      <div className="rounded-2xl bg-black border border-surface-border overflow-hidden shadow-2xl">
-        {/* Window Top Bar */}
-        <div className="px-4 py-3 bg-[#111114] border-b border-zinc-800 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block" />
-            <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block" />
-            <span className="text-xs text-zinc-400 font-bold ml-2">REST API INTERFACE // V1</span>
+      {/* Expanded API & Webhook Console */}
+      {isOpen && (
+        <div className="mt-4 p-6 rounded-2xl bg-zinc-950 text-zinc-100 font-mono text-xs space-y-6 shadow-xl border border-zinc-800">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-zinc-800 gap-3">
+            <div className="flex items-center space-x-2">
+              <Terminal className="w-4 h-4 text-orange-500" />
+              <span className="font-bold text-white uppercase tracking-wider">
+                Headless Checkout & Split Webhook Gateway
+              </span>
+            </div>
+
+            {/* Snippet Tabs */}
+            <div className="flex items-center space-x-1 p-0.5 bg-zinc-900 rounded-lg border border-zinc-800">
+              <button
+                type="button"
+                onClick={() => setActiveTab('checkout')}
+                className={`px-3 py-1 rounded text-[11px] transition ${
+                  activeTab === 'checkout'
+                    ? 'bg-zinc-800 text-white font-bold'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                /v1/checkout
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('farm')}
+                className={`px-3 py-1 rounded text-[11px] transition ${
+                  activeTab === 'farm'
+                    ? 'bg-zinc-800 text-orange-400 font-bold'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Slant3D Farm API
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('dropship')}
+                className={`px-3 py-1 rounded text-[11px] transition ${
+                  activeTab === 'dropship'
+                    ? 'bg-zinc-800 text-sky-400 font-bold'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                DSers Domestic Hook
+              </button>
+            </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <button
-              type="button"
-              onClick={() => setActiveTab('checkout')}
-              className={`px-2.5 py-1 rounded text-xs transition ${
-                activeTab === 'checkout' ? 'bg-zinc-800 text-signal-orange' : 'text-zinc-500 hover:text-white'
-              }`}
-            >
-              Stripe Split
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('farm')}
-              className={`px-2.5 py-1 rounded text-xs transition ${
-                activeTab === 'farm' ? 'bg-zinc-800 text-signal-cyan' : 'text-zinc-500 hover:text-white'
-              }`}
-            >
-              Slant3D Farm
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('dropship')}
-              className={`px-2.5 py-1 rounded text-xs transition ${
-                activeTab === 'dropship' ? 'bg-zinc-800 text-signal-lime' : 'text-zinc-500 hover:text-white'
-              }`}
-            >
-              DSers Hub
-            </button>
+          {/* Active Snippet Code Box */}
+          <div className="relative p-4 rounded-xl bg-black border border-zinc-800 overflow-x-auto text-[11px] leading-relaxed text-zinc-300">
             <button
               type="button"
               onClick={handleCopy}
-              className="p-1 rounded text-zinc-500 hover:text-white transition ml-2"
+              className="absolute top-3 right-3 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700 transition"
               title="Copy snippet"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-signal-lime" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
             </button>
+            <pre className="font-mono">{snippets[activeTab]}</pre>
           </div>
-        </div>
 
-        {/* Code Content */}
-        <div className="p-4 overflow-x-auto text-xs text-zinc-300 leading-relaxed max-h-72">
-          <pre>{snippets[activeTab]}</pre>
-        </div>
+          {/* Interactive Webhook Simulator */}
+          <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-white font-bold text-xs">Live Dual-Fulfillment Webhook Simulator</div>
+                <div className="text-zinc-400 text-[11px]">
+                  Fires client-side test through both 3D Print Farm and Domestic Accessory logistics router
+                </div>
+              </div>
 
-        {/* Live Simulation Output Drawer (if triggered) */}
-        {simulationResponse && (
-          <div className="p-4 bg-[#0a0a0d] border-t border-zinc-800 space-y-2">
-            <div className="flex items-center justify-between text-[11px] text-signal-lime">
-              <span className="flex items-center gap-1 font-bold">
-                <ShieldCheck className="w-3.5 h-3.5" /> LIVE DISPATCH ENGINE SIMULATION COMPLETE (200 OK)
-              </span>
               <button
                 type="button"
-                onClick={() => setSimulationResponse(null)}
-                className="text-zinc-500 hover:text-white text-[10px]"
+                onClick={handleSimulateWebhook}
+                disabled={simulating}
+                className="py-2 px-4 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs tracking-wider flex items-center space-x-1.5 transition disabled:opacity-50 cursor-pointer"
               >
-                DISMISS
+                <Play className="w-3.5 h-3.5 fill-current" />
+                <span>{simulating ? 'DISPATCHING...' : 'TRIGGER SIMULATION'}</span>
               </button>
             </div>
-            <pre className="text-[11px] text-zinc-400 max-h-48 overflow-y-auto">
-              {simulationResponse}
-            </pre>
+
+            {simulationResponse && (
+              <div className="mt-3 p-3 rounded-lg bg-black border border-emerald-900/60 text-emerald-400 overflow-x-auto text-[10px]">
+                <div className="flex items-center space-x-1 font-bold text-emerald-300 mb-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>200 OK — DUAL PACKAGES ROUTED INDEPENDENTLY</span>
+                </div>
+                <pre>{simulationResponse}</pre>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 };

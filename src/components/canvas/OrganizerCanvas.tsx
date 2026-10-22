@@ -11,6 +11,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { ParametricMesh } from './ParametricMesh';
 import { StudioEnvironment } from './StudioEnvironment';
 import { ParametricOrganizerDimensions, MaterialOption } from '../../types';
+import { LightingPreset } from '../../store/useCustomizerStore';
 
 interface OrganizerCanvasProps {
   dimensions: ParametricOrganizerDimensions;
@@ -22,6 +23,7 @@ interface OrganizerCanvasProps {
   engravedText?: string;
   sliceHeight?: number;
   explodedOffset?: number;
+  lightingPreset?: LightingPreset;
 }
 
 export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
@@ -34,6 +36,7 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   engravedText,
   sliceHeight,
   explodedOffset,
+  lightingPreset,
 }) => {
   const controlsRef = useRef<OrbitControlsImpl>(null);
 
@@ -42,11 +45,11 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   const shadowScale = Math.max(300, maxDim * 2.2);
 
   return (
-    <div className="relative w-full h-full min-h-[420px] bg-[#0c0c0e] rounded-xl overflow-hidden border border-surface-border">
-      {/* Precision Grid Coordinates Overlay (Teenage Engineering style) */}
-      <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center space-x-2 font-mono text-[11px] text-zinc-500 uppercase tracking-widest">
+    <div className="relative w-full h-full min-h-[420px] bg-gradient-to-b from-[#fbfbfd] to-[#f0f0f4] dark:bg-[#0c0c0e] rounded-xl overflow-hidden border border-zinc-200/90 dark:border-zinc-800">
+      {/* Precision Grid Coordinates Overlay (Clean Consumer Style) */}
+      <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center space-x-2 font-sans text-xs text-zinc-500 dark:text-zinc-400">
         <span className="w-2 h-2 rounded-full bg-signal-orange animate-pulse" />
-        <span>R3F VIEWPORT // RENDER ENGINE: WEBGL2</span>
+        <span className="font-medium">3D Studio Viewport</span>
       </div>
 
       <Canvas
@@ -67,7 +70,7 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
         }}
       >
         <Suspense fallback={null}>
-          <StudioEnvironment shadowScale={shadowScale} />
+          <StudioEnvironment shadowScale={shadowScale} preset={lightingPreset} />
           
           <ParametricMesh
             dimensions={dimensions}
@@ -96,9 +99,9 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
         </Suspense>
       </Canvas>
 
-      {/* Viewport Micro Watermark */}
-      <div className="absolute bottom-3 right-4 z-10 pointer-events-none font-mono text-[10px] text-zinc-600">
-        GRID-SCALE: 1:1 MM // MANIFOLD WATERTIGHT
+      {/* Viewport Scale Indicator */}
+      <div className="absolute bottom-3 right-4 z-10 pointer-events-none font-sans text-xs text-zinc-400 dark:text-zinc-500">
+        1:1 Millimeter Scale • Guaranteed Fit
       </div>
     </div>
   );

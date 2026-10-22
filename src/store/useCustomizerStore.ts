@@ -15,6 +15,8 @@ import { SEED_MATERIALS, SEED_PRODUCTS } from '../db/seed';
 import { calculateSlicingTelemetry, SlicingTelemetry } from '../lib/parametricMath';
 import { exportMeshToBinarySTL, triggerStlDownload } from '../lib/stlExporter';
 
+export type LightingPreset = 'daylight' | 'laboratory' | 'warm' | 'cyberpunk';
+
 export interface StudioBlueprintPreset {
   id: string;
   name: string;
@@ -23,6 +25,7 @@ export interface StudioBlueprintPreset {
   materialId: string;
   resinId: string | null;
   engravedText: string;
+  lightingPreset?: LightingPreset;
 }
 
 export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
@@ -44,6 +47,7 @@ export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
     materialId: 'mat_pla_obsidian',
     resinId: 'mat_resin_cobalt',
     engravedText: 'EDC-VALET // 01',
+    lightingPreset: 'daylight',
   },
   {
     id: 'preset_keeb_station',
@@ -63,6 +67,7 @@ export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
     materialId: 'mat_pla_concrete',
     resinId: null,
     engravedText: 'KEEB-LAB // 68%',
+    lightingPreset: 'cyberpunk',
   },
   {
     id: 'preset_audio_plinth',
@@ -82,6 +87,7 @@ export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
     materialId: 'mat_pla_obsidian',
     resinId: 'mat_resin_amber',
     engravedText: 'AUDIO-PLINTH // 32BIT',
+    lightingPreset: 'warm',
   },
   {
     id: 'preset_maker_bench',
@@ -101,6 +107,7 @@ export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
     materialId: 'mat_pla_signal_orange',
     resinId: null,
     engravedText: 'MAKER-BENCH // M2-M3',
+    lightingPreset: 'cyberpunk',
   },
   {
     id: 'preset_fountain_pen',
@@ -120,6 +127,7 @@ export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
     materialId: 'mat_pla_studio_white',
     resinId: 'mat_resin_clear',
     engravedText: 'PEN-DOCK // ROTRING',
+    lightingPreset: 'laboratory',
   },
 ];
 
@@ -128,6 +136,7 @@ export interface CustomizerStoreState {
   dimensions: ParametricOrganizerDimensions;
   selectedMaterial: MaterialOption;
   selectedResin: MaterialOption | null;
+  lightingPreset: LightingPreset;
   telemetry: SlicingTelemetry;
   meshRef: THREE.Group | null;
   isExportingStl: boolean;
@@ -142,6 +151,7 @@ export interface CustomizerStoreState {
   setDimensions: (dims: Partial<ParametricOrganizerDimensions>) => void;
   setMaterial: (material: MaterialOption) => void;
   setResin: (resin: MaterialOption | null) => void;
+  setLightingPreset: (preset: LightingPreset) => void;
   setProduct: (product: Product) => void;
   setMeshRef: (group: THREE.Group) => void;
   toggleAutoRotate: () => void;
@@ -178,6 +188,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
   dimensions: { ...defaultDims },
   selectedMaterial: defaultFilament,
   selectedResin: defaultResin,
+  lightingPreset: 'daylight',
   telemetry: initialTelemetry,
   meshRef: null,
   isExportingStl: false,
@@ -230,6 +241,10 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       selectedResin: resin,
       telemetry: updatedTelemetry,
     });
+  },
+
+  setLightingPreset: (preset) => {
+    set({ lightingPreset: preset });
   },
 
   setProduct: (product) => {
@@ -292,6 +307,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       dimensions: { ...preset.dimensions },
       selectedMaterial: filament,
       selectedResin: resin,
+      lightingPreset: preset.lightingPreset || get().lightingPreset,
       engravedText: preset.engravedText,
       sliceHeight: 100,
       explodedOffset: 0,
@@ -307,6 +323,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       dimensions: { ...dims },
       selectedMaterial: defaultFilament,
       selectedResin: null,
+      lightingPreset: 'daylight',
       wireframe: false,
       engravedText: 'FORMGRID // 01',
       sliceHeight: 100,
