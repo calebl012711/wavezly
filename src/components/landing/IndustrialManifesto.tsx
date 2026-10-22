@@ -31,7 +31,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'Can I download the 3D model and print it on my own printer?',
-    a: 'Yes! Every design you configure in our 3D Studio generates an instant binary STL file and slicer profiles (for Bambu Lab, Prusa, and Klipper). You can download the file directly from the studio panel to inspect or 3D print yourself at home.',
+    a: 'Yes! Every design you configure in our 3D Studio generates an instant 3D print file (.STL) and print settings (for Bambu Lab, Prusa, and more). You can download the file directly from the studio panel to inspect or 3D print yourself at home.',
   },
   {
     q: 'What is the acoustic resin base inlay?',

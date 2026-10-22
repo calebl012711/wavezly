@@ -506,14 +506,14 @@ export const LogisticsTransitMap: React.FC<LogisticsTransitMapProps> = ({
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-bold text-precision-white tracking-wider text-xs sm:text-sm font-sans">
+              <span className="font-bold text-zinc-950 dark:text-white tracking-wider text-xs sm:text-sm font-sans">
                 TRANSIT TELEMETRY RADAR
               </span>
               <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-signal-orange/10 text-signal-orange border border-signal-orange/30">
                 DUAL DISPATCH
               </span>
             </div>
-            <div className="text-[10px] text-zinc-400 flex items-center space-x-2">
+            <div className="text-[10px] text-zinc-500 dark:text-zinc-400 flex items-center space-x-2">
               <span>SYSTEM ID: {orderId}</span>
               <span>•</span>
               <span className="text-signal-lime flex items-center gap-1">

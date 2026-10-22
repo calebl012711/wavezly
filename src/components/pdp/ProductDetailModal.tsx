@@ -28,6 +28,47 @@ interface ProductDetailModalProps {
   onLaunchCustomizer: (product: Product) => void;
 }
 
+// Clean up CAD jargon and engineering abbreviations into friendly shopper language
+function simplifyFeatureText(feature: string): string {
+  return feature
+    .replace(/continuous sub-millimeter parametric resizing \((\d+mm) to (\d+mm)\)/gi, 'Custom sizing to your exact drawer ($1 to $2)')
+    .replace(/sub-millimeter parametric resizing/gi, 'custom sizing to your exact space')
+    .replace(/subtle \d+mm corner fillet radii preventing stress concentrations/gi, 'Smooth rounded corners that won’t snag or catch')
+    .replace(/corner fillet radii preventing stress concentrations/gi, 'smooth rounded corners that won’t snag')
+    .replace(/flat floor bottom geometry optimized for solid zero-infill bed adhesion/gi, 'Sturdy flat bottom that stays put in your drawer')
+    .replace(/optimized for solid zero-infill bed adhesion/gi, 'anti-wobble flat bottom that stays put')
+    .replace(/optional \d+mm high-transmission resin pocket pour for tactile dampening/gi, 'Optional luxe glossy resin inlay that dampens sound')
+    .replace(/high-transmission resin pocket pour for tactile dampening/gi, 'luxe glossy resin inlay that dampens sound')
+    .replace(/calculated binary STL generation ready for high-speed print farm queue/gi, 'Instant crafting in our Boise, Idaho studio workshop')
+    .replace(/compatible with Bambu Lab \/ Slant 3D farm automated high-temp extruders/gi, 'Crafted with premium organic biopolymer')
+    .replace(/dense \d+% gyroid internal ballast weight/gi, 'Solid, satisfying weight that won’t slide around')
+    .replace(/industrial matte surface hides layer steps/gi, 'Ultra-smooth matte finish with zero glare')
+    .replace(/friction-tuned ([\d.]+mm - [\d.]+mm) braided cable retention slots/gi, 'Snug soft-grip slots for all your charging cables ($1)');
+}
+
+function simplifySpecLabel(key: string): string {
+  const map: Record<string, string> = {
+    'Tolerances': 'Fit Accuracy',
+    'Layer Height': 'Surface Finish',
+    'Wall Thickness': 'Wall Durability',
+    'Infill': 'Internal Core',
+    'Thermal Deflection': 'Heat Resistance',
+    'Manufacturing Time': 'Crafting Time',
+  };
+  return map[key] || key;
+}
+
+function simplifySpecValue(val: string): string {
+  return val
+    .replace(/\(ISO 2768-m\)/gi, '(100% Guaranteed Fit)')
+    .replace(/56°C HDT at 0.45 MPa/gi, 'Heat safe up to 135°F (Everyday Desk Use)')
+    .replace(/Gyroid High-Shear Core/gi, 'Sturdy Honeycomb Core')
+    .replace(/Structural Detail/gi, 'Ultra-Smooth Matte')
+    .replace(/Parametric/gi, 'Custom Sized')
+    .replace(/Tight Fit/gi, 'Guaranteed Snug Fit')
+    .replace(/Critical Fit/gi, 'Exact Precision Fit');
+}
+
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
   onClose,
@@ -67,11 +108,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const isCustom = product.type === 'custom_3d';
   const images = product.images.length > 0 ? product.images : ['/assets/products/valet-pro-hero.svg'];
   const imageLabels = [
-    'Perspective View',
-    'Top Plan Angle',
-    'Macro Texture & Edges',
-    'Dimension Blueprint',
-    'Studio Environment',
+    'Angled View',
+    'Top-Down Layout',
+    'Matte Surface Detail',
+    'Sizing & Measurements',
+    'Desk Setup Example',
   ];
 
   const handleAction = () => {
@@ -110,11 +151,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="flex items-center space-x-3 text-xs text-zinc-600 dark:text-zinc-400">
               <span className="w-2 h-2 rounded-full bg-signal-orange" />
               <span className="text-zinc-900 dark:text-white font-semibold">
-                {isCustom ? 'Custom On-Demand Studio Piece' : 'In-Stock Studio Hardware'}
+                {isCustom ? 'Custom Made-to-Order Organizer' : 'In-Stock & Ready to Ship'}
               </span>
               <span className="text-zinc-300 dark:text-zinc-700">•</span>
               <span className="text-zinc-500">
-                {isCustom ? 'Dispatches in 48h' : 'Dispatches in 24h'}
+                {isCustom ? 'Crafted in 48 Hours' : 'Ships in 24 Hours'}
               </span>
             </div>
 
@@ -209,7 +250,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Quality Guarantee Callout */}
               <div className="p-3 rounded-xl bg-white dark:bg-zinc-800/80 border border-zinc-200/90 dark:border-zinc-700/80 text-xs text-zinc-600 dark:text-zinc-400 flex items-center justify-between">
                 <span className="flex items-center gap-2 text-emerald-600 font-medium">
-                  <ShieldCheck className="w-4 h-4" /> 100% Fit Guarantee • ISO 2768-m Calibrated
+                  <ShieldCheck className="w-4 h-4" /> 100% Guaranteed Exact Fit • Precision Crafted
                 </span>
                 <span className="text-zinc-500 font-medium">Free US Returns</span>
               </div>
@@ -228,7 +269,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   ) : (
                     <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/50 text-xs text-sky-800 dark:text-sky-300 font-medium">
                       <Truck className="w-3.5 h-3.5" />
-                      <span>Domestic Dispatch</span>
+                      <span>Fast Domestic Shipping</span>
                     </span>
                   )}
 
@@ -267,7 +308,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   {product.features.slice(0, 4).map((f, i) => (
                     <div key={i} className="flex items-start space-x-2 text-zinc-600 dark:text-zinc-400 text-xs">
                       <span className="text-orange-600 font-bold">•</span>
-                      <span>{f}</span>
+                      <span>{simplifyFeatureText(f)}</span>
                     </div>
                   ))}
                 </div>
@@ -280,8 +321,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
                 {Object.entries(product.technicalSpecs).map(([key, val]) => (
                   <div key={key} className="flex justify-between text-zinc-700 dark:text-zinc-300">
-                    <span className="text-zinc-500">{key}:</span>
-                    <span className="font-medium">{val}</span>
+                    <span className="text-zinc-500">{simplifySpecLabel(key)}:</span>
+                    <span className="font-medium">{simplifySpecValue(val)}</span>
                   </div>
                 ))}
               </div>
@@ -304,7 +345,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="flex items-center justify-between text-xs text-zinc-500 pt-1 border-t border-zinc-200 dark:border-zinc-700">
                   <span>Estimated Delivery:</span>
                   <span className="text-zinc-900 dark:text-white font-medium">
-                    {isCustom ? 'Oct 26 – Oct 29 (Crafted in 48h)' : 'Oct 25 – Oct 27 (Ships in 24h)'}
+                    {isCustom ? 'Arrives in 4–5 Days (Crafted in 48h)' : 'Arrives in 2–3 Days (Ships in 24h)'}
                   </span>
                 </div>
               </div>
@@ -318,7 +359,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     className="w-full py-4 px-5 rounded-xl bg-signal-orange hover:bg-orange-600 text-white font-semibold flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transition cursor-pointer text-sm"
                   >
                     <Sliders className="w-4 h-4" />
-                    <span>Customize Your Dimensions</span>
+                    <span>Customize Your Tray Size</span>
                   </button>
                 ) : (
                   <button

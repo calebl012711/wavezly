@@ -14,10 +14,10 @@ export const Footer: React.FC = () => {
         <div className="space-y-3 md:col-span-1">
           <div className="flex items-center space-x-2 text-zinc-900 dark:text-white font-bold text-sm">
             <div className="w-2.5 h-2.5 bg-signal-orange rounded-sm" />
-            <span>FORMGRID</span>
+            <span>SnugDesk</span>
           </div>
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-            Minimal, purposeful desk architecture. Custom 3D-crafted organizers made to your exact millimeter, paired with curated studio accessories.
+            Made to fit your desk like a glove. Custom 3D-crafted drawer organizers tailored to your exact measurements, paired with curated studio accessories.
           </p>
           <div className="text-[11px] text-zinc-400">
             Crafted with pride in the United States.
@@ -71,7 +71,7 @@ export const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-3">
         <div>
-          © {new Date().getFullYear()} Formgrid Technologies Inc. All rights reserved.
+          © {new Date().getFullYear()} SnugDesk Goods Inc. All rights reserved.
         </div>
         <div className="flex items-center space-x-4">
           <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Terms of Service</span>

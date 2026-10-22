@@ -67,36 +67,53 @@ interface PrintFarmClusterModalProps {
   onClose: () => void;
 }
 
-// Generate initial 34 nodes with realistic industrial distribution
+// Generate initial 34 crafting printers with realistic studio distribution
 const INITIAL_NODES: FarmNode[] = Array.from({ length: 34 }, (_, i) => {
   const id = i + 1;
   const statusCycle: NodeStatus[] = [
     'extruding', 'extruding', 'extruding', 'laser_scanning',
     'extruding', 'preheating', 'extruding', 'idle'
   ];
-  const status = statusCycle[i % statusCycle.length];
+  const status = id === 12 ? 'extruding' : statusCycle[i % statusCycle.length];
 
   const jobNames = [
-    'VALET PRO // TRAY DOCK',
-    'MODULAR HEX TRAY // MK3',
-    'DESK PAD TRAY // WIDE',
-    'CABLE GUIDE SPINE // SEG-8',
-    'KEYBOARD STAND // 15-DEG',
-    'MONITOR RISER FEET // DUAL',
-    'PEN TROUGH // MATTE INLAY',
+    'IKEA Alex Tray',
+    'Desk Valet Pro Dock',
+    'Modular Hexagon Organizer',
+    'Wide Desk Pad Station',
+    'Segmented Cable Spine',
+    'Ergonomic Keyboard Rest',
+    'Dual Riser Tray',
+    'Precision Pen Trough',
   ];
-  const materials = ['PLA-CF Matte Black', 'PETG Precision Smoke', 'Resin Core Hybrid', 'ASA Industrial Gray'];
+  const materials = [
+    'Matte Charcoal',
+    'Terracotta Sand',
+    'Slate Gray',
+    'Olive Clay',
+    'Chalk White',
+  ];
 
   const totalLayers = 380 + ((id * 37) % 240);
-  const progressPercent = status === 'extruding' ? (15 + ((id * 23) % 75)) : status === 'laser_scanning' ? 6 : 0;
+  const progressPercent = id === 12 ? 64 : status === 'extruding' ? (15 + ((id * 23) % 75)) : status === 'laser_scanning' ? 6 : 0;
   const currentLayer = Math.floor((progressPercent / 100) * totalLayers);
+
+  const jobName = id === 12
+    ? 'IKEA Alex Tray'
+    : status === 'idle'
+    ? 'Ready for Next Order'
+    : jobNames[i % jobNames.length];
+
+  const material = id === 12
+    ? 'Matte Charcoal'
+    : materials[i % materials.length];
 
   return {
     id,
-    name: `NODE ${id.toString().padStart(2, '0')}`,
+    name: `Printer #${id.toString().padStart(2, '0')}`,
     status,
-    jobName: status === 'idle' ? 'STANDBY // READY' : jobNames[i % jobNames.length],
-    material: materials[i % materials.length],
+    jobName,
+    material,
     currentLayer,
     totalLayers,
     progressPercent,
@@ -117,9 +134,9 @@ const INITIAL_NODES: FarmNode[] = Array.from({ length: 34 }, (_, i) => {
 const INITIAL_QUEUE: SlicingQueueItem[] = [
   {
     id: 'JOB-FG-9821',
-    jobName: 'Valet Pro Desk Dock // Charcoal Base',
-    sku: 'FG-VPD-01',
-    material: 'PLA-CF Matte',
+    jobName: 'IKEA Alex Deep Tray // Matte Charcoal',
+    sku: 'FG-IAT-01',
+    material: 'Matte Charcoal Biopolymer',
     color: '#1a1a1a',
     layerHeightMm: 0.20,
     infillType: 'Gyroid',
@@ -127,14 +144,14 @@ const INITIAL_QUEUE: SlicingQueueItem[] = [
     status: 'slicing',
     progressPercent: 88,
     estimatedMinutes: 84,
-    assignedNodeId: 14,
+    assignedNodeId: 12,
   },
   {
     id: 'JOB-FG-9822',
-    jobName: 'Precision Caliper Tray // Dual Slot',
-    sku: 'FG-CAL-02',
-    material: 'PETG Space Gray',
-    color: '#3f3f46',
+    jobName: 'Valet Pro Desk Dock // Terracotta Sand',
+    sku: 'FG-VPD-02',
+    material: 'Terracotta Sand Biopolymer',
+    color: '#9a4e32',
     layerHeightMm: 0.16,
     infillType: 'Gyroid',
     infillPercent: 24,
@@ -145,9 +162,9 @@ const INITIAL_QUEUE: SlicingQueueItem[] = [
   },
   {
     id: 'JOB-FG-9823',
-    jobName: 'Cable Channel Spine // Segmented 12x',
-    sku: 'FG-CCS-12',
-    material: 'ASA Industrial Smoke',
+    jobName: 'Modular Hexagon Desk Tidy // Slate Gray',
+    sku: 'FG-HEX-03',
+    material: 'Slate Gray Biopolymer',
     color: '#27272a',
     layerHeightMm: 0.20,
     infillType: 'Honeycomb',
@@ -158,10 +175,10 @@ const INITIAL_QUEUE: SlicingQueueItem[] = [
   },
   {
     id: 'JOB-FG-9824',
-    jobName: 'Mechanical Switch Valet // 60% Form',
-    sku: 'FG-MSV-60',
-    material: 'Resin-Inlay Composite',
-    color: '#52525b',
+    jobName: 'Precision Pen & Ruler Tray // Olive Clay',
+    sku: 'FG-PEN-04',
+    material: 'Olive Clay Biopolymer',
+    color: '#555e4e',
     layerHeightMm: 0.12,
     infillType: 'Adaptive Cubic',
     infillPercent: 30,
@@ -171,10 +188,10 @@ const INITIAL_QUEUE: SlicingQueueItem[] = [
   },
   {
     id: 'JOB-FG-9825',
-    jobName: 'Audio Interface Angled Cradle',
-    sku: 'FG-AIC-04',
-    material: 'PLA-CF Signal Orange Inlay',
-    color: '#ff5500',
+    jobName: 'Dual Slot Organizer // Chalk White',
+    sku: 'FG-DSO-05',
+    material: 'Chalk White Biopolymer',
+    color: '#e4e4e7',
     layerHeightMm: 0.20,
     infillType: 'Gyroid',
     infillPercent: 18,
@@ -189,7 +206,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
   onClose,
 }) => {
   const [nodes, setNodes] = useState<FarmNode[]>(INITIAL_NODES);
-  const [selectedNodeId, setSelectedNodeId] = useState<number>(14);
+  const [selectedNodeId, setSelectedNodeId] = useState<number>(12);
   const [filter, setFilter] = useState<'all' | NodeStatus>('all');
   const [queue] = useState<SlicingQueueItem[]>(INITIAL_QUEUE);
   const [isSimPaused, setIsSimPaused] = useState<boolean>(false);
@@ -521,9 +538,9 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
     playClickSound('snap');
     const timestamp = new Date().toLocaleTimeString();
     setDiagnosticsLog((prev) => [
-      `[${timestamp}] CALIBRATION PING: Node ${selectedNode.id} responded OK (2.4ms, 0 packet loss)`,
-      `[${timestamp}] FLOW SENSOR: Extrusion delta 0.02% nominal`,
-      `[${timestamp}] BED MESH: 36-point bilinear matrix tolerance ±0.03mm`,
+      `[${timestamp}] PRECISION FIT CHECK: Printer #${selectedNode.id} calibrated and running at peak quality`,
+      `[${timestamp}] MATERIAL SENSOR: Continuous flow rate 100% nominal (Silky Matte Finish)`,
+      `[${timestamp}] BED MESH: 36-point micro-matrix calibrated to ±0.03mm (100% Guaranteed Fit)`,
       ...prev.slice(0, 5),
     ]);
   };
@@ -539,7 +556,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
       <div className="min-h-screen px-3 sm:px-6 py-6 flex items-center justify-center font-mono">
         <div className="relative w-full max-w-6xl bg-surface border border-surface-border rounded-xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
           
-          {/* Top Industrial Dieter Rams Header */}
+          {/* Top Crafting Studio Header */}
           <div className="px-5 py-4 bg-surface-subtle border-b border-surface-border flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded bg-zinc-900 border border-zinc-700 flex items-center justify-center">
@@ -548,15 +565,15 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
               <div>
                 <div className="flex items-center space-x-2">
                   <h2 className="text-sm font-bold tracking-tight text-white uppercase font-sans">
-                    AUTOMATED PRINT FARM CLUSTER
+                    LOOK INSIDE OUR CRAFTING STUDIO
                   </h2>
                   <span className="px-1.5 py-0.5 rounded bg-signal-lime/10 text-signal-lime text-[10px] font-mono border border-signal-lime/30 flex items-center space-x-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-signal-lime animate-pulse" />
-                    <span>34 NODES ONLINE</span>
+                    <span>34 PRINTERS CRAFTING LIVE</span>
                   </span>
                 </div>
                 <p className="text-[11px] text-zinc-400">
-                  SLANT3D / BAMBU FARM PROTOCOL • GYROID INFILL • DUAL EXTRUSION TOLERANCE ±0.05MM
+                  Real 3D crafting printers building customer trays right now in Boise, Idaho • Made in USA
                 </p>
               </div>
             </div>
@@ -566,19 +583,19 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
               <div className="hidden md:flex items-center space-x-3 text-[11px] text-zinc-400 border-r border-surface-border pr-4">
                 <span className="flex items-center space-x-1">
                   <span className="w-2 h-2 rounded-full bg-signal-lime" />
-                  <span>{counts.extruding} EXTRUDING</span>
+                  <span>{counts.extruding} CRAFTING</span>
                 </span>
                 <span className="flex items-center space-x-1">
                   <span className="w-2 h-2 rounded-full bg-signal-cyan" />
-                  <span>{counts.laser_scanning} LIDAR</span>
+                  <span>{counts.laser_scanning} LEVELING</span>
                 </span>
                 <span className="flex items-center space-x-1">
                   <span className="w-2 h-2 rounded-full bg-signal-amber" />
-                  <span>{counts.preheating} HEATING</span>
+                  <span>{counts.preheating} WARMING UP</span>
                 </span>
                 <span className="flex items-center space-x-1">
                   <span className="w-2 h-2 rounded-full bg-zinc-600" />
-                  <span>{counts.idle} IDLE</span>
+                  <span>{counts.idle} READY</span>
                 </span>
               </div>
 
@@ -624,7 +641,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                 }`}
               >
                 <Cpu className="w-3.5 h-3.5 text-signal-orange" />
-                <span>CLUSTER MATRIX (34)</span>
+                <span>OUR CRAFTING PRINTERS (34)</span>
               </button>
 
               <button
@@ -640,7 +657,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                 }`}
               >
                 <Video className="w-3.5 h-3.5 text-signal-cyan" />
-                <span>IN-SITU WEBCAM FEED</span>
+                <span>LIVE PRINTER WEBCAM</span>
               </button>
 
               <button
@@ -656,34 +673,43 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                 }`}
               >
                 <Layers className="w-3.5 h-3.5 text-signal-lime" />
-                <span>SLICING DISPATCH QUEUE</span>
+                <span>UPCOMING ORDERS QUEUE</span>
                 <span className="px-1.5 py-0.2 text-[10px] rounded-full bg-zinc-900 border border-zinc-700 text-zinc-300">
                   {queue.length}
                 </span>
               </button>
             </div>
 
-            {/* Filter Pills for the Cluster Matrix */}
+            {/* Filter Pills for the Printers */}
             {activeTab === 'telemetry' && (
               <div className="hidden sm:flex items-center space-x-1.5 text-[11px]">
                 <span className="text-zinc-500 mr-1">FILTER:</span>
-                {(['all', 'extruding', 'laser_scanning', 'preheating', 'idle'] as const).map((mode) => (
-                  <button
-                    key={mode}
-                    type="button"
-                    onClick={() => {
-                      playClickSound('toggle');
-                      setFilter(mode);
-                    }}
-                    className={`px-2 py-0.5 rounded uppercase transition ${
-                      filter === mode
-                        ? 'bg-signal-orange/15 text-signal-orange border border-signal-orange/40 font-bold'
-                        : 'text-zinc-400 hover:text-zinc-200 bg-surface-subtle'
-                    }`}
-                  >
-                    {mode.replace('_', ' ')}
-                  </button>
-                ))}
+                {(['all', 'extruding', 'laser_scanning', 'preheating', 'idle'] as const).map((mode) => {
+                  const filterLabels: Record<string, string> = {
+                    all: 'ALL',
+                    extruding: 'CRAFTING',
+                    laser_scanning: 'LEVELING',
+                    preheating: 'WARMING UP',
+                    idle: 'READY',
+                  };
+                  return (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => {
+                        playClickSound('toggle');
+                        setFilter(mode);
+                      }}
+                      className={`px-2 py-0.5 rounded uppercase transition ${
+                        filter === mode
+                          ? 'bg-signal-orange/15 text-signal-orange border border-signal-orange/40 font-bold'
+                          : 'text-zinc-400 hover:text-zinc-200 bg-surface-subtle'
+                      }`}
+                    >
+                      {filterLabels[mode]}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -695,13 +721,15 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
             <div className="bg-surface-subtle border border-surface-border rounded-xl p-4 sm:p-5">
               <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-surface-border pb-4 mb-4">
                 <div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs text-signal-orange font-bold uppercase tracking-widest">
-                      {selectedNode.name}
+                      Active Printer #{selectedNode.id}
                     </span>
                     <span className="text-zinc-500">•</span>
-                    <span className="text-xs text-zinc-300 font-semibold">
-                      {selectedNode.jobName}
+                    <span className="text-xs text-zinc-100 font-semibold">
+                      {selectedNode.status === 'idle'
+                        ? 'is ready for the next customer order'
+                        : `is crafting an ${selectedNode.jobName} in ${selectedNode.material}`}
                     </span>
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
                       selectedNode.status === 'extruding'
@@ -712,17 +740,23 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                         ? 'bg-signal-amber/10 text-signal-amber border-signal-amber/30'
                         : 'bg-zinc-800 text-zinc-400 border-zinc-700'
                     }`}>
-                      {selectedNode.status.replace('_', ' ')}
+                      {selectedNode.status === 'extruding'
+                        ? 'Crafting Live'
+                        : selectedNode.status === 'laser_scanning'
+                        ? 'Laser Leveling'
+                        : selectedNode.status === 'preheating'
+                        ? 'Warming Up'
+                        : 'Ready'}
                     </span>
                   </div>
-                  <div className="flex items-center space-x-3 text-[11px] text-zinc-400 mt-1">
-                    <span>MATERIAL: {selectedNode.material}</span>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-zinc-400 mt-1">
+                    <span>Material: {selectedNode.material}</span>
                     <span>•</span>
-                    <span>FLOW: {selectedNode.flowRate} mm³/s</span>
+                    <span>Studio: Boise, Idaho Workshop</span>
                     <span>•</span>
-                    <span>FAN: {selectedNode.fanSpeedRpm} RPM</span>
+                    <span>Est. Time Left: {selectedNode.etaMinutes > 0 ? `${selectedNode.etaMinutes} min` : 'Next up'}</span>
                     <span>•</span>
-                    <span>CHAMBER: {selectedNode.chamberTemp}°C</span>
+                    <span>Quality: 100% Guaranteed Fit</span>
                   </div>
                 </div>
 
@@ -733,7 +767,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                     className="px-3 py-1.5 rounded-lg bg-surface border border-zinc-700 hover:border-signal-cyan text-xs text-zinc-200 flex items-center space-x-1.5 transition"
                   >
                     <Terminal className="w-3.5 h-3.5 text-signal-cyan" />
-                    <span>DIAGNOSTIC PING</span>
+                    <span>PRECISION FIT CHECK</span>
                   </button>
                 </div>
               </div>
@@ -876,20 +910,20 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
               )}
             </div>
 
-            {/* TAB 1: 34-NODE TELEMETRY MATRIX */}
+            {/* TAB 1: 34-PRINTER STATUS MATRIX */}
             {activeTab === 'telemetry' && (
               <div>
                 <div className="flex items-center justify-between mb-3 text-xs">
                   <div className="flex items-center space-x-2">
                     <span className="font-bold text-white uppercase tracking-wider">
-                      34-NODE CLUSTER STATUS GRID
+                      34 STUDIO CRAFTING PRINTERS
                     </span>
                     <span className="text-zinc-500 text-[11px]">
-                      (Click any node to focus telemetry and live camera)
+                      (Click any printer to watch live crafting progress and webcam feed)
                     </span>
                   </div>
                   <span className="text-zinc-400 text-[11px]">
-                    SHOWING {filteredNodes.length} OF 34 NODES
+                    SHOWING {filteredNodes.length} OF 34 PRINTERS
                   </span>
                 </div>
 
@@ -928,7 +962,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
 
                         {/* Status Label */}
                         <div className="text-[10px] text-zinc-400 truncate mb-1">
-                          {node.status === 'idle' ? 'STANDBY' : node.jobName.split('//')[0]}
+                          {node.status === 'idle' ? 'Ready for Order' : node.jobName}
                         </div>
 
                         {/* Progress or Status Readout */}
@@ -941,18 +975,18 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                               />
                             </div>
                             <div className="flex justify-between text-[9px] text-zinc-500">
-                              <span>{node.progressPercent.toFixed(0)}%</span>
+                              <span>{node.progressPercent.toFixed(0)}% crafted</span>
                               <span>{node.nozzleTemp.toFixed(0)}°C</span>
                             </div>
                           </div>
                         ) : node.status === 'laser_scanning' ? (
                           <div className="text-[9px] text-signal-cyan font-mono flex items-center justify-between">
-                            <span>LIDAR BED MESH</span>
+                            <span>LEVELING BED</span>
                             <span>{node.bedTemp.toFixed(0)}°C</span>
                           </div>
                         ) : node.status === 'preheating' ? (
                           <div className="text-[9px] text-signal-amber font-mono flex items-center justify-between">
-                            <span>HEATING NOZZLE</span>
+                            <span>WARMING UP</span>
                             <span>{node.nozzleTemp.toFixed(0)}°C</span>
                           </div>
                         ) : (
@@ -974,14 +1008,14 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                   <div className="flex items-center space-x-2">
                     <Video className="w-4 h-4 text-signal-cyan" />
                     <span className="font-bold text-white uppercase">
-                      IN-SITU OPTICAL SENSOR // {selectedNode.name}
+                      LIVE WORKSHOP CAMERA // {selectedNode.name}
                     </span>
                     <span className="px-2 py-0.5 rounded bg-zinc-800 text-[10px] text-zinc-300 border border-zinc-700">
-                      HIGH-SPEED RASTER SCAN
+                      BOISE WORKSHOP FEED
                     </span>
                   </div>
                   <span className="text-[11px] text-zinc-500">
-                    REAL-TIME PROCEDURAL GANTRY SIMULATION
+                    REAL-TIME 3D CRAFTING IN PROGRESS
                   </span>
                 </div>
 
@@ -994,45 +1028,45 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                     className="w-full h-full object-contain"
                   />
                   {/* Subtle Corner Caliper Targets */}
-                  <div className="absolute top-3 left-3 pointer-events-none text-[9px] font-mono text-zinc-600">
-                    FORMGRID CLUSTER CAM // FEED ENCRYPTED TLS 1.3
+                  <div className="absolute top-3 left-3 pointer-events-none text-[9px] font-mono text-zinc-500">
+                    FORMGRID CRAFTING STUDIO // BOISE, IDAHO
                   </div>
                   <div className="absolute top-3 right-3 pointer-events-none text-[9px] font-mono text-signal-orange">
-                    ● REC [LIVE 30FPS]
+                    ● LIVE [30 FPS]
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                   <div className="bg-surface border border-surface-border rounded-lg p-3">
                     <span className="text-[10px] text-zinc-500 uppercase block mb-1">
-                      CAMERA SPECIFICATION
+                      STUDIO CAMERA SPEC
                     </span>
                     <div className="text-zinc-300 text-[11px] space-y-0.5">
-                      <div>SENSOR: Sony Starvis 2 Low-Light</div>
-                      <div>RESOLUTION: 1080p @ 30 FPS Hardware Synced</div>
-                      <div>CALIBRATION: Optical Distortion Vector 0.002</div>
+                      <div>SENSOR: High-Definition In-Chamber Optical</div>
+                      <div>RESOLUTION: 1080p Live Workshop Stream</div>
+                      <div>LOCATION: Boise, Idaho Additive Workshop</div>
                     </div>
                   </div>
 
                   <div className="bg-surface border border-surface-border rounded-lg p-3">
                     <span className="text-[10px] text-zinc-500 uppercase block mb-1">
-                      FIRST-LAYER AI INSPECTION
+                      AUTOMATED QUALITY INSPECTION
                     </span>
                     <div className="text-zinc-300 text-[11px] space-y-0.5">
-                      <div className="text-signal-lime font-bold">SPAGHETTI / FAIL RISK: 0.01%</div>
-                      <div>FLOW COMPENSATION: Active Micro-stepping</div>
-                      <div>BED ADHESION: Textured PEI Verified</div>
+                      <div className="text-signal-lime font-bold">100% PERFECT FIT GUARANTEE</div>
+                      <div>SURFACE CHECK: Flawless layer-by-layer optical audit</div>
+                      <div>BUILD BED: Textured PEI for crisp, clean bottoms</div>
                     </div>
                   </div>
 
                   <div className="bg-surface border border-surface-border rounded-lg p-3">
                     <span className="text-[10px] text-zinc-500 uppercase block mb-1">
-                      GANTRY METRICS
+                      PRECISION CRAFTING GANTRY
                     </span>
                     <div className="text-zinc-300 text-[11px] space-y-0.5">
-                      <div>CORE-XY BELT TENSION: 68 Hz Resonant</div>
-                      <div>INPUT SHAPING: Dual-Axis Accelerometer</div>
-                      <div>PRINT HEAD FIRMWARE: Klipper Industrial v0.12</div>
+                      <div>MOTION TUNING: Active Vibration Compensation</div>
+                      <div>TOLERANCE: Precision within ±0.03mm</div>
+                      <div>EXTRUDER: Continuous micro-stepping flow</div>
                     </div>
                   </div>
                 </div>
@@ -1045,14 +1079,14 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                 <div className="flex items-center justify-between text-xs">
                   <div>
                     <h3 className="font-bold text-white uppercase tracking-wider">
-                      ACTIVE SLICING & DISPATCH QUEUE
+                      UPCOMING CUSTOMER ORDERS IN QUEUE
                     </h3>
                     <p className="text-[11px] text-zinc-400">
-                      Parametric G-Code compiler jobs awaiting automated node assignment
+                      Trays prepared by our digital craftsmen, awaiting printer assignment in Boise, Idaho
                     </p>
                   </div>
                   <span className="px-2 py-1 rounded bg-surface border border-zinc-700 text-zinc-300 text-[11px]">
-                    ENGINE: BAMBU STUDIO CORE V2.1
+                    STUDIO WORKSHOP: BOISE HUB
                   </span>
                 </div>
 
@@ -1062,10 +1096,10 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                       <tr>
                         <th className="py-2.5 px-4 font-semibold">POS</th>
                         <th className="py-2.5 px-4 font-semibold">JOB ID & PRODUCT</th>
-                        <th className="py-2.5 px-4 font-semibold">MATERIAL / SLICE SPEC</th>
+                        <th className="py-2.5 px-4 font-semibold">MATERIAL / SPECS</th>
                         <th className="py-2.5 px-4 font-semibold">STATUS</th>
                         <th className="py-2.5 px-4 font-semibold">EST. TIME</th>
-                        <th className="py-2.5 px-4 font-semibold text-right">ROUTING</th>
+                        <th className="py-2.5 px-4 font-semibold text-right">ASSIGNED PRINTER</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-surface-border text-zinc-300">
@@ -1087,7 +1121,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                               <span>{item.material}</span>
                             </div>
                             <div className="text-[10px] text-zinc-500">
-                              {item.layerHeightMm}mm • {item.infillType} {item.infillPercent}%
+                              {item.layerHeightMm}mm finish • {item.infillType} {item.infillPercent}% core
                             </div>
                           </td>
                           <td className="py-3 px-4">
@@ -1095,7 +1129,7 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                               <div className="space-y-1">
                                 <span className="inline-flex items-center space-x-1 text-signal-orange text-[11px] font-semibold">
                                   <RefreshCw className="w-3 h-3 animate-spin" />
-                                  <span>SLICING {item.progressPercent}%</span>
+                                  <span>PREPARING {item.progressPercent}%</span>
                                 </span>
                                 <div className="w-24 bg-zinc-800 h-1 rounded-full overflow-hidden">
                                   <div
@@ -1107,12 +1141,12 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                             ) : item.status === 'gcode_ready' ? (
                               <span className="inline-flex items-center space-x-1 text-signal-lime text-[11px] font-semibold">
                                 <CheckCircle2 className="w-3 h-3" />
-                                <span>G-CODE READY</span>
+                                <span>READY TO CRAFT</span>
                               </span>
                             ) : (
                               <span className="inline-flex items-center space-x-1 text-zinc-400 text-[11px]">
                                 <Clock className="w-3 h-3 text-zinc-500" />
-                                <span>IN PIPELINE</span>
+                                <span>IN WORKSHOP PIPELINE</span>
                               </span>
                             )}
                           </td>
@@ -1122,11 +1156,11 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
                           <td className="py-3 px-4 text-right">
                             {item.assignedNodeId ? (
                               <span className="px-2 py-0.5 rounded bg-zinc-800 border border-zinc-700 text-signal-orange font-mono text-[10px] font-bold">
-                                NODE {String(item.assignedNodeId).padStart(2, '0')}
+                                PRINTER #{String(item.assignedNodeId).padStart(2, '0')}
                               </span>
                             ) : (
                               <span className="text-[10px] text-zinc-500 font-mono">
-                                AUTO-ASSIGNING
+                                AUTO-ROUTING
                               </span>
                             )}
                           </td>
@@ -1145,21 +1179,21 @@ export const PrintFarmClusterModal: React.FC<PrintFarmClusterModalProps> = ({
             <div className="flex items-center space-x-3 text-zinc-400 text-[11px]">
               <span className="flex items-center space-x-1">
                 <Radio className="w-3 h-3 text-signal-lime" />
-                <span>MQTT TELEMETRY BROKER: CONNECTED</span>
+                <span>BOISE CRAFTING STUDIO: LIVE & CONNECTED</span>
               </span>
               <span>•</span>
-              <span>BUFFER LATENCY: 12ms</span>
+              <span>100% PERFECT FIT GUARANTEE</span>
               <span>•</span>
-              <span>BED ADHESION SENSOR: 100% OK</span>
+              <span>MADE IN USA</span>
             </div>
 
             <div className="flex items-center space-x-2">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-mono text-xs transition"
+                className="px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-mono text-xs transition cursor-pointer"
               >
-                CLOSE TELEMETRY
+                CLOSE WORKSHOP VIEW
               </button>
             </div>
           </div>

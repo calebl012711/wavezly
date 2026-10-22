@@ -194,7 +194,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
   isExportingStl: false,
   autoRotate: false,
   wireframe: false,
-  engravedText: 'FORMGRID // 01',
+  engravedText: 'SNUGDESK // 01',
   sliceHeight: 100,
   explodedOffset: 0,
 
@@ -325,7 +325,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       selectedResin: null,
       lightingPreset: 'daylight',
       wireframe: false,
-      engravedText: 'FORMGRID // 01',
+      engravedText: 'SNUGDESK // 01',
       sliceHeight: 100,
       explodedOffset: 0,
       telemetry,

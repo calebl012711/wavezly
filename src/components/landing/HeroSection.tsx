@@ -52,19 +52,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs text-zinc-700 dark:text-zinc-300">
             <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span className="font-medium">Tailored Drawer Fit (±0.25mm)</span>
+              <span className="font-medium">Tailored Drawer Fit (Zero Dead Space)</span>
             </div>
             <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span className="font-medium">Silky Matte Bio-Polymer</span>
+              <span className="font-medium">Velveteen Matte Finish</span>
             </div>
             <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
               <Sparkles className="w-4 h-4 text-orange-500 flex-shrink-0" />
-              <span className="font-medium">Acoustic Resin Base Inlay</span>
+              <span className="font-medium">Whisper-Quiet Base Inlay</span>
             </div>
             <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
               <ShieldCheck className="w-4 h-4 text-sky-600 flex-shrink-0" />
-              <span className="font-medium">Free 30-Day Fit Guarantee</span>
+              <span className="font-medium">100% Snug-Fit Guarantee</span>
             </div>
           </div>
 

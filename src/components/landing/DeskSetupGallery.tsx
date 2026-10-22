@@ -417,10 +417,10 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
             <Sparkles className="w-4 h-4" />
             <span>COMMUNITY & CREATOR SPACES // LIVE FIELD STUDIES</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-precision-white font-sans">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white font-sans">
             Curated Creator Workspaces
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-3xl font-sans">
+          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-3xl font-sans">
             Explore authentic creator studios tuned with Formgrid parametric modules and aerospace hardware.
             Hover or tap any interactive radar pin to inspect technical blueprints or add directly to your build.
           </p>
@@ -433,7 +433,7 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
           className={`px-4 py-2 rounded-lg text-xs font-semibold flex items-center space-x-2 transition border ${
             bundleSuccess
               ? 'bg-signal-cyan/20 text-signal-cyan border-signal-cyan'
-              : 'bg-surface hover:bg-zinc-800 text-precision-white border-surface-border hover:border-zinc-700'
+              : 'bg-zinc-100 hover:bg-zinc-200 dark:bg-surface dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border-zinc-300 dark:border-surface-border'
           }`}
         >
           {bundleSuccess ? (
@@ -461,8 +461,8 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
               onClick={() => handleSelectWorkspace(idx)}
               className={`p-3.5 text-left rounded-xl border transition relative flex flex-col justify-between ${
                 isActive
-                  ? 'bg-surface border-signal-orange text-precision-white shadow-tactile ring-1 ring-signal-orange/40'
-                  : 'bg-surface/50 border-surface-border text-zinc-400 hover:text-zinc-200 hover:border-zinc-700 hover:bg-surface'
+                  ? 'bg-white dark:bg-surface border-signal-orange text-zinc-950 dark:text-white shadow-tactile ring-1 ring-signal-orange/40'
+                  : 'bg-white/80 dark:bg-surface/50 border-zinc-200 dark:border-surface-border text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200 hover:border-zinc-400 dark:hover:border-zinc-700'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -471,7 +471,7 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
                   className={`text-[10px] px-2 py-0.5 rounded font-mono uppercase tracking-wider ${
                     isActive
                       ? 'bg-signal-orange/15 text-signal-orange border border-signal-orange/30'
-                      : 'bg-zinc-900/60 text-zinc-500 border border-zinc-800'
+                      : 'bg-zinc-100 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-500 border border-zinc-200 dark:border-zinc-800'
                   }`}
                 >
                   SET-0{idx + 1}
@@ -479,10 +479,10 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
               </div>
 
               <div>
-                <div className="text-xs font-bold text-precision-white font-sans truncate mb-0.5">
+                <div className="text-xs font-bold text-zinc-950 dark:text-white font-sans truncate mb-0.5">
                   {ws.title}
                 </div>
-                <div className="flex items-center space-x-1 text-[11px] text-zinc-400">
+                <div className="flex items-center space-x-1 text-[11px] text-zinc-500 dark:text-zinc-400">
                   <MapPin className="w-3 h-3 text-signal-orange shrink-0" />
                   <span className="truncate">
                     {ws.city}, {ws.country}
@@ -712,13 +712,13 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
             </div>
 
             {/* Bottom Photo Caption Bar */}
-            <div className="px-4 py-2.5 bg-surface border-t border-surface-border flex flex-col sm:flex-row sm:items-center justify-between text-xs text-zinc-400 gap-2">
+            <div className="px-4 py-2.5 bg-white dark:bg-surface border-t border-zinc-200 dark:border-surface-border flex flex-col sm:flex-row sm:items-center justify-between text-xs text-zinc-600 dark:text-zinc-400 gap-2">
               <div className="flex items-center space-x-2">
-                <span className="text-precision-white font-semibold">{activeWorkspace.creatorName}</span>
-                <span className="text-zinc-600">/</span>
-                <span className="text-signal-orange text-[11px]">{activeWorkspace.creatorHandle}</span>
-                <span className="text-zinc-600">/</span>
-                <span className="text-zinc-400 text-[11px] hidden md:inline">
+                <span className="text-zinc-950 dark:text-white font-semibold">{activeWorkspace.creatorName}</span>
+                <span className="text-zinc-400 dark:text-zinc-600">/</span>
+                <span className="text-signal-orange text-[11px] font-mono">{activeWorkspace.creatorHandle}</span>
+                <span className="text-zinc-400 dark:text-zinc-600">/</span>
+                <span className="text-zinc-500 dark:text-zinc-400 text-[11px] hidden md:inline">
                   {activeWorkspace.creatorRole}
                 </span>
               </div>
@@ -731,18 +731,18 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
           </div>
 
           {/* Creator Testimonial & Environmental Telemetry */}
-          <div className="p-4 rounded-xl bg-surface/60 border border-surface-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="p-4 rounded-xl bg-white dark:bg-surface/60 border border-zinc-200 dark:border-surface-border flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
             <div className="flex-1">
               <div className="flex items-center space-x-1.5 text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
                 <CornerDownRight className="w-3 h-3 text-signal-orange" />
                 <span>CREATOR MANIFESTO NOTE</span>
               </div>
-              <p className="text-xs text-zinc-300 italic font-sans leading-relaxed">
+              <p className="text-xs text-zinc-700 dark:text-zinc-300 italic font-sans leading-relaxed">
                 "{activeWorkspace.quote}"
               </p>
             </div>
 
-            <div className="sm:border-l sm:border-surface-border sm:pl-4 sm:shrink-0 flex sm:flex-col justify-between sm:justify-center items-end text-right">
+            <div className="sm:border-l sm:border-zinc-200 dark:sm:border-surface-border sm:pl-4 sm:shrink-0 flex sm:flex-col justify-between sm:justify-center items-end text-right">
               <div className="text-[10px] text-zinc-500 uppercase tracking-wider">
                 {activeWorkspace.deskSpecs.telemetryLabel}
               </div>
@@ -755,18 +755,18 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
 
         {/* Right Stage: Complete Setup Equipment Manifest (4 Columns) */}
         <div className="lg:col-span-4 flex flex-col space-y-3">
-          <div className="p-4 rounded-2xl bg-surface border border-surface-border shadow-xl">
-            <div className="flex items-center justify-between pb-3 border-b border-surface-border mb-3">
-              <div className="flex items-center space-x-2 text-xs text-precision-white font-bold">
+          <div className="p-4 rounded-2xl bg-white dark:bg-surface border border-zinc-200 dark:border-surface-border shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-surface-border mb-3">
+              <div className="flex items-center space-x-2 text-xs text-zinc-950 dark:text-white font-bold">
                 <Layers className="w-4 h-4 text-signal-orange" />
                 <span>EQUIPMENT MANIFEST</span>
               </div>
-              <span className="text-[10px] text-zinc-400 font-mono">
+              <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
                 [{workspaceProducts.length} MODULES]
               </span>
             </div>
 
-            <p className="text-[11px] text-zinc-400 mb-4 font-sans leading-relaxed">
+            <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mb-4 font-sans leading-relaxed">
               Every Formgrid component present on {activeWorkspace.creatorName}’s desk. Click any module to preview
               schematics or deploy to your cart.
             </p>
@@ -783,22 +783,22 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
                     onClick={() => handleHotspotClick(hotspot.id)}
                     className={`p-3 rounded-xl border transition cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-zinc-800/90 border-signal-orange shadow-tactile'
-                        : 'bg-zinc-900/60 border-surface-border hover:border-zinc-700 hover:bg-zinc-800/40'
+                        ? 'bg-zinc-100 dark:bg-zinc-800/90 border-signal-orange shadow-tactile'
+                        : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-surface-border hover:border-zinc-400 dark:hover:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800/40'
                     }`}
                   >
                     <div className="flex items-start space-x-3 mb-2">
                       <img
                         src={product.images[0]}
                         alt={product.title}
-                        className="w-12 h-12 object-cover rounded-lg border border-surface-border bg-black shrink-0"
+                        className="w-12 h-12 object-cover rounded-lg border border-zinc-200 dark:border-surface-border bg-black shrink-0"
                       />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-precision-white truncate font-sans">
+                          <span className="text-xs font-bold text-zinc-950 dark:text-white truncate font-sans">
                             {product.title}
                           </span>
-                          <span className="text-xs font-mono font-semibold text-zinc-200">
+                          <span className="text-xs font-mono font-semibold text-zinc-900 dark:text-zinc-200">
                             ${product.basePrice.toFixed(2)}
                           </span>
                         </div>

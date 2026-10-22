@@ -1,11 +1,32 @@
 /**
- * FORMGRID POST-CHECKOUT SPLIT FULFILLMENT HUD
- * Visualizes order bifurcation into automated 3D Print Farm jobs and DSers/AutoDS domestic dispatch
+ * FORMGRID POST-CHECKOUT SPLIT FULFILLMENT HUD & CELEBRATION
+ * Features:
+ * - Celebration Confetti Burst Animation on Mount
+ * - Warm Welcome: "Your custom order is on its way to the workshop!"
+ * - Printable "100% Guaranteed Fit Certificate & Spec Sheet" button using orderInvoiceGenerator.ts
+ * - Direct link to track both packages in real-time
+ * - Consumer Trust Guarantees: 30-Day Fit Guarantee, Free Returns, Carbon-Neutral Delivery
  */
 
-import React from 'react';
-import { CheckCircle2, Cpu, Truck, ArrowRight, Printer, ShieldCheck, FileText } from 'lucide-react';
-import { exportProductionSpecSheet } from '../lib/orderInvoiceGenerator';
+import React, { useEffect, useState } from 'react';
+import {
+  CheckCircle2,
+  Box,
+  Truck,
+  ArrowRight,
+  Printer,
+  ShieldCheck,
+  FileText,
+  Download,
+  Sparkles,
+  ExternalLink,
+  RotateCcw,
+  Leaf,
+  Compass,
+} from 'lucide-react';
+import { exportProductionSpecSheet, downloadSpecSheetHtml, resolveProductionSpecOrder } from '../lib/orderInvoiceGenerator';
+import { ConfettiCanvas } from '../components/common/ConfettiCanvas';
+import { playClickSound } from '../lib/soundEffects';
 
 interface SuccessPageProps {
   orderNumber?: string;
@@ -18,196 +39,365 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
   onContinueShopping,
   onTrackOrder,
 }) => {
-  const farmJobId = `SLANT3D-${orderNumber.split('-')[1] || '98231'}-J01`;
-  const trackingNumber = `94001118992231${Math.floor(100000 + Math.random() * 900000)}`;
+  const [showConfetti, setShowConfetti] = useState(true);
+  const [specOrder, setSpecOrder] = useState(() => resolveProductionSpecOrder(orderNumber));
 
-  const handleExportSpecSheet = () => {
+  const handleReplayConfetti = () => {
+    playClickSound('snap');
+    setShowConfetti(false);
+    setTimeout(() => setShowConfetti(true), 60);
+  };
+
+  useEffect(() => {
+    // Play celebratory audio chime
+    playClickSound('success');
+
+    const timer = setTimeout(() => {
+      setShowConfetti(false);
+    }, 8000);
+
+    // Refresh spec order data from localStorage
+    try {
+      const resolved = resolveProductionSpecOrder(orderNumber);
+      setSpecOrder(resolved);
+    } catch (_err) {
+      // Fallback already resolved
+    }
+
+    return () => clearTimeout(timer);
+  }, [orderNumber]);
+
+  const handlePrintCertificate = () => {
+    playClickSound('download');
     exportProductionSpecSheet(orderNumber);
   };
 
+  const handleDownloadHtml = () => {
+    playClickSound('tick');
+    downloadSpecSheetHtml(orderNumber);
+  };
+
+  const handleTrack = () => {
+    playClickSound('snap');
+    if (onTrackOrder) {
+      onTrackOrder(orderNumber);
+    }
+  };
+
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8 font-mono">
-      {/* Top Success Banner */}
-      <div className="p-6 rounded-2xl bg-surface border border-surface-border text-center space-y-3 shadow-2xl">
-        <div className="w-14 h-14 rounded-full bg-signal-lime/10 border border-signal-lime/30 flex items-center justify-center mx-auto text-signal-lime">
-          <CheckCircle2 className="w-8 h-8" />
-        </div>
+    <div className="relative min-h-screen bg-[#fafafc] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-orange-500 selection:text-white py-10 sm:py-16">
+      {/* 1. CELEBRATION CONFETTI BURST */}
+      {showConfetti && <ConfettiCanvas durationMs={5000} particleCount={110} />}
 
-        <div className="space-y-1">
-          <span className="text-xs text-signal-orange uppercase tracking-widest font-semibold">
-            PAYMENT CONFIRMED // JOB QUEUED
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-precision-white font-sans">
-            Order Dispatched to Dual Facilities
-          </h1>
-          <p className="text-xs text-zinc-400 font-mono">
-            ORDER IDENTIFIER: <span className="text-zinc-200 font-bold">{orderNumber}</span>
-          </p>
-        </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* TOP CELEBRATION HERO BANNER */}
+        <div className="relative overflow-hidden p-8 sm:p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-xl text-center space-y-4">
+          <div className="absolute top-0 right-0 transform translate-x-8 -translate-y-8 w-48 h-48 rounded-full bg-orange-500/10 dark:bg-orange-500/5 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 transform -translate-x-8 translate-y-8 w-48 h-48 rounded-full bg-emerald-500/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
 
-        <p className="text-xs text-zinc-400 font-sans max-w-lg mx-auto leading-relaxed">
-          Your order has bifurcated into our automated fabrication pipeline. The STL geometry is now in the print farm slicing buffer, and domestic hardware has been queued for warehouse pick.
-        </p>
-
-        {/* Quick Action Export Pill */}
-        <div className="pt-2 flex justify-center">
-          <button
-            type="button"
-            onClick={handleExportSpecSheet}
-            className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-signal-orange text-xs text-zinc-200 hover:text-white transition shadow-sm group"
-          >
-            <Printer className="w-3.5 h-3.5 text-signal-orange group-hover:scale-110 transition-transform" />
-            <span className="font-semibold">EXPORT SPEC SHEET (PDF/PRINT)</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Split Fulfillment Bifurcation Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* PACKAGE A: 3D PRINT FARM (Made-to-Order) */}
-        <div className="p-5 rounded-xl bg-surface border border-signal-orange/40 bg-gradient-to-b from-signal-orange/5 to-transparent flex flex-col justify-between space-y-4 shadow-tactile">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
-              <div className="flex items-center space-x-2 text-signal-orange text-xs font-bold uppercase">
-                <Cpu className="w-4 h-4" />
-                <span>Package A: Print Farm Queue</span>
-              </div>
-              <span className="px-2 py-0.5 rounded bg-signal-orange/20 text-signal-orange text-[10px] font-bold">
-                FARM_QUEUED
-              </span>
-            </div>
-
-            <div className="space-y-2 text-xs text-zinc-300">
-              <div className="font-bold text-zinc-100 font-sans">
-                Modular Desk Valet Pro (Custom Sliced)
-              </div>
-              <div className="p-2.5 rounded bg-black/60 border border-zinc-800 text-[11px] text-zinc-400 space-y-1">
-                <div>Dimensions: 160 × 120 × 40 mm (2×3 Grid)</div>
-                <div>Material: Obsidian Black Matte PLA</div>
-                <div>Infill: 18% Gyroid High-Shear Core</div>
-                <div>Mesh Status: Manifold Watertight Binary STL</div>
-              </div>
-            </div>
+          {/* Glowing Checkmark Badge (Click to replay celebration) */}
+          <div className="relative inline-flex items-center justify-center">
+            <button
+              type="button"
+              onClick={handleReplayConfetti}
+              title="Click to replay celebration confetti"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+            >
+              <CheckCircle2 className="w-9 h-9 sm:w-11 sm:h-11" />
+            </button>
+            <span className="absolute -top-1 -right-1 flex h-4 w-4 pointer-events-none">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500" />
+            </span>
           </div>
 
-          <div className="pt-3 border-t border-zinc-800/80 space-y-2 text-[11px] text-zinc-400">
-            <div className="flex justify-between">
-              <span>Farm Job ID:</span>
-              <span className="text-zinc-200 font-bold">{farmJobId}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Target Farm:</span>
-              <span>Slant 3D Cluster #4 (Boise, ID)</span>
-            </div>
-            <div className="flex justify-between text-signal-orange">
-              <span>Est. Dispatch:</span>
-              <span>2–4 Business Days</span>
-            </div>
-          </div>
-        </div>
-
-        {/* PACKAGE B: FAST-SHIP ACCESSORIES (Domestic Hub) */}
-        <div className="p-5 rounded-xl bg-surface border border-signal-cyan/40 bg-gradient-to-b from-signal-cyan/5 to-transparent flex flex-col justify-between space-y-4 shadow-tactile">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
-              <div className="flex items-center space-x-2 text-signal-cyan text-xs font-bold uppercase">
-                <Truck className="w-4 h-4" />
-                <span>Package B: Domestic Hardware</span>
-              </div>
-              <span className="px-2 py-0.5 rounded bg-signal-cyan/20 text-signal-cyan text-[10px] font-bold">
-                DISPATCHED
-              </span>
+          <div className="space-y-2">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/60 text-xs text-orange-700 dark:text-orange-400 font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>ORDER CONFIRMED & DISPATCHED</span>
             </div>
 
-            <div className="space-y-2 text-xs text-zinc-300">
-              <div className="font-bold text-zinc-100 font-sans">
-                Asymmetric Desk ScreenBar (US Domestic)
-              </div>
-              <div className="p-2.5 rounded bg-black/60 border border-zinc-800 text-[11px] text-zinc-400 space-y-1">
-                <div>Channel: DSers Automated AliExpress Pass-Through</div>
-                <div>Warehouse: Salt Lake City, UT (US Domestic)</div>
-                <div>Courier: USPS Domestic Ground Priority</div>
-                <div>Handling: Picked & Packed under 24h</div>
-              </div>
-            </div>
-          </div>
+            {/* WARM WELCOME MESSAGE */}
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white font-display">
+              Your custom order is on its way to the workshop!
+            </h1>
 
-          <div className="pt-3 border-t border-zinc-800/80 space-y-2 text-[11px] text-zinc-400">
-            <div className="flex justify-between">
-              <span>Tracking Number:</span>
-              <span className="text-zinc-200 font-bold">{trackingNumber}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Carrier:</span>
-              <span>USPS Ground Advantage (Tracked)</span>
-            </div>
-            <div className="flex justify-between text-signal-cyan">
-              <span>Est. Delivery:</span>
-              <span>2–3 Business Days</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ISO 2768-m Metrology Certification & Spec Sheet Export Banner */}
-      <div className="p-5 rounded-xl bg-surface border border-surface-border flex flex-col md:flex-row items-center justify-between gap-4 shadow-tactile">
-        <div className="flex items-start space-x-3.5 text-xs">
-          <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-signal-orange flex-shrink-0 mt-0.5">
-            <ShieldCheck className="w-5 h-5" />
-          </div>
-          <div className="space-y-1">
-            <div className="flex items-center space-x-2">
-              <span className="font-bold text-precision-white font-sans text-sm">
-                ISO 2768-m Legal Manufacturing Guarantee
-              </span>
-              <span className="px-1.5 py-0.5 rounded bg-signal-lime/20 text-signal-lime text-[10px] font-bold">
-                AUDITED
-              </span>
-            </div>
-            <p className="text-[11px] text-zinc-400 leading-relaxed font-sans max-w-xl">
-              Dimensional variance strictly bounded to ±0.2mm nominal. All CAD meshes computational validated watertight manifold prior to queue insertion.
+            <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
+              Thank you, <strong className="text-zinc-900 dark:text-zinc-100">{specOrder.customerName}</strong>. We've routed your bespoke CAD geometry to our automated additive print farm, and domestic hardware has been queued for immediate warehouse pick.
             </p>
           </div>
+
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 pt-1 font-mono text-xs">
+            <span className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 font-semibold">
+              ORDER #: <span className="text-orange-600 dark:text-orange-400">{orderNumber}</span>
+            </span>
+            <span className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">
+              EMAIL: <span className="text-zinc-900 dark:text-zinc-200">{specOrder.customerEmail}</span>
+            </span>
+          </div>
+
+          {/* 2. PRINTABLE SPEC SHEET & CERTIFICATE ACTION */}
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={handlePrintCertificate}
+              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs tracking-wider flex items-center justify-center space-x-2.5 shadow-lg shadow-orange-500/20 active:scale-95 transition cursor-pointer"
+            >
+              <Printer className="w-4 h-4" />
+              <span>PRINT 100% GUARANTEED FIT CERTIFICATE & SPEC SHEET</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDownloadHtml}
+              className="w-full sm:w-auto px-4 py-3.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 font-semibold text-xs tracking-wider flex items-center justify-center space-x-2 transition cursor-pointer"
+            >
+              <Download className="w-4 h-4 text-zinc-500" />
+              <span>SAVE BACKUP HTML</span>
+            </button>
+          </div>
         </div>
 
-        <button
-          type="button"
-          onClick={handleExportSpecSheet}
-          className="w-full md:w-auto py-2.5 px-5 rounded-lg bg-signal-orange hover:bg-signal-orange/90 text-black text-xs font-bold tracking-wider flex items-center justify-center space-x-2 transition shadow-tactile active:scale-95 flex-shrink-0"
-        >
-          <FileText className="w-4 h-4" />
-          <span>EXPORT PRODUCTION SPEC SHEET (PDF/PRINT)</span>
-        </button>
-      </div>
+        {/* 3. DIRECT SPLIT-DELIVERY TRACKING CARDS */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
+              <h2 className="text-base font-bold text-zinc-950 dark:text-white uppercase tracking-wider text-xs">
+                Active Split Delivery Packages
+              </h2>
+            </div>
+            <span className="text-xs text-zinc-500">Live Dual-Stream Routing</span>
+          </div>
 
-      {/* Action Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-surface-border gap-4">
-        <button
-          type="button"
-          onClick={onContinueShopping}
-          className="text-xs text-zinc-400 hover:text-zinc-200 transition"
-        >
-          ← Return to Hardware Catalog
-        </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* PACKAGE 1: 3D PRINT FARM (MADE TO MEASURE) */}
+            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-orange-200/90 dark:border-orange-800/60 shadow-sm flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
+                  <div className="flex items-center space-x-2 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
+                    <Box className="w-4 h-4" />
+                    <span>Package 1: Handcrafted to Measure</span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 text-[10px] font-bold">
+                    FARM_QUEUED
+                  </span>
+                </div>
 
-        <div className="flex items-center space-x-3 w-full sm:w-auto">
+                <div>
+                  <h3 className="font-bold text-sm text-zinc-950 dark:text-white">
+                    {specOrder.packageA.productTitle}
+                  </h3>
+                  <p className="text-xs text-zinc-500 mt-0.5">
+                    Job ID: <span className="font-mono text-zinc-700 dark:text-zinc-300 font-semibold">{specOrder.packageA.farmJobId}</span>
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/80 dark:border-zinc-700/60 text-xs space-y-1.5 font-mono">
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Bounding Envelope:</span>
+                    <span className="font-bold text-zinc-800 dark:text-zinc-200">
+                      {specOrder.packageA.dimensions.length}×{specOrder.packageA.dimensions.width}×{specOrder.packageA.dimensions.height} mm
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Material Formula:</span>
+                    <span className="font-medium text-zinc-800 dark:text-zinc-200">{specOrder.packageA.material.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Facility:</span>
+                    <span className="text-zinc-800 dark:text-zinc-200">{specOrder.packageA.facility}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Tolerance Code:</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">ISO 2768-m (±0.2mm)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Est. Delivery</span>
+                  <span className="text-xs font-bold text-orange-600 dark:text-orange-400">
+                    Arrives in 4–5 Business Days
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleTrack}
+                  className="px-3.5 py-2 rounded-lg bg-orange-50 dark:bg-orange-950/40 hover:bg-orange-100 dark:hover:bg-orange-900/60 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800/80 text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer"
+                >
+                  <span>Track Package 1</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* PACKAGE 2: IN-STOCK ACCESSORY (DOMESTIC WAREHOUSE) */}
+            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-sky-200/90 dark:border-sky-800/60 shadow-sm flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
+                  <div className="flex items-center space-x-2 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">
+                    <Truck className="w-4 h-4" />
+                    <span>Package 2: In-Stock Accessory</span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-[10px] font-bold">
+                    DISPATCHED
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-sm text-zinc-950 dark:text-white">
+                    {specOrder.packageB.productTitle}
+                  </h3>
+                  <p className="text-xs text-zinc-500 mt-0.5">
+                    SKU: <span className="font-mono text-zinc-700 dark:text-zinc-300 font-semibold">{specOrder.packageB.sku}</span>
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/80 dark:border-zinc-700/60 text-xs space-y-1.5 font-mono">
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Tracking Code:</span>
+                    <span className="font-bold text-zinc-800 dark:text-zinc-200">{specOrder.packageB.trackingNumber}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Courier Service:</span>
+                    <span className="text-zinc-800 dark:text-zinc-200">USPS Ground Advantage</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Origin Warehouse:</span>
+                    <span className="text-zinc-800 dark:text-zinc-200">Salt Lake City, UT</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Handling SLA:</span>
+                    <span className="text-sky-600 dark:text-sky-400 font-bold">&lt; 24h Picked & Packed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Est. Delivery</span>
+                  <span className="text-xs font-bold text-sky-600 dark:text-sky-400">
+                    Arrives in 2–3 Business Days
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleTrack}
+                  className="px-3.5 py-2 rounded-lg bg-sky-50 dark:bg-sky-950/40 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/80 text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer"
+                >
+                  <span>Track Package 2</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* PRIMARY CTA: DIRECT LINK TO TRACK BOTH PACKAGES IN REAL-TIME */}
+        <div className="p-6 rounded-2xl bg-zinc-900 text-white dark:bg-zinc-800 border border-zinc-800 dark:border-zinc-700 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+          <div className="space-y-1 text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start space-x-2">
+              <Compass className="w-4 h-4 text-orange-400" />
+              <span className="text-xs uppercase font-bold tracking-wider text-orange-400">
+                Interactive Telemetry Radar
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-white font-display">
+              Track Both Packages in Real-Time
+            </h3>
+            <p className="text-xs text-zinc-400">
+              View live GPS coordinates, 3D farm layer progress, and domestic courier scans on our unified transit radar.
+            </p>
+          </div>
+
           <button
             type="button"
-            onClick={handleExportSpecSheet}
-            className="py-3 px-4 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-precision-white text-xs font-bold tracking-wider flex items-center justify-center space-x-2 transition flex-1 sm:flex-initial"
+            onClick={handleTrack}
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-xs tracking-wider flex items-center justify-center space-x-2 shadow-sm transition active:scale-95 cursor-pointer flex-shrink-0"
           >
-            <Printer className="w-4 h-4 text-signal-orange" />
-            <span>SPEC SHEET (PDF)</span>
+            <span>OPEN REAL-TIME DUAL TRACKER</span>
+            <ExternalLink className="w-3.5 h-3.5 text-orange-600" />
           </button>
+        </div>
 
+        {/* 4. PROMINENT CONSUMER TRUST GUARANTEES REMINDER */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
+            <div className="w-9 h-9 rounded-lg bg-orange-100 dark:bg-orange-950/50 flex items-center justify-center text-orange-600 dark:text-orange-400 flex-shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
+                30-Day Fit Guarantee
+              </h4>
+              <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
+                Fits your drawer perfectly or 100% money back. Guaranteed.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
+            <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
+              <RotateCcw className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
+                Free Returns
+              </h4>
+              <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
+                30-day hassle-free return window with prepaid domestic labels.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
+            <div className="w-9 h-9 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400 flex-shrink-0">
+              <Leaf className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
+                Carbon-Neutral Delivery
+              </h4>
+              <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
+                Every mile offset through verified reforestation and climate programs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* FOOTER ACTIONS */}
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-zinc-200 dark:border-zinc-800 gap-4">
           <button
             type="button"
-            onClick={() => onTrackOrder && onTrackOrder(orderNumber)}
-            className="py-3 px-5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-precision-white text-xs font-bold tracking-wider flex items-center justify-center space-x-2 transition flex-1 sm:flex-initial"
+            onClick={onContinueShopping}
+            className="text-xs text-zinc-500 hover:text-orange-600 dark:hover:text-orange-400 transition flex items-center space-x-1 cursor-pointer"
           >
-            <span>OPEN REAL-TIME TRACKING PORTAL</span>
-            <ArrowRight className="w-4 h-4 text-signal-orange" />
+            <span>← Return to Hardware Catalog</span>
           </button>
+
+          <div className="flex items-center space-x-3">
+            <button
+              type="button"
+              onClick={handlePrintCertificate}
+              className="px-4 py-2.5 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:border-orange-500 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition flex items-center space-x-1.5 cursor-pointer"
+            >
+              <FileText className="w-3.5 h-3.5 text-orange-500" />
+              <span>Spec Sheet (PDF)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleTrack}
+              className="px-5 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm"
+            >
+              <span>Track Orders</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, onOpen
 
           <span className="text-zinc-300 dark:text-zinc-700">|</span>
 
-          {/* Farm Telemetry Quick Modal Trigger */}
+          {/* Crafting Studio Live Status Modal Trigger */}
           <button
             type="button"
             onClick={() => {
@@ -63,10 +63,10 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, onOpen
               setIsFarmModalOpen(true);
             }}
             className="flex items-center space-x-1.5 hover:text-signal-orange transition cursor-pointer text-[10px] font-mono"
-            title="Inspect 34-Node Print Farm Telemetry"
+            title="Look Inside Our Crafting Studio"
           >
             <Cpu className="w-3 h-3 text-signal-orange" />
-            <span>Studio Farm Status: 34 Active Nodes</span>
+            <span>Live Workshop: Crafting Orders • Made in USA</span>
           </button>
         </div>
 
@@ -108,14 +108,14 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, onOpen
           <div>
             <div className="flex items-center space-x-2">
               <span className="font-bold tracking-tight text-lg text-zinc-900 dark:text-white font-sans">
-                FORMGRID
+                SnugDesk
               </span>
               <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-orange-100 text-signal-orange font-mono font-bold dark:bg-orange-950/80">
                 STUDIO
               </span>
             </div>
             <span className="hidden sm:block text-[10px] text-zinc-500 font-sans tracking-wide">
-              Custom Desk Architecture
+              Made to Fit Like a Glove
             </span>
           </div>
         </button>
@@ -161,12 +161,12 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, onOpen
                 onOpenDeskPlanner();
               }}
               className="px-3 py-2 rounded-lg hidden sm:flex items-center space-x-1.5 text-zinc-600 dark:text-zinc-400 hover:text-signal-orange dark:hover:text-signal-orange hover:bg-orange-50/50 dark:hover:bg-zinc-800 font-medium transition"
-              title="Launch Interactive 2D Desk Planner & Workspace Telemetry"
+              title="Launch Interactive Desk Planner & Layout Designer"
             >
               <Grid className="w-3.5 h-3.5 text-signal-orange" />
               <span>Desk Planner</span>
               <span className="text-[9px] px-1 py-0.2 rounded bg-signal-orange/15 text-signal-orange font-mono font-bold border border-signal-orange/30">
-                2D CAD
+                Interactive
               </span>
             </button>
           )}

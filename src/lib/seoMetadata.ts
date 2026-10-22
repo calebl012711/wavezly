@@ -7,16 +7,16 @@ import { Product, ProductType } from '../types';
 import { CustomerReview, SEED_PRODUCTS, SEED_REVIEWS } from '../db/seed';
 
 export const SITE_CONFIG = {
-  name: 'FORMGRID',
-  legalName: 'FORMGRID Industrial Technologies LLC',
-  url: 'https://formgrid.design',
-  canonicalDomain: 'formgrid.design',
-  logoUrl: 'https://formgrid.design/assets/branding/formgrid-logo.svg',
-  ogImageUrl: 'https://formgrid.design/assets/branding/og-preview.png',
-  twitterHandle: '@formgrid',
+  name: 'SnugDesk',
+  legalName: 'SnugDesk Goods Inc.',
+  url: 'https://snugdesk.com',
+  canonicalDomain: 'snugdesk.com',
+  logoUrl: 'https://snugdesk.com/assets/branding/snugdesk-logo.svg',
+  ogImageUrl: 'https://snugdesk.com/assets/products/valet-pro-real.jpg',
+  twitterHandle: '@snugdesk',
   customerServicePhone: '+1-800-367-6474',
   defaultDescription:
-    'Industrial bespoke desktop organizers engineered on-demand via real-time 3D parametric synthesis and rapid domestic hardware fulfillment.',
+    'Custom-crafted desk and drawer organizers made to fit your exact measurements. 100% Snug Fit Guarantee with zero dead space and fast domestic shipping.',
   currency: 'USD',
   countryCode: 'US',
 } as const;

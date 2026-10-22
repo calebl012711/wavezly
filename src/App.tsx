@@ -74,23 +74,23 @@ export const App: React.FC = () => {
     // Synchronize OpenGraph, Twitter, canonical, and indexing robots directives
     if (currentRoute === 'home') {
       updateDocumentMetadata({
-        title: 'FORMGRID | Precision Parametric Desktop Architecture',
+        title: 'SnugDesk | Custom Desk & Drawer Organizers Made to Fit Like a Glove',
         description: SITE_CONFIG.defaultDescription,
         canonicalUrl: origin,
         ogType: 'website',
-        ogTitle: 'FORMGRID | Precision Parametric Desktop Architecture',
+        ogTitle: 'SnugDesk | Custom Desk & Drawer Organizers Made to Fit Like a Glove',
         ogDescription: SITE_CONFIG.defaultDescription,
         ogImage: SITE_CONFIG.ogImageUrl,
-        twitterTitle: 'FORMGRID | Precision Parametric Desktop Architecture',
+        twitterTitle: 'SnugDesk | Custom Desk & Drawer Organizers Made to Fit Like a Glove',
         twitterDescription: SITE_CONFIG.defaultDescription,
         twitterImage: SITE_CONFIG.ogImageUrl,
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       });
     } else if (currentRoute === 'customizer') {
-      const prodTitle = currentProduct ? currentProduct.title : 'Parametric Desktop Hardware';
+      const prodTitle = currentProduct ? currentProduct.title : 'Custom Desk Hardware';
       const prodDesc = currentProduct
-        ? `Configure ${currentProduct.title} to custom sub-millimeter drawer dimensions in real-time 3D WebGL.`
-        : 'Configure custom millimeter desktop organizers in real-time 3D WebGL.';
+        ? `Customize ${currentProduct.title} to your exact drawer measurements in real-time 3D.`
+        : 'Design custom drawer organizers tailored to your exact measurements in real-time 3D.';
       const prodImage = currentProduct?.images?.[0]
         ? currentProduct.images[0].startsWith('http')
           ? currentProduct.images[0]
@@ -101,41 +101,41 @@ export const App: React.FC = () => {
       }`;
 
       updateDocumentMetadata({
-        title: `${prodTitle} // 3D Parametric Studio | FORMGRID`,
+        title: `${prodTitle} // Custom 3D Studio | SnugDesk`,
         description: prodDesc,
         canonicalUrl: customizerCanonical,
         ogType: 'product',
-        ogTitle: `${prodTitle} | Real-Time Parametric Customizer`,
+        ogTitle: `${prodTitle} | Real-Time 3D Customizer`,
         ogDescription: prodDesc,
         ogImage: prodImage,
-        twitterTitle: `${prodTitle} | FORMGRID Studio`,
+        twitterTitle: `${prodTitle} | SnugDesk Studio`,
         twitterDescription: prodDesc,
         twitterImage: prodImage,
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       });
     } else if (currentRoute === 'checkout') {
       updateDocumentMetadata({
-        title: 'Secure Order Dispatch & Split Logistics | FORMGRID',
+        title: 'Secure Checkout | SnugDesk',
         description:
-          'Bifurcated domestic hardware fulfillment checkout for 3D printed components and fast-ship accessories.',
+          'Fast domestic shipping and custom 3D on-demand crafting with 100% Snug Fit Guarantee.',
         canonicalUrl: `${origin}/?route=checkout`,
         ogType: 'website',
         robots: 'noindex, nofollow',
       });
     } else if (currentRoute === 'tracking') {
       updateDocumentMetadata({
-        title: 'Real-Time Order Telemetry & Logistics HUD | FORMGRID',
+        title: 'Real-Time Order Tracking & Delivery Status | SnugDesk',
         description:
-          'Track domestic print farm job queues and USPS Priority fast-ship domestic packages.',
+          'Track your custom workshop craft and USPS Priority fast-ship packages in real time.',
         canonicalUrl: `${origin}/?route=tracking`,
         ogType: 'website',
         robots: 'index, follow, max-image-preview:large',
       });
     } else if (currentRoute === 'success') {
       updateDocumentMetadata({
-        title: 'Order Confirmed // Farm Queued | FORMGRID',
+        title: 'Order Confirmed! Your Custom Order is in Our Workshop | SnugDesk',
         description:
-          'Your bespoke hardware order has been received and queued into the autonomous Bambu farm print pipeline.',
+          'Your custom order has been received and scheduled for made-to-measure crafting.',
         canonicalUrl: `${origin}/?route=success`,
         ogType: 'website',
         robots: 'noindex, nofollow',

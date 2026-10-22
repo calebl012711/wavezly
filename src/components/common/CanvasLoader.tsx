@@ -21,11 +21,11 @@ export const CanvasLoader: React.FC = () => {
     <Html center>
       <div className="flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-6 py-4 rounded-xl border border-surface-border font-mono shadow-2xl text-center space-y-2">
         <Loader2 className="w-5 h-5 text-signal-orange animate-spin" />
-        <div className="text-xs font-semibold text-precision-white tracking-widest uppercase">
-          COMPUTING MANIFOLD MESH
+        <div className="text-xs font-semibold text-white tracking-widest uppercase">
+          PREPARING 3D PREVIEW
         </div>
-        <div className="text-[10px] text-zinc-500">
-          TRIANGULATING CSG // TICK {ticks.toString().padStart(2, '0')}
+        <div className="text-[10px] text-zinc-400">
+          CALIBRATING PRECISION GRID // {ticks.toString().padStart(2, '0')}%
         </div>
       </div>
     </Html>

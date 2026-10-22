@@ -1,13 +1,17 @@
 /**
- * FORMGRID HOME PAGE
- * Complete industrial storefront integrating hero showcase, catalog grid, customer reviews,
- * manufacturing manifesto, and developer API connection console
+ * SNUGDESK CONSUMER HOME PAGE
+ * Complete conversion-focused storefront integrating hero showcase, before & after slider,
+ * 3-step drawer sizing wizard, creator setups gallery, catalog grid, viral UGC reels,
+ * verified reviews, and precision manufacturing manifesto.
  */
 
 import React from 'react';
 import { HeroSection } from '../components/landing/HeroSection';
+import { BeforeAfterSlider } from '../components/landing/BeforeAfterSlider';
+import { ConsumerSizingWizard } from '../components/customizer/ConsumerSizingWizard';
 import { DeskSetupGallery } from '../components/landing/DeskSetupGallery';
 import { ProductGrid } from '../components/landing/ProductGrid';
+import { SocialUGCReels } from '../components/landing/SocialUGCReels';
 import { ManufacturingSpecs } from '../components/landing/ManufacturingSpecs';
 import { CustomerReviewsSection } from '../components/landing/CustomerReviewsSection';
 import { IndustrialManifesto } from '../components/landing/IndustrialManifesto';
@@ -33,7 +37,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   };
 
   return (
-    <div className="min-h-screen space-y-4">
+    <div className="min-h-screen space-y-6">
       {/* 1. Hero Showcase */}
       <HeroSection
         onLaunchStudio={onNavigateToCustomizer}
@@ -41,25 +45,37 @@ export const HomePage: React.FC<HomePageProps> = ({
         onOpenDeskPlanner={onOpenDeskPlanner}
       />
 
-      {/* 2. Curated Creator Workspaces with Interactive Hotspot Pins */}
+      {/* 2. Before vs After Interactive Split Comparison */}
+      <BeforeAfterSlider onOpenCustomizer={onNavigateToCustomizer} />
+
+      {/* 3. Approachable 3-Step Sizing Wizard (IKEA Alex & Tape Measure) */}
+      <ConsumerSizingWizard onCompleteTo3D={onNavigateToCustomizer} />
+
+      {/* 4. Curated Creator Workspaces with Interactive Hotspot Pins */}
       <DeskSetupGallery
         onCustomizeProduct={onCustomizeProduct}
         onNavigateToCustomizer={onNavigateToCustomizer}
       />
 
-      {/* 3. Expanded 10-Product Catalog with 5-Image PDP */}
+      {/* 5. Expanded 10-Product Catalog with 5-Image PDP */}
       <ProductGrid onCustomizeProduct={onCustomizeProduct} />
 
-      {/* 4. Verified Field Reviews & Tolerance Reports */}
+      {/* 6. As Seen on TikTok & Instagram UGC Video Showcase */}
+      <SocialUGCReels
+        onCustomizeProduct={onCustomizeProduct}
+        onNavigateToCustomizer={onNavigateToCustomizer}
+      />
+
+      {/* 7. Verified Field Reviews & Customer Stories */}
       <CustomerReviewsSection />
 
-      {/* 5. Manufacturing Specifications */}
+      {/* 8. Made-in-USA Crafting Workshop Specifications */}
       <ManufacturingSpecs />
 
-      {/* 6. Dieter Rams Manifesto & Zero-Inventory Calculator */}
+      {/* 9. Zero-Waste On-Demand Production Manifesto */}
       <IndustrialManifesto />
 
-      {/* 7. Headless API & Webhook Connection Enclave */}
+      {/* 10. Optional Developer API Enclave */}
       <ApiDeveloperDrawer />
     </div>
   );

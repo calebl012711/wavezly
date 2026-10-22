@@ -763,13 +763,13 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
         <div className="space-y-2">
           {/* CAM Export Action Triggers */}
           <div className="grid grid-cols-2 gap-2 relative">
-            {/* Direct Binary STL Download */}
+            {/* Direct 3D Model STL Download */}
             <button
               type="button"
               onClick={handleExportStl}
               disabled={isExportingStl}
-              className="flex items-center justify-center space-x-1.5 py-2.5 px-2 rounded-lg border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 font-mono text-[11px] font-medium transition disabled:opacity-50"
-              title="Download IEEE 754 Binary STL"
+              className="flex items-center justify-center space-x-1.5 py-2.5 px-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono text-[11px] font-medium transition disabled:opacity-50"
+              title="Download 3D Print File (.STL)"
             >
               {downloadSuccess ? (
                 <>
@@ -778,13 +778,13 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                 </>
               ) : (
                 <>
-                  <Download className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
-                  <span className="truncate">{isExportingStl ? 'SLICING...' : 'EXPORT STL'}</span>
+                  <Download className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />
+                  <span className="truncate">{isExportingStl ? 'PREPARING...' : 'EXPORT .STL'}</span>
                 </>
               )}
             </button>
 
-            {/* Export Slicer Profile (Bambu / Prusa / Klipper) */}
+            {/* Export 3D Print Profiles */}
             <div className="relative">
               <button
                 type="button"
@@ -799,7 +799,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                     ? 'border-signal-orange bg-signal-orange/20 text-signal-orange shadow-glow-orange'
                     : 'border-signal-orange/40 bg-signal-orange/10 hover:bg-signal-orange/20 text-signal-orange'
                 }`}
-                title="Export Slicer Profile (Bambu / Prusa / Klipper)"
+                title="Export 3D Print Settings (Bambu / Prusa / Klipper)"
               >
                 <div className="flex items-center space-x-1.5 truncate">
                   {slicerSuccess ? (

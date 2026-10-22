@@ -278,18 +278,18 @@ export function generateIsoGuaranteeSealSvg(size: number = 160): string {
       <path id="isoBottomArc" d="M 156 90 A 66 66 0 0 1 24 90" fill="none" />
 
       <text font-size="7.5" font-family="ui-monospace, monospace" font-weight="800" letter-spacing="1.8" fill="#000000">
-        <textPath href="#isoTopArc" startOffset="50%" text-anchor="middle">FORMGRID QUALITY CONTROL</textPath>
+        <textPath href="#isoTopArc" startOffset="50%" text-anchor="middle">FORMGRID CRAFTING STUDIO</textPath>
       </text>
-      <text font-size="7.5" font-family="ui-monospace, monospace" font-weight="800" letter-spacing="1.6" fill="#000000">
-        <textPath href="#isoBottomArc" startOffset="50%" text-anchor="middle">★ ISO 2768-m GUARANTEE ★</textPath>
+      <text font-size="7.5" font-family="ui-monospace, monospace" font-weight="800" letter-spacing="1.4" fill="#000000">
+        <textPath href="#isoBottomArc" startOffset="50%" text-anchor="middle">★ 100% PERFECT FIT GUARANTEE ★</textPath>
       </text>
 
       <!-- Center Hexagon Metrology Crest -->
       <polygon points="90,44 118,60 118,92 90,108 62,92 62,60" fill="#f4f4f5" stroke="#000000" stroke-width="1.8"/>
 
-      <text x="90" y="70" font-size="11" font-family="system-ui, sans-serif" font-weight="900" text-anchor="middle" fill="#000000">ISO</text>
-      <text x="90" y="85" font-size="9.5" font-family="ui-monospace, monospace" font-weight="800" text-anchor="middle" fill="#ea580c">2768-m</text>
-      <text x="90" y="98" font-size="6.5" font-family="ui-monospace, monospace" font-weight="700" text-anchor="middle" fill="#52525b">±0.2mm</text>
+      <text x="90" y="70" font-size="10" font-family="system-ui, sans-serif" font-weight="900" text-anchor="middle" fill="#000000">PERFECT</text>
+      <text x="90" y="85" font-size="10" font-family="system-ui, sans-serif" font-weight="900" text-anchor="middle" fill="#ea580c">FIT</text>
+      <text x="90" y="98" font-size="6.5" font-family="ui-monospace, monospace" font-weight="700" text-anchor="middle" fill="#52525b">100% GUARANTEED</text>
 
       <!-- Stamp Bottom Ribbon -->
       <rect x="36" y="122" width="108" height="18" fill="#000000" rx="2" />
@@ -455,13 +455,13 @@ export function resolveProductionSpecOrder(
       totalUsd: total,
     },
     isoGuarantee: {
-      standard: 'DIN EN ISO 2768-1 / ISO 2768-m',
-      toleranceEnvelope: 'Class Medium (±0.10mm to ±0.50mm)',
-      inspectionStatus: 'CONFORMANCE VERIFIED // 100% METROLOGY PASS',
-      qcInspectorId: 'QC-INSPECTOR-402 (AUTOMATED LASER PROFILOMETER)',
-      digitalSignatureHash: `QC-PASS-ISO2768M-${orderNumber}-V8`,
+      standard: '100% Guaranteed Perfect Fit (±0.2mm Precision)',
+      toleranceEnvelope: 'Precision Fit (within ±0.20mm)',
+      inspectionStatus: '100% FIT GUARANTEE // INSPECTION PASSED',
+      qcInspectorId: 'BOISE STUDIO QC-VERIFIED',
+      digitalSignatureHash: `PERFECT-FIT-${orderNumber}-VERIFIED`,
       legalCertificationStatement:
-        'Formgrid Industrial Technologies GmbH certifies that all physical components fabricated under this manifest conform to International Standard ISO 2768-m (General Tolerances for Linear and Angular Dimensions without Individual Tolerance Indications - Class Medium). All digital geometry has been computationally verified for watertight manifold closure prior to print-farm queue release. Any structural discrepancy exceeding standard ISO 2768-m tolerances qualifies for immediate priority re-fabrication under Formgrid Guarantee Clause 4.2.',
+        'Formgrid certifies that all custom components fabricated under this order are guaranteed to fit your exact specified dimensions within ±0.2mm. Every order is crafted on demand in our Boise, Idaho studio workshop and inspected before packaging. If any custom tray does not fit your space or drawer perfectly, it qualifies for an immediate priority recraft at zero cost under the Formgrid 100% Perfect Fit Guarantee.',
     },
   };
 
@@ -1064,7 +1064,7 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
   <!-- ON-SCREEN TOOLBAR (HIDDEN IN ACTUAL PRINT/PDF) -->
   <div class="screen-toolbar">
     <div class="screen-toolbar-title">
-      <span>FORMGRID INDUSTRIAL SPECIFICATION SHEET</span>
+      <span>100% GUARANTEED PERFECT FIT CERTIFICATE & PACKING SLIP</span>
       <span class="badge-live">READY FOR PRINT</span>
     </div>
     <div class="toolbar-actions">
@@ -1085,10 +1085,10 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
       <div class="header-branding">
         <div class="brand-mark">
           <div class="brand-name">FORMGRID</div>
-          <div class="brand-sub">FABRICATION PIPELINE</div>
+          <div class="brand-sub">CRAFTING STUDIO • BOISE, ID</div>
         </div>
-        <div class="doc-title">Production Spec Sheet & Routing Manifest</div>
-        <div class="doc-sub">Automated CAD Slicing Telemetry • Split-Fulfillment Logistics • ISO 2768-m Certification</div>
+        <div class="doc-title">100% Guaranteed Perfect Fit Certificate & Packing Slip</div>
+        <div class="doc-sub">Crafted on Demand in Boise, ID • Split-Fulfillment Logistics • 100% Guaranteed Fit</div>
       </div>
 
       <div class="header-metadata">
@@ -1125,11 +1125,11 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
     </div>
 
     <div class="bifurcation-grid">
-      <!-- PACKAGE A: 3D PRINT FARM QUEUE -->
+      <!-- PACKAGE A: 3D CRAFTING STUDIO -->
       <div class="pipeline-card">
         <div class="pipeline-header">
-          <div class="pipeline-tag">Package A: Made-to-Order Farm Queue</div>
-          <div class="pipeline-status">FARM_QUEUED</div>
+          <div class="pipeline-tag">Package A: Made-to-Order Studio Workshop</div>
+          <div class="pipeline-status">STUDIO_QUEUED</div>
         </div>
         <div class="pipeline-item-name">${packageA.productTitle}</div>
         <table class="data-table">
@@ -1282,7 +1282,7 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
       </tbody>
     </table>
 
-    <!-- SECTION 03: LEGAL ISO 2768-m GUARANTEE SEAL -->
+    <!-- SECTION 03: 100% GUARANTEED PERFECT FIT CERTIFICATE -->
     <div class="iso-guarantee-panel">
       <div class="iso-seal-box">
         ${isoSealSvg}
@@ -1290,23 +1290,21 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
 
       <div class="iso-content">
         <div class="iso-header-badge">${isoGuarantee.inspectionStatus}</div>
-        <div class="iso-headline">ISO 2768-m Legal Dimensional Guarantee</div>
+        <div class="iso-headline">100% Guaranteed Perfect Fit Certificate & Packing Slip</div>
         <p class="iso-text">
           ${isoGuarantee.legalCertificationStatement}
         </p>
 
         <div class="tolerance-pill-table">
-          <div class="tol-pill">Nominal 0.5–3mm: <strong>±0.1mm</strong></div>
-          <div class="tol-pill">Nominal 3–6mm: <strong>±0.1mm</strong></div>
-          <div class="tol-pill">Nominal 6–30mm: <strong>±0.2mm</strong></div>
-          <div class="tol-pill">Nominal 30–120mm: <strong>±0.3mm</strong></div>
-          <div class="tol-pill">Nominal 120–400mm: <strong>±0.5mm</strong></div>
+          <div class="tol-pill">Small Slots (0–30mm): <strong>±0.1mm Exact</strong></div>
+          <div class="tol-pill">Medium Compartments (30–120mm): <strong>±0.2mm Exact</strong></div>
+          <div class="tol-pill">Full Drawer Width (120–400mm): <strong>±0.3mm Flush Fit</strong></div>
         </div>
 
         <div class="iso-signature-row">
-          <span>VERIFIED BY: <strong>${isoGuarantee.qcInspectorId}</strong></span>
-          <span>SIGNATURE HASH: <strong>${isoGuarantee.digitalSignatureHash}</strong></span>
-          <span>STANDARD: <strong>${isoGuarantee.standard}</strong></span>
+          <span>INSPECTED & VERIFIED: <strong>${isoGuarantee.qcInspectorId}</strong></span>
+          <span>CERTIFICATE HASH: <strong>${isoGuarantee.digitalSignatureHash}</strong></span>
+          <span>ASSURANCE: <strong>${isoGuarantee.standard}</strong></span>
         </div>
       </div>
     </div>
@@ -1314,7 +1312,7 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
     <!-- FINANCIALS SUMMARY -->
     <div class="financials-bar">
       <div class="financials-col">
-        <div>PACKAGE A (PRINT FARM FABRICATION): <strong>$${financials.packageAPriceUsd.toFixed(2)}</strong></div>
+        <div>PACKAGE A (CRAFTING STUDIO FABRICATION): <strong>$${financials.packageAPriceUsd.toFixed(2)}</strong></div>
         <div>PACKAGE B (DOMESTIC HARDWARE DISPATCH): <strong>$${financials.packageBPriceUsd.toFixed(2)}</strong></div>
         <div>SPECIALIZED LOGISTICS & DOMESTIC SHIPPING: <strong>$${(financials.farmShippingUsd + financials.domesticShippingUsd).toFixed(2)}</strong></div>
         <div>CURRENCY & TAXES: <strong>USD (UNITED STATES DOLLARS) // ALL FEES INCLUDED</strong></div>
