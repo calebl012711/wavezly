@@ -42,7 +42,7 @@ export const CustomizerPage: React.FC = () => {
 
   const { addCustomItem, openCart } = useCartStore();
 
-  const custom3dProducts = SEED_PRODUCTS.filter((p) => p.type === 'custom_3d');
+  const custom3dProducts = SEED_PRODUCTS.filter((p) => p.type === 'custom_3d' && p.active !== false);
 
   const handleAddToCart = () => {
     const specs = getCustomSpecs();
@@ -79,21 +79,29 @@ export const CustomizerPage: React.FC = () => {
             <span>Sizing Wizard</span>
           </button>
 
-          <div className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 font-sans text-xs font-medium">
+          <div className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 font-sans text-xs font-medium overflow-x-auto max-w-full sm:max-w-xl scrollbar-none gap-1">
             {custom3dProducts.map((prod) => {
               const isSelected = currentProduct.id === prod.id;
+              // Clean short display name
+              const shortTitle = prod.title
+                .replace('SnugDesk ', '')
+                .replace('Modular Desk ', '')
+                .replace('Parametric ', '')
+                .replace('Precision ', '')
+                .replace('Audiophile ', '');
+
               return (
                 <button
                   key={prod.id}
                   type="button"
                   onClick={() => setProduct(prod)}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-all cursor-pointer ${
                     isSelected
                       ? 'bg-white dark:bg-zinc-800 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
                       : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
                   }`}
                 >
-                  {prod.title.split(' ')[0]} {prod.title.split(' ')[1]}
+                  {shortTitle}
                 </button>
               );
             })}

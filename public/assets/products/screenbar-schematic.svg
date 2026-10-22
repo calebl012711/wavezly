@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'JetBrains Mono', monospace;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'Inter', sans-serif;">
   <defs>
     <!-- Background Grid Pattern -->
     <pattern id="grid-screenbar-schematic" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -38,40 +38,34 @@
   </g>
 
   <!-- Header Telemetry Readouts -->
-  <text x="60" y="70" fill="#00e5ff" font-size="12" font-weight="700" letter-spacing="2">FORMGRID ARCHITECTURE // OPTICAL LUMINAIRE</text>
-  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SYSTEM ID: FG-SCREENBAR</text>
+  <text x="60" y="70" fill="#0284c7" font-size="12" font-weight="700" letter-spacing="2">SNUGDESK // GLARE-FREE DESK LIGHT</text>
+  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SKU: SD-SCREENBAR</text>
   <line x1="60" y1="85" x2="1140" y2="85" stroke="#27272a" stroke-width="1"/>
 
   <!-- Product Name Banner -->
   <text x="60" y="125" fill="#f4f4f5" font-size="24" font-weight="800" font-family="'Space Grotesk', sans-serif" letter-spacing="-0.5">ASYMMETRIC DESK SCREENBAR</text>
-  <text x="60" y="148" fill="#a1a1aa" font-size="12" letter-spacing="1">04 // CALIPER TOLERANCE BLUEPRINT</text>
+  <text x="60" y="148" fill="#a1a1aa" font-size="12" letter-spacing="1">04 // PRECISION SIZING SPEC</text>
 
   <!-- ================= VARIANT GRAPHICS ================= -->
   
       <!-- Technical Tolerances & Caliper Blueprint -->
       <g transform="translate(600, 460)">
-        <!-- Engineering Blueprint Lines -->
         <rect x="-320" y="-180" width="640" height="360" fill="none" stroke="#27272a" stroke-width="1"/>
         <circle cx="0" cy="0" r="140" fill="none" stroke="#27272a" stroke-width="1" stroke-dasharray="5,5"/>
 
-        <!-- Digital Caliper Tool Jaws Rendering -->
-        <path d="M -300 -140 L -250 -140 L -250 -30 L -290 -30 Z" fill="#3f3f46"/>
-        <path d="M 300 -140 L 250 -140 L 250 -30 L 290 -30 Z" fill="#3f3f46"/>
-        <line x1="-250" y1="-85" x2="250" y2="-85" stroke="#00e5ff" stroke-width="2"/>
-
         <!-- Digital Caliper HUD Readout -->
-        <rect x="-120" y="-120" width="240" height="70" rx="8" fill="#000000" stroke="#00e5ff" stroke-width="2"/>
-        <text x="0" y="-90" text-anchor="middle" fill="#71717a" font-size="10">DIGITAL GAUGE</text>
-        <text x="0" y="-65" text-anchor="middle" fill="#00e5ff" font-size="22" font-weight="700">± 0.25 MM</text>
+        <rect x="-120" y="-120" width="240" height="70" rx="8" fill="#000000" stroke="#0284c7" stroke-width="2"/>
+        <text x="0" y="-90" text-anchor="middle" fill="#71717a" font-size="10">GUARANTEED FIT SCORE</text>
+        <text x="0" y="-65" text-anchor="middle" fill="#0284c7" font-size="22" font-weight="700">100% SNUG</text>
 
-        <!-- Tolerances Table Card -->
+        <!-- Sizing Highlights -->
         <g transform="translate(-280, 50)" font-size="11" fill="#a1a1aa">
-          <text x="0" y="20">• MIN WALL THICKNESS: 2.40 MM</text>
-          <text x="0" y="45">• MIN FLOOR BASE: 2.00 MM</text>
-          <text x="0" y="70">• TENSILE SHEAR STRENGTH: 48 MPA</text>
-          <text x="320" y="20">• INFILL CORE: 18% GYROID</text>
-          <text x="320" y="45">• ISO 2768-m PASS GUARANTEE</text>
-          <text x="320" y="70">• ZERO BED WARPAGE SPEC</text>
+          <text x="0" y="20">• PRECISION FIT: Zero drawer rattling</text>
+          <text x="0" y="45">• REINFORCED WALLS: Sturdy & drop-proof</text>
+          <text x="0" y="70">• SAFE FOR GEAR: Smooth chamfered rims</text>
+          <text x="320" y="20">• ECO BIOPOLYMER: Zero plastic waste</text>
+          <text x="320" y="45">• 30-DAY FIT GUARANTEE: Free remakes</text>
+          <text x="320" y="70">• CLEAN RESET: Instantly organized</text>
         </g>
       </g>
       
@@ -81,6 +75,6 @@
   <g fill="#71717a" font-size="11">
     <text x="60" y="835">MATERIAL: <tspan fill="#f4f4f5">CNC 6063 ANODIZED ALUMINUM</tspan></text>
     <text x="500" y="835">DIMENSIONS: <tspan fill="#f4f4f5">450 × 92 × 32 MM</tspan></text>
-    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="#00e5ff">US DOMESTIC PRIORITY (2–4D)</tspan></text>
+    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="#0284c7">FAST SHIP IN-STOCK (2–3 DAYS)</tspan></text>
   </g>
 </svg>

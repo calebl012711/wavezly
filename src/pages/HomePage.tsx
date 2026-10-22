@@ -11,6 +11,7 @@ import { BeforeAfterSlider } from '../components/landing/BeforeAfterSlider';
 import { ConsumerSizingWizard } from '../components/customizer/ConsumerSizingWizard';
 import { DeskSetupGallery } from '../components/landing/DeskSetupGallery';
 import { ProductGrid } from '../components/landing/ProductGrid';
+import { InnovationPipeline } from '../components/landing/InnovationPipeline';
 import { SocialUGCReels } from '../components/landing/SocialUGCReels';
 import { ManufacturingSpecs } from '../components/landing/ManufacturingSpecs';
 import { CustomerReviewsSection } from '../components/landing/CustomerReviewsSection';
@@ -57,8 +58,11 @@ export const HomePage: React.FC<HomePageProps> = ({
         onNavigateToCustomizer={onNavigateToCustomizer}
       />
 
-      {/* 5. Expanded 10-Product Catalog with 5-Image PDP */}
+      {/* 5. Expanded 20-Product Catalog with 5-Image PDP */}
       <ProductGrid onCustomizeProduct={onCustomizeProduct} />
+
+      {/* 5.5. Community Innovation Pipeline & Pre-Order Lab */}
+      <InnovationPipeline />
 
       {/* 6. As Seen on TikTok & Instagram UGC Video Showcase */}
       <SocialUGCReels

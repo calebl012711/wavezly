@@ -99,6 +99,9 @@ export interface Product {
   features: string[];
   technicalSpecs: Record<string, string>;
   active: boolean;
+  pipelineStage?: 'prototype' | 'voting' | 'production';
+  communityVotes?: number;
+  badge?: string;
   parametricConstraints?: ParametricConstraints;
   supplierMeta?: SupplierMeta;
   defaultDimensions?: ParametricOrganizerDimensions;

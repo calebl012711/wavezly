@@ -1,8 +1,8 @@
 /**
- * FORMGRID ASSET GENERATION ENGINE
- * Synthesizes 50 high-resolution industrial product images:
+ * SNUGDESK ASSET GENERATION ENGINE
+ * Synthesizes 125 high-resolution product images across all 25 catalog systems:
  * 5 perspectives per product (Hero Perspective, Top CAD, Macro Detail, Caliper Schematic, Lifestyle In-Situ)
- * Aesthetic: Dieter Rams / Teenage Engineering matte black, signal orange, technical telemetry
+ * Aesthetic: Warm minimal consumer design, premium materials, tactile precision
  */
 
 import fs from 'fs';
@@ -29,35 +29,36 @@ interface ProductImageSpec {
 }
 
 const products: ProductImageSpec[] = [
+  // 1-5: Classic Custom 3D Organizers
   {
     slug: 'valet-pro',
     name: 'MODULAR DESK VALET PRO',
     type: 'custom_3d',
     primaryColor: '#18181b',
-    accentColor: '#ff5500',
+    accentColor: '#ea580c',
     materialTag: 'MATTE OBSIDIAN PLA + OPTICAL RESIN',
     dimensionsTag: '160 × 120 × 40 MM',
-    category: 'PARAMETRIC FABRICATION',
+    category: 'MADE TO MEASURE VALET',
   },
   {
     slug: 'drawer-matrix',
     name: 'PARAMETRIC DRAWER MATRIX',
     type: 'custom_3d',
     primaryColor: '#27272a',
-    accentColor: '#ff5500',
-    materialTag: 'HIGH-SHEAR IMPACT PLA',
+    accentColor: '#ea580c',
+    materialTag: 'HIGH-SHEAR IMPACT BIOPOLYMER',
     dimensionsTag: '210 × 150 × 45 MM',
-    category: 'MODULAR STORAGE MATRIX',
+    category: 'CUSTOM DRAWER INSERTS',
   },
   {
     slug: 'cable-anchor',
     name: 'PRECISION CABLE ANCHOR BLOCK',
     type: 'custom_3d',
     primaryColor: '#141416',
-    accentColor: '#ff5500',
-    materialTag: 'DENSE GYROID BALLAST CORE',
+    accentColor: '#ea580c',
+    materialTag: 'DENSE WEIGHTED CORE + SOFT CHANNELS',
     dimensionsTag: '100 × 65 × 28 MM',
-    category: 'CABLE ARCHITECTURE',
+    category: 'CABLE MANAGEMENT',
   },
   {
     slug: 'hex-bit-tray',
@@ -65,56 +66,58 @@ const products: ProductImageSpec[] = [
     type: 'custom_3d',
     primaryColor: '#1c1917',
     accentColor: '#f59e0b',
-    materialTag: 'CARBON FIBER ENFORCED PLA',
+    materialTag: 'CARBON-REINFORCED BIOPOLYMER',
     dimensionsTag: '140 × 90 × 24 MM',
-    category: 'PRECISION TOOLING',
+    category: 'MAKER & TOOL VALET',
   },
   {
     slug: 'headphone-plinth',
     name: 'AUDIOPHILE DAC & IEM PLINTH',
     type: 'custom_3d',
     primaryColor: '#09090b',
-    accentColor: '#00e5ff',
-    materialTag: 'RESONANCE DAMPENED POLYMER',
+    accentColor: '#0284c7',
+    materialTag: 'ACOUSTIC RESONANCE DAMPENED POLYMER',
     dimensionsTag: '220 × 140 × 35 MM',
-    category: 'ACOUSTIC HARDWARE',
+    category: 'AUDIO & MEDIA DOCK',
   },
+
+  // 6-10: Classic Fast-Ship Accessories
   {
     slug: 'screenbar',
     name: 'ASYMMETRIC DESK SCREENBAR',
     type: 'dropship',
     primaryColor: '#18181b',
-    accentColor: '#00e5ff',
+    accentColor: '#0284c7',
     materialTag: 'CNC 6063 ANODIZED ALUMINUM',
     dimensionsTag: '450 × 92 × 32 MM',
-    category: 'OPTICAL LUMINAIRE',
+    category: 'GLARE-FREE DESK LIGHT',
   },
   {
     slug: 'felt-mat',
     name: 'DUAL-SIDED ECO-FELT DESK MAT',
     type: 'dropship',
     primaryColor: '#3f3f46',
-    accentColor: '#a3e635',
-    materialTag: 'RECYCLED MERINO + VEGAN SADDLE',
+    accentColor: '#16a34a',
+    materialTag: 'RECYCLED MERINO + VEGAN SADDLE LEATHER',
     dimensionsTag: '900 × 400 × 4 MM',
-    category: 'DESK SURFACE FOUNDATION',
+    category: 'DESK FOUNDATION MAT',
   },
   {
     slug: 'magnetic-dock',
     name: 'MAGNETIC SILICONE CABLE DOCK',
     type: 'dropship',
     primaryColor: '#18181b',
-    accentColor: '#ff5500',
+    accentColor: '#ea580c',
     materialTag: 'N52 NEODYMIUM + LIQUID SILICONE',
     dimensionsTag: '85 × 20 × 12 MM (4-PK)',
-    category: 'MAGNETIC MANAGEMENT',
+    category: 'MAGNETIC CABLE HOLDER',
   },
   {
     slug: 'laptop-riser',
     name: 'ANODIZED ALUMINUM LAPTOP RISER',
     type: 'dropship',
     primaryColor: '#27272a',
-    accentColor: '#00e5ff',
+    accentColor: '#0284c7',
     materialTag: 'AEROSPACE 6061-T6 ALLOY',
     dimensionsTag: '260 × 225 × 65 MM',
     category: 'ERGONOMIC ELEVATION',
@@ -127,7 +130,163 @@ const products: ProductImageSpec[] = [
     accentColor: '#f59e0b',
     materialTag: 'GRADE 5 BILLET TITANIUM',
     dimensionsTag: '60 × 60 × 30 MM',
-    category: 'MECHANICAL HARDWARE',
+    category: 'MINIMALIST DESK ACCENT',
+  },
+
+  // 11-15: NEW Custom 3D Parametric Goods
+  {
+    slug: 'vanity-matrix',
+    name: 'BEAUTY & SKINCARE VANITY GRID',
+    type: 'custom_3d',
+    primaryColor: '#262626',
+    accentColor: '#f43f5e',
+    materialTag: 'WATERPROOF BIOPOLYMER + SILK LINER',
+    dimensionsTag: '180 × 130 × 50 MM',
+    category: 'BATHROOM & VANITY ORGANIZER',
+  },
+  {
+    slug: 'controller-dock',
+    name: 'DUAL CONTROLLER & REMOTE PLINTH',
+    type: 'custom_3d',
+    primaryColor: '#1f1f23',
+    accentColor: '#8b5cf6',
+    materialTag: 'HEAVY DAMPED BIOPOLYMER',
+    dimensionsTag: '210 × 140 × 65 MM',
+    category: 'GAMING & MEDIA SANCTUARY',
+  },
+  {
+    slug: 'keeb-lube-station',
+    name: 'MECHANICAL SWITCH & MODDER STATION',
+    type: 'custom_3d',
+    primaryColor: '#18181b',
+    accentColor: '#06b6d4',
+    materialTag: 'ANTI-STATIC MATTE POLYMER',
+    dimensionsTag: '195 × 120 × 28 MM',
+    category: 'MECHANICAL KEYBOARD WORKSHOP',
+  },
+  {
+    slug: 'watch-jewelry-caddy',
+    name: 'TIMEPIECE & RING CUSHION CADDY',
+    type: 'custom_3d',
+    primaryColor: '#1c1917',
+    accentColor: '#eab308',
+    materialTag: 'ARCHITECTURAL RESIN + MICROFIBER SADDLE',
+    dimensionsTag: '170 × 110 × 36 MM',
+    category: 'NIGHTSTAND & EDC VALET',
+  },
+  {
+    slug: 'pourover-coffee-tray',
+    name: 'BARISTA ESPRESSO & POUR-OVER VALET',
+    type: 'custom_3d',
+    primaryColor: '#18181b',
+    accentColor: '#b45309',
+    materialTag: 'HEAT-RESISTANT 100°C REINFORCED COMPOSITE',
+    dimensionsTag: '230 × 150 × 42 MM',
+    category: 'SPECIALTY COFFEE STATION',
+  },
+
+  // 16-20: NEW Fast-Ship Accessories (Dropship)
+  {
+    slug: 'desk-vacuum',
+    name: 'MICRO-SUCTION WIRELESS DESK VACUUM',
+    type: 'dropship',
+    primaryColor: '#27272a',
+    accentColor: '#10b981',
+    materialTag: 'HIGH-RPM BRUSHLESS MOTOR + ABS',
+    dimensionsTag: '85 × 85 × 65 MM',
+    category: 'DESK CLEANLINESS & DUSTING',
+  },
+  {
+    slug: 'mag-cable-clips',
+    name: 'MAGNETIC CABLE ANCHOR BEADS (4-PK)',
+    type: 'dropship',
+    primaryColor: '#18181b',
+    accentColor: '#ea580c',
+    materialTag: 'LIQUID SILICONE + NEODYMIUM CORE',
+    dimensionsTag: '22 × 22 × 14 MM',
+    category: 'QUICK-SNAP CABLE RETENTION',
+  },
+  {
+    slug: 'artisan-wrist-rest',
+    name: 'ERGONOMIC MEMORY CLOUD WRIST REST',
+    type: 'dropship',
+    primaryColor: '#3f3f46',
+    accentColor: '#6366f1',
+    materialTag: 'COOLING GEL MEMORY FOAM + SILK LYCRA',
+    dimensionsTag: '360 × 80 × 20 MM',
+    category: 'ERGONOMIC TYPING COMFORT',
+  },
+  {
+    slug: 'ambient-backlight',
+    name: 'MONITOR AMBIENT GLOW LIGHTSTRIP',
+    type: 'dropship',
+    primaryColor: '#18181b',
+    accentColor: '#a855f7',
+    materialTag: 'DIFFUSED SILICONE + CRI 95+ LED',
+    dimensionsTag: '600 × 12 × 5 MM',
+    category: 'CIRCADIAN AMBIENT LIGHTING',
+  },
+  {
+    slug: 'desk-coasters',
+    name: 'SOLID BASALT & CORK COASTER SET (4-PK)',
+    type: 'dropship',
+    primaryColor: '#1c1917',
+    accentColor: '#78716c',
+    materialTag: 'VOLCANIC BASALT + PORTUGUESE CORK',
+    dimensionsTag: '100 × 100 × 10 MM',
+    category: 'NATURAL STONE TABLEWARE',
+  },
+
+  // 21-25: Upcoming Innovation Pipeline Products
+  {
+    slug: 'smart-cable-spine',
+    name: 'ARTICULATED UNDER-DESK CABLE SPINE',
+    type: 'dropship',
+    primaryColor: '#18181b',
+    accentColor: '#ea580c',
+    materialTag: 'MODULAR ABS VERTEBRAE + CAST STEEL BASE',
+    dimensionsTag: '1280 × 65 × 35 MM',
+    category: 'SIT-STAND WIRE MANAGEMENT',
+  },
+  {
+    slug: 'solenoid-key-lock',
+    name: 'BIOMETRIC FINGERPRINT DRAWER MODULE',
+    type: 'custom_3d',
+    primaryColor: '#141416',
+    accentColor: '#0284c7',
+    materialTag: '0.3S CAPACITIVE SENSOR + 3D MOUNT',
+    dimensionsTag: '75 × 50 × 22 MM',
+    category: 'DESK SECURITY & PRIVACY',
+  },
+  {
+    slug: 'under-desk-drawer',
+    name: 'SLIDE-OUT SECRET COMPARTMENT',
+    type: 'custom_3d',
+    primaryColor: '#27272a',
+    accentColor: '#f59e0b',
+    materialTag: 'STEALTH MATTE RAILS + CONCEALED DRAWER',
+    dimensionsTag: '220 × 170 × 45 MM',
+    category: 'CONCEALED UNDER-DESK STORAGE',
+  },
+  {
+    slug: 'acoustic-desk-divider',
+    name: 'ACOUSTIC PET DESK PRIVACY BAFFLE',
+    type: 'dropship',
+    primaryColor: '#3f3f46',
+    accentColor: '#10b981',
+    materialTag: 'HIGH-DENSITY COMPRESSED RECYCLED PET',
+    dimensionsTag: '600 × 400 × 18 MM',
+    category: 'FOCUS & NOISE REDUCTION',
+  },
+  {
+    slug: 'wireless-charging-puck',
+    name: 'INVISIBLE SUB-DESK 15W QI PUCK',
+    type: 'dropship',
+    primaryColor: '#18181b',
+    accentColor: '#3b82f6',
+    materialTag: 'LONG-RANGE INDUCTIVE COIL (32MM RANGE)',
+    dimensionsTag: '110 × 110 × 15 MM',
+    category: 'SUB-SURFACE FAST CHARGING',
   },
 ];
 
@@ -137,15 +296,14 @@ function generateSVG(
 ): string {
   const is3D = p.type === 'custom_3d';
   const variantTitle = {
-    hero: '01 // PERSPECTIVE HERO VIEW',
-    top: '02 // ORTHOGONAL PLAN CAD',
-    detail: '03 // MACRO TEXTURE & CHAMFER',
-    schematic: '04 // CALIPER TOLERANCE BLUEPRINT',
-    lifestyle: '05 // IN-SITU WORKSPACE CONTEXT',
+    hero: '01 // PERSPECTIVE VIEW',
+    top: '02 // TOP-DOWN BLUEPRINT',
+    detail: '03 // MATERIAL & TEXTURE MACRO',
+    schematic: '04 // PRECISION SIZING SPEC',
+    lifestyle: '05 // IN-SITU DESK SETUP',
   }[variant];
 
-  // Common high-tech grid background and Dieter Rams markings
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'JetBrains Mono', monospace;">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'Inter', sans-serif;">
   <defs>
     <!-- Background Grid Pattern -->
     <pattern id="grid-${p.slug}-${variant}" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -185,8 +343,8 @@ function generateSVG(
   </g>
 
   <!-- Header Telemetry Readouts -->
-  <text x="60" y="70" fill="${p.accentColor}" font-size="12" font-weight="700" letter-spacing="2">FORMGRID ARCHITECTURE // ${p.category}</text>
-  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SYSTEM ID: FG-${p.slug.toUpperCase()}</text>
+  <text x="60" y="70" fill="${p.accentColor}" font-size="12" font-weight="700" letter-spacing="2">SNUGDESK // ${p.category}</text>
+  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SKU: SD-${p.slug.toUpperCase()}</text>
   <line x1="60" y1="85" x2="1140" y2="85" stroke="#27272a" stroke-width="1"/>
 
   <!-- Product Name Banner -->
@@ -201,7 +359,7 @@ function generateSVG(
   <g fill="#71717a" font-size="11">
     <text x="60" y="835">MATERIAL: <tspan fill="#f4f4f5">${p.materialTag}</tspan></text>
     <text x="500" y="835">DIMENSIONS: <tspan fill="#f4f4f5">${p.dimensionsTag}</tspan></text>
-    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="${p.accentColor}">${is3D ? 'AUTOMATED 3D PRINT FARM (2–4D)' : 'US DOMESTIC PRIORITY (2–4D)'}</tspan></text>
+    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="${p.accentColor}">${is3D ? 'CUSTOM MADE ON DEMAND (2–4 DAYS)' : 'FAST SHIP IN-STOCK (2–3 DAYS)'}</tspan></text>
   </g>
 </svg>`;
 }
@@ -220,22 +378,18 @@ function renderVariantIllustration(p: ProductImageSpec, variant: string): string
         <polygon points="0,100 280,-40 280,20 0,160" fill="#1e1e22" stroke="#27272a" stroke-width="1.5"/>
 
         <!-- Top Compartment Cavities (Chamfered Dividers) -->
-        <!-- Cavity 1 -->
         <polygon points="-220,-45 -40,-135 -40,-35 -220,55" fill="#0d0d0f" stroke="#3f3f46" stroke-width="1.5"/>
-        <!-- Optional Resin Pool Layer -->
         <polygon points="-210,-40 -50,-120 -50,-40 -210,40" fill="${p.accentColor}" opacity="0.35"/>
         
-        <!-- Cavity 2 -->
         <polygon points="40,-135 220,-45 220,55 40,-35" fill="#0d0d0f" stroke="#3f3f46" stroke-width="1.5"/>
         <polygon points="50,-120 210,-40 210,40 50,-40" fill="${p.accentColor}" opacity="0.2"/>
 
-        <!-- Front Long Cavity -->
         <polygon points="-180,60 180,60 0,135" fill="#0c0c0e" stroke="#3f3f46" stroke-width="1.5"/>
 
-        <!-- High-Tech Axis Coordinates Indicator -->
+        <!-- Precision Center Indicator -->
         <circle cx="0" cy="100" r="4" fill="${p.accentColor}"/>
         <line x1="0" y1="100" x2="60" y2="125" stroke="${p.accentColor}" stroke-width="1.5"/>
-        <text x="70" y="130" fill="${p.accentColor}" font-size="10">X:0 Y:0 Z:0</text>
+        <text x="70" y="130" fill="${p.accentColor}" font-size="10">PERFECT FIT</text>
       </g>
       `;
 
@@ -248,19 +402,19 @@ function renderVariantIllustration(p: ProductImageSpec, variant: string): string
         
         <!-- Internal Grid Compartments -->
         <rect x="-270" y="-160" width="250" height="180" rx="10" ry="10" fill="#09090b" stroke="${p.accentColor}" stroke-width="1.5" stroke-dasharray="2,2"/>
-        <text x="-145" y="-60" text-anchor="middle" fill="#71717a" font-size="12">CHAMBER A1</text>
+        <text x="-145" y="-60" text-anchor="middle" fill="#71717a" font-size="12">COMPARTMENT 01</text>
         
         <rect x="20" y="-160" width="250" height="180" rx="10" ry="10" fill="#09090b" stroke="${p.accentColor}" stroke-width="1.5" stroke-dasharray="2,2"/>
-        <text x="145" y="-60" text-anchor="middle" fill="#71717a" font-size="12">CHAMBER A2</text>
+        <text x="145" y="-60" text-anchor="middle" fill="#71717a" font-size="12">COMPARTMENT 02</text>
         
         <rect x="-270" y="50" width="540" height="110" rx="10" ry="10" fill="#09090b" stroke="#3f3f46" stroke-width="1.5"/>
-        <text x="0" y="110" text-anchor="middle" fill="#71717a" font-size="12">CHAMBER B1 // FULL SPAN EDC</text>
+        <text x="0" y="110" text-anchor="middle" fill="#71717a" font-size="12">WIDE ACCESS TRAY</text>
 
         <!-- Dimension Callout Arrows -->
         <line x1="-300" y1="-215" x2="300" y2="-215" stroke="#71717a" stroke-width="1.5"/>
         <line x1="-300" y1="-225" x2="-300" y2="-205" stroke="#71717a" stroke-width="1.5"/>
         <line x1="300" y1="-225" x2="300" y2="-205" stroke="#71717a" stroke-width="1.5"/>
-        <text x="0" y="-225" text-anchor="middle" fill="#f4f4f5" font-size="12">${p.dimensionsTag.split('×')[0]} mm (EXTERIOR LENGTH)</text>
+        <text x="0" y="-225" text-anchor="middle" fill="#f4f4f5" font-size="12">${p.dimensionsTag.split('×')[0]} mm (TOTAL LENGTH)</text>
 
         <line x1="325" y1="-190" x2="325" y2="190" stroke="#71717a" stroke-width="1.5"/>
         <line x1="315" y1="-190" x2="335" y2="-190" stroke="#71717a" stroke-width="1.5"/>
@@ -288,11 +442,12 @@ function renderVariantIllustration(p: ProductImageSpec, variant: string): string
         <!-- Chamfer Cut Edge Accent -->
         <path d="M -160 -180 L 160 140" stroke="${p.accentColor}" stroke-width="3"/>
         <circle cx="0" cy="-20" r="6" fill="${p.accentColor}"/>
-        
-        <!-- Callout Banner -->
-        <rect x="-180" y="70" width="360" height="60" rx="6" fill="#09090b" stroke="#3f3f46" stroke-width="1.5"/>
-        <text x="0" y="95" text-anchor="middle" fill="#f4f4f5" font-size="12" font-weight="700">0.20MM LAYER STEPPING</text>
-        <text x="0" y="115" text-anchor="middle" fill="#71717a" font-size="10">SUB-MILLIMETER BOND STRENGTH</text>
+
+        <!-- Callout Detail Badge -->
+        <rect x="50" y="-120" width="220" height="70" rx="6" fill="#18181b" stroke="${p.accentColor}" stroke-width="1.5"/>
+        <text x="65" y="-95" fill="${p.accentColor}" font-size="10" font-weight="700">VELVET MATTE FINISH</text>
+        <text x="65" y="-75" fill="#f4f4f5" font-size="12">0.20mm Ultra Detail</text>
+        <text x="65" y="-60" fill="#71717a" font-size="10">Resists fingerprints & scratches</text>
 
         <!-- Reticle Crosshairs -->
         <line x1="-260" y1="0" x2="-230" y2="0" stroke="#71717a" stroke-width="1.5"/>
@@ -306,28 +461,22 @@ function renderVariantIllustration(p: ProductImageSpec, variant: string): string
       return `
       <!-- Technical Tolerances & Caliper Blueprint -->
       <g transform="translate(600, 460)">
-        <!-- Engineering Blueprint Lines -->
         <rect x="-320" y="-180" width="640" height="360" fill="none" stroke="#27272a" stroke-width="1"/>
         <circle cx="0" cy="0" r="140" fill="none" stroke="#27272a" stroke-width="1" stroke-dasharray="5,5"/>
 
-        <!-- Digital Caliper Tool Jaws Rendering -->
-        <path d="M -300 -140 L -250 -140 L -250 -30 L -290 -30 Z" fill="#3f3f46"/>
-        <path d="M 300 -140 L 250 -140 L 250 -30 L 290 -30 Z" fill="#3f3f46"/>
-        <line x1="-250" y1="-85" x2="250" y2="-85" stroke="${p.accentColor}" stroke-width="2"/>
-
         <!-- Digital Caliper HUD Readout -->
         <rect x="-120" y="-120" width="240" height="70" rx="8" fill="#000000" stroke="${p.accentColor}" stroke-width="2"/>
-        <text x="0" y="-90" text-anchor="middle" fill="#71717a" font-size="10">DIGITAL GAUGE</text>
-        <text x="0" y="-65" text-anchor="middle" fill="${p.accentColor}" font-size="22" font-weight="700">± 0.25 MM</text>
+        <text x="0" y="-90" text-anchor="middle" fill="#71717a" font-size="10">GUARANTEED FIT SCORE</text>
+        <text x="0" y="-65" text-anchor="middle" fill="${p.accentColor}" font-size="22" font-weight="700">100% SNUG</text>
 
-        <!-- Tolerances Table Card -->
+        <!-- Sizing Highlights -->
         <g transform="translate(-280, 50)" font-size="11" fill="#a1a1aa">
-          <text x="0" y="20">• MIN WALL THICKNESS: 2.40 MM</text>
-          <text x="0" y="45">• MIN FLOOR BASE: 2.00 MM</text>
-          <text x="0" y="70">• TENSILE SHEAR STRENGTH: 48 MPA</text>
-          <text x="320" y="20">• INFILL CORE: 18% GYROID</text>
-          <text x="320" y="45">• ISO 2768-m PASS GUARANTEE</text>
-          <text x="320" y="70">• ZERO BED WARPAGE SPEC</text>
+          <text x="0" y="20">• PRECISION FIT: Zero drawer rattling</text>
+          <text x="0" y="45">• REINFORCED WALLS: Sturdy & drop-proof</text>
+          <text x="0" y="70">• SAFE FOR GEAR: Smooth chamfered rims</text>
+          <text x="320" y="20">• ECO BIOPOLYMER: Zero plastic waste</text>
+          <text x="320" y="45">• 30-DAY FIT GUARANTEE: Free remakes</text>
+          <text x="320" y="70">• CLEAN RESET: Instantly organized</text>
         </g>
       </g>
       `;
@@ -362,11 +511,11 @@ function renderVariantIllustration(p: ProductImageSpec, variant: string): string
             .join('')}
         </g>
 
-        <!-- Minimalist Machined Brass Pen in Tray -->
+        <!-- Brass Pen / Accessory -->
         <line x1="-240" y1="45" x2="-20" y2="45" stroke="#f59e0b" stroke-width="5" stroke-linecap="round"/>
 
         <!-- Context Stamp -->
-        <text x="380" y="160" text-anchor="end" fill="#52525b" font-size="10">DESKTOP CURATION // FORMGRID V3</text>
+        <text x="380" y="160" text-anchor="end" fill="#52525b" font-size="10">STUDIO DESK CURATION // SNUGDESK</text>
       </g>
       `;
 
@@ -375,7 +524,7 @@ function renderVariantIllustration(p: ProductImageSpec, variant: string): string
   }
 }
 
-console.log('Generating 50 industrial product image assets...');
+console.log('Generating 125 product image assets across 25 products...');
 const variants: Array<'hero' | 'top' | 'detail' | 'schematic' | 'lifestyle'> = [
   'hero',
   'top',

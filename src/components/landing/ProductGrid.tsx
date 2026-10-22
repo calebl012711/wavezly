@@ -33,7 +33,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
   const { addStandardItem } = useCartStore();
   const { setProduct } = useCustomizerStore();
 
-  const filteredProducts = SEED_PRODUCTS.filter((p) => {
+  const activeProducts = SEED_PRODUCTS.filter((p) => p.active !== false);
+  const customCount = activeProducts.filter((p) => p.type === 'custom_3d').length;
+  const dropshipCount = activeProducts.filter((p) => p.type === 'dropship').length;
+  const upcomingCount = SEED_PRODUCTS.filter((p) => p.active === false).length;
+
+  const filteredProducts = activeProducts.filter((p) => {
     if (filter === 'all') return true;
     return p.type === filter;
   });
@@ -70,7 +75,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
         </div>
 
         {/* Consumer Filter Tabs */}
-        <div className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 self-start md:self-auto text-xs font-medium">
+        <div className="flex flex-wrap items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 self-start md:self-auto text-xs font-medium gap-1">
           <button
             type="button"
             onClick={() => {
@@ -83,7 +88,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
             }`}
           >
-            All Products ({SEED_PRODUCTS.length})
+            All Products ({activeProducts.length})
           </button>
 
           <button
@@ -99,7 +104,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
             }`}
           >
             <Box className="w-3.5 h-3.5" />
-            <span>Custom Sized (5)</span>
+            <span>Custom Sized ({customCount})</span>
           </button>
 
           <button
@@ -115,8 +120,17 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
             }`}
           >
             <Truck className="w-3.5 h-3.5" />
-            <span>Fast-Ship (5)</span>
+            <span>Fast-Ship ({dropshipCount})</span>
           </button>
+
+          <a
+            href="#pipeline-section"
+            onClick={() => playClickSound('tick')}
+            className="px-3.5 py-1.5 rounded-lg flex items-center space-x-1.5 text-amber-600 dark:text-amber-400 hover:bg-white/60 dark:hover:bg-zinc-800/60 transition-all cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Upcoming ({upcomingCount})</span>
+          </a>
         </div>
       </div>
 
