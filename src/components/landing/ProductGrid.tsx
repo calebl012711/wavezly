@@ -10,6 +10,7 @@ import { useCartStore } from '../../store/useCartStore';
 import { useCustomizerStore } from '../../store/useCustomizerStore';
 import { ProductDetailModal } from '../pdp/ProductDetailModal';
 import { playClickSound } from '../../lib/soundEffects';
+import { getProductDisplayImage } from '../../lib/productImages';
 import {
   Sliders,
   Plus,
@@ -140,6 +141,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
           const isCustom = product.type === 'custom_3d';
           const isAdded = recentlyAddedId === product.id;
           const heroImage = product.images[0] || '/assets/products/valet-pro-hero.svg';
+          const displayImage = getProductDisplayImage(product.id, heroImage);
 
           return (
             <div
@@ -171,11 +173,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
                 </div>
 
                 {/* Actual Generated Image Render */}
-                <div className="absolute inset-0 flex items-center justify-center p-6">
+                <div className="absolute inset-0 flex items-center justify-center p-4">
                   <img
-                    src={heroImage}
+                    src={displayImage}
                     alt={product.title}
-                    className="w-full h-full object-contain filter group-hover:scale-105 transition-transform duration-300 select-none"
+                    className="w-full h-full object-contain filter group-hover:scale-105 transition-transform duration-300 select-none rounded-xl"
                   />
                 </div>
 

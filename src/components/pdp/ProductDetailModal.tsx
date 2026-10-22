@@ -8,6 +8,7 @@ import { Product } from '../../types';
 import { useCartStore } from '../../store/useCartStore';
 import { useCustomizerStore } from '../../store/useCustomizerStore';
 import { playClickSound } from '../../lib/soundEffects';
+import { getAllProductImages } from '../../lib/productImages';
 import {
   X,
   ChevronLeft,
@@ -106,14 +107,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   if (!product) return null;
 
   const isCustom = product.type === 'custom_3d';
-  const images = product.images.length > 0 ? product.images : ['/assets/products/valet-pro-hero.svg'];
-  const imageLabels = [
-    'Angled View',
-    'Top-Down Layout',
-    'Matte Surface Detail',
-    'Sizing & Measurements',
-    'Desk Setup Example',
-  ];
+  const { images, labels: imageLabels } = getAllProductImages(product);
 
   const handleAction = () => {
     if (isCustom) {

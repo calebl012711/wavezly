@@ -222,7 +222,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
             }`}
           >
             <Sliders className="w-3 h-3" />
-            <span>Extents</span>
+            <span>Dimensions</span>
           </button>
 
           <button
@@ -238,7 +238,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
             }`}
           >
             <Grid className="w-3 h-3" />
-            <span>Topology</span>
+            <span>Layout</span>
           </button>
 
           <button
@@ -254,7 +254,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
             }`}
           >
             <Palette className="w-3 h-3" />
-            <span>Finishes</span>
+            <span>Colors</span>
           </button>
 
           <button
@@ -270,7 +270,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
             }`}
           >
             <Layers className="w-3 h-3" />
-            <span>Inspect</span>
+            <span>Layers</span>
             {(sliceHeight < 100 || explodedOffset > 0) && (
               <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-signal-orange animate-pulse" />
             )}
@@ -289,7 +289,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
             }`}
           >
             <Sparkles className="w-3 h-3" />
-            <span>Presets</span>
+            <span>Styles</span>
           </button>
         </div>
 
@@ -298,46 +298,46 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
           {activeTab === 'dimensions' && (
             <div className="space-y-2.5">
               <DimensionSlider
-                label="Exterior Length (X)"
-                axisTag="X-AXIS"
+                label="Length (Front-to-Back)"
+                axisTag="LENGTH"
                 value={dimensions.length}
                 min={constraints.minLengthMm}
                 max={constraints.maxLengthMm}
                 step={5}
                 onChange={(val) => setDimension('length', val)}
-                description="Longitudinal desk footprint clearance."
+                description="Exact front-to-back sizing to fit your drawer or desk."
               />
 
               <DimensionSlider
-                label="Exterior Width (Z)"
-                axisTag="Z-AXIS"
+                label="Width (Side-to-Side)"
+                axisTag="WIDTH"
                 value={dimensions.width}
                 min={constraints.minWidthMm}
                 max={constraints.maxWidthMm}
                 step={5}
                 onChange={(val) => setDimension('width', val)}
-                description="Transverse depth along your desktop."
+                description="Side-to-side width to eliminate sliding and loose gaps."
               />
 
               <DimensionSlider
-                label="Exterior Height (Y)"
-                axisTag="Y-AXIS"
+                label="Height (Wall Depth)"
+                axisTag="HEIGHT"
                 value={dimensions.height}
                 min={constraints.minHeightMm}
                 max={constraints.maxHeightMm}
                 step={2}
                 onChange={(val) => setDimension('height', val)}
-                description="Total tray elevation & pocket chamber depth."
+                description="Wall height to keep watches, pens, and tools safe."
               />
 
               <DimensionSlider
-                label="Perimeter Wall Thickness"
+                label="Wall Sturdiness"
                 value={dimensions.wallThickness}
                 min={constraints.minWallThicknessMm}
                 max={5.0}
                 step={0.2}
                 onChange={(val) => setDimension('wallThickness', val)}
-                description="Minimum 2.4mm for structural layer shear strength."
+                description="Reinforced perimeter thickness for drop-proof durability."
               />
             </div>
           )}
@@ -345,7 +345,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
           {activeTab === 'grid' && (
             <div className="space-y-2.5">
               <DimensionSlider
-                label="Grid Columns (Length Splits)"
+                label="Columns (Horizontal Compartments)"
                 axisTag="COLS"
                 value={dimensions.cols}
                 min={1}
