@@ -28,9 +28,10 @@ export interface PrintFarmJobResponse {
 export async function dispatchToPrintFarm(
   payload: PrintFarmJobRequest
 ): Promise<PrintFarmJobResponse> {
+  const env = typeof process !== 'undefined' && process.env ? process.env : {};
   const farmEndpoint =
-    process.env.PRINT_FARM_API_ENDPOINT || 'https://api.slant3d.com/v1/jobs';
-  const farmApiKey = process.env.PRINT_FARM_API_KEY || 'test_farm_key';
+    env.PRINT_FARM_API_ENDPOINT || 'https://api.slant3d.com/v1/jobs';
+  const farmApiKey = env.PRINT_FARM_API_KEY || 'test_farm_key';
 
   // Construct standard Slant 3D / Print Farm request body
   const farmPayload = {

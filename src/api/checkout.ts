@@ -8,11 +8,22 @@ import { CartItem, ShippingAddress } from '../types';
 import { calculateSlicingTelemetry } from '../lib/parametricMath';
 import { SEED_PRODUCTS } from '../db/seed';
 
-// Initialize Stripe instance
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder_mock_key';
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2025-02-24.acacia' as any,
-});
+// Initialize Stripe instance safely (server-side only, client-side fallback)
+const stripeSecretKey =
+  typeof process !== 'undefined' && process.env && process.env.STRIPE_SECRET_KEY
+    ? process.env.STRIPE_SECRET_KEY
+    : undefined;
+
+let stripe: Stripe | null = null;
+if (typeof window === 'undefined' && stripeSecretKey && !stripeSecretKey.includes('placeholder')) {
+  try {
+    stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2025-02-24.acacia' as any,
+    });
+  } catch {
+    stripe = null;
+  }
+}
 
 export interface CreateCheckoutSessionRequest {
   items: CartItem[];
@@ -68,7 +79,10 @@ export async function createCheckoutSession(
     .substring(2, 5)
     .toUpperCase()}`;
 
-  const appUrl = process.env.VITE_APP_URL || 'http://localhost:5173';
+  const appUrl =
+    (typeof window !== 'undefined' ? window.location.origin : undefined) ||
+    (typeof process !== 'undefined' && process.env ? process.env.VITE_APP_URL : undefined) ||
+    'http://localhost:5842';
   const resolvedSuccessUrl =
     successUrl || `${appUrl}/success?session_id={CHECKOUT_SESSION_ID}&order_number=${orderNumber}`;
   const resolvedCancelUrl = cancelUrl || `${appUrl}/customizer`;
@@ -153,7 +167,7 @@ export async function createCheckoutSession(
   }
 
   // If live Stripe Key is provided and not test placeholder
-  if (stripeSecretKey && !stripeSecretKey.includes('placeholder')) {
+  if (stripe && stripeSecretKey && !stripeSecretKey.includes('placeholder')) {
     try {
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,

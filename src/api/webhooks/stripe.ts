@@ -7,12 +7,20 @@ import Stripe from 'stripe';
 import { Order, OrderItem, ShippingAddress } from '../../types';
 import { routeOrderFulfillment, FulfillmentDispatchResult } from '../../services/fulfillment/fulfillmentRouter';
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder_mock_key';
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder_secret';
+const env = typeof process !== 'undefined' && process.env ? process.env : {};
+const stripeSecretKey = env.STRIPE_SECRET_KEY || 'sk_test_placeholder_mock_key';
+const webhookSecret = env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder_secret';
 
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2025-02-24.acacia' as any,
-});
+let stripe: Stripe | null = null;
+if (typeof window === 'undefined' && stripeSecretKey && !stripeSecretKey.includes('placeholder')) {
+  try {
+    stripe = new Stripe(stripeSecretKey, {
+      apiVersion: '2025-02-24.acacia' as any,
+    });
+  } catch {
+    stripe = null;
+  }
+}
 
 export interface WebhookProcessingResult {
   received: boolean;
@@ -32,7 +40,7 @@ export async function handleStripeWebhook(
   let event: Stripe.Event;
 
   // 1. Signature Verification
-  if (webhookSecret && !webhookSecret.includes('placeholder')) {
+  if (stripe && webhookSecret && !webhookSecret.includes('placeholder')) {
     try {
       event = stripe.webhooks.constructEvent(rawBody, signatureHeader, webhookSecret);
     } catch (err: any) {

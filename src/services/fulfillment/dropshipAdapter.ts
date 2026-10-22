@@ -62,15 +62,16 @@ export async function dispatchToDropshipSupplier(
     auto_place: true,
   };
 
+  const env = typeof process !== 'undefined' && process.env ? process.env : {};
   const endpoint =
     channel === 'autods'
-      ? process.env.AUTODS_API_ENDPOINT || 'https://api.autods.com/v1/orders'
-      : process.env.DSERS_API_ENDPOINT || 'https://api.dsers.com/v1/orders';
+      ? env.AUTODS_API_ENDPOINT || 'https://api.autods.com/v1/orders'
+      : env.DSERS_API_ENDPOINT || 'https://api.dsers.com/v1/orders';
 
   const apiKey =
     channel === 'autods'
-      ? process.env.AUTODS_API_KEY
-      : process.env.DSERS_API_KEY;
+      ? env.AUTODS_API_KEY
+      : env.DSERS_API_KEY;
 
   if (apiKey && !apiKey.includes('placeholder')) {
     try {

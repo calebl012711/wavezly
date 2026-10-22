@@ -22,8 +22,9 @@ export async function uploadStlArtifact(
   const filename = `part_${partIndex}_${Date.now()}.stl`;
   const storagePath = `orders/${orderId}/${filename}`;
 
-  const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const env = typeof process !== 'undefined' && process.env ? process.env : {};
+  const supabaseUrl = env.VITE_SUPABASE_URL || env.SUPABASE_URL;
+  const supabaseKey = env.SUPABASE_SERVICE_ROLE_KEY || env.VITE_SUPABASE_ANON_KEY;
 
   const byteLength =
     stlBlobOrBuffer instanceof Blob
