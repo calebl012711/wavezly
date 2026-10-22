@@ -40,7 +40,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({
           Track Your Orders
         </h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-          Enter your Formgrid order number to monitor made-to-order 3D fabrication and domestic courier transit in real-time.
+          Enter your SnugFit order number to monitor made-to-order 3D fabrication and domestic courier transit in real-time.
         </p>
 
         {/* Input Bar */}

@@ -1,11 +1,12 @@
 /**
- * FORMGRID CONSUMER LUXURY HERO SECTION
- * Prioritized Light Mode, warm editorial typography, consumer benefits, and interactive 3D preview
+ * SNUGFIT CONSUMER HERO SECTION
+ * Clean, punchy, un-cluttered, consumer-friendly hero showcasing custom organizers
+ * for every room in the home: Kitchen, Vanity, Bedside, Living Room, and Workspace.
  */
 
-import React from 'react';
-import { LiveShowcase } from './LiveShowcase';
-import { ArrowRight, Sliders, ShoppingBag, CheckCircle2, ShieldCheck, Sparkles, Star, Grid } from 'lucide-react';
+import React, { useState } from 'react';
+import { LiveShowcase, RoomPresetKey, ROOM_PRESETS } from './LiveShowcase';
+import { ArrowRight, Sliders, ShoppingBag, ShieldCheck, CheckCircle2, Star, Sparkles } from 'lucide-react';
 import { playClickSound } from '../../lib/soundEffects';
 
 interface HeroSectionProps {
@@ -17,70 +18,87 @@ interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onLaunchStudio,
   onExploreCatalog,
-  onOpenDeskPlanner,
 }) => {
-  return (
-    <section className="relative pt-8 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-      {/* Subtle Warm Porcelain Grid Pattern */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e4e4e7_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:24px_24px] opacity-70" />
+  const [selectedRoom, setSelectedRoom] = useState<RoomPresetKey>('kitchen');
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        {/* Left Column: Consumer Luxury Editorial Copy */}
-        <div className="lg:col-span-6 space-y-6">
-          {/* Trust Badge */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/50 text-xs font-sans text-orange-800 dark:text-orange-300 shadow-sm">
+  const handleRoomSelect = (roomKey: RoomPresetKey) => {
+    setSelectedRoom(roomKey);
+  };
+
+  return (
+    <section className="relative pt-6 sm:pt-10 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      {/* Background Soft Texture */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e4e4e7_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:28px_28px] opacity-60" />
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Left Column: Clear, Non-Wordy Consumer Headline & CTA */}
+        <div className="lg:col-span-6 space-y-5 sm:space-y-6">
+          {/* Top Friendly Badge */}
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/90 dark:border-orange-800/60 text-xs font-sans text-orange-800 dark:text-orange-300 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-signal-orange animate-pulse" />
-            <span className="font-semibold tracking-wide">PRECISION DESK GOODS</span>
+            <span className="font-semibold tracking-wide">MADE TO MEASURE FOR YOUR HOME</span>
             <span className="text-orange-300 dark:text-orange-700">•</span>
-            <span>MADE TO ORDER IN 48 HOURS</span>
+            <span>SHIPS IN 48 HOURS</span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.08] font-sans">
-            The perfect desk, made to your{' '}
+          {/* Main Headline: Bold, Direct, Not Narrow */}
+          <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.1] font-sans">
+            Custom organizers made to fit{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-600">
-              exact millimeters.
+              every space in your home.
             </span>
           </h1>
 
-          {/* Consumer Value Proposition */}
+          {/* Clear Subtitle: Exactly 1 Friendly Sentence */}
           <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-300 font-normal leading-relaxed">
-            Eliminate drawer clutter forever. Custom 3D-crafted trays tailored to your workspace down to the millimeter, paired with curated studio accessories and fast domestic delivery.
+            Stop buying bins that slide around. Design custom-sized organizers for your kitchen, vanity, bedside, and workspace—or shop ready-to-ship essentials.
           </p>
 
-          {/* Consumer Benefit Pills */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs text-zinc-700 dark:text-zinc-300">
-            <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span className="font-medium">Tailored Drawer Fit (Zero Dead Space)</span>
+          {/* Interactive Room Quick-Pills: Proves it's for the WHOLE home */}
+          <div className="space-y-2 pt-1">
+            <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
+              <span>Choose Your Space:</span>
             </div>
-            <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span className="font-medium">Velveteen Matte Finish</span>
-            </div>
-            <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
-              <Sparkles className="w-4 h-4 text-orange-500 flex-shrink-0" />
-              <span className="font-medium">Whisper-Quiet Base Inlay</span>
-            </div>
-            <div className="flex items-center space-x-2.5 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 shadow-sm">
-              <ShieldCheck className="w-4 h-4 text-sky-600 flex-shrink-0" />
-              <span className="font-medium">100% Snug-Fit Guarantee</span>
+            <div className="flex flex-wrap gap-2">
+              {(Object.keys(ROOM_PRESETS) as RoomPresetKey[]).map((key) => {
+                const preset = ROOM_PRESETS[key];
+                const isSelected = selectedRoom === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => {
+                      playClickSound('snap');
+                      handleRoomSelect(key);
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-medium flex items-center space-x-1.5 transition cursor-pointer border ${
+                      isSelected
+                        ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border-zinc-900 dark:border-white shadow-sm scale-102'
+                        : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-orange-300 hover:bg-orange-50/40'
+                    }`}
+                  >
+                    <span>{preset.emoji}</span>
+                    <span>{preset.name}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-3.5 pt-2">
             <button
               type="button"
               onClick={() => {
                 playClickSound('snap');
                 onLaunchStudio();
               }}
-              className="py-3.5 px-6 rounded-xl bg-signal-orange hover:bg-orange-600 text-white font-sans font-semibold text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
+              className="py-3.5 px-6 rounded-xl bg-signal-orange hover:bg-orange-600 text-white font-sans font-semibold text-sm tracking-wide flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transition cursor-pointer"
             >
               <Sliders className="w-4 h-4" />
-              <span>Customize Your Tray</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
+              <span>Customize Any Space</span>
+              <ArrowRight className="w-4 h-4 ml-0.5" />
             </button>
 
             <button
@@ -89,64 +107,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 playClickSound('tick');
                 onExploreCatalog();
               }}
-              className="py-3.5 px-6 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white font-sans font-medium text-sm tracking-wide flex items-center justify-center space-x-2 shadow-sm transition-all cursor-pointer"
+              className="py-3.5 px-6 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white font-sans font-medium text-sm tracking-wide flex items-center justify-center space-x-2 shadow-xs transition cursor-pointer"
             >
               <ShoppingBag className="w-4 h-4 text-zinc-500" />
-              <span>Explore Collection</span>
+              <span>Shop All Goods</span>
             </button>
           </div>
 
-          {/* Spatial Desk Planner Hero Banner Link */}
-          {onOpenDeskPlanner && (
-            <div
-              onClick={() => {
-                playClickSound('snap');
-                onOpenDeskPlanner();
-              }}
-              className="p-3.5 rounded-xl bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-transparent border border-orange-300/40 dark:border-orange-800/40 flex items-center justify-between cursor-pointer hover:border-signal-orange transition-all group shadow-xs"
-            >
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-lg bg-signal-orange text-white flex items-center justify-center font-bold shadow-xs">
-                  <Grid className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="font-semibold text-xs text-zinc-900 dark:text-white group-hover:text-signal-orange transition-colors">
-                      Interactive 2D Desk Planner
-                    </span>
-                    <span className="text-[9px] px-1.5 py-0.2 rounded bg-signal-orange/15 text-signal-orange font-mono font-bold">
-                      NEW CAD
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                    Arrange modular trays, check clearance & order your custom bundle in 1 click
-                  </p>
-                </div>
+          {/* Consumer Trust Strip */}
+          <div className="pt-3 border-t border-zinc-200/80 dark:border-zinc-800/80 grid grid-cols-3 gap-2 text-center sm:text-left text-xs text-zinc-600 dark:text-zinc-400">
+            <div className="flex items-center space-x-1.5 justify-center sm:justify-start">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <span className="font-medium text-zinc-800 dark:text-zinc-200">100% Fit Guarantee</span>
+            </div>
+            <div className="flex items-center space-x-1.5 justify-center sm:justify-start">
+              <CheckCircle2 className="w-4 h-4 text-orange-500 flex-shrink-0" />
+              <span className="font-medium text-zinc-800 dark:text-zinc-200">Made in USA</span>
+            </div>
+            <div className="flex items-center space-x-1.5 justify-center sm:justify-start">
+              <div className="flex items-center text-amber-500">
+                <Star className="w-3.5 h-3.5 fill-current" />
               </div>
-              <ArrowRight className="w-4 h-4 text-signal-orange group-hover:translate-x-1 transition-transform" />
+              <span className="font-medium text-zinc-800 dark:text-zinc-200">4.9/5 Rating</span>
             </div>
-          )}
-
-          {/* Social Proof Bar */}
-          <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex flex-wrap items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-            <div className="flex items-center space-x-1 text-amber-500">
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <span className="font-semibold text-zinc-800 dark:text-zinc-200 ml-1">4.9/5</span>
-            </div>
-            <span>•</span>
-            <span>Over 1,840+ workspaces organized</span>
-            <span>•</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">Free US shipping over $60</span>
           </div>
         </div>
 
-        {/* Right Column: Live Interactive 3D Model with Light Studio Styling */}
+        {/* Right Column: Live Interactive 3D Model that dynamically reflects selected room */}
         <div className="lg:col-span-6">
-          <LiveShowcase />
+          <LiveShowcase
+            activeRoom={selectedRoom}
+            onSelectRoom={handleRoomSelect}
+          />
         </div>
       </div>
     </section>

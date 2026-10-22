@@ -193,7 +193,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
         // Cache order details in localStorage for client-side invoice and tracking specs
         try {
           localStorage.setItem(
-            'formgrid-last-order',
+            'snugfit-last-order',
             JSON.stringify({
               orderNumber: response.orderNumber,
               items: orderItems.map(({ stlBlob, ...rest }) => rest),
@@ -1067,7 +1067,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/80 dark:border-zinc-700/60 space-y-1.5 text-[11px] text-zinc-500">
                 <div className="flex items-center space-x-1.5 text-zinc-900 dark:text-zinc-200 font-semibold">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Backed by Formgrid Metrology Warranty</span>
+                  <span>Backed by SnugFit Metrology Warranty</span>
                 </div>
                 <p className="leading-snug">
                   Every order includes the printable ISO 2768-m Guaranteed Fit Certificate & Spec Sheet directly after checkout.

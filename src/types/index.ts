@@ -94,6 +94,7 @@ export interface Product {
   subtitle?: string;
   description: string;
   type: ProductType;
+  category?: 'kitchen' | 'vanity' | 'bedside' | 'living' | 'workspace';
   basePrice: number; // Base USD price
   images: string[];
   features: string[];

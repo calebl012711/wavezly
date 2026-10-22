@@ -1,6 +1,7 @@
 /**
- * FORMGRID CONSUMER PRODUCT CATALOG & DUAL FULFILLMENT GRID
- * Prioritized Light Mode, luxury DTC product cards, 5-view perspective inspector, and bag quick-add
+ * SNUGFIT CONSUMER PRODUCT CATALOG & DUAL FULFILLMENT GRID
+ * Filterable across all consumer spaces: Kitchen & Coffee, Vanity & Bath,
+ * Bedside & Entryway, Living & Media, Workspace, and Made-to-Measure 3D.
  */
 
 import React, { useState } from 'react';
@@ -15,8 +16,6 @@ import {
   Sliders,
   Plus,
   Check,
-  Star,
-  Eye,
   Sparkles,
   Truck,
   Box,
@@ -26,8 +25,18 @@ interface ProductGridProps {
   onCustomizeProduct: (product: Product) => void;
 }
 
+type CatalogCategoryFilter =
+  | 'all'
+  | 'kitchen'
+  | 'vanity'
+  | 'bedside'
+  | 'living'
+  | 'workspace'
+  | 'custom_3d'
+  | 'dropship';
+
 export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) => {
-  const [filter, setFilter] = useState<'all' | 'custom_3d' | 'dropship'>('all');
+  const [filter, setFilter] = useState<CatalogCategoryFilter>('all');
   const [recentlyAddedId, setRecentlyAddedId] = useState<string | null>(null);
   const [selectedProductForModal, setSelectedProductForModal] = useState<Product | null>(null);
 
@@ -35,13 +44,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
   const { setProduct } = useCustomizerStore();
 
   const activeProducts = SEED_PRODUCTS.filter((p) => p.active !== false);
-  const customCount = activeProducts.filter((p) => p.type === 'custom_3d').length;
-  const dropshipCount = activeProducts.filter((p) => p.type === 'dropship').length;
-  const upcomingCount = SEED_PRODUCTS.filter((p) => p.active === false).length;
 
   const filteredProducts = activeProducts.filter((p) => {
     if (filter === 'all') return true;
-    return p.type === filter;
+    if (filter === 'custom_3d') return p.type === 'custom_3d';
+    if (filter === 'dropship') return p.type === 'dropship';
+    return p.category === filter;
   });
 
   const handleCustomize = (product: Product) => {
@@ -58,90 +66,71 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
     setTimeout(() => setRecentlyAddedId(null), 2500);
   };
 
+  const categories: { id: CatalogCategoryFilter; label: string; emoji?: string; count?: number }[] = [
+    { id: 'all', label: 'All Goods', emoji: '✨', count: activeProducts.length },
+    { id: 'kitchen', label: 'Kitchen & Coffee', emoji: '🍳' },
+    { id: 'vanity', label: 'Vanity & Bath', emoji: '💄' },
+    { id: 'bedside', label: 'Bedside & Entry', emoji: '🌙' },
+    { id: 'living', label: 'Living & Media', emoji: '🛋️' },
+    { id: 'workspace', label: 'Desk & Work', emoji: '🖥️' },
+    { id: 'custom_3d', label: 'Custom 3D Fit', emoji: '📐' },
+    { id: 'dropship', label: 'Fast-Ship', emoji: '📦' },
+  ];
+
   return (
-    <section id="catalog-section" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Catalog Header & Filter Tabs */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-5 border-b border-zinc-200 dark:border-zinc-800 gap-4">
+    <section id="catalog-section" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Catalog Header & Room Filter Tabs */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-5 border-b border-zinc-200 dark:border-zinc-800 gap-4">
         <div>
           <div className="inline-flex items-center space-x-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 uppercase tracking-wider mb-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>STUDIO COLLECTION</span>
+            <span>WHOLE-HOME COLLECTION</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white font-sans">
-            Curated Desk Modules & Studio Accessories
+            Organizers & Goods for Every Room
           </h2>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1.5 max-w-2xl">
-            Custom-sized 3D organizers made to your drawer’s exact millimeter, paired with instant-ship studio accessories.
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-2xl">
+            Custom-made 3D organizers tailored down to your exact millimeters, paired with fast-shipping home essentials.
           </p>
         </div>
 
-        {/* Consumer Filter Tabs */}
+        {/* Room Category Tabs */}
         <div className="flex flex-wrap items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 self-start md:self-auto text-xs font-medium gap-1">
-          <button
-            type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setFilter('all');
-            }}
-            className={`px-3.5 py-1.5 rounded-lg transition-all cursor-pointer ${
-              filter === 'all'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-sm font-semibold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
-            }`}
-          >
-            All Products ({activeProducts.length})
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setFilter('custom_3d');
-            }}
-            className={`px-3.5 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all cursor-pointer ${
-              filter === 'custom_3d'
-                ? 'bg-white dark:bg-zinc-800 text-orange-600 dark:text-orange-400 shadow-sm font-semibold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
-            }`}
-          >
-            <Box className="w-3.5 h-3.5" />
-            <span>Custom Sized ({customCount})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setFilter('dropship');
-            }}
-            className={`px-3.5 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all cursor-pointer ${
-              filter === 'dropship'
-                ? 'bg-white dark:bg-zinc-800 text-sky-600 dark:text-sky-400 shadow-sm font-semibold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
-            }`}
-          >
-            <Truck className="w-3.5 h-3.5" />
-            <span>Fast-Ship ({dropshipCount})</span>
-          </button>
-
-          <a
-            href="#pipeline-section"
-            onClick={() => playClickSound('tick')}
-            className="px-3.5 py-1.5 rounded-lg flex items-center space-x-1.5 text-amber-600 dark:text-amber-400 hover:bg-white/60 dark:hover:bg-zinc-800/60 transition-all cursor-pointer"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Upcoming ({upcomingCount})</span>
-          </a>
+          {categories.map((cat) => {
+            const isSelected = filter === cat.id;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => {
+                  playClickSound('snap');
+                  setFilter(cat.id);
+                }}
+                className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-950 dark:text-white shadow-xs font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
+                }`}
+              >
+                {cat.emoji && <span>{cat.emoji}</span>}
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Product Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
         {filteredProducts.map((product) => {
           const isCustom = product.type === 'custom_3d';
           const isAdded = recentlyAddedId === product.id;
           const heroImage = product.images[0] || '/assets/products/valet-pro-hero.svg';
           const displayImage = getProductDisplayImage(product.id, heroImage);
+
+          const roomLabel = product.category
+            ? product.category.charAt(0).toUpperCase() + product.category.slice(1)
+            : 'Home';
 
           return (
             <div
@@ -150,26 +139,26 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
                 playClickSound('tick');
                 setSelectedProductForModal(product);
               }}
-              className="group relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer"
+              className="group relative bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-lg transition-all duration-200 cursor-pointer"
             >
-              {/* Product Visual Container with 5-image Indicator */}
+              {/* Product Visual Container */}
               <div className="relative h-60 bg-gradient-to-b from-[#fbfbfd] to-[#f4f4f7] dark:from-[#141418] dark:to-background p-4 flex flex-col justify-between border-b border-zinc-100 dark:border-zinc-800/80 overflow-hidden">
                 <div className="flex items-center justify-between z-10">
+                  <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-zinc-900/5 dark:bg-white/10 text-[11px] text-zinc-700 dark:text-zinc-300 font-medium border border-zinc-200/60 dark:border-zinc-700/60">
+                    <span>{roomLabel}</span>
+                  </span>
+
                   {isCustom ? (
-                    <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/50 text-[11px] text-orange-700 dark:text-orange-300 font-medium">
+                    <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/50 text-[11px] text-orange-700 dark:text-orange-300 font-medium">
                       <Box className="w-3 h-3" />
                       <span>Custom Fit</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/50 text-[11px] text-sky-700 dark:text-sky-300 font-medium">
+                    <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-sky-50 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/50 text-[11px] text-sky-700 dark:text-sky-300 font-medium">
                       <Truck className="w-3 h-3" />
-                      <span>Ships in 24h</span>
+                      <span>In Stock</span>
                     </span>
                   )}
-
-                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 bg-white/90 dark:bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center gap-1 font-medium shadow-xs">
-                    <Eye className="w-3 h-3" /> 5 Perspectives
-                  </span>
                 </div>
 
                 {/* Actual Generated Image Render */}
@@ -181,60 +170,35 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
                   />
                 </div>
 
-                {/* Bottom Spec Snapshot */}
-                <div className="z-10 text-[11px] text-zinc-600 dark:text-zinc-400 bg-white/90 dark:bg-black/70 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 self-start font-medium shadow-xs">
+                {/* Bottom Snapshot Badge */}
+                <div className="z-10 text-[11px] text-zinc-600 dark:text-zinc-400 bg-white/90 dark:bg-black/70 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-zinc-200 dark:border-zinc-800 self-start font-medium shadow-xs">
                   {isCustom ? (
-                    <span>±0.25mm Fit • Made in USA</span>
+                    <span>Guaranteed Fit • Made in USA</span>
                   ) : (
-                    <span>Domestic Transit • 2–4 Days</span>
+                    <span>Fast Delivery • 2–4 Days</span>
                   )}
                 </div>
               </div>
 
               {/* Product Info Body */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-3.5">
                 <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="text-base font-semibold text-zinc-950 dark:text-white group-hover:text-signal-orange transition-colors">
-                      {product.title}
-                    </h3>
-                    <div className="flex items-center space-x-1 text-amber-500 text-xs">
-                      <Star className="w-3 h-3 fill-current" />
-                      <span className="font-semibold text-zinc-700 dark:text-zinc-300">4.9</span>
-                    </div>
-                  </div>
-
-                  {product.subtitle && (
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-1">
-                      {product.subtitle}
-                    </p>
-                  )}
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300 mt-2 line-clamp-2 leading-relaxed font-sans">
-                    {product.description}
+                  <h3 className="text-base font-semibold text-zinc-950 dark:text-white group-hover:text-signal-orange transition-colors">
+                    {product.title}
+                  </h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 mt-1 leading-relaxed">
+                    {product.subtitle || product.description}
                   </p>
                 </div>
 
-                {/* Highlights */}
-                <div className="flex flex-wrap gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400">
-                  {Object.entries(product.technicalSpecs).slice(0, 3).map(([key, val]) => (
-                    <span
-                      key={key}
-                      className="px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/70 dark:border-zinc-700/60 font-medium"
-                    >
-                      {val}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Pricing & Action Button */}
-                <div className="pt-3.5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                {/* Price and Action Row */}
+                <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-zinc-500 uppercase tracking-wider block font-medium">
-                      {isCustom ? 'Crafted From' : 'Price'}
+                    <span className="text-xs text-zinc-400 block">
+                      {isCustom ? 'Starts at' : 'Price'}
                     </span>
-                    <span className="text-lg font-bold text-zinc-950 dark:text-white">
-                      ${product.basePrice.toFixed(2)}{' '}
-                      <span className="text-xs text-zinc-500 font-normal">USD</span>
+                    <span className="text-lg font-bold text-zinc-900 dark:text-white font-sans">
+                      ${product.basePrice.toFixed(2)}
                     </span>
                   </div>
 
@@ -245,29 +209,29 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
                         e.stopPropagation();
                         handleCustomize(product);
                       }}
-                      className="flex items-center space-x-1.5 py-2.5 px-4 rounded-xl bg-signal-orange hover:bg-orange-600 text-white font-sans text-xs font-semibold shadow-sm hover:shadow-md transition cursor-pointer"
+                      className="px-4 py-2 rounded-xl bg-signal-orange hover:bg-orange-600 text-white text-xs font-semibold tracking-wide flex items-center space-x-1.5 shadow-xs transition cursor-pointer"
                     >
                       <Sliders className="w-3.5 h-3.5" />
-                      <span>Customize Fit</span>
+                      <span>Customize</span>
                     </button>
                   ) : (
                     <button
                       type="button"
                       onClick={(e) => handleQuickAddDropship(e, product)}
-                      className={`flex items-center space-x-1.5 py-2.5 px-4 rounded-xl border text-xs font-medium transition cursor-pointer ${
+                      className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wide flex items-center space-x-1.5 transition cursor-pointer ${
                         isAdded
-                          ? 'border-emerald-300 text-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300'
-                          : 'border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white shadow-xs'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 shadow-xs'
                       }`}
                     >
                       {isAdded ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Added to Bag</span>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Added!</span>
                         </>
                       ) : (
                         <>
-                          <Plus className="w-3.5 h-3.5 text-zinc-500" />
+                          <Plus className="w-3.5 h-3.5" />
                           <span>Add to Bag</span>
                         </>
                       )}
@@ -280,12 +244,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
         })}
       </div>
 
-      {/* Interactive Product Detail Modal */}
-      <ProductDetailModal
-        product={selectedProductForModal}
-        onClose={() => setSelectedProductForModal(null)}
-        onLaunchCustomizer={(p) => onCustomizeProduct(p)}
-      />
+      {/* Product Detail Modal */}
+      {selectedProductForModal && (
+        <ProductDetailModal
+          product={selectedProductForModal}
+          onClose={() => setSelectedProductForModal(null)}
+          onLaunchCustomizer={handleCustomize}
+        />
+      )}
     </section>
   );
 };

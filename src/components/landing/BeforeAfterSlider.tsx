@@ -163,14 +163,13 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         <div>
           <div className="inline-flex items-center space-x-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 uppercase tracking-wider mb-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>VISUAL TRANSFORMATION ENGINE</span>
+            <span>VISUAL HOME TRANSFORMATION</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white">
-            From Drawer Chaos to Millimeter Calm
+            From Everyday Clutter to Millimeter Calm
           </h2>
           <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1.5 max-w-2xl leading-relaxed">
-            Drag the tactile split-screen handle to experience the transition from a rattling, tangled drawer
-            to custom velvet-matte compartmentalization engineered to your exact millimeter dimensions.
+            Drag the slider to see how custom organizers turn messy drawers across kitchens, vanities, and bedrooms into calm, glove-like storage.
           </p>
         </div>
 
@@ -254,7 +253,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
           onKeyDown={handleKeyDown}
           tabIndex={0}
           role="slider"
-          aria-label="Comparison slider between chaotic drawer and organized Formgrid custom tray"
+          aria-label="Comparison slider between chaotic drawer and organized SnugFit custom tray"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={sliderPos}
@@ -462,7 +461,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
               clipPath: `inset(0 0 0 ${sliderPos}%)`,
             }}
           >
-            {/* Drawer Interior Backdrop: Formgrid warm light porcelain modular tray architecture */}
+            {/* Drawer Interior Backdrop: SnugFit warm light porcelain modular tray architecture */}
             <div className="absolute inset-0 bg-[#f4f4f7] dark:bg-[#121215] overflow-hidden">
               {/* Precision Millimeter Grid Background */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:20px_20px] opacity-40" />

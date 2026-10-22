@@ -170,7 +170,7 @@ export const App: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-[#fafafc] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 selection:bg-signal-orange selection:text-white transition-colors">
       {/* Schema.org In-DOM JSON-LD Script Tag */}
       <script
-        id="formgrid-schema-vdom"
+        id="snugfit-schema-vdom"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(activeSchemaGraph) }}
       />
@@ -191,7 +191,7 @@ export const App: React.FC = () => {
 
       {/* Main Viewport Enclave */}
       <main className="flex-1">
-        <ErrorBoundary fallbackTitle="Formgrid Viewport Recovery">
+        <ErrorBoundary fallbackTitle="SnugFit Viewport Recovery">
           <Suspense
             fallback={
               <div className="min-h-[500px] flex items-center justify-center font-mono text-xs text-zinc-500 space-x-2">

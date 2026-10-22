@@ -318,7 +318,7 @@ export function resolveProductionSpecOrder(
 
   if (typeof window !== 'undefined') {
     try {
-      const lastOrderRaw = localStorage.getItem('formgrid-last-order');
+      const lastOrderRaw = localStorage.getItem('snugfit-last-order');
       if (lastOrderRaw) {
         const parsed = JSON.parse(lastOrderRaw);
         if (parsed.items && Array.isArray(parsed.items)) {
@@ -461,7 +461,7 @@ export function resolveProductionSpecOrder(
       qcInspectorId: 'BOISE STUDIO QC-VERIFIED',
       digitalSignatureHash: `PERFECT-FIT-${orderNumber}-VERIFIED`,
       legalCertificationStatement:
-        'Formgrid certifies that all custom components fabricated under this order are guaranteed to fit your exact specified dimensions within ±0.2mm. Every order is crafted on demand in our Boise, Idaho studio workshop and inspected before packaging. If any custom tray does not fit your space or drawer perfectly, it qualifies for an immediate priority recraft at zero cost under the Formgrid 100% Perfect Fit Guarantee.',
+        'SnugFit certifies that all custom components fabricated under this order are guaranteed to fit your exact specified dimensions within ±0.2mm. Every order is crafted on demand in our Boise, Idaho studio workshop and inspected before packaging. If any custom tray does not fit your space or drawer perfectly, it qualifies for an immediate priority recraft at zero cost under the SnugFit 100% Perfect Fit Guarantee.',
     },
   };
 
@@ -486,7 +486,7 @@ export function resolveProductionSpecOrder(
 export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
   const barcodeSvg = generateBarcodeSvg(spec.orderNumber, { height: 44 });
   const qrSvg = generateQrCodeSvg(
-    `https://formgrid.io/track?order=${encodeURIComponent(spec.orderNumber)}`,
+    `https://snugfit.io/track?order=${encodeURIComponent(spec.orderNumber)}`,
     96
   );
   const isoSealSvg = generateIsoGuaranteeSealSvg(150);
@@ -1381,13 +1381,13 @@ export function exportProductionSpecSheet(
 
   // Fallback: If pop-up blockers blocked window.open, print cleanly via hidden iframe
   try {
-    const existingIframe = document.getElementById('formgrid-print-iframe');
+    const existingIframe = document.getElementById('snugfit-print-iframe');
     if (existingIframe) {
       existingIframe.remove();
     }
 
     const iframe = document.createElement('iframe');
-    iframe.id = 'formgrid-print-iframe';
+    iframe.id = 'snugfit-print-iframe';
     iframe.style.position = 'fixed';
     iframe.style.right = '0';
     iframe.style.bottom = '0';

@@ -59,256 +59,170 @@ export interface CreatorWorkspace {
 
 const CREATOR_WORKSPACES: CreatorWorkspace[] = [
   {
-    id: 'ws_tokyo_keeb',
-    slug: 'tokyo-mechanical-keyboard-engineer',
-    title: 'The Mechanical Keyboard Engineer',
-    city: 'Tokyo',
-    country: 'Japan',
-    flag: '🇯🇵',
-    creatorName: 'Kenji Takahashi',
-    creatorHandle: '@keeb_craft_tokyo',
-    creatorRole: 'Artisanal Switch Tuner & Firmware Engineer',
-    image: '/assets/workspaces/workspace-tokyo.jpg',
-    quote:
-      'Sub-millimeter clearances isolate high-frequency housing resonance. Formgrid’s modular trays keep 90 individual switch stems and lubed stabilizers in absolute zero-rattle alignment.',
+    id: "ws_kitchen_coffee",
+    slug: "modern-kitchen-and-coffee-bar",
+    title: "The Modern Kitchen & Coffee Bar",
+    city: "Seattle, WA",
+    country: "United States",
+    flag: "☕",
+    creatorName: "Claire Laurent",
+    creatorHandle: "@claire_coffeelab",
+    creatorRole: "Coffee Specialist & Culinary Stylist",
+    image: "/assets/products/pourover-coffee-tray-real.jpg",
+    quote: "Having dedicated, custom-sized slots for 58mm tampers, dosing cups, and basalt coasters transformed my morning routine. Clean counters bring genuine calm.",
     deskSpecs: {
-      surface: 'Solid Japanese Hinoki Cypress',
-      dimensions: '1800 × 800 mm',
-      primaryAesthetic: 'Artisanal Cyber-Craft / Precision Akihabara',
-      telemetryMetric: '54 dB Acoustic Thock',
-      telemetryLabel: 'Bottom-Out Resonance Dampened',
+      surface: "Natural White Oak & Quartz Counter",
+      dimensions: "2200 × 700 mm",
+      primaryAesthetic: "Nordic Warm Minimalist / Specialty Cafe",
+      telemetryMetric: "Zero Countertop Clutter",
+      telemetryLabel: "Everything in its Dedicated Home",
     },
     hotspots: [
       {
-        id: 'hs_tokyo_valet',
-        productId: 'prod_valet_pro',
-        xPercent: 32,
+        id: "hs_kitchen_valet",
+        productId: "prod_pourover_coffee_tray",
+        xPercent: 42,
         yPercent: 62,
-        usageContext: 'Switch Stem & Lube Valet (Cobalt Inlay)',
-        curatorNote:
-          'Houses Krytox 205g0 vials, titanium switch pullers, and calibrated stem holders without table vibration.',
+        usageContext: "Barista Espresso & Tamper Valet",
+        curatorNote: "Houses 58mm portafilter, WDT needle tool, and precision distributor with heat-resistant composite.",
       },
       {
-        id: 'hs_tokyo_hex_tray',
-        productId: 'prod_hex_bit_tray',
-        xPercent: 72,
-        yPercent: 68,
-        usageContext: 'M2 Hardware & Standoff Organizer',
-        curatorNote:
-          'Neodymium magnetic wells prevent copper standoffs and gold-plated case screws from rolling across the desk.',
-      },
-      {
-        id: 'hs_tokyo_pen_stand',
-        productId: 'prod_titanium_pen_stand',
-        xPercent: 82,
-        yPercent: 42,
-        usageContext: 'Machined Titanium Stem Holder Dock',
-        curatorNote:
-          'Grade 5 titanium mass anchors the brass switch stem holder upright for rapid one-handed grasping during assembly.',
-      },
-      {
-        id: 'hs_tokyo_felt_mat',
-        productId: 'prod_felt_mat',
-        xPercent: 52,
-        yPercent: 58,
-        usageContext: 'High-Density Merino Acoustic Pad',
-        curatorNote:
-          '5mm German merino wool absorbs lower-mid switch ping, deepening the acoustic signature of polycarbonate plates.',
-      },
-      {
-        id: 'hs_tokyo_cable_anchor',
-        productId: 'prod_cable_anchor',
-        xPercent: 20,
-        yPercent: 45,
-        usageContext: 'Precision Aviator Cable Anchor',
-        curatorNote:
-          'Weighted zinc-core channel prevents heavyweight coiled GX16 aviator connectors from sliding off the rear edge.',
-      },
-    ],
-  },
-  {
-    id: 'ws_berlin_audio',
-    slug: 'berlin-analog-mastering-suite',
-    title: 'Audiophile Analog Mastering Suite',
-    city: 'Berlin',
-    country: 'Germany',
-    flag: '🇩🇪',
-    creatorName: 'Elena Voss',
-    creatorHandle: '@voss_analog_berlin',
-    creatorRole: 'Vinyl Mastering & Acoustics Engineer',
-    image: '/assets/workspaces/workspace-berlin.jpg',
-    quote:
-      'In an analog mastering room, magnetic isolation and non-resonant plinths aren’t luxuries—they’re acoustic imperatives. The headphone plinth cradles planar diaphragms with zero foam fatigue.',
-    deskSpecs: {
-      surface: 'Smoked European Bog Oak Console',
-      dimensions: '2400 × 950 mm',
-      primaryAesthetic: 'Industrial Brutalist Acoustics / Kreuzberg Control',
-      telemetryMetric: '0.18s RT60 Decay',
-      telemetryLabel: 'Reference Control Room Certified',
-    },
-    hotspots: [
-      {
-        id: 'hs_berlin_plinth',
-        productId: 'prod_headphone_plinth',
-        xPercent: 24,
-        yPercent: 48,
-        usageContext: 'Planar Magnetic Headphone Plinth',
-        curatorNote:
-          'Curved aluminum head cradle distributes headband weight evenly, preserving memory foam earpad geometry.',
-      },
-      {
-        id: 'hs_berlin_screenbar',
-        productId: 'prod_screenbar',
-        xPercent: 50,
-        yPercent: 20,
-        usageContext: 'Zero-Glare Console ScreenBar',
-        curatorNote:
-          'Asymmetric optical path casts 500 lx across analog faders and tube gear without bouncing light off meters.',
-      },
-      {
-        id: 'hs_berlin_matrix',
-        productId: 'prod_drawer_matrix',
+        id: "hs_kitchen_coasters",
+        productId: "prod_desk_coasters",
         xPercent: 78,
-        yPercent: 66,
-        usageContext: 'Console Patch Cord & 1/4" Adapter Grid',
-        curatorNote:
-          'Tailored to 19-inch rack drawer depths to sort gold Neutrik balanced adapters and patch cables by length.',
+        yPercent: 54,
+        usageContext: "Solid Basalt & Cork Coaster Set",
+        curatorNote: "Volcanic basalt stone absorbs condensation while Portuguese cork protects natural timber surfaces.",
       },
       {
-        id: 'hs_berlin_dock',
-        productId: 'prod_magnetic_dock',
-        xPercent: 84,
-        yPercent: 40,
-        usageContext: 'MagSafe Audio Transport Control Dock',
-        curatorNote:
-          'Solid machined brass plinth anchors iPad telemetry running DAW transport meters at an ergonomic 45° angle.',
+        id: "hs_kitchen_vacuum",
+        productId: "prod_desk_vacuum",
+        xPercent: 20,
+        yPercent: 48,
+        usageContext: "Micro-Suction Wireless Handheld Vacuum",
+        curatorNote: "High-RPM micro-suction glides across countertops and drawers to whisk away stray espresso grounds and crumbs.",
       },
     ],
   },
   {
-    id: 'ws_sf_architect',
-    slug: 'sf-minimalist-software-architect',
-    title: 'Minimalist Software Architect',
-    city: 'San Francisco, CA',
-    country: 'United States',
-    flag: '🇺🇸',
-    creatorName: 'Marcus Vance',
-    creatorHandle: '@vance_systems_sf',
-    creatorRole: 'Principal Distributed Systems Lead',
-    image: '/assets/workspaces/workspace-sf.jpg',
-    quote:
-      'Zero cognitive clutter on the surface correlates directly with architectural clarity. Elevating the laptop and locking Thunderbolt optical lines with micro-suction anchors completely freed my mental space.',
+    id: "ws_vanity_skincare",
+    slug: "minimalist-vanity-skincare-sanctuary",
+    title: "Minimalist Vanity & Skincare Sanctuary",
+    city: "Paris",
+    country: "France",
+    flag: "💄",
+    creatorName: "Camille Dubois",
+    creatorHandle: "@camille_beauty",
+    creatorRole: "Cosmetic & Dermatology Stylist",
+    image: "/assets/products/vanity-matrix-real.jpg",
+    quote: "Zero messy drawers. The custom vanity grid holds all my tall serums, perfume bottles, and makeup brushes without a single millimeter of wasted space.",
     deskSpecs: {
-      surface: 'American Black Walnut Standing Desk',
-      dimensions: '1600 × 750 mm',
-      primaryAesthetic: 'Functionalist Monolith / Dieter Rams Purity',
-      telemetryMetric: 'Single 40Gbps Optical Trunk',
-      telemetryLabel: 'Hidden Zero-Wire Infrastructure',
+      surface: "Polished Calacatta Gold Marble",
+      dimensions: "1400 × 600 mm",
+      primaryAesthetic: "Parisian Clean Luxury / Soft Light",
+      telemetryMetric: "100% Spill-Proof",
+      telemetryLabel: "Water-Repellent Composite Finish",
     },
     hotspots: [
       {
-        id: 'hs_sf_riser',
-        productId: 'prod_laptop_riser',
-        xPercent: 28,
-        yPercent: 42,
-        usageContext: 'Aviation Aluminum Laptop Riser',
-        curatorNote:
-          '15° ergonomic tilt elevates the 16" MacBook Pro display to eye height while maximizing underside convection airflow.',
-      },
-      {
-        id: 'hs_sf_valet',
-        productId: 'prod_valet_pro',
-        xPercent: 74,
-        yPercent: 56,
-        usageContext: 'Modular EDC Desk Valet (Obsidian PLA)',
-        curatorNote:
-          'Custom dimensioned to dock hardware security keys, fountain pens, and ANC earbuds within arm’s reach.',
-      },
-      {
-        id: 'hs_sf_mat',
-        productId: 'prod_felt_mat',
-        xPercent: 50,
-        yPercent: 65,
-        usageContext: 'Anthracite Merino Desk Surface',
-        curatorNote:
-          'High-density wool felt dampens key bottom-out while insulating wrists against cold aluminum chassis edges.',
-      },
-      {
-        id: 'hs_sf_cable_anchor',
-        productId: 'prod_cable_anchor',
-        xPercent: 86,
-        yPercent: 70,
-        usageContext: 'Braided Optical Cable Anchor',
-        curatorNote:
-          'Micro-suction base immobilizes high-speed Thunderbolt optical cable without leaving sticky desk residues.',
-      },
-      {
-        id: 'hs_sf_screenbar',
-        productId: 'prod_screenbar',
-        xPercent: 50,
-        yPercent: 22,
-        usageContext: 'Auto-Dimming Touch ScreenBar',
-        curatorNote:
-          'Warm 3000K evening color temperature automatically tracks circadian rhythms during late code reviews.',
-      },
-    ],
-  },
-  {
-    id: 'ws_zurich_proto',
-    slug: 'zurich-hardware-prototyping-bench',
-    title: 'Industrial Hardware Prototyping Bench',
-    city: 'Zurich',
-    country: 'Switzerland',
-    flag: '🇨🇭',
-    creatorName: 'Dr. Beatrix Keller',
-    creatorHandle: '@keller_robotics_eth',
-    creatorRole: 'Mechatronics & Micro-Robotics Lead',
-    image: '/assets/workspaces/workspace-zurich.jpg',
-    quote:
-      'Fast-turn robotics prototyping requires immediate access to SMD passives, calibrated hex bits, and digital calipers. Formgrid’s sub-millimeter custom bins fit our ESD workbench with aerospace precision.',
-    deskSpecs: {
-      surface: 'Grounded Anti-Static Hard Maple Lab Bench',
-      dimensions: '2000 × 900 mm',
-      primaryAesthetic: 'Precision Metrology / ETH Mechatronics Lab',
-      telemetryMetric: '± 0.01mm Metrology',
-      telemetryLabel: 'Laser Calibrated Sub-Millimeter Fit',
-    },
-    hotspots: [
-      {
-        id: 'hs_zurich_matrix',
-        productId: 'prod_drawer_matrix',
-        xPercent: 32,
-        yPercent: 64,
-        usageContext: 'SMD Passives & Stepper Driver Grid',
-        curatorNote:
-          'Custom 4x5 compartment matrix segregates 0402 SMD reels, micro-servos, and ceramic capacitors with instant label visibility.',
-      },
-      {
-        id: 'hs_zurich_hex_tray',
-        productId: 'prod_hex_bit_tray',
-        xPercent: 68,
+        id: "hs_vanity_matrix",
+        productId: "prod_vanity_matrix",
+        xPercent: 48,
         yPercent: 58,
-        usageContext: 'Magnetic Fastener & Bit Sorting Station',
-        curatorNote:
-          'Countersunk neodymium magnets prevent stainless M1.6 and M2 screws from straying into circuit assemblies.',
+        usageContext: "Beauty & Skincare Vanity Grid",
+        curatorNote: "Tall divided wells cradle glass droppers and cosmetic tubes upright with zero tip-overs.",
       },
       {
-        id: 'hs_zurich_pen_stand',
-        productId: 'prod_titanium_pen_stand',
+        id: "hs_vanity_caddy",
+        productId: "prod_watch_jewelry_caddy",
         xPercent: 82,
         yPercent: 46,
-        usageContext: 'Tungsten Carbide Scriber Dock',
-        curatorNote:
-          'Machined grade 5 titanium cylinder prevents sharp diamond scribers and tweezers from puncturing silicone ESD pads.',
+        usageContext: "Ring Cushion & Jewelry Valet",
+        curatorNote: "Soft-touch cushion slits protect signet rings, gold bands, and earrings from scratching.",
+      },
+    ],
+  },
+  {
+    id: "ws_bedside_nightstand",
+    slug: "serene-bedside-nightstand-valet",
+    title: "Serene Bedside & Everyday Carry",
+    city: "Kyoto",
+    country: "Japan",
+    flag: "🌙",
+    creatorName: "Kenji Sato",
+    creatorHandle: "@kenji_minimal",
+    creatorRole: "Architect & Watch Collector",
+    image: "/assets/products/watch-jewelry-caddy-real.jpg",
+    quote: "Dropping my watch, signet rings, and glasses into dedicated soft-inlay compartments when I come home brings instant peace of mind. No metal clatter.",
+    deskSpecs: {
+      surface: "Solid Japanese Hinoki Cypress",
+      dimensions: "550 × 450 mm",
+      primaryAesthetic: "Zen Architectural / Quiet Bedside",
+      telemetryMetric: "Whisper-Quiet",
+      telemetryLabel: "Soft Base Inlay Cushions Every Drop",
+    },
+    hotspots: [
+      {
+        id: "hs_bedside_caddy",
+        productId: "prod_watch_jewelry_caddy",
+        xPercent: 46,
+        yPercent: 54,
+        usageContext: "Timepiece & Ring Cushion Caddy",
+        curatorNote: "Contoured saddle cradles automatic wristwatches while soft bays hold rings and cuff links.",
       },
       {
-        id: 'hs_zurich_dock',
-        productId: 'prod_magnetic_dock',
-        xPercent: 18,
-        yPercent: 50,
-        usageContext: 'Telemetry Thermal Camera Dock',
-        curatorNote:
-          'Holds thermal imaging diagnostic smartphone firmly locked at a 45° angle to monitor PCB power traces during stress tests.',
+        id: "hs_bedside_valet",
+        productId: "prod_valet_pro",
+        xPercent: 78,
+        yPercent: 62,
+        usageContext: "Everyday Carry Valet (Liquid Resin Inlay)",
+        curatorNote: "Dedicated drop zone for MagSafe wallet, car keys, and reading glasses next to the bed.",
+      },
+    ],
+  },
+  {
+    id: "ws_curated_workspace",
+    slug: "curated-workspace-creative-studio",
+    title: "Curated Workspace & Design Studio",
+    city: "San Francisco, CA",
+    country: "United States",
+    flag: "🖥️",
+    creatorName: "Marcus Vance",
+    creatorHandle: "@vance_spaces",
+    creatorRole: "Product Designer & Minimalist",
+    image: "/assets/products/valet-pro-real.jpg",
+    quote: "A calm environment creates a clear mind. The custom-fit drawer matrix eliminated loose clutter and gave every tool its dedicated home.",
+    deskSpecs: {
+      surface: "American Black Walnut Standing Desk",
+      dimensions: "1800 × 800 mm",
+      primaryAesthetic: "Functionalist Warm Modern / Grovemade Taste",
+      telemetryMetric: "Zero Desk Clutter",
+      telemetryLabel: "Every Essential at Your Fingertips",
+    },
+    hotspots: [
+      {
+        id: "hs_sf_matrix",
+        productId: "prod_drawer_matrix",
+        xPercent: 50,
+        yPercent: 55,
+        usageContext: "Modular Drawer Organizer Matrix",
+        curatorNote: "Sized to the millimeter to fill the entire drawer cavity with zero shifting.",
+      },
+      {
+        id: "hs_sf_mat",
+        productId: "prod_felt_mat",
+        xPercent: 48,
+        yPercent: 70,
+        usageContext: "Dual-Sided Eco-Felt Desk Mat",
+        curatorNote: "Merino wool blend provides a soft, warm resting surface for laptops and wrists.",
+      },
+      {
+        id: "hs_sf_screenbar",
+        productId: "prod_screenbar",
+        xPercent: 50,
+        yPercent: 18,
+        usageContext: "Glare-Free LED ScreenBar",
+        curatorNote: "Asymmetric optical cutoff illuminates the workspace without screen glare or eye strain.",
       },
     ],
   },
@@ -418,11 +332,10 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
             <span>COMMUNITY & CREATOR SPACES // LIVE FIELD STUDIES</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white font-sans">
-            Curated Creator Workspaces
+            Curated Spaces in Real Homes
           </h2>
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-3xl font-sans">
-            Explore authentic creator studios tuned with Formgrid parametric modules and aerospace hardware.
-            Hover or tap any interactive radar pin to inspect technical blueprints or add directly to your build.
+            Explore how customers style custom-fit organizers across modern kitchens, bathroom vanities, nightstands, and creative studios. Tap any pin to see the product.
           </p>
         </div>
 
@@ -444,7 +357,7 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
           ) : (
             <>
               <ShoppingBag className="w-3.5 h-3.5 text-signal-orange" />
-              <span>DISPATCH WORKSPACE HARDWARE</span>
+              <span>GET THIS ROOM SETUP</span>
             </>
           )}
         </button>
@@ -515,7 +428,7 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
               </div>
               <div className="flex items-center space-x-2 text-[10px] text-zinc-400">
                 <span className="px-2 py-0.5 rounded bg-black/60 border border-zinc-800 text-signal-cyan">
-                  {activeWorkspace.hotspots.length} FORMGRID MODULES DETECTED
+                  {activeWorkspace.hotspots.length} SNUGFIT GOODS IN SETUP
                 </span>
               </div>
             </div>
@@ -767,7 +680,7 @@ export const DeskSetupGallery: React.FC<DeskSetupGalleryProps> = ({
             </div>
 
             <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mb-4 font-sans leading-relaxed">
-              Every Formgrid component present on {activeWorkspace.creatorName}’s desk. Click any module to preview
+              Every SnugFit component present on {activeWorkspace.creatorName}’s desk. Click any module to preview
               schematics or deploy to your cart.
             </p>
 

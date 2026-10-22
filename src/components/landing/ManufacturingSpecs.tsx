@@ -16,10 +16,10 @@ export const ManufacturingSpecs: React.FC = () => {
           <span>HOW IT'S CRAFTED</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white font-sans">
-          Modern Precision, Built for Your Desk
+          Modern Precision, Built for Your Entire Home
         </h2>
         <p className="text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-          How our on-demand studio transforms your custom measurements into high-density, silk-touch desk organizers in under 48 hours.
+          How our on-demand studio transforms your custom measurements into velvety, made-to-measure home organizers in under 48 hours.
         </p>
       </div>
 
@@ -38,7 +38,7 @@ export const ManufacturingSpecs: React.FC = () => {
               Bespoke Dimensions
             </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-              Enter the exact measurements of your desk, drawer, or shelf. Our 3D studio generates a custom blueprint with millimeter precision.
+              Enter the exact measurements of your kitchen drawer, vanity, nightstand, or desk. Our 3D studio generates a custom preview with millimeter precision.
             </p>
           </div>
           <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 text-[11px] text-zinc-500 space-y-1">

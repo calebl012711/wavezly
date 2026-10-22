@@ -108,14 +108,14 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, onOpen
           <div>
             <div className="flex items-center space-x-2">
               <span className="font-bold tracking-tight text-lg text-zinc-900 dark:text-white font-sans">
-                SnugDesk
+                SnugFit
               </span>
               <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-orange-100 text-signal-orange font-mono font-bold dark:bg-orange-950/80">
                 STUDIO
               </span>
             </div>
             <span className="hidden sm:block text-[10px] text-zinc-500 font-sans tracking-wide">
-              Made to Fit Like a Glove
+              Custom Fit for Your Whole Home
             </span>
           </div>
         </button>

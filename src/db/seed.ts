@@ -126,6 +126,7 @@ export const SEED_PRODUCTS: Product[] = [
   // ==========================================
   {
     id: 'prod_valet_pro',
+    category: 'bedside',
     slug: 'modular-desk-valet-pro',
     title: 'Modular Desk Valet Pro',
     subtitle: 'Parametric Multi-Compartment Tray with Optional Liquid Resin Inlay',
@@ -181,6 +182,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_drawer_matrix',
+    category: 'workspace',
     slug: 'parametric-drawer-matrix',
     title: 'Parametric Drawer Matrix',
     subtitle: 'Precision Flush-Fit Modular Insert for Tooling and Pro Audio Gear',
@@ -233,6 +235,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_cable_anchor',
+    category: 'living',
     slug: 'precision-cable-anchor',
     title: 'Precision Cable Anchor Block',
     subtitle: 'Weighted Parametric Channel Base with Anti-Slip Recesses',
@@ -285,6 +288,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_hex_bit_tray',
+    category: 'workspace',
     slug: 'hex-key-tool-matrix-tray',
     title: 'Hex Key & Tool Matrix Tray',
     subtitle: 'CNC-Toleranced 1/4" Hex Bit & Allen Key Alignment Block',
@@ -337,6 +341,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_headphone_plinth',
+    category: 'workspace',
     slug: 'audiophile-dac-headphone-plinth',
     title: 'Audiophile DAC & Headphone Plinth',
     subtitle: 'Acoustic Resonance Isolation Platform for Pro Studio Desktops',
@@ -389,6 +394,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_vanity_matrix',
+    category: 'vanity',
     slug: 'beauty-skincare-vanity-grid',
     title: 'SnugDesk Beauty & Skincare Vanity Grid',
     subtitle: 'Custom-Fit Cosmetic, Serum & Brush Countertop Organizer',
@@ -443,6 +449,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_controller_dock',
+    category: 'living',
     slug: 'dual-controller-remote-plinth',
     title: 'Dual Gaming Controller & Remote Plinth',
     subtitle: 'Custom Dual-Tier Stand for PS5 / Xbox / Switch Controllers & Media Remotes',
@@ -495,6 +502,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_keeb_lube_station',
+    category: 'workspace',
     slug: 'mechanical-switch-lube-station',
     title: 'Mechanical Switch & Modder Station',
     subtitle: 'Parametric 36-Stem Switch Tester, Lube Well & Stem Cradle Organizer',
@@ -547,6 +555,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_watch_jewelry_caddy',
+    category: 'bedside',
     slug: 'timepiece-ring-caddy',
     title: 'Timepiece & Ring Cushion Caddy',
     subtitle: 'Curved Watch Saddle, Cufflink Wells & Ring Slit Nightstand Valet',
@@ -600,6 +609,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_pourover_coffee_tray',
+    category: 'kitchen',
     slug: 'barista-pour-over-tray',
     title: 'Barista Espresso & Pour-Over Valet',
     subtitle: 'Heat-Resistant Tamper, Portafilter & Dosing Cup Station',
@@ -657,6 +667,7 @@ export const SEED_PRODUCTS: Product[] = [
   // ==========================================
   {
     id: 'prod_screenbar',
+    category: 'workspace',
     slug: 'asymmetric-desk-screenbar',
     title: 'Asymmetric Desk ScreenBar (US Domestic)',
     subtitle: '45° Optical Cutoff Glare-Free LED Task Luminaire',
@@ -696,6 +707,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_felt_mat',
+    category: 'workspace',
     slug: 'dual-sided-eco-felt-desk-mat',
     title: 'Dual-Sided Eco-Felt Desk Mat',
     subtitle: '900 × 400mm High-Density Merino Blend & Vegan Saddle Leather',
@@ -734,6 +746,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_magnetic_dock',
+    category: 'workspace',
     slug: 'magnetic-silicone-cable-dock',
     title: 'Magnetic Silicone Cable Dock (4-Pack)',
     subtitle: 'Neodymium N52 Core Cable Clips with Micro-Suction Base',
@@ -772,6 +785,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_laptop_riser',
+    category: 'workspace',
     slug: 'anodized-aluminum-laptop-riser',
     title: 'Anodized Aluminum Laptop Riser',
     subtitle: 'Ergonomic 15° Elevation Wedge with Passive Thermal Flutes',
@@ -811,6 +825,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_titanium_pen_stand',
+    category: 'workspace',
     slug: 'cnc-titanium-edc-stand',
     title: 'CNC Titanium Switch Puller & EDC Stand',
     subtitle: 'Precision Solid Grade 5 Titanium Billet Desktop Anchor',
@@ -849,6 +864,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_desk_vacuum',
+    category: 'kitchen',
     slug: 'micro-suction-desk-vacuum',
     title: 'Micro-Suction Wireless Desk Vacuum',
     subtitle: 'High-RPM Low-Decibel Crumb & Dust Extractor with USB-C Fast Charge',
@@ -887,6 +903,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_mag_cable_clips',
+    category: 'living',
     slug: 'magnetic-cable-anchor-beads',
     title: 'Magnetic Cable Anchor Beads (4-Pack)',
     subtitle: 'Snap-Fit Silicone Cable Guides with N52 Neodymium Core',
@@ -925,6 +942,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_artisan_wrist_rest',
+    category: 'workspace',
     slug: 'memory-cloud-wrist-rest',
     title: 'Ergonomic Memory Cloud Wrist Rest',
     subtitle: 'Cooling Gel Memory Foam with Lycra Cover for 75% & TKL Keyboards',
@@ -963,6 +981,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_ambient_backlight',
+    category: 'living',
     slug: 'monitor-gradient-lightstrip',
     title: 'Monitor Ambient Glow Lightstrip',
     subtitle: 'USB Powered 2700K–6500K True-Color Workspace Backlight',
@@ -1001,6 +1020,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_desk_coasters',
+    category: 'living',
     slug: 'basalt-cork-coaster-set',
     title: 'Solid Basalt & Cork Coaster Set (4-Pack)',
     subtitle: 'Natural Volcanic Stone with Non-Scratch Portuguese Cork Base',
@@ -1045,6 +1065,7 @@ export const SEED_PRODUCTS: Product[] = [
   // ==========================================
   {
     id: 'prod_smart_cable_spine',
+    category: 'workspace',
     slug: 'articulated-cable-spine',
     title: 'Articulated Under-Desk Cable Spine',
     subtitle: 'Flexible Quad-Channel Sit-Stand Spine with Heavy Steel Foot Base',
@@ -1084,6 +1105,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_solenoid_key_lock',
+    category: 'bedside',
     slug: 'biometric-fingerprint-drawer',
     title: 'Biometric Fingerprint Drawer Lock Module',
     subtitle: '0.3s Capacitive Sensor with 3D Printed Universal Mount',
@@ -1126,6 +1148,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_under_desk_drawer',
+    category: 'bedside',
     slug: 'slide-out-secret-compartment',
     title: 'Slide-Out Under-Desk Secret Compartment',
     subtitle: 'Smooth Rail Concealed Drawer for Passports, Cash & Hard Drives',
@@ -1168,6 +1191,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_acoustic_desk_divider',
+    category: 'workspace',
     slug: 'pet-felt-workspace-baffle',
     title: 'Acoustic PET Desk Privacy Baffle',
     subtitle: 'Sound-Dampening Recycled Felt Screen with Clamp-On Anodized Brackets',
@@ -1207,6 +1231,7 @@ export const SEED_PRODUCTS: Product[] = [
   },
   {
     id: 'prod_wireless_charging_puck',
+    category: 'bedside',
     slug: 'flush-mount-15w-qi-puck',
     title: 'Invisible Sub-Desk 15W Qi Fast-Charging Puck',
     subtitle: 'Penetrates Desktops up to 32mm with Magnetic Alignment Ring',
@@ -1243,6 +1268,214 @@ export const SEED_PRODUCTS: Product[] = [
       estimatedTransitDays: 'Coming in Next Drop',
       inventoryCount: 0,
     },
+  },
+  {
+    id: "prod_kitchen_cutlery_matrix",
+    category: "kitchen",
+    slug: "custom-kitchen-cutlery-matrix",
+    title: "Custom Cutlery & Utensil Matrix",
+    subtitle: "Modular Non-Slip Kitchen Drawer Divider for Silverware, Knives & Gadgets",
+    description: "Tailored to your exact kitchen drawer dimensions. Eliminates loose cutlery and rattling spatulas with deep divided chambers and food-safe matte composite.",
+    type: "custom_3d",
+    basePrice: 29.00,
+    images: [
+      "/assets/products/kitchen-cutlery-matrix-hero.svg",
+      "/assets/products/kitchen-cutlery-matrix-top.svg",
+      "/assets/products/kitchen-cutlery-matrix-detail.svg",
+      "/assets/products/kitchen-cutlery-matrix-schematic.svg",
+      "/assets/products/kitchen-cutlery-matrix-lifestyle.svg"
+    ],
+    features: [
+      "Custom sized to your exact drawer width and length",
+      "Chamfered divider channels for swift utensil retrieval",
+      "Soft silicone dampening pads prevent cutlery clinking",
+      "Food-safe, BPA-free heat-resistant composite"
+    ],
+    technicalSpecs: {
+      "Tolerances": "± 0.25 mm Snug Fit",
+      "Material": "Food-Grade Composite",
+      "Wall Thickness": "3.0 mm Reinforced",
+      "Dishwasher Safe": "Hand Wash Warm Water"
+    },
+    active: true,
+    parametricConstraints: {
+      minLengthMm: 120,
+      maxLengthMm: 380,
+      minWidthMm: 100,
+      maxWidthMm: 320,
+      minHeightMm: 35,
+      maxHeightMm: 80,
+      minWallThicknessMm: 2.6,
+      minBottomThicknessMm: 2.4,
+      maxRows: 4,
+      maxCols: 6
+    },
+    defaultDimensions: {
+      length: 240,
+      width: 160,
+      height: 48,
+      wallThickness: 3.0,
+      bottomThickness: 2.5,
+      rows: 1,
+      cols: 4,
+      cornerFilletRadius: 10
+    }
+  },
+  {
+    id: "prod_spice_pantry_tier",
+    category: "kitchen",
+    slug: "tiered-spice-pantry-organizer",
+    title: "Tiered Spice & Pantry Organizer",
+    subtitle: "Angled Display Riser Sized to Any Kitchen Drawer or Cabinet",
+    description: "Read every spice label at a glance. Angled stepped tiers prevent bottles from rolling and maximize every millimeter of cabinet and drawer depth.",
+    type: "custom_3d",
+    basePrice: 26.00,
+    images: [
+      "/assets/products/spice-pantry-tier-hero.svg",
+      "/assets/products/spice-pantry-tier-top.svg",
+      "/assets/products/spice-pantry-tier-detail.svg",
+      "/assets/products/spice-pantry-tier-schematic.svg",
+      "/assets/products/spice-pantry-tier-lifestyle.svg"
+    ],
+    features: [
+      "Angled cradle rails keep round spice jars upright",
+      "Custom width sized to standard or custom kitchen drawers",
+      "Textured matte finish prevents jar sliding",
+      "Zero dead space in deep pantry cabinets"
+    ],
+    technicalSpecs: {
+      "Tolerances": "± 0.25 mm Custom Fit",
+      "Riser Angle": "22° Optimal Reading Angle",
+      "Jar Capacity": "12 to 28 Jars (Based on Width)",
+      "Manufacturing Time": "2.5 – 4 Hours"
+    },
+    active: true,
+    parametricConstraints: {
+      minLengthMm: 140,
+      maxLengthMm: 360,
+      minWidthMm: 100,
+      maxWidthMm: 320,
+      minHeightMm: 30,
+      maxHeightMm: 70,
+      minWallThicknessMm: 2.6,
+      minBottomThicknessMm: 2.4,
+      maxRows: 3,
+      maxCols: 4
+    },
+    defaultDimensions: {
+      length: 220,
+      width: 150,
+      height: 45,
+      wallThickness: 2.8,
+      bottomThickness: 2.4,
+      rows: 3,
+      cols: 3,
+      cornerFilletRadius: 8
+    }
+  },
+  {
+    id: "prod_grooming_stand",
+    category: "vanity",
+    slug: "electric-toothbrush-grooming-plinth",
+    title: "Electric Toothbrush & Grooming Plinth",
+    subtitle: "Self-Draining Vanity Stand for Electric Brushes, Razors & Pastes",
+    description: "Keep bathroom countertops bone-dry and organized. Designed with angled drainage channels, magnetic head docks, and weighted non-slip base.",
+    type: "custom_3d",
+    basePrice: 22.00,
+    images: [
+      "/assets/products/grooming-stand-hero.svg",
+      "/assets/products/grooming-stand-top.svg",
+      "/assets/products/grooming-stand-detail.svg",
+      "/assets/products/grooming-stand-schematic.svg",
+      "/assets/products/grooming-stand-lifestyle.svg"
+    ],
+    features: [
+      "Custom diameter cradles for Oral-B, Sonicare, and safety razors",
+      "Concealed sloped floor routes drips away from brush handles",
+      "High-density cast composite prevents tip-overs",
+      "Waterproof matte porcelain finish"
+    ],
+    technicalSpecs: {
+      "Tolerances": "± 0.20 mm Precision Fit",
+      "Drainage": "Passive Gravity Runoff",
+      "Finish": "Water-Repellent PBR Matte",
+      "Base": "Micro-Suction Anti-Slip Feet"
+    },
+    active: true,
+    parametricConstraints: {
+      minLengthMm: 80,
+      maxLengthMm: 200,
+      minWidthMm: 60,
+      maxWidthMm: 140,
+      minHeightMm: 30,
+      maxHeightMm: 60,
+      minWallThicknessMm: 2.6,
+      minBottomThicknessMm: 2.4,
+      maxRows: 2,
+      maxCols: 3
+    },
+    defaultDimensions: {
+      length: 120,
+      width: 80,
+      height: 38,
+      wallThickness: 2.8,
+      bottomThickness: 2.5,
+      rows: 1,
+      cols: 2,
+      cornerFilletRadius: 10
+    }
+  },
+  {
+    id: "prod_entryway_catchall",
+    category: "bedside",
+    slug: "entryway-key-sunglass-plinth",
+    title: "Entryway Key & Sunglass Plinth",
+    subtitle: "Curved Catchall with Soft Inlay for Console Tables & Hallways",
+    description: "The welcoming landing spot for keys, sunglasses, mail, and AirPods. Contoured saddle protects delicate lenses and watch crystals.",
+    type: "custom_3d",
+    basePrice: 24.00,
+    images: [
+      "/assets/products/entryway-catchall-hero.svg",
+      "/assets/products/entryway-catchall-top.svg",
+      "/assets/products/entryway-catchall-detail.svg",
+      "/assets/products/entryway-catchall-schematic.svg",
+      "/assets/products/entryway-catchall-lifestyle.svg"
+    ],
+    features: [
+      "Saddle contour cradles sunglasses without scratching frames",
+      "Soft acoustic base eliminates metal key clatter",
+      "Clean architectural silhouette complements any hallway entry",
+      "Made to order in custom lengths and finishes"
+    ],
+    technicalSpecs: {
+      "Tolerances": "± 0.25 mm Architectural Fit",
+      "Inlay": "Whisper-Quiet Soft Touch Pocket",
+      "Weight": "Dense 280g Solid Feel",
+      "Manufacturing Time": "2 – 3 Hours"
+    },
+    active: true,
+    parametricConstraints: {
+      minLengthMm: 120,
+      maxLengthMm: 280,
+      minWidthMm: 80,
+      maxWidthMm: 180,
+      minHeightMm: 25,
+      maxHeightMm: 50,
+      minWallThicknessMm: 2.6,
+      minBottomThicknessMm: 2.4,
+      maxRows: 2,
+      maxCols: 3
+    },
+    defaultDimensions: {
+      length: 180,
+      width: 110,
+      height: 32,
+      wallThickness: 2.8,
+      bottomThickness: 2.4,
+      rows: 1,
+      cols: 2,
+      cornerFilletRadius: 12
+    }
   },
 ];
 

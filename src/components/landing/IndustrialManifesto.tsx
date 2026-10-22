@@ -51,9 +51,9 @@ export const IndustrialManifesto: React.FC = () => {
   const traditionalLeadWeeks = 10;
   const traditionalTotal = traditionalMoldCost + traditionalUnitCost * calcQty;
 
-  const formgridUnitCost = 34.5;
-  const formgridTotal = formgridUnitCost * calcQty;
-  const savings = traditionalTotal - formgridTotal;
+  const snugfitUnitCost = 34.5;
+  const snugfitTotal = snugfitUnitCost * calcQty;
+  const savings = traditionalTotal - snugfitTotal;
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -179,14 +179,14 @@ export const IndustrialManifesto: React.FC = () => {
             </div>
           </div>
 
-          {/* Formgrid On-Demand Farm */}
+          {/* SnugFit On-Demand Farm */}
           <div className="p-5 rounded-xl bg-orange-50/60 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/60 space-y-3">
             <div className="flex items-center justify-between text-xs text-orange-700 dark:text-orange-300 uppercase tracking-wider font-bold">
-              <span>Formgrid On-Demand Studio</span>
+              <span>SnugFit On-Demand Studio</span>
               <span className="text-emerald-600 font-semibold">Ready in 48h</span>
             </div>
             <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-              ${formgridTotal.toLocaleString()} USD
+              ${snugfitTotal.toLocaleString()} USD
             </div>
             <div className="space-y-1.5 text-xs text-zinc-700 dark:text-zinc-300">
               <div>• Upfront tooling cost: <span className="text-emerald-600 font-bold">$0.00</span></div>

@@ -1292,7 +1292,7 @@ export const DeskPlannerModal: React.FC<DeskPlannerModalProps> = ({ isOpen, onCl
 
               <div className="flex items-center justify-between text-[9px] text-zinc-500">
                 <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3 text-zinc-400" /> Formgrid Fit Guarantee
+                  <ShieldCheck className="w-3 h-3 text-zinc-400" /> SnugFit Fit Guarantee
                 </span>
                 <span>Dual-Facility Split Dispatch</span>
               </div>
