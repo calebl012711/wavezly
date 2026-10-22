@@ -10,6 +10,7 @@ import { SEED_PRODUCTS } from '../../db/seed';
 import { useCartStore } from '../../store/useCartStore';
 import { useCustomizerStore } from '../../store/useCustomizerStore';
 import { ProductDetailModal } from '../pdp/ProductDetailModal';
+import { playClickSound } from '../../lib/soundEffects';
 import {
   Cpu,
   Truck,
@@ -38,12 +39,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
   });
 
   const handleCustomize = (product: Product) => {
+    playClickSound('snap');
     setProduct(product);
     onCustomizeProduct(product);
   };
 
   const handleQuickAddDropship = (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
+    playClickSound('success');
     addStandardItem(product, 1);
     setRecentlyAddedId(product.id);
     setTimeout(() => setRecentlyAddedId(null), 2500);
@@ -70,7 +73,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
         <div className="flex items-center p-1 bg-surface rounded-lg border border-surface-border self-start md:self-auto font-mono text-xs">
           <button
             type="button"
-            onClick={() => setFilter('all')}
+            onClick={() => {
+              playClickSound('snap');
+              setFilter('all');
+            }}
             className={`px-3 py-1.5 rounded transition ${
               filter === 'all'
                 ? 'bg-zinc-800 text-precision-white shadow-tactile'
@@ -82,7 +88,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
 
           <button
             type="button"
-            onClick={() => setFilter('custom_3d')}
+            onClick={() => {
+              playClickSound('snap');
+              setFilter('custom_3d');
+            }}
             className={`px-3 py-1.5 rounded flex items-center space-x-1.5 transition ${
               filter === 'custom_3d'
                 ? 'bg-signal-orange/15 text-signal-orange border border-signal-orange/30 shadow-tactile'
@@ -95,7 +104,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
 
           <button
             type="button"
-            onClick={() => setFilter('dropship')}
+            onClick={() => {
+              playClickSound('snap');
+              setFilter('dropship');
+            }}
             className={`px-3 py-1.5 rounded flex items-center space-x-1.5 transition ${
               filter === 'dropship'
                 ? 'bg-signal-cyan/15 text-signal-cyan border border-signal-cyan/30 shadow-tactile'
@@ -118,7 +130,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ onCustomizeProduct }) 
           return (
             <div
               key={product.id}
-              onClick={() => setSelectedProductForModal(product)}
+              onClick={() => {
+                playClickSound('tick');
+                setSelectedProductForModal(product);
+              }}
               className="group relative bg-surface/80 rounded-xl border border-surface-border hover:border-zinc-700 flex flex-col justify-between overflow-hidden shadow-tactile hover:shadow-2xl transition-all cursor-pointer"
             >
               {/* Product Visual Container with 5-image Indicator */}

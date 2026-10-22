@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { Minus, Plus } from 'lucide-react';
+import { playClickSound } from '../../lib/soundEffects';
 
 interface DimensionSliderProps {
   label: string;
@@ -31,11 +32,13 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
 }) => {
   const handleDecrement = () => {
     const newVal = Math.max(min, Number((value - step).toFixed(1)));
+    playClickSound('tick');
     onChange(newVal);
   };
 
   const handleIncrement = () => {
     const newVal = Math.min(max, Number((value + step).toFixed(1)));
+    playClickSound('tick');
     onChange(newVal);
   };
 
@@ -43,6 +46,7 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
     const parsed = parseFloat(e.target.value);
     if (!isNaN(parsed)) {
       const clamped = Math.max(min, Math.min(max, parsed));
+      playClickSound('tick');
       onChange(clamped);
     }
   };
@@ -95,7 +99,10 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
             max={max}
             step={step}
             value={value}
-            onChange={(e) => onChange(parseFloat(e.target.value))}
+            onChange={(e) => {
+              playClickSound('tick');
+              onChange(parseFloat(e.target.value));
+            }}
             className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-signal-orange focus:outline-none"
           />
         </div>

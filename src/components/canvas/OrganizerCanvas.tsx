@@ -20,6 +20,8 @@ interface OrganizerCanvasProps {
   autoRotate?: boolean;
   wireframe?: boolean;
   engravedText?: string;
+  sliceHeight?: number;
+  explodedOffset?: number;
 }
 
 export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
@@ -30,6 +32,8 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   autoRotate = false,
   wireframe = false,
   engravedText,
+  sliceHeight,
+  explodedOffset,
 }) => {
   const controlsRef = useRef<OrbitControlsImpl>(null);
 
@@ -71,6 +75,8 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
             resinInlay={resinInlay}
             wireframe={wireframe}
             engravedText={engravedText}
+            sliceHeight={sliceHeight}
+            explodedOffset={explodedOffset}
             onMeshReady={onMeshReady}
           />
 

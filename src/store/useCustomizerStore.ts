@@ -134,6 +134,8 @@ export interface CustomizerStoreState {
   autoRotate: boolean;
   wireframe: boolean;
   engravedText: string;
+  sliceHeight: number; // 0 to 100 percentage build height
+  explodedOffset: number; // 0 to 80 mm lift for dividers and resin inlays
 
   // Actions
   setDimension: (key: keyof ParametricOrganizerDimensions, value: number) => void;
@@ -145,6 +147,8 @@ export interface CustomizerStoreState {
   toggleAutoRotate: () => void;
   toggleWireframe: () => void;
   setEngravedText: (text: string) => void;
+  setSliceHeight: (val: number) => void;
+  setExplodedOffset: (val: number) => void;
   applyPreset: (presetId: string) => void;
   resetDefaults: () => void;
   exportStlFile: (filename?: string) => Promise<{ blob: Blob; url: string }>;
@@ -180,6 +184,8 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
   autoRotate: false,
   wireframe: false,
   engravedText: 'FORMGRID // 01',
+  sliceHeight: 100,
+  explodedOffset: 0,
 
   setDimension: (key, value) => {
     const { dimensions, selectedMaterial, selectedResin } = get();
@@ -260,6 +266,16 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
     set({ engravedText: text.toUpperCase().substring(0, 24) });
   },
 
+  setSliceHeight: (val) => {
+    const clamped = Math.max(0, Math.min(100, Math.round(val)));
+    set({ sliceHeight: clamped });
+  },
+
+  setExplodedOffset: (val) => {
+    const clamped = Math.max(0, Math.min(80, Math.round(val)));
+    set({ explodedOffset: clamped });
+  },
+
   applyPreset: (presetId) => {
     const preset = BLUEPRINT_PRESETS.find((p) => p.id === presetId);
     if (!preset) return;
@@ -277,6 +293,8 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       selectedMaterial: filament,
       selectedResin: resin,
       engravedText: preset.engravedText,
+      sliceHeight: 100,
+      explodedOffset: 0,
       telemetry,
     });
   },
@@ -291,6 +309,8 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       selectedResin: null,
       wireframe: false,
       engravedText: 'FORMGRID // 01',
+      sliceHeight: 100,
+      explodedOffset: 0,
       telemetry,
     });
   },

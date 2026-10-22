@@ -21,6 +21,10 @@ export const CustomizerPage: React.FC = () => {
     selectedResin,
     telemetry,
     autoRotate,
+    wireframe,
+    engravedText,
+    sliceHeight,
+    explodedOffset,
     setProduct,
     setMeshRef,
     getCustomSpecs,
@@ -89,6 +93,10 @@ export const CustomizerPage: React.FC = () => {
                 resinInlay={selectedResin}
                 onMeshReady={setMeshRef}
                 autoRotate={autoRotate}
+                wireframe={wireframe}
+                engravedText={engravedText}
+                sliceHeight={sliceHeight}
+                explodedOffset={explodedOffset}
               />
             </div>
           </ErrorBoundary>

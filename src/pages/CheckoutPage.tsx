@@ -64,6 +64,21 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
       });
 
       if (response.isMock) {
+        // Cache order details in localStorage for client-side invoice and tracking specs
+        try {
+          localStorage.setItem(
+            'formgrid-last-order',
+            JSON.stringify({
+              orderNumber: response.orderNumber,
+              items: items.map(({ stlBlob, ...rest }) => rest),
+              shippingAddress: form,
+              timestamp: new Date().toISOString(),
+            })
+          );
+        } catch (e) {
+          console.warn('Failed to cache last order to localStorage', e);
+        }
+
         // In local/sandbox mode, clear cart and navigate directly to Success
         clearCart();
         onSuccess(response.orderNumber);

@@ -1,18 +1,25 @@
 /**
  * FORMGRID PROCEDURAL 3D PARAMETRIC ORGANIZER MESH
  * Constructs rounded outer shells, hollow compartment grids, divider walls, and resin inlays
+ * Features:
+ * - Dynamic layer-by-layer slicing height (0% to 100% build height)
+ * - Exploded view offset lifting internal dividers and resin inlays above floor base
+ * - Guaranteed watertight, manifold meshes with computeVertexNormals & bounding boxes
  */
 
 import React, { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { ParametricOrganizerDimensions, MaterialOption } from '../../types';
+import { useCustomizerStore } from '../../store/useCustomizerStore';
 
-interface ParametricMeshProps {
+export interface ParametricMeshProps {
   dimensions: ParametricOrganizerDimensions;
   material: MaterialOption;
   resinInlay: MaterialOption | null;
   wireframe?: boolean;
   engravedText?: string;
+  sliceHeight?: number; // 0% to 100% build height
+  explodedOffset?: number; // In millimeters, lifts internal dividers & resin inlays
   onMeshReady?: (meshGroup: THREE.Group) => void;
 }
 
@@ -82,9 +89,18 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
   resinInlay,
   wireframe = false,
   engravedText,
+  sliceHeight: propsSliceHeight,
+  explodedOffset: propsExplodedOffset,
   onMeshReady,
 }) => {
   const groupRef = useRef<THREE.Group>(null);
+
+  // Read slicing and exploded offset from props or reactive store
+  const storeSliceHeight = useCustomizerStore((state) => state.sliceHeight);
+  const storeExplodedOffset = useCustomizerStore((state) => state.explodedOffset);
+
+  const sliceHeight = propsSliceHeight !== undefined ? propsSliceHeight : (storeSliceHeight ?? 100);
+  const explodedOffset = propsExplodedOffset !== undefined ? propsExplodedOffset : (storeExplodedOffset ?? 0);
 
   const {
     length, // X-axis
@@ -124,44 +140,65 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     });
   }, [resinInlay]);
 
-  // Floor Base Geometry (Solid extruded rounded rectangle)
+  // Slicing Height Calculations
+  const clampedSlice = Math.max(0, Math.min(100, sliceHeight));
+  // Effective cut height in mm: at 0%, keep a minimum of 0.4mm (2 standard 0.2mm layers)
+  // so geometry remains manifold and watertight with non-degenerate faces
+  const effectiveCutHeight = Math.max(0.4, (height * clampedSlice) / 100);
+
+  // Floor Base thickness under slice: capped by effectiveCutHeight
+  const floorDepth = Math.min(bottomThickness, effectiveCutHeight);
+
+  // Available height for outer perimeter walls and dividers above floor
+  const availWallHeight = Math.max(0, effectiveCutHeight - bottomThickness);
+  const maxWallsHeight = Math.max(2, height - bottomThickness);
+  const currentWallsHeight = Math.min(maxWallsHeight, availWallHeight);
+
+  // 1. Floor Base Geometry (Solid extruded rounded rectangle)
   const floorGeometry = useMemo(() => {
     const shape = createRoundedRectShape(length, width, cornerFilletRadius);
+    const bevelOk = floorDepth >= 1.0;
     const geom = new THREE.ExtrudeGeometry(shape, {
-      depth: bottomThickness,
-      bevelEnabled: true,
+      depth: floorDepth,
+      bevelEnabled: bevelOk,
       bevelSegments: 2,
       steps: 1,
-      bevelSize: 0.4,
-      bevelThickness: 0.4,
+      bevelSize: bevelOk ? Math.min(0.4, floorDepth * 0.15) : 0,
+      bevelThickness: bevelOk ? Math.min(0.4, floorDepth * 0.15) : 0,
     });
     geom.computeVertexNormals();
     // Rotate to lie on XZ plane and position at base Y = 0
     geom.rotateX(Math.PI / 2);
-    geom.translate(0, bottomThickness / 2, 0);
+    geom.translate(0, floorDepth / 2, 0);
+    geom.computeBoundingBox();
+    geom.computeBoundingSphere();
     return geom;
-  }, [length, width, cornerFilletRadius, bottomThickness]);
+  }, [length, width, cornerFilletRadius, floorDepth]);
 
-  // Outer Perimeter Walls Geometry
-  const wallsHeight = Math.max(2, height - bottomThickness);
+  // 2. Outer Perimeter Walls Geometry
   const wallsGeometry = useMemo(() => {
+    if (currentWallsHeight <= 0.1) return null;
     const shape = createRoundedFrameShape(length, width, cornerFilletRadius, wallThickness);
+    const bevelOk = currentWallsHeight >= 1.0;
     const geom = new THREE.ExtrudeGeometry(shape, {
-      depth: wallsHeight,
-      bevelEnabled: true,
+      depth: currentWallsHeight,
+      bevelEnabled: bevelOk,
       bevelSegments: 2,
       steps: 1,
-      bevelSize: 0.3,
-      bevelThickness: 0.3,
+      bevelSize: bevelOk ? Math.min(0.3, currentWallsHeight * 0.12) : 0,
+      bevelThickness: bevelOk ? Math.min(0.3, currentWallsHeight * 0.12) : 0,
     });
     geom.computeVertexNormals();
     geom.rotateX(Math.PI / 2);
-    geom.translate(0, bottomThickness + wallsHeight / 2, 0);
+    geom.translate(0, bottomThickness + currentWallsHeight / 2, 0);
+    geom.computeBoundingBox();
+    geom.computeBoundingSphere();
     return geom;
-  }, [length, width, cornerFilletRadius, wallThickness, wallsHeight, bottomThickness]);
+  }, [length, width, cornerFilletRadius, wallThickness, currentWallsHeight, bottomThickness]);
 
-  // Internal Compartment Divider Geometry Calculations
+  // 3. Internal Compartment Divider Geometry Calculations
   const dividerGeometries = useMemo(() => {
+    if (currentWallsHeight <= 0.1) return [];
     const geometries: THREE.BufferGeometry[] = [];
     const innerLength = length - 2 * wallThickness;
     const innerWidth = width - 2 * wallThickness;
@@ -169,113 +206,175 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     const cellLength = (innerLength - (cols - 1) * wallThickness) / cols;
     const cellWidth = (innerWidth - (rows - 1) * wallThickness) / rows;
 
+    // Y position includes current sliced wall height PLUS exploded view lift offset
+    const dividerY = bottomThickness + currentWallsHeight / 2 + explodedOffset;
+
     // Vertical dividers running continuously along Z (between columns)
     for (let c = 1; c < cols; c++) {
       const xPos = -innerLength / 2 + c * cellLength + (c - 0.5) * wallThickness;
-      const vDivider = new THREE.BoxGeometry(wallThickness, wallsHeight, innerWidth);
+      const vDivider = new THREE.BoxGeometry(wallThickness, currentWallsHeight, innerWidth);
       vDivider.computeVertexNormals();
-      vDivider.translate(xPos, bottomThickness + wallsHeight / 2, 0);
+      vDivider.translate(xPos, dividerY, 0);
+      vDivider.computeBoundingBox();
+      vDivider.computeBoundingSphere();
       geometries.push(vDivider);
     }
 
-    // Horizontal dividers segmented between columns to avoid intersecting overlapping non-manifold faces
+    // Horizontal dividers segmented between columns to avoid overlapping non-manifold faces
     for (let r = 1; r < rows; r++) {
       const zPos = -innerWidth / 2 + r * cellWidth + (r - 0.5) * wallThickness;
       for (let c = 0; c < cols; c++) {
         const xPos = -innerLength / 2 + c * (cellLength + wallThickness) + cellLength / 2;
-        const hDivider = new THREE.BoxGeometry(cellLength, wallsHeight, wallThickness);
+        const hDivider = new THREE.BoxGeometry(cellLength, currentWallsHeight, wallThickness);
         hDivider.computeVertexNormals();
-        hDivider.translate(xPos, bottomThickness + wallsHeight / 2, zPos);
+        hDivider.translate(xPos, dividerY, zPos);
+        hDivider.computeBoundingBox();
+        hDivider.computeBoundingSphere();
         geometries.push(hDivider);
       }
     }
 
     return geometries;
-  }, [length, width, wallThickness, rows, cols, wallsHeight, bottomThickness]);
+  }, [
+    length,
+    width,
+    wallThickness,
+    rows,
+    cols,
+    currentWallsHeight,
+    bottomThickness,
+    explodedOffset,
+  ]);
 
-  // Resin Inlay Blocks (Thin slabs sitting flush in each pocket bottom)
+  // 4. Resin Inlay Blocks (Thin slabs sitting flush in each pocket bottom)
   const resinGeometries = useMemo(() => {
-    if (!resinInlay || inlayPocketDepth <= 0) return [];
+    if (!resinInlay || inlayPocketDepth <= 0 || currentWallsHeight <= 0.1) return [];
     const geometries: THREE.BufferGeometry[] = [];
     const innerLength = length - 2 * wallThickness;
     const innerWidth = width - 2 * wallThickness;
 
     const cellLength = (innerLength - (cols - 1) * wallThickness) / cols;
     const cellWidth = (innerWidth - (rows - 1) * wallThickness) / rows;
-    const actualResinHeight = Math.min(inlayPocketDepth, wallsHeight * 0.4);
+    
+    const maxResinHeight = Math.min(inlayPocketDepth, maxWallsHeight * 0.4);
+    const currentResinHeight = Math.min(maxResinHeight, currentWallsHeight);
+    if (currentResinHeight <= 0.05) return [];
+
+    // Exploded view lift: resin inlays lift above the floor base at 1.5x offset for clean multi-tier visual separation
+    const resinY = bottomThickness + currentResinHeight / 2 + (explodedOffset * 1.5);
 
     for (let r = 0; r < rows; r++) {
       const zPos = -innerWidth / 2 + r * (cellWidth + wallThickness) + cellWidth / 2;
       for (let c = 0; c < cols; c++) {
         const xPos = -innerLength / 2 + c * (cellLength + wallThickness) + cellLength / 2;
-        // Inset slightly by 0.2mm to sit cleanly within pocket
+        // Inset slightly by 0.2mm per side to sit cleanly within pocket
         const resinBox = new THREE.BoxGeometry(
           Math.max(2, cellLength - 0.4),
-          actualResinHeight,
+          currentResinHeight,
           Math.max(2, cellWidth - 0.4)
         );
         resinBox.computeVertexNormals();
-        resinBox.translate(xPos, bottomThickness + actualResinHeight / 2, zPos);
+        resinBox.translate(xPos, resinY, zPos);
+        resinBox.computeBoundingBox();
+        resinBox.computeBoundingSphere();
         geometries.push(resinBox);
       }
     }
 
     return geometries;
-  }, [resinInlay, inlayPocketDepth, length, width, wallThickness, rows, cols, wallsHeight, bottomThickness]);
+  }, [
+    resinInlay,
+    inlayPocketDepth,
+    length,
+    width,
+    wallThickness,
+    rows,
+    cols,
+    maxWallsHeight,
+    currentWallsHeight,
+    bottomThickness,
+    explodedOffset,
+  ]);
 
   // Expose group reference once mounted or updated
   useEffect(() => {
     if (groupRef.current && onMeshReady) {
       onMeshReady(groupRef.current);
     }
-  }, [dimensions, material, resinInlay, onMeshReady]);
+  }, [
+    dimensions,
+    material,
+    resinInlay,
+    sliceHeight,
+    explodedOffset,
+    floorGeometry,
+    wallsGeometry,
+    dividerGeometries,
+    resinGeometries,
+    onMeshReady,
+  ]);
 
   const floorBaseName = engravedText ? `FloorBase-${engravedText}` : 'FloorBase';
 
   return (
-    <group ref={groupRef} name="FormgridParametricOrganizer" position={[0, 0, 0]}>
-      {/* 1. Floor Base */}
-      <mesh
-        name={floorBaseName}
-        geometry={floorGeometry}
-        material={shellMaterial}
-        castShadow
-        receiveShadow
-      />
-
-      {/* 2. Outer Perimeter Frame */}
-      <mesh
-        name="PerimeterWalls"
-        geometry={wallsGeometry}
-        material={shellMaterial}
-        castShadow
-        receiveShadow
-      />
-
-      {/* 3. Internal Dividers */}
-      {dividerGeometries.map((geom, idx) => (
+    <>
+      {/* Primary Parametric Solid Group (Captured for STL export & raycasting) */}
+      <group ref={groupRef} name="FormgridParametricOrganizer" position={[0, 0, 0]}>
+        {/* 1. Floor Base */}
         <mesh
-          key={`divider-${idx}`}
-          name={`Divider-${idx}`}
-          geometry={geom}
+          name={floorBaseName}
+          geometry={floorGeometry}
           material={shellMaterial}
           castShadow
           receiveShadow
         />
-      ))}
 
-      {/* 4. Translucent Resin Inlays (if active) */}
-      {resinPbrMaterial &&
-        resinGeometries.map((geom, idx) => (
+        {/* 2. Outer Perimeter Frame (Rendered when slice height > bottom thickness) */}
+        {wallsGeometry && (
           <mesh
-            key={`resin-inlay-${idx}`}
-            name={`ResinInlay-${idx}`}
+            name="PerimeterWalls"
+            geometry={wallsGeometry}
+            material={shellMaterial}
+            castShadow
+            receiveShadow
+          />
+        )}
+
+        {/* 3. Internal Dividers */}
+        {dividerGeometries.map((geom, idx) => (
+          <mesh
+            key={`divider-${idx}`}
+            name={`Divider-${idx}`}
             geometry={geom}
-            material={resinPbrMaterial}
+            material={shellMaterial}
             castShadow
             receiveShadow
           />
         ))}
-    </group>
+
+        {/* 4. Translucent Resin Inlays (if active) */}
+        {resinPbrMaterial &&
+          resinGeometries.map((geom, idx) => (
+            <mesh
+              key={`resin-inlay-${idx}`}
+              name={`ResinInlay-${idx}`}
+              geometry={geom}
+              material={resinPbrMaterial}
+              castShadow
+              receiveShadow
+            />
+          ))}
+      </group>
+
+      {/* 5. Tactile Slicing Plane Laser Indicator (Rendered outside groupRef so it never impacts binary STL export) */}
+      {clampedSlice < 100 && (
+        <group position={[0, effectiveCutHeight + 0.1, 0]}>
+          <lineSegments rotation={[Math.PI / 2, 0, 0]}>
+            <edgesGeometry args={[new THREE.PlaneGeometry(length + 6, width + 6)]} />
+            <lineBasicMaterial color="#ff5500" transparent opacity={0.75} linewidth={2} />
+          </lineSegments>
+        </group>
+      )}
+    </>
   );
 };
