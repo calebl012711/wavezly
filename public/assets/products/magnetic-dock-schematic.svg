@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'JetBrains Mono', monospace;">
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="grid-magnetic-dock-schematic" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#18181b" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#27272a"/>
+    </pattern>
+    <!-- Radial Spotlight -->
+    <radialGradient id="spot-magnetic-dock-schematic" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#1f1f23" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="1"/>
+    </radialGradient>
+    <!-- Linear Product Gradient -->
+    <linearGradient id="bodyGrad-magnetic-dock" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c2c31"/>
+      <stop offset="50%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <filter id="shadow-magnetic-dock" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="25" stdDeviation="25" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="900" fill="url(#spot-magnetic-dock-schematic)"/>
+  <rect width="1200" height="900" fill="url(#grid-magnetic-dock-schematic)"/>
+
+  <!-- Technical Frame & Crop Marks -->
+  <g stroke="#3f3f46" stroke-width="1" opacity="0.6">
+    <path d="M 40 60 L 40 40 L 60 40"/>
+    <path d="M 1160 60 L 1160 40 L 1140 40"/>
+    <path d="M 40 840 L 40 860 L 60 860"/>
+    <path d="M 1160 840 L 1160 860 L 1140 860"/>
+    <line x1="600" y1="40" x2="600" y2="55" stroke-dasharray="3,3"/>
+    <line x1="600" y1="845" x2="600" y2="860" stroke-dasharray="3,3"/>
+    <line x1="40" y1="450" x2="55" y2="450" stroke-dasharray="3,3"/>
+    <line x1="1145" y1="450" x2="1160" y2="450" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- Header Telemetry Readouts -->
+  <text x="60" y="70" fill="#ff5500" font-size="12" font-weight="700" letter-spacing="2">FORMGRID ARCHITECTURE // MAGNETIC MANAGEMENT</text>
+  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SYSTEM ID: FG-MAGNETIC-DOCK</text>
+  <line x1="60" y1="85" x2="1140" y2="85" stroke="#27272a" stroke-width="1"/>
+
+  <!-- Product Name Banner -->
+  <text x="60" y="125" fill="#f4f4f5" font-size="24" font-weight="800" font-family="'Space Grotesk', sans-serif" letter-spacing="-0.5">MAGNETIC SILICONE CABLE DOCK</text>
+  <text x="60" y="148" fill="#a1a1aa" font-size="12" letter-spacing="1">04 // CALIPER TOLERANCE BLUEPRINT</text>
+
+  <!-- ================= VARIANT GRAPHICS ================= -->
+  
+      <!-- Technical Tolerances & Caliper Blueprint -->
+      <g transform="translate(600, 460)">
+        <!-- Engineering Blueprint Lines -->
+        <rect x="-320" y="-180" width="640" height="360" fill="none" stroke="#27272a" stroke-width="1"/>
+        <circle cx="0" cy="0" r="140" fill="none" stroke="#27272a" stroke-width="1" stroke-dasharray="5,5"/>
+
+        <!-- Digital Caliper Tool Jaws Rendering -->
+        <path d="M -300 -140 L -250 -140 L -250 -30 L -290 -30 Z" fill="#3f3f46"/>
+        <path d="M 300 -140 L 250 -140 L 250 -30 L 290 -30 Z" fill="#3f3f46"/>
+        <line x1="-250" y1="-85" x2="250" y2="-85" stroke="#ff5500" stroke-width="2"/>
+
+        <!-- Digital Caliper HUD Readout -->
+        <rect x="-120" y="-120" width="240" height="70" rx="8" fill="#000000" stroke="#ff5500" stroke-width="2"/>
+        <text x="0" y="-90" text-anchor="middle" fill="#71717a" font-size="10">DIGITAL GAUGE</text>
+        <text x="0" y="-65" text-anchor="middle" fill="#ff5500" font-size="22" font-weight="700">± 0.25 MM</text>
+
+        <!-- Tolerances Table Card -->
+        <g transform="translate(-280, 50)" font-size="11" fill="#a1a1aa">
+          <text x="0" y="20">• MIN WALL THICKNESS: 2.40 MM</text>
+          <text x="0" y="45">• MIN FLOOR BASE: 2.00 MM</text>
+          <text x="0" y="70">• TENSILE SHEAR STRENGTH: 48 MPA</text>
+          <text x="320" y="20">• INFILL CORE: 18% GYROID</text>
+          <text x="320" y="45">• ISO 2768-m PASS GUARANTEE</text>
+          <text x="320" y="70">• ZERO BED WARPAGE SPEC</text>
+        </g>
+      </g>
+      
+
+  <!-- Footer Specs & Telemetry -->
+  <line x1="60" y1="810" x2="1140" y2="810" stroke="#27272a" stroke-width="1"/>
+  <g fill="#71717a" font-size="11">
+    <text x="60" y="835">MATERIAL: <tspan fill="#f4f4f5">N52 NEODYMIUM + LIQUID SILICONE</tspan></text>
+    <text x="500" y="835">DIMENSIONS: <tspan fill="#f4f4f5">85 × 20 × 12 MM (4-PK)</tspan></text>
+    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="#ff5500">US DOMESTIC PRIORITY (2–4D)</tspan></text>
+  </g>
+</svg>
