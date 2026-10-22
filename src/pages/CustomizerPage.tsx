@@ -3,17 +3,26 @@
  * Real-time continuous 3D organizer customizer with live PBR WebGL viewport and specification controls
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCustomizerStore } from '../store/useCustomizerStore';
 import { useCartStore } from '../store/useCartStore';
 import { OrganizerCanvas } from '../components/canvas/OrganizerCanvas';
 import { TelemetryHUD } from '../components/customizer/TelemetryHUD';
 import { CustomizerDrawer } from '../components/customizer/CustomizerDrawer';
+import { ConsumerSizingWizard } from '../components/customizer/ConsumerSizingWizard';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { SEED_PRODUCTS } from '../db/seed';
-import { Sliders } from 'lucide-react';
+import { Sliders, Sparkles } from 'lucide-react';
 
 export const CustomizerPage: React.FC = () => {
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('wizard') === 'true' || params.get('wizard') === '1' || params.get('source') === 'ad') {
+      setIsWizardOpen(true);
+    }
+  }, []);
   const {
     currentProduct,
     dimensions,
@@ -58,25 +67,37 @@ export const CustomizerPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Model Tabs */}
-        <div className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 font-sans text-xs self-start sm:self-auto font-medium">
-          {custom3dProducts.map((prod) => {
-            const isSelected = currentProduct.id === prod.id;
-            return (
-              <button
-                key={prod.id}
-                type="button"
-                onClick={() => setProduct(prod)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-white dark:bg-zinc-800 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
-                }`}
-              >
-                {prod.title.split(' ')[0]} {prod.title.split(' ')[1]}
-              </button>
-            );
-          })}
+        {/* Model Tabs & Quick Sizing Wizard */}
+        <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+          <button
+            type="button"
+            onClick={() => setIsWizardOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 dark:bg-orange-950/60 border border-orange-200 dark:border-orange-800 text-orange-700 dark:text-orange-400 text-xs font-semibold hover:bg-orange-100 dark:hover:bg-orange-900/80 transition-colors shadow-xs cursor-pointer"
+            title="Launch 3-step drawer sizing guide"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-orange-600" />
+            <span>Sizing Wizard</span>
+          </button>
+
+          <div className="flex items-center p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-800 font-sans text-xs font-medium">
+            {custom3dProducts.map((prod) => {
+              const isSelected = currentProduct.id === prod.id;
+              return (
+                <button
+                  key={prod.id}
+                  type="button"
+                  onClick={() => setProduct(prod)}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-white dark:bg-zinc-800 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white'
+                  }`}
+                >
+                  {prod.title.split(' ')[0]} {prod.title.split(' ')[1]}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -120,6 +141,15 @@ export const CustomizerPage: React.FC = () => {
           <CustomizerDrawer onAddToCart={handleAddToCart} />
         </div>
       </div>
+
+      {/* Consumer Sizing Wizard Modal */}
+      <ConsumerSizingWizard
+        isOpen={isWizardOpen}
+        onClose={() => setIsWizardOpen(false)}
+        onComplete={() => setIsWizardOpen(false)}
+        onAddToCart={handleAddToCart}
+        isModal={true}
+      />
     </div>
   );
 };

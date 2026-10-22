@@ -437,7 +437,7 @@ export function resolveProductionSpecOrder(
       productTitle:
         dropshipCartItem?.product.title || 'Asymmetric Desk ScreenBar (US Domestic)',
       sku: dropshipCartItem?.product.supplierMeta?.supplierSku || 'FG-ACC-BAR-BLK',
-      channel: 'DSers Automated AliExpress Pass-Through',
+      channel: 'Verified US Domestic Partner Warehouse',
       warehouseOrigin: 'US Domestic Warehouse (Salt Lake City, UT - Bay 4A)',
       courier: 'USPS Domestic Ground Advantage (Tracked Commercial Base)',
       trackingNumber,
