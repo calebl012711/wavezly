@@ -84,7 +84,7 @@ export const CustomizerPage: React.FC = () => {
               const isSelected = currentProduct.id === prod.id;
               // Clean short display name
               const shortTitle = prod.title
-                .replace('SnugDesk ', '')
+                .replace('SnugFit ', '')
                 .replace('Modular Desk ', '')
                 .replace('Parametric ', '')
                 .replace('Precision ', '')

@@ -1,86 +1,40 @@
 /**
- * FORMGRID CONSUMER FOOTER
- * Prioritized Light Mode, clean luxury typography, customer guarantees, and studio links
+ * SNUGFIT FOOTER
  */
 
 import React from 'react';
-import { ShieldCheck } from 'lucide-react';
 
-export const Footer: React.FC = () => {
-  return (
-    <footer className="w-full bg-white dark:bg-[#09090b] border-t border-zinc-200 dark:border-zinc-800 py-14 px-4 sm:px-6 lg:px-8 font-sans text-xs text-zinc-500">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-zinc-200 dark:border-zinc-800">
-        {/* Brand & Ethos */}
-        <div className="space-y-3 md:col-span-1">
-          <div className="flex items-center space-x-2 text-zinc-900 dark:text-white font-bold text-sm">
-            <div className="w-2.5 h-2.5 bg-signal-orange rounded-sm" />
-            <span>SnugDesk</span>
-          </div>
-          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-            Made to fit your desk like a glove. Custom 3D-crafted drawer organizers tailored to your exact measurements, paired with curated studio accessories.
-          </p>
-          <div className="text-[11px] text-zinc-400">
-            Crafted with pride in the United States.
-          </div>
+export const Footer: React.FC = () => (
+  <footer className="bg-zinc-900 text-zinc-300 text-sm">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid md:grid-cols-3 gap-8">
+      <div>
+        <div className="flex items-center gap-2 text-white font-bold text-lg">
+          <span className="w-7 h-7 rounded-md bg-orange-500 text-white flex items-center justify-center text-sm">
+            S
+          </span>
+          SnugFit
         </div>
-
-        {/* Studio Products */}
-        <div className="space-y-2.5">
-          <h4 className="text-zinc-900 dark:text-white font-semibold uppercase tracking-wider text-[11px]">
-            Custom 3D Studio
-          </h4>
-          <ul className="space-y-2 text-zinc-600 dark:text-zinc-400 text-xs">
-            <li>Bespoke Desk Valet Pro</li>
-            <li>Modular Workbench Drawer Matrix</li>
-            <li>Audiophile Headphone Plinth</li>
-            <li>Hex Bit & Fastener Organizer</li>
-            <li>Cable Management Rail</li>
-          </ul>
-        </div>
-
-        {/* Studio Accessories */}
-        <div className="space-y-2.5">
-          <h4 className="text-zinc-900 dark:text-white font-semibold uppercase tracking-wider text-[11px]">
-            Fast-Ship Accessories
-          </h4>
-          <ul className="space-y-2 text-zinc-600 dark:text-zinc-400 text-xs">
-            <li>Asymmetric ScreenBar Luminaire</li>
-            <li>High-Density Merino Wool Desk Mat</li>
-            <li>Solid Titanium Pen Stand</li>
-            <li>Solid Brass Heavyweight Dock</li>
-            <li>Aviation Aluminum Laptop Riser</li>
-          </ul>
-        </div>
-
-        {/* Guarantees & Tolerances */}
-        <div className="space-y-2.5">
-          <h4 className="text-zinc-900 dark:text-white font-semibold uppercase tracking-wider text-[11px]">
-            Our Guarantee
-          </h4>
-          <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 space-y-1.5 shadow-2xs">
-            <div className="flex items-center space-x-1.5 text-emerald-600 font-semibold">
-              <ShieldCheck className="w-4 h-4" />
-              <span>100% Guaranteed Fit</span>
-            </div>
-            <p className="leading-relaxed text-[11px]">
-              If your custom organizer fails to fit your drawer or workspace perfectly, we’ll re-craft and dispatch a replacement at zero charge.
-            </p>
-          </div>
-        </div>
+        <p className="mt-3 text-zinc-400 max-w-xs">
+          Organizers for every room, made to fit your space.
+        </p>
       </div>
-
-      <div className="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-3">
-        <div>
-          © {new Date().getFullYear()} SnugDesk Goods Inc. All rights reserved.
-        </div>
-        <div className="flex items-center space-x-4">
-          <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Terms of Service</span>
-          <span>•</span>
-          <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Privacy Policy</span>
-          <span>•</span>
-          <span className="hover:text-zinc-900 dark:hover:text-white cursor-pointer transition">Shipping & Returns</span>
-        </div>
+      <div>
+        <h4 className="text-white font-semibold mb-3">Our promise</h4>
+        <ul className="space-y-2 text-zinc-400">
+          <li>30-day fit guarantee</li>
+          <li>Free shipping over $60</li>
+          <li>Easy returns</li>
+        </ul>
       </div>
-    </footer>
-  );
-};
+      <div>
+        <h4 className="text-white font-semibold mb-3">Made in the USA</h4>
+        <p className="text-zinc-400">
+          Every custom piece is made to order in our U.S. workshop and shipped within a few days.
+        </p>
+      </div>
+    </div>
+    <div className="border-t border-zinc-800 py-4 text-center text-xs text-zinc-500">
+      © {new Date().getFullYear()} SnugFit. All rights reserved.
+    </div>
+  </footer>
+);

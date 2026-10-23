@@ -396,7 +396,7 @@ export const SEED_PRODUCTS: Product[] = [
     id: 'prod_vanity_matrix',
     category: 'vanity',
     slug: 'beauty-skincare-vanity-grid',
-    title: 'SnugDesk Beauty & Skincare Vanity Grid',
+    title: 'SnugFit Beauty & Skincare Vanity Grid',
     subtitle: 'Custom-Fit Cosmetic, Serum & Brush Countertop Organizer',
     description: 'Custom-dimensioned vanity caddy crafted to fit your skincare vials, luxury perfumes, dropper bottles, and makeup brushes with zero counter clutter. Features waterproof wipe-clean surfaces and soft-radius chambers.',
     type: 'custom_3d',

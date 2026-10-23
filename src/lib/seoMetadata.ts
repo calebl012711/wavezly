@@ -7,8 +7,8 @@ import { Product, ProductType } from '../types';
 import { CustomerReview, SEED_PRODUCTS, SEED_REVIEWS } from '../db/seed';
 
 export const SITE_CONFIG = {
-  name: 'SnugDesk',
-  legalName: 'SnugDesk Goods Inc.',
+  name: 'SnugFit',
+  legalName: 'SnugFit Goods Inc.',
   url: 'https://snugdesk.com',
   canonicalDomain: 'snugdesk.com',
   logoUrl: 'https://snugdesk.com/assets/branding/snugdesk-logo.svg',

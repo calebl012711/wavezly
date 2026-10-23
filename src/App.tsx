@@ -5,7 +5,6 @@
  */
 
 import React, { useState, useEffect, useMemo, Suspense } from 'react';
-import { AnnouncementBar } from './components/common/AnnouncementBar';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { CartDrawer } from './components/cart/CartDrawer';
@@ -25,6 +24,7 @@ import {
   SITE_CONFIG,
 } from './lib/seoMetadata';
 import { Loader2 } from 'lucide-react';
+import { RoomId } from './lib/storefront';
 
 export type AppRoute = 'home' | 'customizer' | 'checkout' | 'success' | 'tracking';
 
@@ -32,6 +32,8 @@ export const App: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<AppRoute>('home');
   const [activeOrderNumber, setActiveOrderNumber] = useState<string>('FG-849201-B3X');
   const [isDeskPlannerOpen, setIsDeskPlannerOpen] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [activeRoom, setActiveRoom] = useState<RoomId>('all');
   const { currentProduct, setProduct } = useCustomizerStore();
 
   // Listen to browser URL or query params on mount
@@ -74,14 +76,14 @@ export const App: React.FC = () => {
     // Synchronize OpenGraph, Twitter, canonical, and indexing robots directives
     if (currentRoute === 'home') {
       updateDocumentMetadata({
-        title: 'SnugDesk | Custom Desk & Drawer Organizers Made to Fit Like a Glove',
+        title: 'SnugFit | Custom Organizers for Every Room',
         description: SITE_CONFIG.defaultDescription,
         canonicalUrl: origin,
         ogType: 'website',
-        ogTitle: 'SnugDesk | Custom Desk & Drawer Organizers Made to Fit Like a Glove',
+        ogTitle: 'SnugFit | Custom Organizers for Every Room',
         ogDescription: SITE_CONFIG.defaultDescription,
         ogImage: SITE_CONFIG.ogImageUrl,
-        twitterTitle: 'SnugDesk | Custom Desk & Drawer Organizers Made to Fit Like a Glove',
+        twitterTitle: 'SnugFit | Custom Organizers for Every Room',
         twitterDescription: SITE_CONFIG.defaultDescription,
         twitterImage: SITE_CONFIG.ogImageUrl,
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
@@ -101,21 +103,21 @@ export const App: React.FC = () => {
       }`;
 
       updateDocumentMetadata({
-        title: `${prodTitle} // Custom 3D Studio | SnugDesk`,
+        title: `${prodTitle} // Custom 3D Studio | SnugFit`,
         description: prodDesc,
         canonicalUrl: customizerCanonical,
         ogType: 'product',
         ogTitle: `${prodTitle} | Real-Time 3D Customizer`,
         ogDescription: prodDesc,
         ogImage: prodImage,
-        twitterTitle: `${prodTitle} | SnugDesk Studio`,
+        twitterTitle: `${prodTitle} | SnugFit Studio`,
         twitterDescription: prodDesc,
         twitterImage: prodImage,
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       });
     } else if (currentRoute === 'checkout') {
       updateDocumentMetadata({
-        title: 'Secure Checkout | SnugDesk',
+        title: 'Secure Checkout | SnugFit',
         description:
           'Fast domestic shipping and custom 3D on-demand crafting with 100% Snug Fit Guarantee.',
         canonicalUrl: `${origin}/?route=checkout`,
@@ -124,7 +126,7 @@ export const App: React.FC = () => {
       });
     } else if (currentRoute === 'tracking') {
       updateDocumentMetadata({
-        title: 'Real-Time Order Tracking & Delivery Status | SnugDesk',
+        title: 'Real-Time Order Tracking & Delivery Status | SnugFit',
         description:
           'Track your custom workshop craft and USPS Priority fast-ship packages in real time.',
         canonicalUrl: `${origin}/?route=tracking`,
@@ -133,7 +135,7 @@ export const App: React.FC = () => {
       });
     } else if (currentRoute === 'success') {
       updateDocumentMetadata({
-        title: 'Order Confirmed! Your Custom Order is in Our Workshop | SnugDesk',
+        title: 'Order Confirmed! Your Custom Order is in Our Workshop | SnugFit',
         description:
           'Your custom order has been received and scheduled for made-to-measure crafting.',
         canonicalUrl: `${origin}/?route=success`,
@@ -167,16 +169,13 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fafafc] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 selection:bg-signal-orange selection:text-white transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#f7f7f5] text-zinc-900 dark:text-zinc-100 selection:bg-signal-orange selection:text-white transition-colors">
       {/* Schema.org In-DOM JSON-LD Script Tag */}
       <script
         id="snugfit-schema-vdom"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(activeSchemaGraph) }}
       />
-
-      {/* Marketing & System Status Announcement Bar */}
-      <AnnouncementBar />
 
       {/* Global Header */}
       <Header
@@ -186,7 +185,10 @@ export const App: React.FC = () => {
             : 'home'
         }
         onNavigate={(r) => handleNavigate(r)}
-        onOpenDeskPlanner={() => setIsDeskPlannerOpen(true)}
+        searchQuery={searchQuery}
+        onSearch={setSearchQuery}
+        activeRoom={activeRoom}
+        onSelectRoom={setActiveRoom}
       />
 
       {/* Main Viewport Enclave */}
@@ -196,7 +198,7 @@ export const App: React.FC = () => {
             fallback={
               <div className="min-h-[500px] flex items-center justify-center font-mono text-xs text-zinc-500 space-x-2">
                 <Loader2 className="w-4 h-4 text-signal-orange animate-spin" />
-                <span>INITIALIZING SYSTEM VIEWPORT...</span>
+                <span>Loading…</span>
               </div>
             }
           >
@@ -204,7 +206,9 @@ export const App: React.FC = () => {
               <HomePage
                 onNavigateToCustomizer={() => handleNavigate('customizer')}
                 onCustomizeProduct={handleCustomizeProduct}
-                onOpenDeskPlanner={() => setIsDeskPlannerOpen(true)}
+                searchQuery={searchQuery}
+                activeRoom={activeRoom}
+                onSelectRoom={setActiveRoom}
               />
             )}
 
