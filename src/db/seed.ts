@@ -4,6 +4,7 @@
  */
 
 import { Product, MaterialOption } from '../types';
+import { CJ_PRODUCTS } from './cjProducts';
 
 export interface CustomerReview {
   id: string;
@@ -120,7 +121,7 @@ export const SEED_MATERIALS: MaterialOption[] = [
   },
 ];
 
-export const SEED_PRODUCTS: Product[] = [
+const BASE_PRODUCTS: Product[] = [
   // ==========================================
   // CATEGORY A: CUSTOM 3D PARAMETRIC HARDWARE
   // ==========================================
@@ -1477,6 +1478,11 @@ export const SEED_PRODUCTS: Product[] = [
       cornerFilletRadius: 12
     }
   },
+];
+
+export const SEED_PRODUCTS: Product[] = [
+  ...BASE_PRODUCTS,
+  ...CJ_PRODUCTS,
 ];
 
 export const SEED_REVIEWS: CustomerReview[] = [

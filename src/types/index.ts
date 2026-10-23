@@ -20,7 +20,8 @@ export type SupplierChannel =
   | 'slant3d'
   | 'printport'
   | 'dsers'
-  | 'autods';
+  | 'autods'
+  | 'cjdropshipping';
 
 export type MaterialCategory = 'filament' | 'resin';
 
@@ -106,6 +107,9 @@ export interface Product {
   parametricConstraints?: ParametricConstraints;
   supplierMeta?: SupplierMeta;
   defaultDimensions?: ParametricOrganizerDimensions;
+  inventoryCount?: number;
+  supplierChannel?: SupplierChannel;
+  supplierSku?: string;
 }
 
 /**
@@ -149,6 +153,7 @@ export interface ShippingAddress {
   state: string;
   postalCode: string;
   country: string; // ISO 2-letter code e.g. 'US'
+  phone?: string;
 }
 
 /**
