@@ -83,6 +83,145 @@ function createRoundedFrameShape(
   return shape;
 }
 
+/**
+ * Procedural FDM 3D Printing Texture Generator
+ * Generates horizontal layer lines (simulating 0.2mm layer height sheen) and micro-granular polymer bead texture
+ */
+function generateFdmTextures(): {
+  bumpMap: THREE.CanvasTexture;
+  roughnessMap: THREE.CanvasTexture;
+} | null {
+  if (typeof document === 'undefined') return null;
+
+  const width = 256;
+  const height = 512;
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+
+  const imgData = ctx.createImageData(width, height);
+  const data = imgData.data;
+
+  // Layer pitch in pixels: simulates fine 0.2mm extrusion layer lines
+  const layerPitch = 6;
+
+  for (let y = 0; y < height; y++) {
+    // Sinusoidal layer extrusion profile: crests catch glancing light, troughs are layer seams
+    const phase = (y % layerPitch) / layerPitch;
+    const layerProfile = Math.sin(phase * Math.PI); // 0 at seams, 1 at peak
+    const layerWobble = Math.sin(y * 0.08 + Math.sin(y * 0.025) * 2.0) * 0.05;
+
+    for (let x = 0; x < width; x++) {
+      const idx = (y * width + x) * 4;
+
+      // Fine polymer bead stippling (extrusion micro-roughness)
+      const stipple = ((Math.sin(x * 17.3 + y * 73.1) * 43758.5453) % 1) * 0.12;
+      // Slight longitudinal raster orientation
+      const nozzleTrack = Math.sin(x * 0.6) * 0.03;
+
+      const bumpNorm = Math.max(0, Math.min(1, layerProfile * 0.72 + layerWobble + stipple + nozzleTrack));
+      const byteVal = Math.round(bumpNorm * 255);
+
+      data[idx] = byteVal;
+      data[idx + 1] = byteVal;
+      data[idx + 2] = byteVal;
+      data[idx + 3] = 255;
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+
+  const bumpMap = new THREE.CanvasTexture(canvas);
+  bumpMap.wrapS = THREE.RepeatWrapping;
+  bumpMap.wrapT = THREE.RepeatWrapping;
+  bumpMap.repeat.set(4, 16);
+
+  // Roughness Map: layer line crests exhibit a subtle graphite/polymer sheen (lower roughness),
+  // while layer seams slightly scatter incident light
+  const rCanvas = document.createElement('canvas');
+  rCanvas.width = width;
+  rCanvas.height = height;
+  const rCtx = rCanvas.getContext('2d');
+  if (rCtx) {
+    const rImg = rCtx.createImageData(width, height);
+    const rData = rImg.data;
+    for (let i = 0; i < data.length; i += 4) {
+      const b = data[i] / 255;
+      // Crests get subtle sheen boost (lower roughness)
+      const r = Math.round(185 - b * 45);
+      rData[i] = r;
+      rData[i + 1] = r;
+      rData[i + 2] = r;
+      rData[i + 3] = 255;
+    }
+    rCtx.putImageData(rImg, 0, 0);
+  }
+
+  const roughnessMap = new THREE.CanvasTexture(rCanvas);
+  roughnessMap.wrapS = THREE.RepeatWrapping;
+  roughnessMap.wrapT = THREE.RepeatWrapping;
+  roughnessMap.repeat.set(4, 16);
+
+  return { bumpMap, roughnessMap };
+}
+
+/**
+ * Creates internal divider geometry with soft bevels on all top rim edges
+ * so directional and environment light catch the rims with clean specular highlights.
+ */
+function createBeveledDividerGeometry(
+  dimX: number,
+  heightY: number,
+  dimZ: number,
+  sinkIntoFloor: number = 0.25
+): THREE.BufferGeometry {
+  // If height is very small during slicing, fallback to simple box
+  if (heightY <= 0.6) {
+    const box = new THREE.BoxGeometry(dimX, heightY, dimZ);
+    box.computeVertexNormals();
+    return box;
+  }
+
+  // Soft bevel radius calibrated to wall thickness & height
+  const bevel = Math.min(0.35, Math.min(dimX, dimZ) * 0.18, heightY * 0.12);
+  const totalHeight = heightY + sinkIntoFloor;
+  const extrudeDepth = Math.max(0.1, totalHeight - bevel * 2);
+
+  // 2D rounded rectangle in X-Z plane
+  const shape = new THREE.Shape();
+  const w = Math.max(0.2, dimX - bevel * 2);
+  const d = Math.max(0.2, dimZ - bevel * 2);
+  const r = Math.min(bevel, w / 2 - 0.05, d / 2 - 0.05);
+  const x = -w / 2;
+  const y = -d / 2;
+
+  shape.moveTo(x + r, y);
+  shape.lineTo(x + w - r, y);
+  shape.quadraticCurveTo(x + w, y, x + w, y + r);
+  shape.lineTo(x + w, y + d - r);
+  shape.quadraticCurveTo(x + w, y + d, x + w - r, y + d);
+  shape.lineTo(x + r, y + d);
+  shape.quadraticCurveTo(x, y + d, x, y + d - r);
+  shape.lineTo(x, y + r);
+  shape.quadraticCurveTo(x, y, x + r, y);
+
+  const geom = new THREE.ExtrudeGeometry(shape, {
+    depth: extrudeDepth,
+    bevelEnabled: true,
+    bevelSegments: 3,
+    steps: 1,
+    bevelSize: bevel,
+    bevelThickness: bevel,
+  });
+
+  // Rotate so extrusion depth aligns with Y-axis
+  geom.rotateX(Math.PI / 2);
+  geom.center();
+  geom.computeVertexNormals();
+  return geom;
+}
+
 export const ParametricMesh: React.FC<ParametricMeshProps> = ({
   dimensions,
   material,
@@ -114,29 +253,144 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     inlayPocketDepth = 2.5,
   } = dimensions;
 
-  // Solid Plastic PBR Material
+  // Procedural FDM 3D printing finish textures (0.2mm layer line striations & micro-bead grain)
+  const fdmTextures = useMemo(() => {
+    return generateFdmTextures();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      fdmTextures?.bumpMap.dispose();
+      fdmTextures?.roughnessMap.dispose();
+    };
+  }, [fdmTextures]);
+
+  // Luxury 3D Printed Finish Shaders for the Organizer Tray
   const shellMaterial = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
-      color: new THREE.Color(material.hexColor),
-      roughness: material.roughness ?? 0.85,
-      metalness: 0.08,
+    const matId = (material.id || '').toLowerCase();
+    const matName = (material.name || '').toLowerCase();
+    const hex = (material.hexColor || '').toLowerCase();
+
+    // Identify luxury material finish presets
+    const isObsidian =
+      matId.includes('obsidian') || matName.includes('obsidian') || hex === '#18181b' || hex === '#1c1c1e';
+    const isTerracotta =
+      matId.includes('terracotta') || matName.includes('terracotta') || matName.includes('clay') || hex === '#c46849';
+    const isAlabaster =
+      matId.includes('white') ||
+      matId.includes('alabaster') ||
+      matName.includes('white') ||
+      matName.includes('alabaster') ||
+      hex === '#f4f4f5' ||
+      hex === '#f8f6f0' ||
+      hex === '#ece5db';
+    const isSage =
+      matId.includes('sage') ||
+      matId.includes('olive') ||
+      matName.includes('sage') ||
+      matName.includes('olive') ||
+      hex === '#5c6d5d' ||
+      hex === '#4a6353';
+
+    let baseColor = material.hexColor;
+    let roughness = material.roughness ?? 0.82;
+    let metalness = 0.04;
+    let clearcoat = 0.0;
+    let clearcoatRoughness = 0.4;
+    let transmission = 0.0;
+    let thickness = 0.0;
+    let ior = 1.54;
+    let attenuationColor: THREE.Color | undefined;
+    let attenuationDistance: number | undefined;
+    let bumpScale = 0.05;
+
+    if (isObsidian) {
+      // Matte Obsidian Black: roughness 0.62, subtle graphite sheen
+      baseColor = '#18181b';
+      roughness = 0.62;
+      metalness = 0.16; // subtle graphite sheen specular reflection
+      clearcoat = 0.12;
+      clearcoatRoughness = 0.38;
+      bumpScale = 0.048;
+    } else if (isTerracotta) {
+      // Terracotta Clay: warm matte organic earthenware
+      baseColor = '#c46849';
+      roughness = 0.88; // rich matte earthenware
+      metalness = 0.02;
+      clearcoat = 0.0;
+      bumpScale = 0.065;
+    } else if (isAlabaster) {
+      // Studio White / Alabaster: clean translucent subsurface scattering look
+      baseColor = '#f8f6f0';
+      roughness = 0.50;
+      transmission = 0.12; // soft optical translucency
+      thickness = 2.4;
+      ior = 1.48;
+      attenuationColor = new THREE.Color('#fff7eb');
+      attenuationDistance = 5.0;
+      clearcoat = 0.08;
+      clearcoatRoughness = 0.35;
+      metalness = 0.01;
+      bumpScale = 0.042;
+    } else if (isSage) {
+      // Sage Green / Olive: contemporary Scandinavian muted hue
+      baseColor = '#5c6d5d';
+      roughness = 0.74;
+      metalness = 0.03;
+      clearcoat = 0.0;
+      bumpScale = 0.055;
+    }
+
+    return new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(baseColor),
+      roughness: roughness,
+      metalness: metalness,
+      clearcoat: clearcoat,
+      clearcoatRoughness: clearcoatRoughness,
+      transmission: transmission,
+      thickness: thickness,
+      ior: ior,
+      attenuationColor: attenuationColor,
+      attenuationDistance: attenuationDistance,
+      bumpMap: fdmTextures?.bumpMap || null,
+      bumpScale: bumpScale,
+      roughnessMap: fdmTextures?.roughnessMap || null,
       wireframe: wireframe,
       shadowSide: THREE.DoubleSide,
     });
-  }, [material, wireframe]);
+  }, [material, wireframe, fdmTextures]);
 
-  // Translucent Resin Material (MeshPhysicalMaterial with optical transmission)
+  // Translucent Resin Material (MeshPhysicalMaterial with optical transmission & clearcoat)
   const resinPbrMaterial = useMemo(() => {
     if (!resinInlay) return null;
+    const resinId = (resinInlay.id || '').toLowerCase();
+    const resinName = (resinInlay.name || '').toLowerCase();
+    const isSmokey =
+      resinId.includes('smoke') ||
+      resinId.includes('smokey') ||
+      resinName.includes('smoke') ||
+      resinName.includes('smokey') ||
+      resinInlay.hexColor === '#2e2b28';
+
+    // Smokey Translucent Resin Inlay: optical transmission 0.85, roughness 0.15, clearcoat 1.0
+    const transmission = isSmokey ? 0.85 : (resinInlay.transmission ?? 0.92);
+    const roughness = isSmokey ? 0.15 : (resinInlay.roughness ?? 0.10);
+    const ior = resinInlay.ior ?? 1.54;
+
     return new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(resinInlay.hexColor),
-      roughness: resinInlay.roughness ?? 0.1,
+      roughness: roughness,
       metalness: 0.0,
-      transmission: resinInlay.transmission ?? 0.95,
-      ior: resinInlay.ior ?? 1.54,
+      transmission: transmission,
+      ior: ior,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.10,
+      attenuationColor: isSmokey ? new THREE.Color('#22201d') : new THREE.Color(resinInlay.hexColor),
+      attenuationDistance: isSmokey ? 8.0 : 14.0,
+      thickness: 3.0,
       transparent: true,
-      opacity: 0.88,
-      reflectivity: 0.5,
+      opacity: 0.92,
+      reflectivity: 0.65,
     });
   }, [resinInlay]);
 
@@ -154,17 +408,17 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
   const maxWallsHeight = Math.max(2, height - bottomThickness);
   const currentWallsHeight = Math.min(maxWallsHeight, availWallHeight);
 
-  // 1. Floor Base Geometry (Solid extruded rounded rectangle)
+  // 1. Floor Base Geometry (Solid extruded rounded rectangle with soft edge bevel)
   const floorGeometry = useMemo(() => {
     const shape = createRoundedRectShape(length, width, cornerFilletRadius);
     const bevelOk = floorDepth >= 1.0;
     const geom = new THREE.ExtrudeGeometry(shape, {
       depth: floorDepth,
       bevelEnabled: bevelOk,
-      bevelSegments: 2,
+      bevelSegments: 3,
       steps: 1,
-      bevelSize: bevelOk ? Math.min(0.4, floorDepth * 0.15) : 0,
-      bevelThickness: bevelOk ? Math.min(0.4, floorDepth * 0.15) : 0,
+      bevelSize: bevelOk ? Math.min(0.35, floorDepth * 0.15) : 0,
+      bevelThickness: bevelOk ? Math.min(0.35, floorDepth * 0.15) : 0,
     });
     geom.computeVertexNormals();
     // Rotate to lie on XZ plane and position at base Y = 0
@@ -175,7 +429,7 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     return geom;
   }, [length, width, cornerFilletRadius, floorDepth]);
 
-  // 2. Outer Perimeter Walls Geometry
+  // 2. Outer Perimeter Walls Geometry with Chamfered Rim
   const wallsGeometry = useMemo(() => {
     if (currentWallsHeight <= 0.1) return null;
     const shape = createRoundedFrameShape(length, width, cornerFilletRadius, wallThickness);
@@ -183,10 +437,10 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     const geom = new THREE.ExtrudeGeometry(shape, {
       depth: currentWallsHeight,
       bevelEnabled: bevelOk,
-      bevelSegments: 2,
+      bevelSegments: 3,
       steps: 1,
-      bevelSize: bevelOk ? Math.min(0.3, currentWallsHeight * 0.12) : 0,
-      bevelThickness: bevelOk ? Math.min(0.3, currentWallsHeight * 0.12) : 0,
+      bevelSize: bevelOk ? Math.min(0.35, currentWallsHeight * 0.12) : 0,
+      bevelThickness: bevelOk ? Math.min(0.35, currentWallsHeight * 0.12) : 0,
     });
     geom.computeVertexNormals();
     geom.rotateX(Math.PI / 2);
@@ -196,7 +450,7 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     return geom;
   }, [length, width, cornerFilletRadius, wallThickness, currentWallsHeight, bottomThickness]);
 
-  // 3. Internal Compartment Divider Geometry Calculations
+  // 3. Internal Compartment Divider Geometry Calculations with Soft Rim Bevels
   const dividerGeometries = useMemo(() => {
     if (currentWallsHeight <= 0.1) return [];
     const geometries: THREE.BufferGeometry[] = [];
@@ -206,15 +460,21 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     const cellLength = (innerLength - (cols - 1) * wallThickness) / cols;
     const cellWidth = (innerWidth - (rows - 1) * wallThickness) / rows;
 
-    // Y position includes current sliced wall height PLUS exploded view lift offset
-    const dividerY = bottomThickness + currentWallsHeight / 2 + explodedOffset;
+    // Soft sink depth into base floor (0.25mm) hides bottom seam when explodedOffset is zero
+    const effectiveSink = explodedOffset > 0 ? 0 : 0.25;
+    const dividerCenterY =
+      bottomThickness + currentWallsHeight / 2 + explodedOffset - effectiveSink / 2;
 
     // Vertical dividers running continuously along Z (between columns)
     for (let c = 1; c < cols; c++) {
       const xPos = -innerLength / 2 + c * cellLength + (c - 0.5) * wallThickness;
-      const vDivider = new THREE.BoxGeometry(wallThickness, currentWallsHeight, innerWidth);
-      vDivider.computeVertexNormals();
-      vDivider.translate(xPos, dividerY, 0);
+      const vDivider = createBeveledDividerGeometry(
+        wallThickness,
+        currentWallsHeight,
+        innerWidth,
+        effectiveSink
+      );
+      vDivider.translate(xPos, dividerCenterY, 0);
       vDivider.computeBoundingBox();
       vDivider.computeBoundingSphere();
       geometries.push(vDivider);
@@ -225,9 +485,13 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
       const zPos = -innerWidth / 2 + r * cellWidth + (r - 0.5) * wallThickness;
       for (let c = 0; c < cols; c++) {
         const xPos = -innerLength / 2 + c * (cellLength + wallThickness) + cellLength / 2;
-        const hDivider = new THREE.BoxGeometry(cellLength, currentWallsHeight, wallThickness);
-        hDivider.computeVertexNormals();
-        hDivider.translate(xPos, dividerY, zPos);
+        const hDivider = createBeveledDividerGeometry(
+          cellLength,
+          currentWallsHeight,
+          wallThickness,
+          effectiveSink
+        );
+        hDivider.translate(xPos, dividerCenterY, zPos);
         hDivider.computeBoundingBox();
         hDivider.computeBoundingSphere();
         geometries.push(hDivider);

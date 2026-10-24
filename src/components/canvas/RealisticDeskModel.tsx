@@ -63,12 +63,14 @@ export const DRAWER_INTERIOR_BOUNDS = {
 
 /**
  * Procedural Oak Wood PBR Texture Generator
- * Generates natural wood growth rings, longitudinal medullary fibers, and pore flecks
+ * Generates natural wood growth rings, longitudinal medullary fibers, specular medullary ray ribbons,
+ * open vessel pores, and warm ambient occlusion crevices.
  */
 function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   diffuseMap: THREE.CanvasTexture;
   roughnessMap: THREE.CanvasTexture;
   bumpMap: THREE.CanvasTexture;
+  aoMap: THREE.CanvasTexture;
 } | null {
   if (typeof document === 'undefined') return null;
 
@@ -122,7 +124,7 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   const imgData = ctx.createImageData(width, height);
   const data = imgData.data;
 
-  // Generate multi-octave wood rings and grain
+  // 1. Generate multi-octave wood rings, longitudinal fibers, and medullary rays
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const idx = (y * width + x) * 4;
@@ -137,13 +139,24 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
       const fineFiber = (Math.sin(x * 0.85 + Math.sin(y * 0.06) * 6) * 0.5 + 0.5) * 0.18;
       const combined = Math.min(1, Math.max(0, ringFactor * 0.75 + fineFiber));
 
-      const r = br * (1 - combined) + (combined > 0.5 ? r2r : r1r) * combined;
-      const g = bg * (1 - combined) + (combined > 0.5 ? r2g : r1g) * combined;
-      const b = bb * (1 - combined) + (combined > 0.5 ? r2b : r1b) * combined;
+      // Medullary rays (transverse ribbon flecks unique to quartersawn oak)
+      const medullaryWave = Math.sin(x * 0.08 + Math.sin(y * 0.12) * 2.2);
+      const isMedullary = Math.abs(medullaryWave) < 0.08 && Math.sin(y * 0.45) > 0.3;
 
-      // Medullary pore flecks
+      let r = br * (1 - combined) + (combined > 0.5 ? r2r : r1r) * combined;
+      let g = bg * (1 - combined) + (combined > 0.5 ? r2g : r1g) * combined;
+      let b = bb * (1 - combined) + (combined > 0.5 ? r2b : r1b) * combined;
+
+      // Medullary flecks have a subtle silvery/creamy luster
+      if (isMedullary) {
+        r = Math.min(255, r * 1.06 + 8);
+        g = Math.min(255, g * 1.06 + 8);
+        b = Math.min(255, b * 1.05 + 6);
+      }
+
+      // Medullary vessel pore flecks
       const isPore = ((x * 19 + y * 37) % 103 < 3) && Math.sin(x * 0.35) > 0.35;
-      const poreMultiplier = isPore ? 0.86 : 1.0;
+      const poreMultiplier = isPore ? 0.85 : 1.0;
 
       data[idx] = Math.round(r * poreMultiplier);
       data[idx + 1] = Math.round(g * poreMultiplier);
@@ -159,7 +172,12 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   diffuseMap.repeat.set(2, 2);
   diffuseMap.colorSpace = THREE.SRGBColorSpace;
 
-  // Roughness Map Canvas
+  // 2. Realistic Specular Roughness Map
+  // Calibrated oak specular response:
+  // - Medullary rays: silky smooth (roughness 0.32-0.38) catching glancing light flashes
+  // - Earlywood dense fibers: 0.50-0.56
+  // - Latewood ring edges: 0.65-0.72
+  // - Open vessel pores: high diffuse scatter (0.82-0.88)
   const rCanvas = document.createElement('canvas');
   rCanvas.width = width;
   rCanvas.height = height;
@@ -167,14 +185,30 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   if (rCtx) {
     const rImgData = rCtx.createImageData(width, height);
     const rData = rImgData.data;
-    for (let i = 0; i < data.length; i += 4) {
-      const lum = Math.round(data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
-      // Roughness 0.55 to 0.75 range
-      const roughVal = Math.round(140 + (lum / 255) * 50);
-      rData[i] = roughVal;
-      rData[i + 1] = roughVal;
-      rData[i + 2] = roughVal;
-      rData[i + 3] = 255;
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const idx = (y * width + x) * 4;
+        const lum = (data[idx] * 0.299 + data[idx + 1] * 0.587 + data[idx + 2] * 0.114) / 255;
+
+        const medullaryWave = Math.sin(x * 0.08 + Math.sin(y * 0.12) * 2.2);
+        const isMedullary = Math.abs(medullaryWave) < 0.08 && Math.sin(y * 0.45) > 0.3;
+        const isPore = ((x * 19 + y * 37) % 103 < 3) && Math.sin(x * 0.35) > 0.35;
+
+        let roughVal: number;
+        if (isPore) {
+          roughVal = 218; // ~0.85
+        } else if (isMedullary) {
+          roughVal = Math.round(85 + lum * 15); // ~0.35 specular sheen
+        } else {
+          // Subtle variance between smooth earlywood and textured latewood
+          roughVal = Math.round(135 + (1 - lum) * 45); // 0.53 - 0.70
+        }
+
+        rData[idx] = roughVal;
+        rData[idx + 1] = roughVal;
+        rData[idx + 2] = roughVal;
+        rData[idx + 3] = 255;
+      }
     }
     rCtx.putImageData(rImgData, 0, 0);
   }
@@ -184,7 +218,7 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   roughnessMap.wrapT = THREE.RepeatWrapping;
   roughnessMap.repeat.set(2, 2);
 
-  // Bump Map Canvas
+  // 3. Bump Map: Tactile pores and growth ring ridges
   const bCanvas = document.createElement('canvas');
   bCanvas.width = width;
   bCanvas.height = height;
@@ -192,12 +226,18 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   if (bCtx) {
     const bImgData = bCtx.createImageData(width, height);
     const bData = bImgData.data;
-    for (let i = 0; i < data.length; i += 4) {
-      const lum = Math.round(data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
-      bData[i] = lum;
-      bData[i + 1] = lum;
-      bData[i + 2] = lum;
-      bData[i + 3] = 255;
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const idx = (y * width + x) * 4;
+        const lum = Math.round(data[idx] * 0.299 + data[idx + 1] * 0.587 + data[idx + 2] * 0.114);
+        const isPore = ((x * 19 + y * 37) % 103 < 3) && Math.sin(x * 0.35) > 0.35;
+        // Deepen vessel pores in bump map
+        const bumpVal = isPore ? Math.max(0, lum - 55) : lum;
+        bData[idx] = bumpVal;
+        bData[idx + 1] = bumpVal;
+        bData[idx + 2] = bumpVal;
+        bData[idx + 3] = 255;
+      }
     }
     bCtx.putImageData(bImgData, 0, 0);
   }
@@ -207,7 +247,42 @@ function generateOakWoodTextures(finish: WoodFinish = 'whiteOak'): {
   bumpMap.wrapT = THREE.RepeatWrapping;
   bumpMap.repeat.set(2, 2);
 
-  return { diffuseMap, roughnessMap, bumpMap };
+  // 4. Warm Ambient Occlusion Map:
+  // Micro-crevices, ring valleys, and pore depressions receive warm, natural contact occlusion
+  const aoCanvas = document.createElement('canvas');
+  aoCanvas.width = width;
+  aoCanvas.height = height;
+  const aoCtx = aoCanvas.getContext('2d');
+  if (aoCtx) {
+    const aoImgData = aoCtx.createImageData(width, height);
+    const aoData = aoImgData.data;
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const idx = (y * width + x) * 4;
+        const lum = (data[idx] * 0.299 + data[idx + 1] * 0.587 + data[idx + 2] * 0.114) / 255;
+        const isPore = ((x * 19 + y * 37) % 103 < 3) && Math.sin(x * 0.35) > 0.35;
+
+        // Annular ring valleys and pores receive soft warm occlusion (values 145 to 255)
+        let aoVal = Math.round(180 + lum * 75);
+        if (isPore) {
+          aoVal = 145;
+        }
+        aoData[idx] = aoVal;
+        aoData[idx + 1] = aoVal;
+        aoData[idx + 2] = aoVal;
+        aoData[idx + 3] = 255;
+      }
+    }
+    aoCtx.putImageData(aoImgData, 0, 0);
+  }
+
+  const aoMap = new THREE.CanvasTexture(aoCanvas);
+  aoMap.wrapS = THREE.RepeatWrapping;
+  aoMap.wrapT = THREE.RepeatWrapping;
+  aoMap.repeat.set(2, 2);
+  aoMap.channel = 0;
+
+  return { diffuseMap, roughnessMap, bumpMap, aoMap };
 }
 
 /**
@@ -250,6 +325,12 @@ function createChamferedSlabGeometry(
   geom.rotateX(Math.PI / 2);
   geom.center();
   geom.computeVertexNormals();
+
+  // Ensure second UV channel is set for full compatibility with aoMap in all Three.js renderers
+  if (geom.attributes.uv && !geom.attributes.uv2) {
+    geom.setAttribute('uv2', geom.attributes.uv.clone());
+  }
+
   return geom;
 }
 
@@ -280,6 +361,7 @@ export const RealisticDeskModel: React.FC<RealisticDeskModelProps> = ({
       textures?.diffuseMap.dispose();
       textures?.roughnessMap.dispose();
       textures?.bumpMap.dispose();
+      textures?.aoMap.dispose();
     };
   }, [textures]);
 
@@ -297,16 +379,22 @@ export const RealisticDeskModel: React.FC<RealisticDeskModelProps> = ({
     }
   }, [woodFinish]);
 
-  // Desk Wood Material
+  // Fine-tuned Desk Oak Wood PBR Material
+  // Calibrated with organic specular roughness map, tactile pores, warm ambient occlusion,
+  // and subtle hardwax-oil satin clearcoat characteristic of fine Scandinavian furniture.
   const woodMaterial = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
+    return new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(woodColorHex),
       map: textures?.diffuseMap || null,
       roughnessMap: textures?.roughnessMap || null,
       bumpMap: textures?.bumpMap || null,
-      bumpScale: 0.15,
-      roughness: 0.65,
-      metalness: 0.04,
+      bumpScale: 0.12,
+      aoMap: textures?.aoMap || null,
+      aoMapIntensity: 1.15,
+      roughness: 0.58,
+      metalness: 0.02,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.42,
     });
   }, [woodColorHex, textures]);
 

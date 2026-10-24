@@ -241,6 +241,143 @@ function synthesizeSuccess(ctx: AudioContext, destination: AudioNode): void {
 }
 
 /**
+ * Synthesizes a high-frequency soft ceramic tap (~40ms).
+ * Acoustic signature: dual high-frequency sinusoidal ring (3400Hz + 5600Hz)
+ * passing through a bandpass filter with snappy exponential decay.
+ */
+function synthesizeCeramicTap(ctx: AudioContext, destination: AudioNode): void {
+  const now = ctx.currentTime;
+
+  // Primary ceramic fundamental resonance (~3400Hz)
+  const osc1 = ctx.createOscillator();
+  const gain1 = ctx.createGain();
+  const filter1 = ctx.createBiquadFilter();
+
+  filter1.type = 'bandpass';
+  filter1.frequency.setValueAtTime(3400, now);
+  filter1.Q.setValueAtTime(3.8, now);
+
+  osc1.type = 'sine';
+  osc1.frequency.setValueAtTime(3400, now);
+  osc1.frequency.exponentialRampToValueAtTime(3100, now + 0.04);
+
+  gain1.gain.setValueAtTime(0.18, now);
+  gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+  osc1.connect(filter1);
+  filter1.connect(gain1);
+  gain1.connect(destination);
+
+  osc1.start(now);
+  osc1.stop(now + 0.045);
+
+  // Secondary high ceramic overtone (~5600Hz) for crystalline surface clink
+  const osc2 = ctx.createOscillator();
+  const gain2 = ctx.createGain();
+
+  osc2.type = 'sine';
+  osc2.frequency.setValueAtTime(5600, now);
+  osc2.frequency.exponentialRampToValueAtTime(4900, now + 0.025);
+
+  gain2.gain.setValueAtTime(0.09, now);
+  gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+
+  osc2.connect(gain2);
+  gain2.connect(destination);
+
+  osc2.start(now);
+  osc2.stop(now + 0.03);
+}
+
+/**
+ * Synthesizes a smooth mechanical wood gliding sound (~220ms).
+ * Simulates solid Scandinavian oak drawer on precision ball-bearing runners.
+ *
+ * @param {boolean} isOpen - Whether drawer is sliding open or closed.
+ */
+function synthesizeWoodSlide(ctx: AudioContext, destination: AudioNode, isOpen: boolean): void {
+  const now = ctx.currentTime;
+  const duration = 0.22;
+
+  // 1. Procedural friction noise for wood slide contact
+  const bufferSize = Math.floor(ctx.sampleRate * duration);
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+
+  const noise = ctx.createBufferSource();
+  noise.buffer = noiseBuffer;
+
+  const bandpass = ctx.createBiquadFilter();
+  bandpass.type = 'bandpass';
+  bandpass.Q.setValueAtTime(2.4, now);
+
+  const noiseGain = ctx.createGain();
+
+  if (isOpen) {
+    // Sliding open: gentle glide acceleration, filter sweeps 420Hz -> 620Hz
+    bandpass.frequency.setValueAtTime(420, now);
+    bandpass.frequency.exponentialRampToValueAtTime(620, now + duration * 0.7);
+
+    noiseGain.gain.setValueAtTime(0.001, now);
+    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.05);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+  } else {
+    // Sliding closed: deceleration glide into flush closure, filter sweeps 650Hz -> 360Hz
+    bandpass.frequency.setValueAtTime(650, now);
+    bandpass.frequency.exponentialRampToValueAtTime(360, now + duration * 0.75);
+
+    noiseGain.gain.setValueAtTime(0.13, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+  }
+
+  noise.connect(bandpass);
+  bandpass.connect(noiseGain);
+  noiseGain.connect(destination);
+
+  noise.start(now);
+  noise.stop(now + duration);
+
+  // 2. Wood drawer acoustic box body resonance (160Hz - 220Hz low warmth)
+  const woodBodyOsc = ctx.createOscillator();
+  const woodBodyGain = ctx.createGain();
+
+  woodBodyOsc.type = 'triangle';
+  woodBodyOsc.frequency.setValueAtTime(isOpen ? 190 : 220, now);
+  woodBodyOsc.frequency.exponentialRampToValueAtTime(isOpen ? 140 : 120, now + duration * 0.85);
+
+  woodBodyGain.gain.setValueAtTime(0.07, now);
+  woodBodyGain.gain.exponentialRampToValueAtTime(0.001, now + duration * 0.85);
+
+  woodBodyOsc.connect(woodBodyGain);
+  woodBodyGain.connect(destination);
+
+  woodBodyOsc.start(now);
+  woodBodyOsc.stop(now + duration);
+
+  // 3. Tactile bottom-out / latch thud at completion
+  const latchTime = now + (isOpen ? 0.16 : 0.17);
+  const latchOsc = ctx.createOscillator();
+  const latchGain = ctx.createGain();
+
+  latchOsc.type = 'sine';
+  latchOsc.frequency.setValueAtTime(isOpen ? 240 : 160, latchTime);
+  latchOsc.frequency.exponentialRampToValueAtTime(isOpen ? 110 : 80, latchTime + 0.035);
+
+  latchGain.gain.setValueAtTime(0, now);
+  latchGain.gain.setValueAtTime(isOpen ? 0.09 : 0.14, latchTime);
+  latchGain.gain.exponentialRampToValueAtTime(0.001, latchTime + 0.038);
+
+  latchOsc.connect(latchGain);
+  latchGain.connect(destination);
+
+  latchOsc.start(latchTime);
+  latchOsc.stop(latchTime + 0.04);
+}
+
+/**
  * Primary API: Play a crisp tactile audio feedback event.
  *
  * @param {'tick' | 'snap' | 'success' | 'toggle' | 'tab' | 'cart' | 'download'} type
@@ -275,3 +412,54 @@ export function playClickSound(type: SoundType = 'tick'): void {
     console.debug('[AudioSystem] Audio playback blocked or uninitialized:', err);
   }
 }
+
+/**
+ * Play a smooth mechanical wood gliding sound when the desk drawer slides open or closed.
+ * Synthesizes procedural wood-on-wood and precision runner friction + bottom-out latch.
+ *
+ * @param {boolean} isOpen - True if opening drawer forward, false if sliding flush shut.
+ */
+export function playDrawerSlideSound(isOpen: boolean): void {
+  if (isSoundMuted()) return;
+
+  try {
+    const ctx = getAudioContext();
+    if (!ctx || !masterGain) return;
+    synthesizeWoodSlide(ctx, masterGain, isOpen);
+  } catch (err) {
+    console.debug('[AudioSystem] Drawer slide audio blocked:', err);
+  }
+}
+
+/**
+ * Play a crisp tactile mechanical click when a new preset or dimension stepper is pressed.
+ * Emulates Dieter Rams / Braun microswitch detent with instant tactile confirmation.
+ */
+export function playSnapPresetSound(): void {
+  if (isSoundMuted()) return;
+
+  try {
+    const ctx = getAudioContext();
+    if (!ctx || !masterGain) return;
+    synthesizeSnap(ctx, masterGain);
+  } catch (err) {
+    console.debug('[AudioSystem] Snap preset audio blocked:', err);
+  }
+}
+
+/**
+ * Play a high-frequency soft ceramic tap when a material finish or resin swatch is clicked.
+ * Acoustic profile: dual-mode high-Q resonant glass/ceramic surface clink.
+ */
+export function playMaterialSwitchSound(): void {
+  if (isSoundMuted()) return;
+
+  try {
+    const ctx = getAudioContext();
+    if (!ctx || !masterGain) return;
+    synthesizeCeramicTap(ctx, masterGain);
+  } catch (err) {
+    console.debug('[AudioSystem] Material tap audio blocked:', err);
+  }
+}
+

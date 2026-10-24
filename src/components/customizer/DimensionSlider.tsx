@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Minus, Plus } from 'lucide-react';
-import { playClickSound } from '../../lib/soundEffects';
+import { playClickSound, playSnapPresetSound } from '../../lib/soundEffects';
 
 interface DimensionSliderProps {
   label: string;
@@ -37,13 +37,13 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
   const inchesDisplay = showInches || unit === 'mm' ? `${(value / 25.4).toFixed(1)} in` : null;
   const handleDecrement = () => {
     const newVal = Math.max(min, Number((value - step).toFixed(1)));
-    playClickSound('tick');
+    playSnapPresetSound();
     onChange(newVal);
   };
 
   const handleIncrement = () => {
     const newVal = Math.min(max, Number((value + step).toFixed(1)));
-    playClickSound('tick');
+    playSnapPresetSound();
     onChange(newVal);
   };
 
@@ -51,7 +51,7 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
     const parsed = parseFloat(e.target.value);
     if (!isNaN(parsed)) {
       const clamped = Math.max(min, Math.min(max, parsed));
-      playClickSound('tick');
+      playSnapPresetSound();
       onChange(clamped);
     }
   };

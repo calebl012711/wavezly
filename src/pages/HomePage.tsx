@@ -4,7 +4,12 @@
  * - Pure white / porcelain background (#FAFAFA)
  * - Hero showcase & category highlights
  * - Main 2-column mobile / 4-column desktop product catalog
- * - Dedicated customizer banner
+ * - Cohesive luxury-grade transition into Custom 3D Studio:
+ *   * White background with subtle ambient warmth
+ *   * Electric orange accents (#FF6B00)
+ *   * Crisp slate typography (#0F172A / slate-600)
+ *   * Direct millimeter preset launch pills
+ *   * 3-Stage precision Made-to-Measure pipeline
  * - Honest guarantees & real customer reviews
  */
 
@@ -16,6 +21,11 @@ import {
   ShieldCheck,
   ArrowRight,
   Leaf,
+  Sparkles,
+  Sliders,
+  Check,
+  Layers,
+  Ruler,
 } from 'lucide-react';
 import { AmazonHero } from '../components/landing/AmazonHero';
 import { ProductGrid } from '../components/landing/ProductGrid';
@@ -55,6 +65,13 @@ const REVIEWS = [
   },
 ];
 
+const POPULAR_STUDIO_PRESETS = [
+  { name: 'IKEA Alex (300 × 520 mm)', tag: 'Most Popular' },
+  { name: 'IKEA Alex Wide (400 × 520 mm)', tag: 'Office' },
+  { name: 'Herman Miller Tu (380 × 460 mm)', tag: 'Desk' },
+  { name: 'Custom Millimeter Spec', tag: 'Any Size' },
+];
+
 export const HomePage: React.FC<HomePageProps> = ({
   onNavigateToCustomizer,
   onCustomizeProduct,
@@ -88,38 +105,176 @@ export const HomePage: React.FC<HomePageProps> = ({
         />
       </section>
 
-      {/* 3. DEDICATED MADE-TO-MEASURE CUSTOMIZER BANNER */}
+      {/* 3. COHESIVE LUXURY-GRADE CUSTOM 3D STUDIO SHOWCASE BANNER */}
+      {/* Pure white background with electric orange accents and crisp slate typography */}
       <section className="max-w-7xl mx-auto px-3 sm:px-6 my-10 sm:my-16">
-        <div className="bg-[#0F172A] rounded-2xl sm:rounded-3xl p-6 sm:p-12 text-white relative overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#FF6B00]/15 blur-3xl pointer-events-none" />
+        {/* Transitional Header Bridge */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 px-1 gap-2">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-bold text-[#FF6B00] uppercase tracking-wider mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Parametric Made-to-Measure Studio</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
+              Beyond standard catalog goods: exact fit to the millimeter.
+            </h2>
+          </div>
+          <span className="text-xs text-zinc-500 font-medium">
+            ✦ 100% Guaranteed Zero-Gap Fit • Free Remakes
+          </span>
+        </div>
 
-          <div className="relative z-10 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-orange-400 text-xs font-semibold mb-3.5 backdrop-blur-xs">
-              <Box className="w-3.5 h-3.5" />
-              <span>3D Customizer Studio</span>
+        {/* Studio Showcase Card */}
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-zinc-200/90 shadow-sm relative overflow-hidden">
+          {/* Subtle warm electric orange ambient backlight */}
+          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#FF6B00]/5 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-slate-500/5 blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left: Studio Proposition & Preset Launchers (7 cols) */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/70 text-[#FF6B00] text-xs font-bold mb-3.5 self-start">
+                <Box className="w-3.5 h-3.5" />
+                <span>Wavezly 3D Customizer</span>
+              </div>
+
+              <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#0F172A] leading-tight">
+                Need an organizer tailored to your{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] to-[#FF8A00]">
+                  exact drawer?
+                </span>
+              </h3>
+
+              <p className="mt-3.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl">
+                Measure your drawer width and depth down to the millimeter. Our studio generates the 3D model in real time and prints an exact zero-gap fit with domestic 48h dispatch.
+              </p>
+
+              {/* 3-Stage Precision Engineering Process */}
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="p-3 rounded-xl bg-zinc-50/80 border border-zinc-200/70">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 mb-1">
+                    <Ruler className="w-3.5 h-3.5 text-[#FF6B00]" />
+                    <span>01 / Measure (mm)</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 leading-normal">
+                    Enter width & depth down to 0.1 mm or pick an IKEA preset.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-zinc-50/80 border border-zinc-200/70">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 mb-1">
+                    <Layers className="w-3.5 h-3.5 text-[#FF6B00]" />
+                    <span>02 / Live 3D Mesh</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 leading-normal">
+                    Parametric dividers adjust instantly with live 3D preview.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-zinc-50/80 border border-zinc-200/70">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900 mb-1">
+                    <Truck className="w-3.5 h-3.5 text-[#FF6B00]" />
+                    <span>03 / 48h Farm Print</span>
+                  </div>
+                  <p className="text-[11px] text-zinc-500 leading-normal">
+                    Manufactured in renewable PLA and shipped in 2 days.
+                  </p>
+                </div>
+              </div>
+
+              {/* Quick Preset Launch Pills */}
+              <div className="mt-5 pt-4 border-t border-zinc-100">
+                <div className="text-xs font-semibold text-slate-700 mb-2">
+                  Launch with Popular Dimensions:
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {POPULAR_STUDIO_PRESETS.map((preset) => (
+                    <button
+                      key={preset.name}
+                      type="button"
+                      onClick={onNavigateToCustomizer}
+                      className="px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-orange-50 hover:text-[#FF6B00] hover:border-orange-200 text-xs text-slate-700 font-medium border border-zinc-200/70 transition flex items-center gap-1.5 cursor-pointer active:scale-95"
+                    >
+                      <span>{preset.name}</span>
+                      <span className="text-[10px] text-zinc-400 bg-white px-1.5 py-0.5 rounded border border-zinc-200/60 font-semibold">
+                        {preset.tag}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons & Reassurance */}
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={onNavigateToCustomizer}
+                  className="h-11 sm:h-12 px-6 sm:px-7 rounded-full bg-[#FF6B00] hover:bg-[#ea5f00] text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-2 cursor-pointer active:scale-95 group"
+                >
+                  <span>Launch 3D Studio</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
+                <div className="flex items-center gap-3 text-xs text-zinc-600 font-medium">
+                  <span className="flex items-center gap-1 text-slate-800">
+                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>100% Fit Guarantee</span>
+                  </span>
+                  <span className="text-zinc-300">•</span>
+                  <span className="flex items-center gap-1 text-slate-800">
+                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>Free Remakes</span>
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-              Need an organizer tailored to your exact drawer?
-            </h2>
+            {/* Right: Studio Architectural CAD Preview Box (5 cols) */}
+            <div className="lg:col-span-5">
+              <div className="bg-zinc-50 rounded-2xl p-5 border border-zinc-200/80 relative">
+                {/* Visual CAD Grid & Dimension Annotations */}
+                <div className="relative aspect-square sm:aspect-[4/3] rounded-xl bg-white border border-zinc-200/70 overflow-hidden flex items-center justify-center p-4">
+                  {/* Grid Lines */}
+                  <div
+                    className="absolute inset-0 opacity-40 pointer-events-none"
+                    style={{
+                      backgroundImage: `linear-gradient(to right, #E2E8F0 1px, transparent 1px), linear-gradient(to bottom, #E2E8F0 1px, transparent 1px)`,
+                      backgroundSize: '20px 20px',
+                    }}
+                  />
 
-            <p className="mt-3 text-xs sm:text-sm text-zinc-300 leading-relaxed">
-              Measure your drawer width and depth down to the millimeter. Our studio generates the 3D model in real time and prints an exact zero-gap fit.
-            </p>
+                  {/* Real Organizer Product Image with Dimension Overlays */}
+                  <img
+                    src="/assets/products/drawer-matrix-real.jpg"
+                    alt="Wavezly Custom Drawer Organizer 3D Studio"
+                    className="w-full h-full object-cover rounded-lg shadow-xs"
+                  />
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={onNavigateToCustomizer}
-                className="h-11 sm:h-12 px-6 sm:px-7 rounded-full bg-[#FF6B00] hover:bg-[#ea5f00] text-white font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-2 cursor-pointer active:scale-95"
-              >
-                <span>Launch 3D Studio</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <span className="text-xs text-zinc-400 font-medium">
-                100% Fit Guarantee • Ships in 48h
-              </span>
+                  {/* Dimension Tag (Top Left) */}
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-md bg-white/95 text-[11px] font-bold text-[#0F172A] shadow-xs border border-zinc-200">
+                      W: 300 mm • D: 520 mm
+                    </span>
+                  </div>
+
+                  {/* Guaranteed Fit Pill (Bottom Right) */}
+                  <div className="absolute bottom-3 right-3">
+                    <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#0F172A] text-white text-[11px] font-bold shadow-sm">
+                      <span className="text-[#FF6B00]">✦</span>
+                      <span>Zero-Gap Tolerance (0.0mm)</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Studio Feature Bullet Points */}
+                <div className="mt-4 pt-3 border-t border-zinc-200/70 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1 text-slate-700 font-semibold">
+                    <Sliders className="w-3.5 h-3.5 text-[#FF6B00]" />
+                    <span>Parametric Grid System</span>
+                  </div>
+                  <span className="text-zinc-500 font-mono">From $39.00</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

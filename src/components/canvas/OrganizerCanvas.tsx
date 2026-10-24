@@ -22,10 +22,12 @@ import { RealisticDeskModel } from './RealisticDeskModel';
 import { SlidingDrawerUnit } from './SlidingDrawerUnit';
 import { DeskLifestyleProps } from './DeskLifestyleProps';
 import { CameraController, CameraViewMode } from './CameraController';
+import { OrganizerGearLoadout } from './OrganizerGearLoadout';
 import { ParametricOrganizerDimensions, MaterialOption } from '../../types';
 import { LightingPreset, useCustomizerStore } from '../../store/useCustomizerStore';
-import { playClickSound } from '../../lib/soundEffects';
-import { Eye, ZoomIn, Rotate3d, Lock } from 'lucide-react';
+import { playDrawerSlideSound, playSnapPresetSound } from '../../lib/soundEffects';
+import { LightingPresetSwitcher } from './StudioEnvironment';
+import { Eye, ZoomIn, Rotate3d, Lock, Sparkles } from 'lucide-react';
 
 export interface OrganizerCanvasProps {
   dimensions: ParametricOrganizerDimensions;
@@ -44,8 +46,10 @@ export interface OrganizerCanvasProps {
   enableDrawer?: boolean;
   viewMode?: CameraViewMode;
   isDrawerOpen?: boolean;
+  showGearLoadout?: boolean;
   onToggleDrawer?: () => void;
   onViewModeChange?: (mode: CameraViewMode) => void;
+  onToggleGearLoadout?: () => void;
 }
 
 /**
@@ -113,8 +117,10 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   enableDrawer = true,
   viewMode: propsViewMode,
   isDrawerOpen: propsIsDrawerOpen,
+  showGearLoadout: propsShowGearLoadout,
   onToggleDrawer,
   onViewModeChange,
+  onToggleGearLoadout,
 }) => {
   const controlsRef = useRef<OrbitControlsImpl>(null);
   const [isTouchActive, setIsTouchActive] = useState(false);
@@ -139,9 +145,12 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   const storeToggleDrawer = useCustomizerStore((state) => state.toggleDrawerOpen);
   const storeViewMode = useCustomizerStore((state) => state.viewMode);
   const storeSetViewMode = useCustomizerStore((state) => state.setViewMode);
+  const storeShowGearLoadout = useCustomizerStore((state) => state.showGearLoadout);
+  const storeToggleGearLoadout = useCustomizerStore((state) => state.toggleGearLoadout);
 
   const [localDrawerOpen, setLocalDrawerOpen] = useState(initialDrawerOpen);
   const [localViewMode, setLocalViewMode] = useState<CameraViewMode>('desk');
+  const [localShowGearLoadout, setLocalShowGearLoadout] = useState(true);
 
   const drawerOpen =
     propsIsDrawerOpen !== undefined
@@ -157,6 +166,24 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
       ? (storeViewMode as CameraViewMode)
       : localViewMode;
 
+  const showGearLoadout =
+    propsShowGearLoadout !== undefined
+      ? propsShowGearLoadout
+      : storeShowGearLoadout !== undefined
+      ? storeShowGearLoadout
+      : localShowGearLoadout;
+
+  const toggleGearLoadout = useCallback(() => {
+    if (onToggleGearLoadout) {
+      onToggleGearLoadout();
+    } else if (storeToggleGearLoadout) {
+      storeToggleGearLoadout();
+    } else {
+      setLocalShowGearLoadout((prev) => !prev);
+    }
+    playSnapPresetSound();
+  }, [onToggleGearLoadout, storeToggleGearLoadout]);
+
   const slideDistance = dimensions.width * 0.82 + 45;
   const [drawerSlideZ, setDrawerSlideZ] = useState(drawerOpen ? slideDistance : 0);
 
@@ -166,6 +193,7 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   }, [drawerOpen, slideDistance]);
 
   const toggleDrawer = useCallback(() => {
+    const nextState = !drawerOpen;
     if (onToggleDrawer) {
       onToggleDrawer();
     } else if (storeToggleDrawer) {
@@ -173,8 +201,8 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
     } else {
       setLocalDrawerOpen((prev) => !prev);
     }
-    playClickSound('snap');
-  }, [onToggleDrawer, storeToggleDrawer]);
+    playDrawerSlideSound(nextState);
+  }, [drawerOpen, onToggleDrawer, storeToggleDrawer]);
 
   const handleViewModeChange = useCallback(
     (mode: CameraViewMode) => {
@@ -185,7 +213,7 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
       } else {
         setLocalViewMode(mode);
       }
-      playClickSound('tab');
+      playSnapPresetSound();
     },
     [onViewModeChange, storeSetViewMode]
   );
@@ -206,6 +234,11 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
         <span className="font-semibold text-[#0F172A] dark:text-zinc-200">
           3D Studio
         </span>
+      </div>
+
+      {/* Cinematic Lighting Atmosphere Switcher (Bottom-Left) */}
+      <div className="absolute bottom-9 sm:bottom-8 left-3 sm:left-4 z-20 pointer-events-auto">
+        <LightingPresetSwitcher />
       </div>
 
       {/* Mobile Touch to Rotate / Lock Scroll Pill */}
@@ -279,7 +312,22 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
             </button>
           )}
 
-          {/* Pill 2: View Mode Switcher (Desk Environment vs Close-up Product) */}
+          {/* Pill 2: Staged EDC Gear Loadout Toggle */}
+          <button
+            type="button"
+            onClick={toggleGearLoadout}
+            title={showGearLoadout ? 'Hide staged EDC gear items' : 'Stage EDC gear items in tray compartments'}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[38px] ${
+              showGearLoadout
+                ? 'bg-[#FF6B00]/10 dark:bg-[#FF6B00]/20 text-[#FF6B00] border-[#FF6B00]/40 shadow-xs'
+                : 'bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 border-zinc-200/80 dark:border-zinc-700/80 hover:bg-white'
+            }`}
+          >
+            <Sparkles className={`w-3.5 h-3.5 ${showGearLoadout ? 'text-[#FF6B00]' : 'text-zinc-400'}`} />
+            <span>✦ Staged EDC Gear ({showGearLoadout ? 'On' : 'Off'})</span>
+          </button>
+
+          {/* Pill 3: View Mode Switcher (Desk Environment vs Close-up Product) */}
           <div className="flex items-center p-0.5 rounded-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-700/80 shadow-xs">
             <button
               type="button"
@@ -376,18 +424,28 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
                   explodedOffset={explodedOffset}
                   onMeshReady={onMeshReady}
                 />
+                <OrganizerGearLoadout
+                  dimensions={dimensions}
+                  visible={showGearLoadout}
+                />
               </SlidingDrawerUnit>
             ) : (
-              <ParametricMesh
-                dimensions={dimensions}
-                material={material}
-                resinInlay={resinInlay}
-                wireframe={wireframe}
-                engravedText={engravedText}
-                sliceHeight={sliceHeight}
-                explodedOffset={explodedOffset}
-                onMeshReady={onMeshReady}
-              />
+              <>
+                <ParametricMesh
+                  dimensions={dimensions}
+                  material={material}
+                  resinInlay={resinInlay}
+                  wireframe={wireframe}
+                  engravedText={engravedText}
+                  sliceHeight={sliceHeight}
+                  explodedOffset={explodedOffset}
+                  onMeshReady={onMeshReady}
+                />
+                <OrganizerGearLoadout
+                  dimensions={dimensions}
+                  visible={showGearLoadout}
+                />
+              </>
             )}
 
             {/* 4. Desk Lifestyle Props (Glowing Voronoi Lamp, Ceramic Mug, Notebook, Pen) */}
@@ -399,7 +457,24 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
               showPen={true}
               showDeskMat={true}
               showEarbuds={true}
-              lampIntensity={3.8}
+              lampIntensity={
+                lightingPreset === 'evening'
+                  ? 5.5
+                  : lightingPreset === 'warm'
+                  ? 4.6
+                  : lightingPreset === 'cyberpunk'
+                  ? 2.4
+                  : 3.8
+              }
+              lampLightColor={
+                lightingPreset === 'evening'
+                  ? '#FFA858'
+                  : lightingPreset === 'warm'
+                  ? '#F59E0B'
+                  : lightingPreset === 'cyberpunk'
+                  ? '#FB923C'
+                  : '#FFA858'
+              }
               visible={true}
             />
 

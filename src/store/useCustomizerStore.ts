@@ -251,6 +251,7 @@ export interface CustomizerStoreState {
   // Drawer & Environmental View Mode State
   viewMode: 'desk' | 'closeup';
   isDrawerOpen: boolean;
+  showGearLoadout: boolean;
 
   // Actions
   setDimension: (key: keyof ParametricOrganizerDimensions, value: number) => void;
@@ -262,6 +263,8 @@ export interface CustomizerStoreState {
   setMeshRef: (group: THREE.Group) => void;
   toggleAutoRotate: () => void;
   toggleWireframe: () => void;
+  toggleGearLoadout: () => void;
+  setShowGearLoadout: (show: boolean) => void;
   setEngravedText: (text: string) => void;
   setSliceHeight: (val: number) => void;
   setExplodedOffset: (val: number) => void;
@@ -310,6 +313,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
   // Environmental Drawer & View Mode State
   viewMode: 'closeup',
   isDrawerOpen: true,
+  showGearLoadout: true,
 
   setDimension: (key, value) => {
     const { dimensions, selectedMaterial, selectedResin } = get();
@@ -390,6 +394,14 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
     set((state) => ({ wireframe: !state.wireframe }));
   },
 
+  toggleGearLoadout: () => {
+    set((state) => ({ showGearLoadout: !state.showGearLoadout }));
+  },
+
+  setShowGearLoadout: (show) => {
+    set({ showGearLoadout: show });
+  },
+
   setEngravedText: (text) => {
     set({ engravedText: text.toUpperCase().substring(0, 24) });
   },
@@ -467,6 +479,7 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       explodedOffset: 0,
       viewMode: 'closeup',
       isDrawerOpen: true,
+      showGearLoadout: true,
       telemetry,
     });
   },

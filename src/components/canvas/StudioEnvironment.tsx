@@ -1,16 +1,21 @@
 /**
  * SCANDINAVIAN DESK LIGHTING & STUDIO ATMOSPHERE RIG
  * Multi-preset precision illumination engineered for natural wood grain, matte polymer & resin finishes.
- * Presets:
- * 1. Warm Morning Sun: Directional warm sunlight (#FFF6EC, 1.8), soft sky ambient (#E8F0FE, 0.6), natural window fill.
- * 2. Minimalist Studio: Balanced architectural softbox illumination (#FFFFFF, 1.8), crisp neutral daylight.
- * 3. Cozy Evening: Atmospheric warm incandescent desk lamp glow (#FED7AA, #F59E0B), gentle dusk window contrast.
+ * 7 Cinematic Presets:
+ * 1. Morning: Warm golden hour sun (4800K, angled window light casting soft desk shadows)
+ * 2. Studio: Neutral Scandinavian design studio (5500K balanced diffuse light, zero harsh glare)
+ * 3. Evening: Moody cozy dusk (warm 2700K ambient glow from the Voronoi mushroom lamp, deep twilight window fill)
+ * 4. Daylight: Bright California midday sun (6000K crisp white highlights)
+ * 5. Laboratory: Precision QC bench (pure clean surgical neutral white, high CRI)
+ * 6. Warm: Hearth & walnut warm interior glow (3000K amber)
+ * 7. Cyberpunk: Modern neon maker accent (electric orange and subtle violet rim light)
  */
 
 import React from 'react';
 import { ContactShadows, Environment, Lightformer } from '@react-three/drei';
-import { Sun, Lamp, SlidersHorizontal } from 'lucide-react';
+import { Sun, Lamp, SlidersHorizontal, SunMedium, Microscope, Flame, Zap } from 'lucide-react';
 import { useCustomizerStore, LightingPreset } from '../../store/useCustomizerStore';
+import { playSnapPresetSound } from '../../lib/soundEffects';
 
 export interface LightingPresetInfo {
   id: LightingPreset;
@@ -30,19 +35,19 @@ export const LIGHTING_PRESETS_METADATA: Record<LightingPreset, LightingPresetInf
     name: 'Warm Morning Sun',
     subtitle: 'Golden Hour Scandinavian Window Light',
     badge: '4800K SUN',
-    cct: '4800K Sunlight',
-    description: 'Angled warm sunlight key light (#FFF6EC) with soft sky ambient fill (#E8F0FE) illuminating the natural Scandinavian wood desk.',
+    cct: '4800K Warm Sunlight',
+    description: 'Angled warm sunlight key light (#FFF6EC) with soft sky ambient fill (#E8F0FE) casting soft desk shadows on natural Scandinavian wood.',
     primaryColor: '#FFF6EC',
     accentColor: '#E8F0FE',
     gradient: 'from-amber-100 via-orange-50 to-sky-100',
   },
   studio: {
     id: 'studio',
-    name: 'Minimalist Studio',
+    name: 'Scandinavian Studio',
     subtitle: 'Balanced Architectural Softbox Illumination',
     badge: '5500K STUDIO',
-    cct: '5500K Neutral',
-    description: 'Clean Scandinavian design studio lighting with balanced softbox overheads and crisp edge highlights.',
+    cct: '5500K Neutral White',
+    description: 'Clean Scandinavian design studio lighting with balanced softbox overheads, diffuse fill, and zero harsh glare.',
     primaryColor: '#FFFFFF',
     accentColor: '#E2E8F0',
     gradient: 'from-slate-100 via-zinc-100 to-slate-200',
@@ -50,57 +55,57 @@ export const LIGHTING_PRESETS_METADATA: Record<LightingPreset, LightingPresetInf
   evening: {
     id: 'evening',
     name: 'Cozy Evening',
-    subtitle: 'Warm Task Lamp & Amber Dusk Glow',
-    badge: '2700K COZY',
-    cct: '2700K Amber',
-    description: 'Atmospheric evening mood with an incandescent desk lamp glow, gentle dusk window contrast, and rich wood grain highlights.',
+    subtitle: 'Voronoi Lamp & Amber Dusk Glow',
+    badge: '2700K DUSK',
+    cct: '2700K Cozy Amber',
+    description: 'Moody cozy dusk with warm 2700K ambient glow from the Voronoi mushroom lamp and deep twilight window fill.',
     primaryColor: '#FED7AA',
-    accentColor: '#F59E0B',
-    gradient: 'from-amber-200 via-orange-300 to-amber-600',
+    accentColor: '#0284C7',
+    gradient: 'from-amber-200 via-orange-300 to-sky-800',
   },
   daylight: {
     id: 'daylight',
-    name: 'Warm Morning Sun',
-    subtitle: 'Golden Hour Scandinavian Window Light',
-    badge: '4800K SUN',
-    cct: '4800K Sunlight',
-    description: 'Angled warm sunlight key light (#FFF6EC) with soft sky ambient fill (#E8F0FE) illuminating the natural Scandinavian wood desk.',
-    primaryColor: '#FFF6EC',
-    accentColor: '#E8F0FE',
-    gradient: 'from-amber-100 via-orange-50 to-sky-100',
+    name: 'California Daylight',
+    subtitle: 'Bright High-Noon Sun & Crisp Highlights',
+    badge: '6000K DAYLIGHT',
+    cct: '6000K Crisp Sunlight',
+    description: 'Bright California midday sun with 6000K crisp white specular highlights, open sky fill, and defined contact shadows.',
+    primaryColor: '#F0F9FF',
+    accentColor: '#38BDF8',
+    gradient: 'from-sky-100 via-cyan-50 to-blue-200',
   },
   laboratory: {
     id: 'laboratory',
-    name: 'Minimalist Studio',
-    subtitle: 'Balanced Architectural Softbox Illumination',
-    badge: '5500K STUDIO',
-    cct: '5500K Neutral',
-    description: 'Clean Scandinavian design studio lighting with balanced softbox overheads and crisp edge highlights.',
-    primaryColor: '#FFFFFF',
-    accentColor: '#E2E8F0',
-    gradient: 'from-slate-100 via-zinc-100 to-slate-200',
+    name: 'Precision QC Bench',
+    subtitle: 'Surgical High-CRI Neutral White',
+    badge: '6500K QC',
+    cct: '6500K Pure White',
+    description: 'Precision inspection bench illumination with pure clean surgical neutral white, dual overhead LED panels, and ultra-high CRI.',
+    primaryColor: '#F8FAFC',
+    accentColor: '#94A3B8',
+    gradient: 'from-zinc-100 via-slate-100 to-zinc-300',
   },
   warm: {
     id: 'warm',
-    name: 'Cozy Evening',
-    subtitle: 'Warm Task Lamp & Amber Dusk Glow',
-    badge: '2700K COZY',
-    cct: '2700K Amber',
-    description: 'Atmospheric evening mood with an incandescent desk lamp glow, gentle dusk window contrast, and rich wood grain highlights.',
-    primaryColor: '#FED7AA',
-    accentColor: '#F59E0B',
-    gradient: 'from-amber-200 via-orange-300 to-amber-600',
+    name: 'Hearth & Walnut',
+    subtitle: 'Rich 3000K Interior Amber Glow',
+    badge: '3000K HEARTH',
+    cct: '3000K Warm Amber',
+    description: 'Hearth and walnut warm interior glow with rich 3000K amber bounce, deep hardwood warmth, and soft enveloping shadows.',
+    primaryColor: '#FDE68A',
+    accentColor: '#D97706',
+    gradient: 'from-amber-200 via-orange-200 to-amber-500',
   },
   cyberpunk: {
     id: 'cyberpunk',
-    name: 'Nordic Twilight',
-    subtitle: 'Subtle Slate & Aurora Accent',
-    badge: 'TWILIGHT',
-    cct: '6500K / 4200K',
-    description: 'Late evening Nordic dusk with gentle cool fill and refined warm desk focus.',
-    primaryColor: '#38BDF8',
-    accentColor: '#FB923C',
-    gradient: 'from-sky-300 to-amber-300',
+    name: 'Neon Maker Accent',
+    subtitle: 'Electric Orange & Subtle Violet Rim Light',
+    badge: 'MAKER NEON',
+    cct: 'Orange & Violet',
+    description: 'Modern neon maker accent with high-contrast electric orange rim lighting and subtle violet/cyan atmospheric kickers.',
+    primaryColor: '#FF6B00',
+    accentColor: '#A855F7',
+    gradient: 'from-orange-400 via-pink-500 to-purple-600',
   },
 };
 
@@ -108,16 +113,26 @@ export const LIGHTING_PRESET_KEYS: LightingPreset[] = [
   'morning',
   'studio',
   'evening',
+  'daylight',
+  'laboratory',
+  'warm',
+  'cyberpunk',
 ];
 
-export type NormalizedLightingPreset = 'morning' | 'studio' | 'evening' | 'cyberpunk';
-
-export function normalizeLightingPreset(preset: LightingPreset | string | undefined): NormalizedLightingPreset {
+export function normalizeLightingPreset(preset: LightingPreset | string | undefined): LightingPreset {
   if (!preset) return 'morning';
-  if (preset === 'morning' || preset === 'daylight') return 'morning';
-  if (preset === 'studio' || preset === 'laboratory') return 'studio';
-  if (preset === 'evening' || preset === 'warm') return 'evening';
-  if (preset === 'cyberpunk') return 'cyberpunk';
+  const valid: LightingPreset[] = [
+    'morning',
+    'studio',
+    'evening',
+    'daylight',
+    'laboratory',
+    'warm',
+    'cyberpunk',
+  ];
+  if (valid.includes(preset as LightingPreset)) {
+    return preset as LightingPreset;
+  }
   return 'morning';
 }
 
@@ -138,6 +153,7 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
     <>
       {/* Dynamic PBR Reflection Environment Map */}
       <Environment key={normalizedPreset} resolution={256} frames={1}>
+        {/* 1. MORNING SUN */}
         {normalizedPreset === 'morning' && (
           <group>
             {/* Direct morning sunbeam through casement window */}
@@ -179,6 +195,7 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
           </group>
         )}
 
+        {/* 2. MINIMALIST STUDIO */}
         {normalizedPreset === 'studio' && (
           <group>
             {/* Large architectural ceiling softbox */}
@@ -211,6 +228,7 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
           </group>
         )}
 
+        {/* 3. COZY EVENING */}
         {normalizedPreset === 'evening' && (
           <group>
             {/* Focused 2700K incandescent desk lamp reflector glow */}
@@ -243,43 +261,162 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
           </group>
         )}
 
-        {normalizedPreset === 'cyberpunk' && (
+        {/* 4. CALIFORNIA DAYLIGHT */}
+        {normalizedPreset === 'daylight' && (
           <group>
+            {/* Direct high-noon California sun disc */}
             <Lightformer
-              form="rect"
-              intensity={3.5}
-              color="#38BDF8"
-              scale={[2, 25, 1]}
-              position={[-18, 6, -12]}
+              form="circle"
+              intensity={3.2}
+              color="#F0F9FF"
+              scale={18}
+              position={[10, 26, 8]}
               target={[0, 0, 0]}
             />
-            <Lightformer
-              form="rect"
-              intensity={3.5}
-              color="#FB923C"
-              scale={[2, 25, 1]}
-              position={[18, 6, -12]}
-              target={[0, 0, 0]}
-            />
+            {/* Pure sky dome ambient reflector */}
             <Lightformer
               form="rect"
               intensity={1.5}
-              color="#E0F2FE"
-              scale={[20, 20, 1]}
-              position={[0, 22, 0]}
+              color="#BAE6FD"
+              scale={[40, 40, 1]}
+              position={[0, 20, 0]}
               rotation={[-Math.PI / 2, 0, 0]}
+            />
+            {/* Crisp rim kicker */}
+            <Lightformer
+              form="rect"
+              intensity={1.6}
+              color="#FFFFFF"
+              scale={[30, 6, 1]}
+              position={[-20, 16, -18]}
+              target={[0, 0, 0]}
+            />
+          </group>
+        )}
+
+        {/* 5. PRECISION QC BENCH / LABORATORY */}
+        {normalizedPreset === 'laboratory' && (
+          <group>
+            {/* Dual linear overhead LED inspection bars */}
+            <Lightformer
+              form="rect"
+              intensity={2.6}
+              color="#F8FAFC"
+              scale={[34, 4, 1]}
+              position={[-12, 22, 0]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+            <Lightformer
+              form="rect"
+              intensity={2.6}
+              color="#F8FAFC"
+              scale={[34, 4, 1]}
+              position={[12, 22, 0]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+            {/* Diffuse clean white ambient ceiling */}
+            <Lightformer
+              form="rect"
+              intensity={1.2}
+              color="#FFFFFF"
+              scale={[38, 38, 1]}
+              position={[0, 26, 0]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+            {/* Neutral lateral fill */}
+            <Lightformer
+              form="rect"
+              intensity={1.0}
+              color="#E2E8F0"
+              scale={[18, 18, 1]}
+              position={[22, 10, 10]}
+              target={[0, 0, 0]}
+            />
+          </group>
+        )}
+
+        {/* 6. HEARTH & WALNUT / WARM */}
+        {normalizedPreset === 'warm' && (
+          <group>
+            {/* Warm hearth reflector panel */}
+            <Lightformer
+              form="rect"
+              intensity={3.0}
+              color="#FDE68A"
+              scale={[30, 20, 1]}
+              position={[18, 14, 14]}
+              target={[0, 0, 0]}
+            />
+            {/* Amber hardwood bounce floor */}
+            <Lightformer
+              form="rect"
+              intensity={1.6}
+              color="#D97706"
+              scale={[36, 36, 1]}
+              position={[0, -4, 0]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+            {/* Cozy back-wall ambient */}
+            <Lightformer
+              form="rect"
+              intensity={0.9}
+              color="#78350F"
+              scale={[24, 16, 1]}
+              position={[-20, 12, -16]}
+              target={[0, 0, 0]}
+            />
+          </group>
+        )}
+
+        {/* 7. NEON MAKER ACCENT / CYBERPUNK */}
+        {normalizedPreset === 'cyberpunk' && (
+          <group>
+            {/* Electric orange maker tube */}
+            <Lightformer
+              form="rect"
+              intensity={4.2}
+              color="#FF6B00"
+              scale={[3, 30, 1]}
+              position={[20, 8, -10]}
+              target={[0, 0, 0]}
+            />
+            {/* Violet neon tube rim */}
+            <Lightformer
+              form="rect"
+              intensity={3.8}
+              color="#A855F7"
+              scale={[3, 30, 1]}
+              position={[-20, 8, -10]}
+              target={[0, 0, 0]}
+            />
+            {/* Cool cyan grid ceiling */}
+            <Lightformer
+              form="rect"
+              intensity={1.6}
+              color="#38BDF8"
+              scale={[26, 26, 1]}
+              position={[0, 24, 0]}
+              rotation={[-Math.PI / 2, 0, 0]}
+            />
+            {/* Subtle front violet fill */}
+            <Lightformer
+              form="circle"
+              intensity={1.2}
+              color="#C084FC"
+              scale={12}
+              position={[0, 10, 20]}
+              target={[0, 0, 0]}
             />
           </group>
         )}
       </Environment>
 
       {/* Preset Direct Illumination & Directional Shadow Rigs */}
+
+      {/* 1. MORNING SUN */}
       {normalizedPreset === 'morning' && (
         <>
-          {/* Soft sky ambient light for realistic fill */}
           <ambientLight intensity={0.6} color="#E8F0FE" />
-
-          {/* Directional warm sunlight key light */}
           <directionalLight
             position={[130, 220, 140]}
             intensity={1.8}
@@ -295,22 +432,16 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             shadow-camera-bottom={-250}
             shadow-bias={-0.0001}
           />
-
-          {/* Soft sky diffuse fill light */}
           <directionalLight
             position={[-150, 120, -100]}
             intensity={0.4}
             color="#E8F0FE"
           />
-
-          {/* Warm wood desktop upward bounce fill */}
           <directionalLight
             position={[0, -60, 60]}
             intensity={0.25}
             color="#FEF3C7"
           />
-
-          {/* Subtle soft overhead spot to sculpt organizer walls and drawer pull rims */}
           <spotLight
             position={[20, 260, 20]}
             intensity={0.6}
@@ -318,8 +449,6 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             penumbra={0.8}
             color="#FFF6EC"
           />
-
-          {/* Contact shadows on desk surface (soft opacity 0.45, blur 2.0, resolution 1024) */}
           <ContactShadows
             position={[0, -0.05, 0]}
             opacity={0.45}
@@ -329,8 +458,6 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             resolution={1024}
             color="#292524"
           />
-
-          {/* Floor level contact shadow beneath desk */}
           <ContactShadows
             position={[0, -220, 0]}
             opacity={0.45}
@@ -343,16 +470,14 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
         </>
       )}
 
+      {/* 2. MINIMALIST STUDIO */}
       {normalizedPreset === 'studio' && (
         <>
-          {/* Soft neutral ambient fill */}
-          <ambientLight intensity={0.6} color="#E8F0FE" />
-
-          {/* Directional key light with clean studio white */}
+          <ambientLight intensity={0.65} color="#F8FAFC" />
           <directionalLight
             position={[110, 240, 130]}
-            intensity={1.8}
-            color="#FFF6EC"
+            intensity={1.75}
+            color="#FFFFFF"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
@@ -364,40 +489,32 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             shadow-camera-bottom={-250}
             shadow-bias={-0.0001}
           />
-
-          {/* Balanced architectural softbox fill */}
           <directionalLight
             position={[-140, 140, 80]}
-            intensity={0.55}
+            intensity={0.6}
             color="#F1F5F9"
           />
-
-          {/* Crisp overhead edge definition spot */}
           <spotLight
             position={[0, 280, -180]}
-            intensity={1.0}
+            intensity={0.85}
             angle={0.5}
             penumbra={0.7}
             color="#FFFFFF"
           />
-
-          {/* Contact shadows on desk (soft opacity 0.45, blur 2.0, resolution 1024) */}
           <ContactShadows
             position={[0, -0.05, 0]}
-            opacity={0.45}
+            opacity={0.42}
             scale={shadowScale}
-            blur={2.0}
+            blur={2.2}
             far={80}
             resolution={1024}
             color="#1E293B"
           />
-
-          {/* Floor contact shadow */}
           <ContactShadows
             position={[0, -220, 0]}
-            opacity={0.45}
+            opacity={0.42}
             scale={shadowScale * 1.8}
-            blur={2.0}
+            blur={2.2}
             far={120}
             resolution={1024}
             color="#0F172A"
@@ -405,16 +522,14 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
         </>
       )}
 
+      {/* 3. COZY EVENING */}
       {normalizedPreset === 'evening' && (
         <>
-          {/* Deep dusk ambient room fill */}
-          <ambientLight intensity={0.42} color="#1E293B" />
-
-          {/* Warm incandescent desk key light */}
+          <ambientLight intensity={0.38} color="#1E293B" />
           <directionalLight
             position={[90, 180, 100]}
-            intensity={1.8}
-            color="#FFF6EC"
+            intensity={1.5}
+            color="#FED7AA"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
@@ -426,11 +541,10 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             shadow-camera-bottom={-250}
             shadow-bias={-0.0001}
           />
-
           {/* Cozy warm desk lamp spot light creating radiant task pool */}
           <spotLight
             position={[75, 160, 65]}
-            intensity={2.6}
+            intensity={2.8}
             angle={0.75}
             penumbra={0.7}
             color="#FED7AA"
@@ -439,45 +553,36 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             shadow-mapSize-height={2048}
             shadow-bias={-0.0001}
           />
-
           {/* Warm incandescent lamp bulb omni-glow */}
           <pointLight
             position={[75, 150, 65]}
-            intensity={1.6}
+            intensity={1.8}
             color="#F59E0B"
             distance={450}
             decay={2}
           />
-
-          {/* Cool twilight window backlight from exterior */}
           <directionalLight
             position={[-180, 110, -130]}
             intensity={0.45}
             color="#38BDF8"
           />
-
-          {/* Soft sky ambient fill */}
           <directionalLight
             position={[0, 100, 100]}
-            intensity={0.25}
+            intensity={0.2}
             color="#E8F0FE"
           />
-
-          {/* Contact shadows on desk (soft opacity 0.45, blur 2.0, resolution 1024) */}
           <ContactShadows
             position={[0, -0.05, 0]}
-            opacity={0.45}
+            opacity={0.48}
             scale={shadowScale}
             blur={2.0}
             far={80}
             resolution={1024}
             color="#1C1917"
           />
-
-          {/* Floor contact shadow */}
           <ContactShadows
             position={[0, -220, 0]}
-            opacity={0.45}
+            opacity={0.48}
             scale={shadowScale * 1.8}
             blur={2.0}
             far={120}
@@ -487,13 +592,15 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
         </>
       )}
 
-      {normalizedPreset === 'cyberpunk' && (
+      {/* 4. CALIFORNIA DAYLIGHT */}
+      {normalizedPreset === 'daylight' && (
         <>
-          <ambientLight intensity={0.35} color="#0B132B" />
+          <ambientLight intensity={0.72} color="#E0F2FE" />
+          {/* Steep midday sun with 6000K crisp white highlights */}
           <directionalLight
-            position={[120, 220, 120]}
-            intensity={1.5}
-            color="#FFF6EC"
+            position={[90, 270, 80]}
+            intensity={2.3}
+            color="#F0F9FF"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
@@ -505,37 +612,224 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
             shadow-camera-bottom={-250}
             shadow-bias={-0.0001}
           />
-          <spotLight
-            position={[-180, 140, -120]}
-            intensity={2.8}
-            angle={0.65}
-            penumbra={0.6}
-            color="#38BDF8"
+          <directionalLight
+            position={[-160, 160, -90]}
+            intensity={0.55}
+            color="#BAE6FD"
           />
           <spotLight
-            position={[180, 140, -120]}
-            intensity={2.6}
-            angle={0.65}
-            penumbra={0.6}
-            color="#F97316"
+            position={[40, 290, -120]}
+            intensity={1.1}
+            angle={0.45}
+            penumbra={0.5}
+            color="#FFFFFF"
+          />
+          <directionalLight
+            position={[0, -50, 50]}
+            intensity={0.28}
+            color="#FFFFFF"
           />
           <ContactShadows
             position={[0, -0.05, 0]}
-            opacity={0.45}
+            opacity={0.52}
             scale={shadowScale}
-            blur={2.0}
+            blur={1.4}
             far={80}
             resolution={1024}
-            color="#030712"
+            color="#0F172A"
           />
           <ContactShadows
             position={[0, -220, 0]}
-            opacity={0.45}
+            opacity={0.52}
             scale={shadowScale * 1.8}
-            blur={2.0}
+            blur={1.4}
             far={120}
             resolution={1024}
+            color="#090D16"
+          />
+        </>
+      )}
+
+      {/* 5. PRECISION QC BENCH / LABORATORY */}
+      {normalizedPreset === 'laboratory' && (
+        <>
+          <ambientLight intensity={0.82} color="#F8FAFC" />
+          {/* Dual balanced surgical inspection white key lights */}
+          <directionalLight
+            position={[-80, 250, 90]}
+            intensity={1.45}
+            color="#FFFFFF"
+            castShadow
+            shadow-mapSize-width={2048}
+            shadow-mapSize-height={2048}
+            shadow-camera-near={10}
+            shadow-camera-far={800}
+            shadow-camera-left={-250}
+            shadow-camera-right={250}
+            shadow-camera-top={250}
+            shadow-camera-bottom={-250}
+            shadow-bias={-0.0001}
+          />
+          <directionalLight
+            position={[80, 250, 90]}
+            intensity={1.45}
+            color="#FFFFFF"
+            castShadow
+            shadow-mapSize-width={2048}
+            shadow-mapSize-height={2048}
+            shadow-bias={-0.0001}
+          />
+          {/* Front ring inspection fill */}
+          <directionalLight
+            position={[0, 110, 160]}
+            intensity={0.5}
+            color="#F1F5F9"
+          />
+          <spotLight
+            position={[0, 260, 0]}
+            intensity={0.75}
+            angle={0.85}
+            penumbra={0.9}
+            color="#FFFFFF"
+          />
+          <ContactShadows
+            position={[0, -0.05, 0]}
+            opacity={0.36}
+            scale={shadowScale}
+            blur={2.6}
+            far={80}
+            resolution={1024}
+            color="#334155"
+          />
+          <ContactShadows
+            position={[0, -220, 0]}
+            opacity={0.36}
+            scale={shadowScale * 1.8}
+            blur={2.6}
+            far={120}
+            resolution={1024}
+            color="#1E293B"
+          />
+        </>
+      )}
+
+      {/* 6. HEARTH & WALNUT / WARM */}
+      {normalizedPreset === 'warm' && (
+        <>
+          <ambientLight intensity={0.52} color="#451A03" />
+          {/* Warm 3000K amber hearth key light */}
+          <directionalLight
+            position={[110, 190, 120]}
+            intensity={1.7}
+            color="#FDE68A"
+            castShadow
+            shadow-mapSize-width={2048}
+            shadow-mapSize-height={2048}
+            shadow-camera-near={10}
+            shadow-camera-far={800}
+            shadow-camera-left={-250}
+            shadow-camera-right={250}
+            shadow-camera-top={250}
+            shadow-camera-bottom={-250}
+            shadow-bias={-0.0001}
+          />
+          <directionalLight
+            position={[-120, 130, -80]}
+            intensity={0.5}
+            color="#FED7AA"
+          />
+          <spotLight
+            position={[80, 220, 60]}
+            intensity={1.8}
+            angle={0.7}
+            penumbra={0.8}
+            color="#F59E0B"
+          />
+          <directionalLight
+            position={[0, -60, 60]}
+            intensity={0.35}
+            color="#D97706"
+          />
+          <ContactShadows
+            position={[0, -0.05, 0]}
+            opacity={0.48}
+            scale={shadowScale}
+            blur={2.2}
+            far={80}
+            resolution={1024}
+            color="#261205"
+          />
+          <ContactShadows
+            position={[0, -220, 0]}
+            opacity={0.48}
+            scale={shadowScale * 1.8}
+            blur={2.2}
+            far={120}
+            resolution={1024}
+            color="#160803"
+          />
+        </>
+      )}
+
+      {/* 7. NEON MAKER ACCENT / CYBERPUNK */}
+      {normalizedPreset === 'cyberpunk' && (
+        <>
+          <ambientLight intensity={0.32} color="#090D16" />
+          {/* Electric orange directional key */}
+          <directionalLight
+            position={[120, 200, 110]}
+            intensity={1.8}
+            color="#FF6B00"
+            castShadow
+            shadow-mapSize-width={2048}
+            shadow-mapSize-height={2048}
+            shadow-camera-near={10}
+            shadow-camera-far={800}
+            shadow-camera-left={-250}
+            shadow-camera-right={250}
+            shadow-camera-top={250}
+            shadow-camera-bottom={-250}
+            shadow-bias={-0.0001}
+          />
+          {/* Subtle violet rim light */}
+          <spotLight
+            position={[-160, 150, -120]}
+            intensity={3.4}
+            angle={0.65}
+            penumbra={0.6}
+            color="#A855F7"
+          />
+          {/* Electric orange edge kicker */}
+          <spotLight
+            position={[160, 150, -120]}
+            intensity={3.0}
+            angle={0.65}
+            penumbra={0.6}
+            color="#FB923C"
+          />
+          {/* Cyan front ambient fill */}
+          <directionalLight
+            position={[0, 140, 120]}
+            intensity={0.6}
+            color="#38BDF8"
+          />
+          <ContactShadows
+            position={[0, -0.05, 0]}
+            opacity={0.56}
+            scale={shadowScale}
+            blur={1.8}
+            far={80}
+            resolution={1024}
             color="#020617"
+          />
+          <ContactShadows
+            position={[0, -220, 0]}
+            opacity={0.56}
+            scale={shadowScale * 1.8}
+            blur={1.8}
+            far={120}
+            resolution={1024}
+            color="#010208"
           />
         </>
       )}
@@ -556,25 +850,51 @@ export const LightingPresetSwitcher: React.FC<LightingPresetSwitcherProps> = ({ 
     {
       id: 'morning' as LightingPreset,
       name: 'Warm Morning Sun',
-      shortName: 'Morning Sun',
+      shortName: 'Morning',
       icon: Sun,
     },
     {
       id: 'studio' as LightingPreset,
-      name: 'Minimalist Studio',
+      name: 'Scandinavian Studio',
       shortName: 'Studio',
       icon: SlidersHorizontal,
     },
     {
       id: 'evening' as LightingPreset,
       name: 'Cozy Evening',
-      shortName: 'Cozy Evening',
+      shortName: 'Evening',
       icon: Lamp,
+    },
+    {
+      id: 'daylight' as LightingPreset,
+      name: 'California Daylight',
+      shortName: 'Daylight',
+      icon: SunMedium,
+    },
+    {
+      id: 'laboratory' as LightingPreset,
+      name: 'Precision QC Bench',
+      shortName: 'Lab QC',
+      icon: Microscope,
+    },
+    {
+      id: 'warm' as LightingPreset,
+      name: 'Hearth & Walnut',
+      shortName: 'Warm',
+      icon: Flame,
+    },
+    {
+      id: 'cyberpunk' as LightingPreset,
+      name: 'Neon Maker Accent',
+      shortName: 'Maker Neon',
+      icon: Zap,
     },
   ];
 
   return (
-    <div className={`flex items-center space-x-1 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-1 rounded-full border border-slate-200/80 dark:border-zinc-800 shadow-xs ${className}`}>
+    <div
+      className={`flex items-center space-x-1 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md p-1 rounded-full border border-slate-200/80 dark:border-zinc-800 shadow-xs overflow-x-auto max-w-full no-scrollbar ${className}`}
+    >
       {presets.map((preset) => {
         const Icon = preset.icon;
         const isSelected = normalized === preset.id;
@@ -582,9 +902,12 @@ export const LightingPresetSwitcher: React.FC<LightingPresetSwitcherProps> = ({ 
           <button
             key={preset.id}
             type="button"
-            onClick={() => setLightingPreset(preset.id)}
-            title={preset.name}
-            className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer ${
+            onClick={() => {
+              playSnapPresetSound();
+              setLightingPreset(preset.id);
+            }}
+            title={`${preset.name} - ${LIGHTING_PRESETS_METADATA[preset.id]?.cct || ''}`}
+            className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition cursor-pointer shrink-0 ${
               isSelected
                 ? 'bg-[#FF6B00] text-white shadow-xs font-semibold'
                 : 'text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800'

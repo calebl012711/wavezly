@@ -4,7 +4,7 @@
  * Removed all fake live streams and developer clutter.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   X,
   ChevronRight,
@@ -17,6 +17,7 @@ import {
   Home,
   ShieldCheck,
   Package,
+  Search,
 } from 'lucide-react';
 import { RoomId } from '../../lib/storefront';
 import { WavezlyLogo } from './WavezlyLogo';
@@ -28,6 +29,8 @@ interface AmazonNavDrawerProps {
   onNavigateTracking: () => void;
   onOpenCustomizer: () => void;
   onOpenDeskPlanner?: () => void;
+  searchQuery?: string;
+  onSearch?: (q: string) => void;
 }
 
 interface DepartmentItem {
@@ -77,7 +80,15 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
   onSelectDepartment,
   onNavigateTracking,
   onOpenCustomizer,
+  searchQuery = '',
+  onSearch,
 }) => {
+  const [localSearch, setLocalSearch] = useState(searchQuery);
+
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -94,19 +105,43 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(localSearch);
+    }
+    onSelectDepartment('all');
+    onClose();
+  };
+
+  const filteredDepartments = localSearch.trim()
+    ? DEPARTMENTS.filter((d) =>
+        d.label.toLowerCase().includes(localSearch.toLowerCase())
+      )
+    : DEPARTMENTS;
 
   return (
-    <div className="fixed inset-0 z-50 flex">
-      {/* Backdrop */}
+    <div
+      className={`fixed inset-0 z-50 transition-all duration-300 ${
+        isOpen ? 'pointer-events-auto visible' : 'pointer-events-none invisible'
+      }`}
+      aria-hidden={!isOpen}
+    >
+      {/* Backdrop with silky fade */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
+        className={`fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity duration-300 ease-out ${
+          isOpen ? 'opacity-100' : 'opacity-0'
+        }`}
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Drawer */}
-      <div className="relative w-80 max-w-[85vw] h-full bg-white flex flex-col z-10 shadow-2xl font-sans border-r border-zinc-200">
+      {/* Drawer Panel with silky slide-in */}
+      <div
+        className={`fixed top-0 bottom-0 left-0 w-80 max-w-[85vw] h-full bg-white flex flex-col z-10 shadow-2xl font-sans border-r border-zinc-200 transition-transform duration-300 ease-out transform ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
         {/* Header */}
         <div className="border-b border-zinc-100 px-5 py-4 flex items-center justify-between shrink-0">
           <div>
@@ -118,11 +153,41 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full text-zinc-400 hover:text-zinc-800 hover:bg-zinc-100 transition cursor-pointer"
+            className="p-2 -mr-1 rounded-full text-zinc-400 hover:text-zinc-800 hover:bg-zinc-100 transition cursor-pointer active:scale-95"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Fast Search input */}
+        <div className="px-4 py-2.5 bg-zinc-50 border-b border-zinc-100 shrink-0">
+          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+            <Search className="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none" />
+            <input
+              type="search"
+              value={localSearch}
+              onChange={(e) => {
+                setLocalSearch(e.target.value);
+                if (onSearch) onSearch(e.target.value);
+              }}
+              placeholder="Fast search toys, organizers…"
+              className="w-full py-2 pl-9 pr-8 text-xs text-[#0F172A] placeholder-zinc-400 bg-white rounded-xl border border-zinc-200 focus:outline-none focus:border-[#FF6B00] font-medium"
+            />
+            {localSearch && (
+              <button
+                type="button"
+                onClick={() => {
+                  setLocalSearch('');
+                  if (onSearch) onSearch('');
+                }}
+                className="absolute right-2.5 p-1 text-zinc-400 hover:text-zinc-600 rounded-full cursor-pointer"
+                aria-label="Clear search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </form>
         </div>
 
         {/* Scrollable Navigation Body */}
@@ -141,13 +206,13 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
                 onSelectDepartment('all');
                 onClose();
               }}
-              className="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition cursor-pointer"
+              className="w-full px-5 py-3 min-h-[44px] flex items-center justify-between text-left hover:bg-zinc-50 active:bg-zinc-100 transition cursor-pointer"
             >
               <span className="font-semibold text-zinc-900">All Products</span>
               <ChevronRight className="w-4 h-4 text-zinc-300" />
             </button>
 
-            {DEPARTMENTS.map((dept) => (
+            {filteredDepartments.map((dept) => (
               <button
                 key={dept.id}
                 type="button"
@@ -155,15 +220,17 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
                   onSelectDepartment(dept.id);
                   onClose();
                 }}
-                className="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition cursor-pointer"
+                className="w-full px-5 py-3 min-h-[44px] flex items-center justify-between text-left hover:bg-zinc-50 active:bg-zinc-100 transition cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  {dept.icon}
+                  <div className="w-6 h-6 rounded-lg bg-zinc-100 flex items-center justify-center shrink-0">
+                    {dept.icon}
+                  </div>
                   <span className="font-medium text-zinc-800">{dept.label}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   {dept.badge && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] font-bold">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] font-bold">
                       {dept.badge}
                     </span>
                   )}
@@ -171,6 +238,12 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
                 </div>
               </button>
             ))}
+
+            {filteredDepartments.length === 0 && (
+              <div className="px-5 py-4 text-center text-zinc-400 text-xs">
+                No matching categories found
+              </div>
+            )}
           </div>
 
           {/* Section 2: Custom Sizing & Order Tracking */}

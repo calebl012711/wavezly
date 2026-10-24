@@ -18,6 +18,11 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useCustomizerStore } from '../../store/useCustomizerStore';
 import { useCartStore } from '../../store/useCartStore';
 import { playClickSound } from '../../lib/soundEffects';
+import {
+  formatFractionalInches,
+  getFurnitureCompatibility,
+  calculatePriceBreakdown,
+} from '../../lib/compartmentGridUtils';
 import { MaterialOption } from '../../types';
 import {
   Sparkles,
@@ -34,6 +39,8 @@ import {
   Check,
   Box,
   Clock,
+  Layers,
+  Truck,
 } from 'lucide-react';
 
 // ============================================================================
@@ -72,7 +79,7 @@ export const SPACE_PRESETS: SpacePreset[] = [
   {
     id: "ikea_alex",
     name: "IKEA Alex Drawer (Wide or Compact)",
-    badge: "99.4% Fit Guarantee",
+    badge: "✓ Perfect Fit for IKEA Alex Drawer",
     description: "Precision clearance engineered for IKEA Alex drawer runner guides with zero wobble.",
     dimensionsMm: { length: 240, width: 140, height: 45 },
     dimensionsIn: { length: 9.45, width: 5.51, height: 1.77 },
@@ -102,11 +109,19 @@ export const SPACE_PRESETS: SpacePreset[] = [
   },
   {
     id: "kitchen_drawer",
-    name: "Kitchen Cutlery / Utensil Drawer",
-    badge: "Culinary Standard",
-    description: "Deep, rigid organizer tailored for cutlery, cooking utensils, silverware, and knives.",
-    dimensionsMm: { length: 320, width: 220, height: 50 },
-    dimensionsIn: { length: 12.6, width: 8.66, height: 1.97 },
+    name: "US Kitchen Standard (12\" × 18\") Cutlery Drawer",
+    badge: "✓ Perfect Fit for US Kitchen Standard (12\" × 18\")",
+    description: "Deep, rigid organizer tailored for American standard 12\" × 18\" cutlery, utensil, and flatware drawers.",
+    dimensionsMm: { length: 250, width: 180, height: 45 },
+    dimensionsIn: { length: 9.84, width: 7.09, height: 1.77 },
+  },
+  {
+    id: "herman_miller_tu",
+    name: "Herman Miller Tu Pedestal Drawer",
+    badge: "✓ Perfect Fit for Herman Miller Tu Drawer",
+    description: "Precision engineered for Herman Miller Tu & Tu Metal mobile pedestal slide runners.",
+    dimensionsMm: { length: 220, width: 160, height: 45 },
+    dimensionsIn: { length: 8.66, width: 6.3, height: 1.77 },
   },
   {
     id: "bathroom_vanity",
@@ -127,7 +142,7 @@ export const SPACE_PRESETS: SpacePreset[] = [
   {
     id: "custom_mm",
     name: "Custom Millimeter Measurement (Enter your exact dimensions)",
-    badge: "Exact Custom Fit",
+    badge: "100% Fit Guarantee",
     description: "Enter your exact drawer or space dimensions. We auto-apply a 2mm safety clearance for a drop-in fit!",
     dimensionsMm: { length: 210, width: 150, height: 40 },
     dimensionsIn: { length: 8.27, width: 5.91, height: 1.57 },
@@ -142,6 +157,7 @@ export interface OrganizingPreset {
   items: string[];
   rows: number;
   cols: number;
+  isAsymmetric?: boolean;
   recommendedHeightMm: number;
   wallThickness: number;
   cornerFilletRadius: number;
@@ -149,23 +165,36 @@ export interface OrganizingPreset {
 
 export const ORGANIZING_PRESETS: OrganizingPreset[] = [
   {
-    id: "pocket_dump",
-    name: "Daily Pocket Dump & EDC",
-    tagline: "Keys, Watch, Wallet, AirPods",
-    categoryTag: "Everyday Carry & Bedside",
-    items: ["Wristwatch & rings", "MagSafe wallet", "Keychains & fobs", "AirPods & sunglasses"],
+    id: "pen_catchall",
+    name: "Pen & Catchall [1 Long + 2 Small]",
+    tagline: "1 Long Slot + 2 Small Catchalls",
+    categoryTag: "EDC & Stationery",
+    items: ["Apple Pencil, pens & stylus", "Wristwatch & rings", "MagSafe wallet & keys", "AirPods Pro & coins"],
     rows: 2,
     cols: 2,
-    recommendedHeightMm: 36,
+    isAsymmetric: true,
+    recommendedHeightMm: 45,
     wallThickness: 2.8,
     cornerFilletRadius: 8,
   },
   {
-    id: "kitchen_silverware",
-    name: "Kitchen Silverware & Tools",
-    tagline: "Knives, Spoons, Forks, Gadgets",
-    categoryTag: "Kitchen & Dining",
-    items: ["Dinner knives & forks", "Teaspoons & soup spoons", "Cooking peelers & openers", "Silverware & tongs"],
+    id: "equal_grid_2x3",
+    name: "Equal Grid [2x3]",
+    tagline: "6 Balanced Uniform Bays",
+    categoryTag: "Desk & Tech Gear",
+    items: ["Controllers & tech accessories", "Braided USB-C cables", "Memory cards & dongles", "IEMs & charging docks"],
+    rows: 2,
+    cols: 3,
+    recommendedHeightMm: 45,
+    wallThickness: 2.8,
+    cornerFilletRadius: 8,
+  },
+  {
+    id: "cutlery_slots_4x1",
+    name: "Cutlery Slots [4x1]",
+    tagline: "4 Longitudinal Silverware Slots",
+    categoryTag: "Kitchen Standard",
+    items: ["Dinner knives & forks", "Teaspoons & soup spoons", "Cooking peelers & openers", "Silverware & utensils"],
     rows: 1,
     cols: 4,
     recommendedHeightMm: 48,
@@ -173,8 +202,20 @@ export const ORGANIZING_PRESETS: OrganizingPreset[] = [
     cornerFilletRadius: 10,
   },
   {
+    id: "single_open_1x1",
+    name: "Single Open Bin [1x1]",
+    tagline: "1 Open Catchall Chamber",
+    categoryTag: "Minimalist Open Tray",
+    items: ["Field Notes notebooks", "iPad mini & e-readers", "Eyewear & sunnies", "Large desk accessories"],
+    rows: 1,
+    cols: 1,
+    recommendedHeightMm: 40,
+    wallThickness: 2.8,
+    cornerFilletRadius: 8,
+  },
+  {
     id: "cosmetics_skincare",
-    name: "Cosmetics & Skincare",
+    name: "Cosmetics & Skincare [3x3]",
     tagline: "Serums, Perfumes, Brushes",
     categoryTag: "Beauty & Bathroom",
     items: ["Glass dropper serums", "Luxury fragrances", "Cosmetic brushes", "Lipsticks & compacts"],
@@ -183,30 +224,6 @@ export const ORGANIZING_PRESETS: OrganizingPreset[] = [
     recommendedHeightMm: 44,
     wallThickness: 2.8,
     cornerFilletRadius: 10,
-  },
-  {
-    id: "gaming_tech",
-    name: "Gaming & Tech Gear",
-    tagline: "Controllers, Cables, Dongles, SD Cards",
-    categoryTag: "Desk & Battlestation",
-    items: ["Controllers & gaming mice", "Braided USB-C cables", "Memory cards & dongles", "IEMs & charging docks"],
-    rows: 2,
-    cols: 3,
-    recommendedHeightMm: 42,
-    wallThickness: 2.8,
-    cornerFilletRadius: 8,
-  },
-  {
-    id: "general_matrix",
-    name: "General Storage Matrix",
-    tagline: "Uniform Multi-Purpose Chambers",
-    categoryTag: "Universal Organization",
-    items: ["Evenly spaced storage cells", "Hardware & craft fasteners", "Stationery & accessories", "Universal catchall compartments"],
-    rows: 2,
-    cols: 4,
-    recommendedHeightMm: 40,
-    wallThickness: 2.8,
-    cornerFilletRadius: 6,
   },
 ];
 
@@ -231,7 +248,7 @@ export const CONSUMER_FINISHES: ConsumerFinish[] = [
       name: 'Obsidian Black',
       category: 'filament',
       hexColor: '#18181b',
-      roughness: 0.88,
+      roughness: 0.62,
       transmission: 0.0,
       ior: 1.54,
       costPerCm3: 0.035,
@@ -384,7 +401,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
   const [customHeight, setCustomHeight] = useState<number>(40);
 
   // STEP 2 STATE: Organizing Goal
-  const [selectedOrgId, setSelectedOrgId] = useState<string>('pocket_dump');
+  const [selectedOrgId, setSelectedOrgId] = useState<string>('pen_catchall');
 
   // STEP 3 STATE: Finish & Liquid Resin Sound Inlay
   const [selectedFinishId, setSelectedFinishId] = useState<string>('mat_obsidian_black');
@@ -468,6 +485,19 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
     customHeight,
     hasResinInlay,
   ]);
+
+  // Fractional inches & Furniture Compatibility
+  const compatibility = useMemo(() => {
+    return getFurnitureCompatibility(resolvedDimensions.length, resolvedDimensions.width, resolvedDimensions.height);
+  }, [resolvedDimensions.length, resolvedDimensions.width, resolvedDimensions.height]);
+
+  const lenFormatted = useMemo(() => formatFractionalInches(resolvedDimensions.length), [resolvedDimensions.length]);
+  const widFormatted = useMemo(() => formatFractionalInches(resolvedDimensions.width), [resolvedDimensions.width]);
+  const heightFormatted = useMemo(() => formatFractionalInches(resolvedDimensions.height), [resolvedDimensions.height]);
+
+  const priceBreakdown = useMemo(() => {
+    return calculatePriceBreakdown(telemetry, activeFinish.materialOption, hasResinInlay);
+  }, [telemetry, activeFinish.materialOption, hasResinInlay]);
 
   // Synchronize store in real-time as user changes choices
   useEffect(() => {
@@ -745,10 +775,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           </div>
                         </div>
 
-                        {/* Dimensions Tag */}
+                        {/* Dimensions Tag with clean fractional inches alongside millimeters */}
                         {preset.id !== 'custom_mm' && (
                           <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400 whitespace-nowrap bg-slate-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
-                            {preset.dimensionsIn.length}″ × {preset.dimensionsIn.width}″ ({preset.dimensionsMm.length}×{preset.dimensionsMm.width}mm)
+                            {formatFractionalInches(preset.dimensionsMm.length).fractionOnly} × {formatFractionalInches(preset.dimensionsMm.width).fractionOnly} ({preset.dimensionsMm.length}×{preset.dimensionsMm.width} mm)
                           </span>
                         )}
                       </div>
@@ -957,6 +987,61 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           {org.tagline}
                         </p>
 
+                        {/* Live SVG Chamber Preview */}
+                        <div className="w-full h-12 rounded-lg bg-slate-100 dark:bg-zinc-800 p-1.5 my-2.5 border border-slate-200 dark:border-zinc-700/60 flex items-center justify-center">
+                          {org.id === 'pen_catchall' && (
+                            <svg viewBox="0 0 100 60" className="w-full h-full">
+                              <rect x="2" y="2" width="96" height="56" rx="5" fill="#18181b" stroke="#71717a" strokeWidth="1.5" />
+                              <rect x="6" y="6" width="88" height="20" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="6" y="30" width="42" height="24" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="52" y="30" width="42" height="24" rx="3" fill="#ffffff" opacity="0.9" />
+                            </svg>
+                          )}
+                          {org.id === 'equal_grid_2x3' && (
+                            <svg viewBox="0 0 100 60" className="w-full h-full">
+                              <rect x="2" y="2" width="96" height="56" rx="5" fill="#18181b" stroke="#71717a" strokeWidth="1.5" />
+                              <rect x="6" y="6" width="26" height="22" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="37" y="6" width="26" height="22" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="68" y="6" width="26" height="22" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="6" y="32" width="26" height="22" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="37" y="32" width="26" height="22" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="68" y="32" width="26" height="22" rx="3" fill="#ffffff" opacity="0.9" />
+                            </svg>
+                          )}
+                          {org.id === 'cutlery_slots_4x1' && (
+                            <svg viewBox="0 0 100 60" className="w-full h-full">
+                              <rect x="2" y="2" width="96" height="56" rx="5" fill="#18181b" stroke="#71717a" strokeWidth="1.5" />
+                              <rect x="6" y="6" width="19" height="48" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="29" y="6" width="19" height="48" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="52" y="6" width="19" height="48" rx="3" fill="#ffffff" opacity="0.9" />
+                              <rect x="75" y="6" width="19" height="48" rx="3" fill="#ffffff" opacity="0.9" />
+                            </svg>
+                          )}
+                          {org.id === 'single_open_1x1' && (
+                            <svg viewBox="0 0 100 60" className="w-full h-full">
+                              <rect x="2" y="2" width="96" height="56" rx="5" fill="#18181b" stroke="#71717a" strokeWidth="1.5" />
+                              <rect x="6" y="6" width="88" height="48" rx="4" fill="#ffffff" opacity="0.9" stroke="#FF6B00" strokeWidth="1" strokeDasharray="3 3" />
+                            </svg>
+                          )}
+                          {org.id === 'cosmetics_skincare' && (
+                            <svg viewBox="0 0 100 60" className="w-full h-full">
+                              <rect x="2" y="2" width="96" height="56" rx="5" fill="#18181b" stroke="#71717a" strokeWidth="1.5" />
+                              {Array.from({ length: 9 }).map((_, i) => (
+                                <rect
+                                  key={i}
+                                  x={6 + (i % 3) * 31}
+                                  y={6 + Math.floor(i / 3) * 16}
+                                  width="26"
+                                  height="13"
+                                  rx="2"
+                                  fill="#ffffff"
+                                  opacity="0.9"
+                                />
+                              ))}
+                            </svg>
+                          )}
+                        </div>
+
                         <div className="mt-3 space-y-1">
                           {org.items.map((item, idx) => (
                             <div
@@ -1136,13 +1221,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
         {/* Right Column: Live Visual Validation Card (5 cols) */}
         <div className="lg:col-span-5 bg-slate-50/70 dark:bg-zinc-900/80 rounded-2xl p-5 border border-slate-200/90 dark:border-zinc-800 space-y-4 shadow-xs">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-1 flex-wrap">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 font-sans flex items-center gap-1.5">
               <Box className="w-3.5 h-3.5 text-[#FF6B00]" />
               LIVE BLUEPRINT PREVIEW
             </span>
-            <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100/70 dark:bg-emerald-950 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/40">
-              ISO 2768-m Fit
+            <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100/70 dark:bg-emerald-950 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/40">
+              {compatibility.badge}
             </span>
           </div>
 
@@ -1167,50 +1252,81 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                   activeFinish.hexColor === '#ece5db' ? '#d4d4d8' : '#3f3f46',
               }}
             >
-              {/* Internal Compartment Grid */}
-              <div
-                className="w-full h-full grid gap-1 p-0.5"
-                style={{
-                  gridTemplateRows: `repeat(${resolvedDimensions.rows}, minmax(0, 1fr))`,
-                  gridTemplateColumns: `repeat(${resolvedDimensions.cols}, minmax(0, 1fr))`,
-                }}
-              >
-                {Array.from({
-                  length: resolvedDimensions.rows * resolvedDimensions.cols,
-                }).map((_, i) => (
+              {/* Internal Compartment Grid (handles asymmetric pen & catchall or standard rows x cols) */}
+              {activeOrg.isAsymmetric ? (
+                <div className="w-full h-full flex flex-col gap-1 p-0.5">
+                  {/* Top long pen channel */}
                   <div
-                    key={i}
-                    className="rounded-md flex items-center justify-center border transition-all"
+                    className="w-full h-[40%] rounded-md flex items-center justify-center border transition-all"
                     style={{
-                      backgroundColor: hasResinInlay
-                        ? 'rgba(224, 242, 254, 0.40)'
-                        : 'rgba(0, 0, 0, 0.12)',
-                      borderColor: hasResinInlay
-                        ? 'rgba(2, 132, 199, 0.45)'
-                        : 'rgba(255, 255, 255, 0.18)',
+                      backgroundColor: hasResinInlay ? 'rgba(224, 242, 254, 0.40)' : 'rgba(0, 0, 0, 0.12)',
+                      borderColor: hasResinInlay ? 'rgba(2, 132, 199, 0.45)' : 'rgba(255, 255, 255, 0.18)',
                     }}
                   >
-                    {hasResinInlay && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-xs" />
-                    )}
+                    <span className="text-[9px] font-mono font-bold opacity-80">#1 Pen / Stylus Slot</span>
                   </div>
-                ))}
-              </div>
+                  {/* Bottom 2 catchalls */}
+                  <div className="w-full h-[58%] grid grid-cols-2 gap-1">
+                    <div
+                      className="rounded-md flex items-center justify-center border transition-all"
+                      style={{
+                        backgroundColor: hasResinInlay ? 'rgba(224, 242, 254, 0.40)' : 'rgba(0, 0, 0, 0.12)',
+                        borderColor: hasResinInlay ? 'rgba(2, 132, 199, 0.45)' : 'rgba(255, 255, 255, 0.18)',
+                      }}
+                    >
+                      <span className="text-[9px] font-mono font-bold opacity-80">#2 Watch</span>
+                    </div>
+                    <div
+                      className="rounded-md flex items-center justify-center border transition-all"
+                      style={{
+                        backgroundColor: hasResinInlay ? 'rgba(224, 242, 254, 0.40)' : 'rgba(0, 0, 0, 0.12)',
+                        borderColor: hasResinInlay ? 'rgba(2, 132, 199, 0.45)' : 'rgba(255, 255, 255, 0.18)',
+                      }}
+                    >
+                      <span className="text-[9px] font-mono font-bold opacity-80">#3 Keys</span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="w-full h-full grid gap-1 p-0.5"
+                  style={{
+                    gridTemplateRows: `repeat(${resolvedDimensions.rows}, minmax(0, 1fr))`,
+                    gridTemplateColumns: `repeat(${resolvedDimensions.cols}, minmax(0, 1fr))`,
+                  }}
+                >
+                  {Array.from({
+                    length: resolvedDimensions.rows * resolvedDimensions.cols,
+                  }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="rounded-md flex items-center justify-center border transition-all"
+                      style={{
+                        backgroundColor: hasResinInlay
+                          ? 'rgba(224, 242, 254, 0.40)'
+                          : 'rgba(0, 0, 0, 0.12)',
+                        borderColor: hasResinInlay
+                          ? 'rgba(2, 132, 199, 0.45)'
+                          : 'rgba(255, 255, 255, 0.18)',
+                      }}
+                    >
+                      <span className="text-[9px] font-mono font-bold opacity-80">#{i + 1}</span>
+                      {hasResinInlay && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-xs ml-1" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Dimensional Dimension Tags */}
-            <div className="mt-2 text-[11px] font-mono text-slate-500 dark:text-zinc-400 flex items-center gap-3">
-              <span>
-                {resolvedDimensions.length}mm ({((resolvedDimensions.length) / 25.4).toFixed(1)}″) L
-              </span>
+            {/* Dimensional Dimension Tags in Fractional Inches & Millimeters */}
+            <div className="mt-2 text-[11px] font-mono text-slate-500 dark:text-zinc-400 flex items-center justify-center gap-2 flex-wrap">
+              <span>{lenFormatted.combinedShort} L</span>
               <span>×</span>
-              <span>
-                {resolvedDimensions.width}mm ({((resolvedDimensions.width) / 25.4).toFixed(1)}″) W
-              </span>
+              <span>{widFormatted.combinedShort} W</span>
               <span>×</span>
-              <span>
-                {resolvedDimensions.height}mm ({((resolvedDimensions.height) / 25.4).toFixed(1)}″) H
-              </span>
+              <span>{heightFormatted.combinedShort} H</span>
             </div>
           </div>
 
@@ -1272,26 +1388,49 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             </div>
           </div>
 
-          {/* Pricing & Fast Shipping Summary */}
-          <div className="pt-2 border-t border-slate-200 dark:border-zinc-800 flex items-baseline justify-between">
-            <div>
-              <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-zinc-400 block font-sans">
-                TOTAL TAILORED PRICE
-              </span>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold font-sans text-[#0F172A] dark:text-white">
-                  ${calculatedDisplayPrice.toFixed(2)}
-                </span>
-                <span className="text-xs text-slate-400 font-mono">USD</span>
+          {/* Manufacturing Telemetry & Live Pricing Breakdown */}
+          <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-zinc-800">
+            {/* Biopolymer mass & Print time chips */}
+            <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+              <div className="p-2 rounded-lg bg-orange-50/70 dark:bg-orange-950/30 border border-orange-200/60 dark:border-orange-900/40 flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-[#FF6B00] shrink-0" />
+                <div>
+                  <span className="text-[10px] text-slate-500 dark:text-zinc-400 block leading-none">Biopolymer Mass</span>
+                  <strong className="text-[#0F172A] dark:text-zinc-200">{priceBreakdown.biopolymerMassGrams}g PLA</strong>
+                </div>
+              </div>
+
+              <div className="p-2 rounded-lg bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/60 dark:border-blue-900/40 flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+                <div>
+                  <span className="text-[10px] text-slate-500 dark:text-zinc-400 block leading-none">Print Farm Time</span>
+                  <strong className="text-[#0F172A] dark:text-zinc-200">{priceBreakdown.machineTimeHours}h {priceBreakdown.machineTimeMinutes}m</strong>
+                </div>
               </div>
             </div>
 
-            <div className="text-right text-[11px] text-slate-500 font-sans">
-              <div className="flex items-center gap-1 justify-end font-semibold text-[#0F172A] dark:text-zinc-300">
-                <Clock className="w-3.5 h-3.5 text-[#FF6B00]" />
-                <span>Ships in 48h</span>
+            <div className="flex items-baseline justify-between pt-1">
+              <div>
+                <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-zinc-400 block font-sans">
+                  TOTAL TAILORED PRICE
+                </span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-bold font-sans text-[#0F172A] dark:text-white">
+                    ${calculatedDisplayPrice.toFixed(2)}
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">USD</span>
+                </div>
               </div>
-              <div className="text-[10px] text-slate-400">Free US Shipping over $50</div>
+
+              <div className="text-right text-[11px] font-sans">
+                <div className="inline-flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/40">
+                  <Truck className="w-3.5 h-3.5" />
+                  <span>Free US Shipping</span>
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">
+                  Orders over $35 ship free • 48h dispatch
+                </div>
+              </div>
             </div>
           </div>
         </div>

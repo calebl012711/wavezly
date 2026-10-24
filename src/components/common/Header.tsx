@@ -196,15 +196,23 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={openCart}
-                className="flex items-center gap-2 pl-3 pr-3.5 py-1.5 sm:py-2 rounded-full bg-[#0F172A] hover:bg-zinc-800 text-white font-semibold text-xs sm:text-sm shadow-xs transition cursor-pointer active:scale-95"
+                className="relative flex items-center gap-2 pl-3 pr-3.5 py-1.5 sm:py-2 rounded-full bg-[#0F172A] hover:bg-zinc-800 text-white font-semibold text-xs sm:text-sm shadow-xs transition cursor-pointer active:scale-95"
                 aria-label={`Cart with ${itemCount} items`}
               >
-                <ShoppingCart className="w-4 h-4 text-white" />
+                <div className="relative flex items-center">
+                  <ShoppingCart className="w-4 h-4 text-white" />
+                  {itemCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 flex h-2.5 w-2.5 pointer-events-none">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B00] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FF6B00]"></span>
+                    </span>
+                  )}
+                </div>
                 <span className="hidden sm:inline">Cart</span>
                 <span
                   className={`min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full text-[10px] font-bold ${
                     itemCount > 0
-                      ? 'bg-[#FF6B00] text-white'
+                      ? 'bg-[#FF6B00] text-white animate-pulse'
                       : 'bg-zinc-700 text-zinc-300'
                   }`}
                 >
@@ -285,6 +293,8 @@ export const Header: React.FC<HeaderProps> = ({
         }}
         onNavigateTracking={() => onNavigate('tracking')}
         onOpenCustomizer={() => onNavigate('customizer')}
+        searchQuery={searchQuery}
+        onSearch={onSearch}
       />
     </>
   );

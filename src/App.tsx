@@ -212,7 +212,9 @@ export const App: React.FC = () => {
               />
             )}
 
-            {currentRoute === 'customizer' && <CustomizerPage />}
+            {currentRoute === 'customizer' && (
+              <CustomizerPage onNavigateHome={() => handleNavigate('home')} />
+            )}
 
             {currentRoute === 'checkout' && (
               <CheckoutPage
