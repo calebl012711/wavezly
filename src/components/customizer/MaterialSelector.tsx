@@ -27,15 +27,15 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
   return (
     <div className="space-y-4">
       {/* 1. Primary Solid Polymer (Outer Shell) */}
-      <div className="p-3 bg-surface rounded-lg border border-surface-border">
+      <div className="p-3 bg-slate-50/70 dark:bg-zinc-900/60 rounded-xl border border-slate-200/80 dark:border-zinc-800 shadow-xs">
         <div className="flex items-center justify-between mb-2.5">
           <div className="flex items-center space-x-1.5">
-            <Layers className="w-3.5 h-3.5 text-signal-orange" />
-            <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+            <Layers className="w-3.5 h-3.5 text-[#FF6B00]" />
+            <span className="text-xs font-semibold text-[#0F172A] dark:text-zinc-200 uppercase tracking-wider">
               Structural Shell Material
             </span>
           </div>
-          <span className="font-mono text-[11px] text-zinc-400">
+          <span className="font-sans text-xs font-medium text-slate-500 dark:text-zinc-400">
             {selectedFilament.name}
           </span>
         </div>
@@ -48,30 +48,30 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
                 key={mat.id}
                 type="button"
                 onClick={() => onSelectFilament(mat)}
-                className={`relative group flex flex-col items-center p-2 rounded-md border text-center transition-all ${
+                className={`relative group flex flex-col items-center p-2 rounded-lg border text-center transition-all ${
                   isSelected
-                    ? 'border-signal-orange bg-zinc-900/90 shadow-glow-orange'
-                    : 'border-zinc-800 bg-zinc-950/60 hover:border-zinc-700'
+                    ? 'border-[#FF6B00] bg-white dark:bg-zinc-900 shadow-[0_2px_12px_rgba(255,107,0,0.14)] ring-1 ring-[#FF6B00]'
+                    : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60 hover:border-slate-300 dark:hover:border-zinc-700 shadow-2xs'
                 }`}
               >
                 {/* Tactical Color Dot */}
                 <div
-                  className="w-7 h-7 rounded-full border border-white/20 shadow-inner flex items-center justify-center transition-transform group-hover:scale-105"
+                  className="w-7 h-7 rounded-full border border-black/10 dark:border-white/20 shadow-xs flex items-center justify-center transition-transform group-hover:scale-105"
                   style={{ backgroundColor: mat.hexColor }}
                 >
                   {isSelected && (
                     <Check
                       className={`w-3.5 h-3.5 ${
-                        mat.hexColor === '#f4f4f5' ? 'text-black' : 'text-white'
+                        mat.hexColor === '#f4f4f5' || mat.hexColor === '#ece5db' ? 'text-black' : 'text-white'
                       }`}
                     />
                   )}
                 </div>
 
-                <span className="mt-1.5 font-mono text-[10px] text-zinc-300 truncate w-full">
+                <span className="mt-1.5 font-sans text-[11px] font-semibold text-[#0F172A] dark:text-zinc-300 truncate w-full">
                   {mat.name.split(' ')[0]}
                 </span>
-                <span className="font-mono text-[9px] text-zinc-500">
+                <span className="font-mono text-[9px] text-slate-400 dark:text-zinc-500">
                   ${mat.costPerCm3.toFixed(3)}/cm³
                 </span>
               </button>
@@ -81,15 +81,15 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
       </div>
 
       {/* 2. Optional Translucent Resin Inlay (Cavity Pocket Infusion) */}
-      <div className="p-3 bg-surface rounded-lg border border-surface-border">
+      <div className="p-3 bg-slate-50/70 dark:bg-zinc-900/60 rounded-xl border border-slate-200/80 dark:border-zinc-800 shadow-xs">
         <div className="flex items-center justify-between mb-2.5">
           <div className="flex items-center space-x-1.5">
-            <Droplets className="w-3.5 h-3.5 text-signal-cyan" />
-            <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+            <Droplets className="w-3.5 h-3.5 text-sky-500" />
+            <span className="text-xs font-semibold text-[#0F172A] dark:text-zinc-200 uppercase tracking-wider">
               Floor Resin Inlay (Optional)
             </span>
           </div>
-          <span className="font-mono text-[11px] text-zinc-400">
+          <span className="font-sans text-xs font-medium text-slate-500 dark:text-zinc-400">
             {selectedResin ? selectedResin.name : 'None (Dry Pocket)'}
           </span>
         </div>
@@ -99,16 +99,16 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
           <button
             type="button"
             onClick={() => onSelectResin(null)}
-            className={`flex flex-col items-center p-2 rounded-md border transition-all ${
+            className={`flex flex-col items-center p-2 rounded-lg border transition-all ${
               selectedResin === null
-                ? 'border-signal-cyan bg-zinc-900/90 shadow-glow-cyan'
-                : 'border-zinc-800 bg-zinc-950/60 hover:border-zinc-700'
+                ? 'border-sky-500 bg-white dark:bg-zinc-900 shadow-xs ring-1 ring-sky-500'
+                : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60 hover:border-slate-300 dark:hover:border-zinc-700 shadow-2xs'
             }`}
           >
-            <div className="w-6 h-6 rounded-full border border-dashed border-zinc-600 flex items-center justify-center">
-              <span className="font-mono text-[9px] text-zinc-500">OFF</span>
+            <div className="w-6 h-6 rounded-full border border-dashed border-slate-400 dark:border-zinc-600 flex items-center justify-center">
+              <span className="font-mono text-[9px] text-slate-400 dark:text-zinc-500">OFF</span>
             </div>
-            <span className="mt-1 font-mono text-[10px] text-zinc-400">None</span>
+            <span className="mt-1 font-sans text-[10px] font-medium text-slate-600 dark:text-zinc-400">None</span>
           </button>
 
           {/* Resin Options */}
@@ -119,14 +119,14 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
                 key={resin.id}
                 type="button"
                 onClick={() => onSelectResin(resin)}
-                className={`relative group flex flex-col items-center p-2 rounded-md border transition-all ${
+                className={`relative group flex flex-col items-center p-2 rounded-lg border transition-all ${
                   isSelected
-                    ? 'border-signal-cyan bg-zinc-900/90 shadow-glow-cyan'
-                    : 'border-zinc-800 bg-zinc-950/60 hover:border-zinc-700'
+                    ? 'border-sky-500 bg-white dark:bg-zinc-900 shadow-xs ring-1 ring-sky-500'
+                    : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60 hover:border-slate-300 dark:hover:border-zinc-700 shadow-2xs'
                 }`}
               >
                 <div
-                  className="w-6 h-6 rounded-full border border-white/30 flex items-center justify-center opacity-90 shadow-inner group-hover:scale-105 transition-transform"
+                  className="w-6 h-6 rounded-full border border-black/10 dark:border-white/30 flex items-center justify-center opacity-90 shadow-2xs group-hover:scale-105 transition-transform"
                   style={{
                     backgroundColor: resin.hexColor,
                     boxShadow: `0 0 10px ${resin.hexColor}40`,
@@ -134,7 +134,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
                 >
                   {isSelected && <Check className="w-3 h-3 text-white" />}
                 </div>
-                <span className="mt-1 font-mono text-[9px] text-zinc-300 truncate w-full text-center">
+                <span className="mt-1 font-sans text-[10px] font-medium text-slate-700 dark:text-zinc-300 truncate w-full text-center">
                   {resin.name.split(' ')[0]}
                 </span>
               </button>

@@ -546,16 +546,16 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
   // The inner content of the wizard
   const wizardContent = (
-    <div className="flex flex-col bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 rounded-2xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden max-w-4xl w-full mx-auto">
+    <div className="flex flex-col bg-white dark:bg-zinc-950 text-[#0F172A] dark:text-zinc-100 rounded-2xl shadow-[0_25px_60px_-15px_rgba(15,23,42,0.14)] border border-slate-200/90 dark:border-zinc-800 overflow-hidden max-w-4xl w-full mx-auto font-sans">
       {/* ---------------------------------------------------- */}
       {/* WIZARD HEADER: Brand, Sizing Stepper & Trust Pills   */}
       {/* ---------------------------------------------------- */}
-      <div className="border-b border-zinc-200 dark:border-zinc-800 bg-gradient-to-r from-orange-50/60 via-zinc-50 to-orange-50/40 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900/80 px-6 py-5">
+      <div className="border-b border-slate-200/80 dark:border-zinc-800 bg-gradient-to-r from-orange-50/50 via-white to-amber-50/30 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900/80 px-6 py-5">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-100 dark:bg-orange-950/80 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800/60 font-sans">
-                <Sparkles className="w-3 h-3" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50 dark:bg-orange-950/80 text-[#FF6B00] dark:text-[#FF7A00] border border-orange-200/80 dark:border-orange-800/60 font-sans shadow-2xs">
+                <Sparkles className="w-3 h-3 text-[#FF6B00]" />
                 WAVEZLY CUSTOM 3D STUDIO • SIZING WIZARD
               </span>
               <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/40">
@@ -563,10 +563,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                 Wavezly 100% Fit Guarantee • Made to Order in Boise, ID • Ships in 48h
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold font-sans tracking-tight text-zinc-900 dark:text-white">
+            <h2 className="text-xl sm:text-2xl font-bold font-sans tracking-tight text-[#0F172A] dark:text-white">
               Wavezly Custom 3D Studio
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 font-sans">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 font-sans">
               Zero guessing. 3 tailored choices to fabricate your custom organizer for any drawer, desktop, vanity, or workshop.
             </p>
           </div>
@@ -578,7 +578,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                 playClickSound('snap');
                 onClose();
               }}
-              className="p-2 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 rounded-full transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-[#0F172A] dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-full transition-colors cursor-pointer"
               title="Close Wizard"
             >
               <X className="w-5 h-5" />
@@ -597,26 +597,26 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             }}
             className={`flex items-center gap-2 p-2 sm:p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
               currentStep === 1
-                ? 'bg-white dark:bg-zinc-900 border-orange-500 shadow-xs ring-2 ring-orange-500/20'
+                ? 'bg-white dark:bg-zinc-900 border-[#FF6B00] shadow-[0_4px_12px_rgba(255,107,0,0.12)] ring-2 ring-[#FF6B00]/20'
                 : currentStep > 1
-                ? 'bg-zinc-100/80 dark:bg-zinc-900/50 border-emerald-500/40 text-zinc-700 dark:text-zinc-300'
-                : 'bg-zinc-100/50 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 text-zinc-400'
+                ? 'bg-slate-50 dark:bg-zinc-900/50 border-emerald-500/40 text-[#0F172A] dark:text-zinc-300'
+                : 'bg-slate-50/60 dark:bg-zinc-900/30 border-slate-200 dark:border-zinc-800 text-slate-400'
             }`}
           >
             <div
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                 currentStep === 1
-                  ? 'bg-orange-600 text-white'
+                  ? 'bg-[#FF6B00] text-white shadow-2xs'
                   : currentStep > 1
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+                  : 'bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400'
               }`}
             >
               {currentStep > 1 ? <Check className="w-3.5 h-3.5" /> : '1'}
             </div>
             <div className="min-w-0">
-              <div className="text-[10px] uppercase font-semibold text-zinc-500 dark:text-zinc-400">Step 1</div>
-              <div className="text-xs sm:text-sm font-semibold truncate">Space or Project</div>
+              <div className="text-[10px] uppercase font-semibold text-slate-400 dark:text-zinc-400 font-sans">Step 1</div>
+              <div className="text-xs sm:text-sm font-bold truncate">Space or Project</div>
             </div>
           </button>
 
@@ -629,26 +629,26 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             }}
             className={`flex items-center gap-2 p-2 sm:p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
               currentStep === 2
-                ? 'bg-white dark:bg-zinc-900 border-orange-500 shadow-xs ring-2 ring-orange-500/20'
+                ? 'bg-white dark:bg-zinc-900 border-[#FF6B00] shadow-[0_4px_12px_rgba(255,107,0,0.12)] ring-2 ring-[#FF6B00]/20'
                 : currentStep > 2
-                ? 'bg-zinc-100/80 dark:bg-zinc-900/50 border-emerald-500/40 text-zinc-700 dark:text-zinc-300'
-                : 'bg-zinc-100/50 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 text-zinc-400'
+                ? 'bg-slate-50 dark:bg-zinc-900/50 border-emerald-500/40 text-[#0F172A] dark:text-zinc-300'
+                : 'bg-slate-50/60 dark:bg-zinc-900/30 border-slate-200 dark:border-zinc-800 text-slate-400'
             }`}
           >
             <div
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                 currentStep === 2
-                  ? 'bg-orange-600 text-white'
+                  ? 'bg-[#FF6B00] text-white shadow-2xs'
                   : currentStep > 2
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+                  : 'bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400'
               }`}
             >
               {currentStep > 2 ? <Check className="w-3.5 h-3.5" /> : '2'}
             </div>
             <div className="min-w-0">
-              <div className="text-[10px] uppercase font-semibold text-zinc-500 dark:text-zinc-400">Step 2</div>
-              <div className="text-xs sm:text-sm font-semibold truncate">What You Organize</div>
+              <div className="text-[10px] uppercase font-semibold text-slate-400 dark:text-zinc-400 font-sans">Step 2</div>
+              <div className="text-xs sm:text-sm font-bold truncate">What You Organize</div>
             </div>
           </button>
 
@@ -661,22 +661,22 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             }}
             className={`flex items-center gap-2 p-2 sm:p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
               currentStep === 3
-                ? 'bg-white dark:bg-zinc-900 border-orange-500 shadow-xs ring-2 ring-orange-500/20'
-                : 'bg-zinc-100/50 dark:bg-zinc-900/30 border-zinc-200 dark:border-zinc-800 text-zinc-400'
+                ? 'bg-white dark:bg-zinc-900 border-[#FF6B00] shadow-[0_4px_12px_rgba(255,107,0,0.12)] ring-2 ring-[#FF6B00]/20'
+                : 'bg-slate-50/60 dark:bg-zinc-900/30 border-slate-200 dark:border-zinc-800 text-slate-400'
             }`}
           >
             <div
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                 currentStep === 3
-                  ? 'bg-orange-600 text-white'
-                  : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+                  ? 'bg-[#FF6B00] text-white shadow-2xs'
+                  : 'bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400'
               }`}
             >
               3
             </div>
             <div className="min-w-0">
-              <div className="text-[10px] uppercase font-semibold text-zinc-500 dark:text-zinc-400">Step 3</div>
-              <div className="text-xs sm:text-sm font-semibold truncate">Finish & Resin Inlay</div>
+              <div className="text-[10px] uppercase font-semibold text-slate-400 dark:text-zinc-400 font-sans">Step 3</div>
+              <div className="text-xs sm:text-sm font-bold truncate">Finish & Resin Inlay</div>
             </div>
           </button>
         </div>
@@ -694,13 +694,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           {currentStep === 1 && (
             <div className="space-y-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400 font-mono">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#FF6B00] dark:text-[#FF7A00] font-sans">
                   STEP 1 OF 3
                 </span>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">
+                <h3 className="text-lg font-bold text-[#0F172A] dark:text-white mt-0.5">
                   Pick Your Space or Project
                 </h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs text-slate-500 dark:text-zinc-400">
                   Select your space, furniture model, or enter exact custom dimensions.
                 </p>
               </div>
@@ -718,8 +718,8 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                       }}
                       className={`p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
                         isSelected
-                          ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-950/20 shadow-xs'
-                          : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900/60'
+                          ? 'border-[#FF6B00] bg-orange-50/40 dark:bg-orange-950/20 shadow-[0_4px_16px_rgba(255,107,0,0.08)]'
+                          : 'border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900/60 shadow-xs'
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2">
@@ -727,18 +727,18 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           <div
                             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                               isSelected
-                                ? 'border-orange-600 bg-orange-600 text-white'
-                                : 'border-zinc-300 dark:border-zinc-600'
+                                ? 'border-[#FF6B00] bg-[#FF6B00] text-white'
+                                : 'border-slate-300 dark:border-zinc-600'
                             }`}
                           >
                             {isSelected && <Check className="w-2.5 h-2.5" />}
                           </div>
                           <div>
-                            <span className="font-semibold text-sm text-zinc-900 dark:text-white">
+                            <span className="font-bold text-sm text-[#0F172A] dark:text-white">
                               {preset.name}
                             </span>
                             {preset.badge && (
-                              <span className="ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-900/60 text-orange-800 dark:text-orange-300 font-sans">
+                              <span className="ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-orange-100/80 dark:bg-orange-900/60 text-[#FF6B00] dark:text-orange-300 font-sans border border-orange-200/60">
                                 {preset.badge}
                               </span>
                             )}
@@ -747,20 +747,20 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
                         {/* Dimensions Tag */}
                         {preset.id !== 'custom_mm' && (
-                          <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 whitespace-nowrap bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
+                          <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400 whitespace-nowrap bg-slate-100 dark:bg-zinc-800 px-2 py-0.5 rounded-md">
                             {preset.dimensionsIn.length}″ × {preset.dimensionsIn.width}″ ({preset.dimensionsMm.length}×{preset.dimensionsMm.width}mm)
                           </span>
                         )}
                       </div>
 
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 pl-6">
+                      <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 pl-6">
                         {preset.description}
                       </p>
 
                       {/* IKEA Alex Sub-Option Selector */}
                       {preset.id === 'ikea_alex' && isSelected && (
-                        <div className="mt-3 pl-6 pt-3 border-t border-orange-200 dark:border-orange-900/40">
-                          <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-1.5">
+                        <div className="mt-3 pl-6 pt-3 border-t border-orange-200/80 dark:border-orange-900/40">
+                          <label className="text-xs font-semibold text-[#0F172A] dark:text-zinc-300 block mb-1.5">
                             Select Alex Drawer Fit:
                           </label>
                           <div className="grid grid-cols-2 gap-2">
@@ -771,10 +771,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                 playClickSound('toggle');
                                 setAlexSubOption('compact');
                               }}
-                              className={`px-3 py-2 rounded-lg text-xs font-medium border text-left transition-all ${
+                              className={`px-3 py-2 rounded-lg text-xs font-medium border text-left transition-all cursor-pointer ${
                                 alexSubOption === 'compact'
-                                  ? 'bg-orange-600 text-white border-orange-600 font-semibold shadow-xs'
-                                  : 'bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
+                                  ? 'bg-[#FF6B00] text-white border-[#FF6B00] font-semibold shadow-xs'
+                                  : 'bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:border-slate-300'
                               }`}
                             >
                               <div className="font-semibold">Compact (Half-Drawer)</div>
@@ -787,10 +787,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                 playClickSound('toggle');
                                 setAlexSubOption('wide');
                               }}
-                              className={`px-3 py-2 rounded-lg text-xs font-medium border text-left transition-all ${
+                              className={`px-3 py-2 rounded-lg text-xs font-medium border text-left transition-all cursor-pointer ${
                                 alexSubOption === 'wide'
-                                  ? 'bg-orange-600 text-white border-orange-600 font-semibold shadow-xs'
-                                  : 'bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
+                                  ? 'bg-[#FF6B00] text-white border-[#FF6B00] font-semibold shadow-xs'
+                                  : 'bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-200 dark:border-zinc-700 hover:border-slate-300'
                               }`}
                             >
                               <div className="font-semibold">Wide (Front Section)</div>
@@ -803,21 +803,21 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                       {/* Custom Measurements Input Box */}
                       {preset.id === 'custom_mm' && isSelected && (
                         <div
-                          className="mt-3 pl-6 pt-3 border-t border-orange-200 dark:border-orange-900/40 space-y-3"
+                          className="mt-3 pl-6 pt-3 border-t border-orange-200/80 dark:border-orange-900/40 space-y-3"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+                            <span className="text-xs font-semibold text-[#0F172A] dark:text-zinc-300">
                               Measurement Unit:
                             </span>
-                            <div className="flex items-center p-0.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg text-xs">
+                            <div className="flex items-center p-0.5 bg-slate-100 dark:bg-zinc-800 rounded-lg text-xs border border-slate-200/80 dark:border-zinc-700">
                               <button
                                 type="button"
                                 onClick={() => handleCustomUnitToggle('mm')}
-                                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                                className={`px-2.5 py-1 rounded-md font-medium transition-all cursor-pointer ${
                                   customUnit === 'mm'
-                                    ? 'bg-white dark:bg-zinc-700 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
-                                    : 'text-zinc-600 dark:text-zinc-400'
+                                    ? 'bg-white dark:bg-zinc-700 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                                    : 'text-slate-600 dark:text-zinc-400'
                                 }`}
                               >
                                 MILLIMETERS (mm)
@@ -825,10 +825,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                               <button
                                 type="button"
                                 onClick={() => handleCustomUnitToggle('in')}
-                                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                                className={`px-2.5 py-1 rounded-md font-medium transition-all cursor-pointer ${
                                   customUnit === 'in'
-                                    ? 'bg-white dark:bg-zinc-700 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
-                                    : 'text-zinc-600 dark:text-zinc-400'
+                                    ? 'bg-white dark:bg-zinc-700 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                                    : 'text-slate-600 dark:text-zinc-400'
                                 }`}
                               >
                                 INCHES (in)
@@ -839,7 +839,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           <div className="grid grid-cols-3 gap-2">
                             {/* Length */}
                             <div>
-                              <label className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 block mb-1">
+                              <label className="text-[11px] font-semibold text-slate-600 dark:text-zinc-400 block mb-1">
                                 Length ({customUnit})
                               </label>
                               <input
@@ -849,13 +849,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                 max={customUnit === 'in' ? 10.2 : 260}
                                 value={customLength}
                                 onChange={(e) => setCustomLength(parseFloat(e.target.value) || 0)}
-                                className="w-full px-2.5 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-mono font-bold"
+                                className="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-mono font-bold text-[#0F172A] dark:text-white focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
                               />
                             </div>
 
                             {/* Width */}
                             <div>
-                              <label className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 block mb-1">
+                              <label className="text-[11px] font-semibold text-slate-600 dark:text-zinc-400 block mb-1">
                                 Width ({customUnit})
                               </label>
                               <input
@@ -865,13 +865,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                 max={customUnit === 'in' ? 9.5 : 240}
                                 value={customWidth}
                                 onChange={(e) => setCustomWidth(parseFloat(e.target.value) || 0)}
-                                className="w-full px-2.5 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-mono font-bold"
+                                className="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-mono font-bold text-[#0F172A] dark:text-white focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
                               />
                             </div>
 
                             {/* Height */}
                             <div>
-                              <label className="text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 block mb-1">
+                              <label className="text-[11px] font-semibold text-slate-600 dark:text-zinc-400 block mb-1">
                                 Height / Depth ({customUnit})
                               </label>
                               <input
@@ -881,13 +881,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                 max={customUnit === 'in' ? 3.0 : 75}
                                 value={customHeight}
                                 onChange={(e) => setCustomHeight(parseFloat(e.target.value) || 0)}
-                                className="w-full px-2.5 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-mono font-bold"
+                                className="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-mono font-bold text-[#0F172A] dark:text-white focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00]"
                               />
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 p-2 rounded-lg">
-                            <Ruler className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+                          <div className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-zinc-400 bg-slate-100/80 dark:bg-zinc-800/80 p-2.5 rounded-xl border border-slate-200/60 dark:border-zinc-700">
+                            <Ruler className="w-3.5 h-3.5 text-[#FF6B00] shrink-0" />
                             <span>
                               Tip: Measure your inner drawer or shelf footprint. Wavezly applies an automatic tolerance margin for a smooth drop-in fit.
                             </span>
@@ -907,13 +907,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           {currentStep === 2 && (
             <div className="space-y-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400 font-mono">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#FF6B00] dark:text-[#FF7A00] font-sans">
                   STEP 2 OF 3
                 </span>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">
+                <h3 className="text-lg font-bold text-[#0F172A] dark:text-white mt-0.5">
                   What Are You Organizing?
                 </h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs text-slate-500 dark:text-zinc-400">
                   Select your items. Wavezly automatically configures grid partitions and wall depths for optimal storage.
                 </p>
               </div>
@@ -930,30 +930,30 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                       }}
                       className={`p-4 rounded-xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
-                          ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-950/20 shadow-xs'
-                          : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900/60'
+                          ? 'border-[#FF6B00] bg-orange-50/40 dark:bg-orange-950/20 shadow-[0_4px_16px_rgba(255,107,0,0.08)]'
+                          : 'border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900/60 shadow-xs'
                       }`}
                     >
                       <div>
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-mono">
+                          <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-sans">
                             {org.categoryTag}
                           </span>
                           <div
                             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                               isSelected
-                                ? 'border-orange-600 bg-orange-600 text-white'
-                                : 'border-zinc-300 dark:border-zinc-600'
+                                ? 'border-[#FF6B00] bg-[#FF6B00] text-white'
+                                : 'border-slate-300 dark:border-zinc-600'
                             }`}
                           >
                             {isSelected && <Check className="w-2.5 h-2.5" />}
                           </div>
                         </div>
 
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-white mt-2">
+                        <h4 className="font-bold text-sm text-[#0F172A] dark:text-white mt-2">
                           {org.name}
                         </h4>
-                        <p className="text-xs font-medium text-orange-600 dark:text-orange-400">
+                        <p className="text-xs font-semibold text-[#FF6B00] dark:text-[#FF7A00]">
                           {org.tagline}
                         </p>
 
@@ -961,17 +961,17 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           {org.items.map((item, idx) => (
                             <div
                               key={idx}
-                              className="flex items-center gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400"
+                              className="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-zinc-400"
                             >
-                              <span className="w-1.5 h-1.5 rounded-full bg-orange-500/80" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00]" />
                               <span>{item}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[11px] text-zinc-500 font-mono">
-                        <span>{org.rows * org.cols} Compartments</span>
+                      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-zinc-500 font-sans">
+                        <span className="font-medium text-[#0F172A] dark:text-zinc-300">{org.rows * org.cols} Compartments</span>
                         <span>{org.recommendedHeightMm}mm Wall Depth</span>
                       </div>
                     </div>
@@ -987,20 +987,20 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           {currentStep === 3 && (
             <div className="space-y-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400 font-mono">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#FF6B00] dark:text-[#FF7A00] font-sans">
                   STEP 3 OF 3
                 </span>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">
+                <h3 className="text-lg font-bold text-[#0F172A] dark:text-white mt-0.5">
                   Finish & Resin Inlay
                 </h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs text-slate-500 dark:text-zinc-400">
                   Select your tactile exterior color and choose optional liquid resin sound-dampening.
                 </p>
               </div>
 
               {/* Color Swatches */}
               <div className="space-y-2.5">
-                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
+                <label className="text-xs font-semibold text-[#0F172A] dark:text-zinc-300 block">
                   1. Exterior Color Finish:
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -1015,13 +1015,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                         }}
                         className={`p-3 rounded-xl border-2 flex items-center gap-3 transition-all cursor-pointer ${
                           isSelected
-                            ? 'border-orange-500 bg-orange-50/50 dark:bg-orange-950/20 shadow-xs'
-                            : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900/60'
+                            ? 'border-[#FF6B00] bg-orange-50/40 dark:bg-orange-950/20 shadow-[0_4px_16px_rgba(255,107,0,0.08)]'
+                            : 'border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 bg-white dark:bg-zinc-900/60 shadow-xs'
                         }`}
                       >
                         {/* Swatch Circle */}
                         <div
-                          className="w-8 h-8 rounded-full border-2 border-white/60 shadow-md shrink-0 flex items-center justify-center"
+                          className="w-8 h-8 rounded-full border-2 border-black/10 dark:border-white/60 shadow-xs shrink-0 flex items-center justify-center"
                           style={{ backgroundColor: finish.hexColor }}
                         >
                           {isSelected && (
@@ -1035,14 +1035,14 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
-                            <span className="font-semibold text-xs text-zinc-900 dark:text-white truncate">
+                            <span className="font-bold text-xs text-[#0F172A] dark:text-white truncate">
                               {finish.name}
                             </span>
-                            <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+                            <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400">
                               {finish.tag}
                             </span>
                           </div>
-                          <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
+                          <p className="text-[10px] text-slate-500 dark:text-zinc-400 truncate mt-0.5">
                             {finish.description}
                           </p>
                         </div>
@@ -1054,7 +1054,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
               {/* Liquid Resin Sound-Dampening Pocket Toggle */}
               <div className="pt-2">
-                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-2">
+                <label className="text-xs font-semibold text-[#0F172A] dark:text-zinc-300 block mb-2">
                   2. Sound-Dampening Resin Inlay:
                 </label>
 
@@ -1065,8 +1065,8 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                   }}
                   className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${
                     hasResinInlay
-                      ? 'border-cyan-500 bg-cyan-50/60 dark:bg-cyan-950/30 ring-2 ring-cyan-500/20'
-                      : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 hover:border-zinc-300'
+                      ? 'border-sky-500/80 bg-sky-50/50 dark:bg-sky-950/30 ring-2 ring-sky-500/20 shadow-xs'
+                      : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 hover:border-slate-300 shadow-xs'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -1074,8 +1074,8 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                       <div
                         className={`p-2.5 rounded-xl ${
                           hasResinInlay
-                            ? 'bg-cyan-500 text-white'
-                            : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
+                            ? 'bg-sky-500 text-white shadow-2xs'
+                            : 'bg-slate-100 dark:bg-zinc-800 text-slate-500'
                         }`}
                       >
                         {hasResinInlay ? (
@@ -1087,14 +1087,14 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-sm text-zinc-900 dark:text-white">
+                          <span className="font-bold text-sm text-[#0F172A] dark:text-white">
                             Optional Liquid Resin Sound-Dampening Pocket
                           </span>
-                          <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-100 dark:bg-cyan-950 px-2 py-0.5 rounded-full">
+                          <span className="text-xs font-bold text-sky-700 dark:text-sky-300 bg-sky-100/80 dark:bg-sky-950 px-2 py-0.5 rounded-full border border-sky-200/60 dark:border-sky-900/40">
                             +$7.50
                           </span>
                         </div>
-                        <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                        <p className="text-xs text-slate-500 dark:text-zinc-400 leading-relaxed font-sans">
                           Pours an optical acoustic dampening resin layer into each pocket floor.
                           Eliminates hollow clatter when tossing car keys, silverware, or metal tools, cushions delicate watches & cosmetics, and adds luxurious heft.
                         </p>
@@ -1104,7 +1104,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                     {/* Toggle Switch */}
                     <div
                       className={`w-11 h-6 rounded-full transition-colors relative shrink-0 p-0.5 ${
-                        hasResinInlay ? 'bg-cyan-600' : 'bg-zinc-300 dark:bg-zinc-700'
+                        hasResinInlay ? 'bg-[#FF6B00]' : 'bg-slate-300 dark:bg-zinc-700'
                       }`}
                     >
                       <div
@@ -1116,14 +1116,14 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                   </div>
 
                   {hasResinInlay && (
-                    <div className="mt-3 pt-3 border-t border-cyan-200 dark:border-cyan-900/40 flex items-center gap-3 text-[11px] text-cyan-800 dark:text-cyan-300 font-medium">
+                    <div className="mt-3 pt-3 border-t border-sky-200/60 dark:border-sky-900/40 flex items-center gap-3 text-[11px] text-sky-800 dark:text-sky-300 font-medium">
                       <span className="flex items-center gap-1">
-                        <Check className="w-3.5 h-3.5 text-cyan-600" />
+                        <Check className="w-3.5 h-3.5 text-sky-600" />
                         -18 dB acoustic clatter reduction
                       </span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
-                        <Check className="w-3.5 h-3.5 text-cyan-600" />
+                        <Check className="w-3.5 h-3.5 text-sky-600" />
                         Protects watches, tools & glassware
                       </span>
                     </div>
@@ -1135,22 +1135,22 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
         </div>
 
         {/* Right Column: Live Visual Validation Card (5 cols) */}
-        <div className="lg:col-span-5 bg-zinc-50 dark:bg-zinc-900/80 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800 space-y-4">
+        <div className="lg:col-span-5 bg-slate-50/70 dark:bg-zinc-900/80 rounded-2xl p-5 border border-slate-200/90 dark:border-zinc-800 space-y-4 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-mono flex items-center gap-1.5">
-              <Box className="w-3.5 h-3.5 text-orange-600" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 font-sans flex items-center gap-1.5">
+              <Box className="w-3.5 h-3.5 text-[#FF6B00]" />
               LIVE BLUEPRINT PREVIEW
             </span>
-            <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100/70 dark:bg-emerald-950 px-2 py-0.5 rounded-full border border-emerald-200/60 dark:border-emerald-800/40">
               ISO 2768-m Fit
             </span>
           </div>
 
           {/* Interactive 2D Compartment Floorplan Visualizer */}
-          <div className="p-4 bg-white dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800/80 shadow-inner flex flex-col items-center justify-center min-h-[170px] relative overflow-hidden">
+          <div className="p-4 bg-white dark:bg-zinc-950 rounded-xl border border-slate-200 dark:border-zinc-800/80 shadow-xs flex flex-col items-center justify-center min-h-[170px] relative overflow-hidden">
             {/* Background grid drafting texture */}
             <div
-              className="absolute inset-0 opacity-[0.06] dark:opacity-[0.12] pointer-events-none"
+              className="absolute inset-0 opacity-[0.05] dark:opacity-[0.12] pointer-events-none"
               style={{
                 backgroundImage:
                   'radial-gradient(circle, #71717a 1px, transparent 1px)',
@@ -1160,7 +1160,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
 
             {/* 2D Organizer Footprint */}
             <div
-              className="w-full max-w-[240px] aspect-[4/3] rounded-lg p-1.5 shadow-sm border flex flex-col justify-between transition-all"
+              className="w-full max-w-[240px] aspect-[4/3] rounded-xl p-1.5 shadow-sm border flex flex-col justify-between transition-all"
               style={{
                 backgroundColor: activeFinish.hexColor,
                 borderColor:
@@ -1180,18 +1180,18 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                 }).map((_, i) => (
                   <div
                     key={i}
-                    className="rounded-sm flex items-center justify-center border transition-all"
+                    className="rounded-md flex items-center justify-center border transition-all"
                     style={{
                       backgroundColor: hasResinInlay
-                        ? 'rgba(224, 242, 254, 0.35)'
-                        : 'rgba(0, 0, 0, 0.15)',
+                        ? 'rgba(224, 242, 254, 0.40)'
+                        : 'rgba(0, 0, 0, 0.12)',
                       borderColor: hasResinInlay
-                        ? 'rgba(2, 132, 199, 0.4)'
-                        : 'rgba(255, 255, 255, 0.15)',
+                        ? 'rgba(2, 132, 199, 0.45)'
+                        : 'rgba(255, 255, 255, 0.18)',
                     }}
                   >
                     {hasResinInlay && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 shadow-xs" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-xs" />
                     )}
                   </div>
                 ))}
@@ -1199,7 +1199,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             </div>
 
             {/* Dimensional Dimension Tags */}
-            <div className="mt-2 text-[11px] font-mono text-zinc-500 dark:text-zinc-400 flex items-center gap-3">
+            <div className="mt-2 text-[11px] font-mono text-slate-500 dark:text-zinc-400 flex items-center gap-3">
               <span>
                 {resolvedDimensions.length}mm ({((resolvedDimensions.length) / 25.4).toFixed(1)}″) L
               </span>
@@ -1215,8 +1215,8 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           </div>
 
           {/* Validation Checklist */}
-          <div className="space-y-2 bg-white dark:bg-zinc-950 p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-xs">
-            <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+          <div className="space-y-2 bg-white dark:bg-zinc-950 p-3.5 rounded-xl border border-slate-200/80 dark:border-zinc-800 text-xs shadow-xs">
+            <div className="flex items-center gap-2 text-[#0F172A] dark:text-zinc-300">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
               <span>
                 <strong>Space:</strong> {activeSpace.name}{' '}
@@ -1224,14 +1224,14 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+            <div className="flex items-center gap-2 text-[#0F172A] dark:text-zinc-300">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
               <span>
                 <strong>Layout:</strong> {activeOrg.name} ({resolvedDimensions.rows * resolvedDimensions.cols} chambers)
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+            <div className="flex items-center gap-2 text-[#0F172A] dark:text-zinc-300">
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
               <div className="flex items-center gap-1.5">
                 <span>
@@ -1244,10 +1244,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+            <div className="flex items-center gap-2 text-[#0F172A] dark:text-zinc-300">
               <CheckCircle2
                 className={`w-4 h-4 ${
-                  hasResinInlay ? 'text-cyan-500' : 'text-zinc-400'
+                  hasResinInlay ? 'text-sky-500' : 'text-slate-400'
                 } shrink-0`}
               />
               <span>
@@ -1260,7 +1260,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           </div>
 
           {/* 100% Fit Guarantee Badge */}
-          <div className="p-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800/50 flex items-start gap-2.5">
+          <div className="p-3 bg-gradient-to-r from-emerald-50/90 to-teal-50/70 dark:from-emerald-950/40 dark:to-teal-950/30 rounded-xl border border-emerald-200/90 dark:border-emerald-800/50 flex items-start gap-2.5">
             <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <div className="text-[11px] leading-snug">
               <div className="font-bold text-emerald-900 dark:text-emerald-300 font-sans">
@@ -1273,25 +1273,25 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           </div>
 
           {/* Pricing & Fast Shipping Summary */}
-          <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800 flex items-baseline justify-between">
+          <div className="pt-2 border-t border-slate-200 dark:border-zinc-800 flex items-baseline justify-between">
             <div>
-              <span className="text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 block font-mono">
+              <span className="text-[10px] uppercase font-bold text-slate-400 dark:text-zinc-400 block font-sans">
                 TOTAL TAILORED PRICE
               </span>
               <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold font-sans text-zinc-950 dark:text-white">
+                <span className="text-2xl font-bold font-sans text-[#0F172A] dark:text-white">
                   ${calculatedDisplayPrice.toFixed(2)}
                 </span>
-                <span className="text-xs text-zinc-400 font-mono">USD</span>
+                <span className="text-xs text-slate-400 font-mono">USD</span>
               </div>
             </div>
 
-            <div className="text-right text-[11px] text-zinc-500 font-sans">
-              <div className="flex items-center gap-1 justify-end font-medium text-zinc-700 dark:text-zinc-300">
-                <Clock className="w-3.5 h-3.5 text-orange-500" />
+            <div className="text-right text-[11px] text-slate-500 font-sans">
+              <div className="flex items-center gap-1 justify-end font-semibold text-[#0F172A] dark:text-zinc-300">
+                <Clock className="w-3.5 h-3.5 text-[#FF6B00]" />
                 <span>Ships in 48h</span>
               </div>
-              <div className="text-[10px]">Free US Shipping over $50</div>
+              <div className="text-[10px] text-slate-400">Free US Shipping over $50</div>
             </div>
           </div>
         </div>
@@ -1300,13 +1300,13 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
       {/* ---------------------------------------------------- */}
       {/* WIZARD FOOTER: Navigation & 1-Click Action Buttons    */}
       {/* ---------------------------------------------------- */}
-      <div className="border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/90 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="border-t border-slate-200/80 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/90 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2 w-full sm:w-auto">
           {currentStep > 1 && (
             <button
               type="button"
               onClick={handlePrevStep}
-              className="px-4 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-zinc-700 text-xs font-semibold text-[#0F172A] dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back</span>
@@ -1317,7 +1317,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             <button
               type="button"
               onClick={handleNextStep}
-              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer font-sans"
+              className="px-5 py-2.5 rounded-xl bg-[#FF6B00] hover:bg-[#FF7A00] text-white text-xs font-semibold shadow-[0_4px_14px_rgba(255,107,0,0.25)] transition-all flex items-center gap-1.5 cursor-pointer font-sans"
             >
               <span>Next: {currentStep === 1 ? 'What You Organize' : 'Finish & Resin Inlay'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -1330,17 +1330,17 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           <button
             type="button"
             onClick={handleDoneView3D}
-            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border-2 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer font-sans"
+            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border-2 border-slate-200 dark:border-zinc-700 hover:border-slate-300 dark:hover:border-zinc-600 bg-white dark:bg-zinc-800 text-[#0F172A] dark:text-zinc-100 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer font-sans"
             title="Inspect tailored dimensions in 3D WebGL viewport"
           >
-            <Eye className="w-4 h-4 text-orange-600" />
+            <Eye className="w-4 h-4 text-[#FF6B00]" />
             <span>Done! View in 3D</span>
           </button>
 
           <button
             type="button"
             onClick={handleAddToCartClick}
-            className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold transition-all shadow-md hover:shadow-glow-orange flex items-center justify-center gap-1.5 cursor-pointer font-sans"
+            className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF7A00] hover:from-[#FF7A00] hover:to-[#FF851A] text-white text-xs font-bold transition-all shadow-[0_4px_20px_rgba(255,107,0,0.30)] hover:shadow-[0_6px_24px_rgba(255,107,0,0.40)] flex items-center justify-center gap-1.5 cursor-pointer font-sans"
             title="Add to shopping bag and initiate high-precision manufacturing"
           >
             <ShoppingBag className="w-4 h-4" />

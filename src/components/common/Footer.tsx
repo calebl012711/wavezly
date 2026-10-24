@@ -1,155 +1,380 @@
 /**
- * AUTHENTIC AMAZON 4-TIER FOOTER FOR WAVEZLY
- * 1. "Back to top" bar (#37475a)
- * 2. 4-column directory (#232f3e)
- * 3. Logo & Language/Currency selectors (#232f3e)
- * 4. Micro-services & Copyright legal strip (#131921)
+ * WAVEZLY MODERN MINIMALIST DTC FOOTER
+ * Concept 1: Warm Minimalist DTC
+ * - Clean airy zinc-50 background with subtle border
+ * - Top Trust Strip with 4 high-craft value props & electric orange accents
+ * - Clean typographic directory columns ("Collections", "Custom Sizing", "Print Farm Telemetry", "Company")
+ * - Modern Newsletter subscription card with live feedback
+ * - Streamlined bottom bar with Wavezly logo, carbon neutral badge, legal links, and smooth back-to-top
  */
 
-import React from 'react';
-import { Globe, ArrowUp } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Truck,
+  ShieldCheck,
+  Leaf,
+  Headphones,
+  ArrowUp,
+  ArrowRight,
+  Check,
+  Sparkles,
+} from 'lucide-react';
 import { WavezlyLogo } from './WavezlyLogo';
 
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) return;
+    setIsSubscribed(true);
+  };
+
   return (
-    <footer className="w-full font-sans select-none text-white">
+    <footer className="w-full bg-zinc-50 border-t border-zinc-200 text-[#0F172A] font-sans antialiased">
       {/* ============================================================ */}
-      {/* TIER 1: BACK TO TOP BAR (#37475a)                             */}
+      {/* 1. TOP TRUST STRIP                                           */}
       {/* ============================================================ */}
-      <button
-        type="button"
-        onClick={scrollToTop}
-        className="w-full py-3.5 bg-[#37475a] hover:bg-[#485769] text-white text-xs font-semibold text-center transition cursor-pointer flex items-center justify-center gap-1.5"
-      >
-        <span>Back to top</span>
-        <ArrowUp className="w-3.5 h-3.5" />
-      </button>
+      <section className="border-b border-zinc-200/80 bg-white/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {/* Value Prop 1: 48h US Print Farm Dispatch */}
+            <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-zinc-200/70 shadow-xs hover:border-orange-200 hover:shadow-sm transition-all duration-200 group">
+              <div className="w-12 h-12 rounded-xl bg-[#FFF5ED] border border-[#FFE2CC] flex items-center justify-center text-[#FF6B00] shrink-0 group-hover:scale-105 transition-transform duration-200">
+                <Truck className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-[#0F172A] tracking-tight">
+                  48h US Print Farm Dispatch
+                </h4>
+                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                  Precision additive manufacturing on demand from Idaho & California.
+                </p>
+              </div>
+            </div>
 
-      {/* ============================================================ */}
-      {/* TIER 2: 4 DIRECTORY COLUMNS (#232f3e)                        */}
-      {/* ============================================================ */}
-      <div className="bg-[#232f3e] border-b border-[#3a4553] py-10 px-4 sm:px-8">
-        <div className="max-w-[1000px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-xs text-[#dddddd]">
-          {/* Column 1 */}
-          <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-sm mb-3">Get to Know Us</h4>
-            <p className="hover:underline cursor-pointer">About Wavezly</p>
-            <p className="hover:underline cursor-pointer">Careers at Wavezly</p>
-            <p className="hover:underline cursor-pointer">Boise Craft Studio</p>
-            <p className="hover:underline cursor-pointer">Sustainability & Zero Waste</p>
-            <p className="hover:underline cursor-pointer">Wavezly Science & 3D Tech</p>
-          </div>
+            {/* Value Prop 2: 100% Snug Fit Guarantee */}
+            <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-zinc-200/70 shadow-xs hover:border-orange-200 hover:shadow-sm transition-all duration-200 group">
+              <div className="w-12 h-12 rounded-xl bg-[#FFF5ED] border border-[#FFE2CC] flex items-center justify-center text-[#FF6B00] shrink-0 group-hover:scale-105 transition-transform duration-200">
+                <ShieldCheck className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-[#0F172A] tracking-tight">
+                  100% Snug Fit Guarantee
+                </h4>
+                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                  Millimeter-accurate tolerances. If it doesn't snap in snug, we reprint free.
+                </p>
+              </div>
+            </div>
 
-          {/* Column 2 */}
-          <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-sm mb-3">Make Money with Us</h4>
-            <p className="hover:underline cursor-pointer">Sell products on Wavezly</p>
-            <p className="hover:underline cursor-pointer">Become an Artisan Partner</p>
-            <p className="hover:underline cursor-pointer">Become an Affiliate</p>
-            <p className="hover:underline cursor-pointer">Advertise Your Products</p>
-            <p className="hover:underline cursor-pointer">Self-Publish with Us</p>
-          </div>
+            {/* Value Prop 3: Recyclable Eco-Biopolymers */}
+            <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-zinc-200/70 shadow-xs hover:border-orange-200 hover:shadow-sm transition-all duration-200 group">
+              <div className="w-12 h-12 rounded-xl bg-[#FFF5ED] border border-[#FFE2CC] flex items-center justify-center text-[#FF6B00] shrink-0 group-hover:scale-105 transition-transform duration-200">
+                <Leaf className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-[#0F172A] tracking-tight">
+                  Recyclable Eco-Biopolymers
+                </h4>
+                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                  Zero petroleum plastics. 100% compostable, non-toxic plant starch PLA.
+                </p>
+              </div>
+            </div>
 
-          {/* Column 3 */}
-          <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-sm mb-3">Wavezly Payment Products</h4>
-            <p className="hover:underline cursor-pointer">Wavezly Business Card</p>
-            <p className="hover:underline cursor-pointer">Shop with Points</p>
-            <p className="hover:underline cursor-pointer">Reload Your Balance</p>
-            <p className="hover:underline cursor-pointer">Wavezly Currency Converter</p>
-          </div>
-
-          {/* Column 4 */}
-          <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-sm mb-3">Let Us Help You</h4>
-            <p className="hover:underline cursor-pointer">Your Account</p>
-            <p className="hover:underline cursor-pointer">Your Orders</p>
-            <p className="hover:underline cursor-pointer">Shipping Rates & Policies</p>
-            <p className="hover:underline cursor-pointer">Returns & Replacements</p>
-            <p className="hover:underline cursor-pointer">100% Fit Guarantee</p>
-            <p className="hover:underline cursor-pointer">Help Center</p>
+            {/* Value Prop 4: 24/7 Maker Support */}
+            <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-zinc-200/70 shadow-xs hover:border-orange-200 hover:shadow-sm transition-all duration-200 group">
+              <div className="w-12 h-12 rounded-xl bg-[#FFF5ED] border border-[#FFE2CC] flex items-center justify-center text-[#FF6B00] shrink-0 group-hover:scale-105 transition-transform duration-200">
+                <Headphones className="w-5 h-5 stroke-[2.2]" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-[#0F172A] tracking-tight">
+                  24/7 Maker Support
+                </h4>
+                <p className="text-xs text-zinc-500 mt-1 leading-relaxed">
+                  Direct live chat with real additive manufacturing engineers & designers.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ============================================================ */}
-      {/* TIER 3: LOGO & REGION / CURRENCY SELECTORS (#232f3e)         */}
+      {/* 2. MAIN DIRECTORY & NEWSLETTER SECTION                       */}
       {/* ============================================================ */}
-      <div className="bg-[#232f3e] py-6 px-4">
-        <div className="max-w-[1000px] mx-auto flex flex-col sm:flex-row items-center justify-center gap-6 text-xs text-[#cccccc]">
-          {/* Wavezly Brand Logo */}
-          <div onClick={scrollToTop} className="cursor-pointer hover:opacity-95 transition">
-            <WavezlyLogo theme="dark" size="md" />
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10">
+          {/* Left: 4 Directory Columns (8 cols) */}
+          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
+            {/* Column 1: Collections */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4">
+                Collections
+              </h3>
+              <ul className="space-y-2.5 text-sm text-zinc-600">
+                <li>
+                  <a href="#desk" className="hover:text-[#FF6B00] transition">
+                    Desk Organization
+                  </a>
+                </li>
+                <li>
+                  <a href="#kitchen" className="hover:text-[#FF6B00] transition">
+                    Kitchen & Coffee
+                  </a>
+                </li>
+                <li>
+                  <a href="#mounts" className="hover:text-[#FF6B00] transition">
+                    Smart Home Mounts
+                  </a>
+                </li>
+                <li>
+                  <a href="#planters" className="hover:text-[#FF6B00] transition">
+                    Planters & Decor
+                  </a>
+                </li>
+                <li>
+                  <a href="#fidgets" className="hover:text-[#FF6B00] transition">
+                    Kinetic Fidgets
+                  </a>
+                </li>
+                <li>
+                  <a href="#cables" className="hover:text-[#FF6B00] transition">
+                    Cable Management
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: Custom Sizing */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4">
+                Custom Sizing
+              </h3>
+              <ul className="space-y-2.5 text-sm text-zinc-600">
+                <li>
+                  <a href="#planner" className="hover:text-[#FF6B00] transition">
+                    Desk Space Planner
+                  </a>
+                </li>
+                <li>
+                  <a href="#custom-tray" className="hover:text-[#FF6B00] transition">
+                    Custom Drawer Trays
+                  </a>
+                </li>
+                <li>
+                  <a href="#caliper" className="hover:text-[#FF6B00] transition">
+                    Precision Caliper Guide
+                  </a>
+                </li>
+                <li>
+                  <a href="#custom-cad" className="hover:text-[#FF6B00] transition">
+                    Request Custom CAD
+                  </a>
+                </li>
+                <li>
+                  <a href="#tolerance" className="hover:text-[#FF6B00] transition">
+                    Tolerance Testing Kit
+                  </a>
+                </li>
+                <li>
+                  <a href="#bulk" className="hover:text-[#FF6B00] transition">
+                    Volume Fleet Orders
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Print Farm Telemetry */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4">
+                Print Farm Telemetry
+              </h3>
+              <ul className="space-y-2.5 text-sm text-zinc-600">
+                <li>
+                  <a href="#live-farm" className="hover:text-[#FF6B00] transition inline-flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Live Farm Status
+                  </a>
+                </li>
+                <li>
+                  <a href="#fleet" className="hover:text-[#FF6B00] transition">
+                    Bambu Lab X1C Fleet
+                  </a>
+                </li>
+                <li>
+                  <a href="#materials" className="hover:text-[#FF6B00] transition">
+                    Biopolymer Filaments
+                  </a>
+                </li>
+                <li>
+                  <a href="#queue" className="hover:text-[#FF6B00] transition">
+                    Production Queue (48h)
+                  </a>
+                </li>
+                <li>
+                  <a href="#quality" className="hover:text-[#FF6B00] transition">
+                    Quality Inspection Log
+                  </a>
+                </li>
+                <li>
+                  <a href="#carbon" className="hover:text-[#FF6B00] transition">
+                    Carbon Offset Audit
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4: Company */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4">
+                Company
+              </h3>
+              <ul className="space-y-2.5 text-sm text-zinc-600">
+                <li>
+                  <a href="#about" className="hover:text-[#FF6B00] transition">
+                    Our Story
+                  </a>
+                </li>
+                <li>
+                  <a href="#mission" className="hover:text-[#FF6B00] transition">
+                    Zero-Waste Mission
+                  </a>
+                </li>
+                <li>
+                  <a href="#artisans" className="hover:text-[#FF6B00] transition">
+                    Artisan Partners
+                  </a>
+                </li>
+                <li>
+                  <a href="#careers" className="hover:text-[#FF6B00] transition">
+                    Careers
+                  </a>
+                </li>
+                <li>
+                  <a href="#press" className="hover:text-[#FF6B00] transition">
+                    Press & Media Kit
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" className="hover:text-[#FF6B00] transition">
+                    Contact Concierge
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          {/* Selector pills */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Right: Newsletter Signup Card (4 cols) */}
+          <div className="lg:col-span-4">
+            <div className="bg-white p-6 sm:p-7 rounded-2xl border border-zinc-200/90 shadow-xs">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-orange-50 text-[#FF6B00] border border-orange-200/60 mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
+                <span>Maker Dispatch & Weekly Drops</span>
+              </div>
+
+              <h4 className="text-base font-bold text-[#0F172A] tracking-tight">
+                Crafted for precision living.
+              </h4>
+              <p className="text-xs text-zinc-500 mt-1.5 leading-relaxed mb-5">
+                Get weekly parametric design releases, early access to new modular organizers, and behind-the-scenes print farm telemetry.
+              </p>
+
+              {isSubscribed ? (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200/70 text-emerald-800 text-xs flex items-center gap-2.5 animate-fadeIn">
+                  <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-emerald-900">You're subscribed!</p>
+                    <p className="text-emerald-700 mt-0.5">Welcome to the Wavezly precision maker community.</p>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe} className="space-y-3">
+                  <div className="relative">
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email address"
+                      className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#0F172A] placeholder:text-zinc-400 focus:outline-hidden focus:ring-2 focus:ring-[#FF6B00]/25 focus:border-[#FF6B00] transition"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-[#FF6B00] hover:bg-[#FF7A00] text-white font-semibold text-xs sm:text-sm py-2.5 px-4 rounded-xl shadow-xs hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+                  >
+                    <span>Subscribe to Drops</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <p className="text-[11px] text-zinc-400 text-center">
+                    Zero spam. Unsubscribe with 1 click at any time.
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* 3. STREAMLINED BOTTOM BAR                                    */}
+      {/* ============================================================ */}
+      <section className="border-t border-zinc-200/90 bg-white/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Left: Wavezly Logo & Copyright */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+            <div onClick={scrollToTop} className="cursor-pointer hover:opacity-90 transition">
+              <WavezlyLogo theme="light" size="sm" />
+            </div>
+            <span className="text-xs text-zinc-500">
+              © {new Date().getFullYear()} Wavezly Inc. Domestic additive manufacturing in Boise, ID.
+            </span>
+          </div>
+
+          {/* Center: 100% Carbon-Neutral Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/70 text-emerald-800 text-xs font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>100% Carbon-Neutral US Print Farm</span>
+          </div>
+
+          {/* Right: Legal Links & Back-to-Top */}
+          <div className="flex items-center gap-5">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-500">
+              <a href="#privacy" className="hover:text-[#FF6B00] transition">
+                Privacy
+              </a>
+              <a href="#terms" className="hover:text-[#FF6B00] transition">
+                Terms
+              </a>
+              <a href="#guarantee" className="hover:text-[#FF6B00] transition">
+                Fit Guarantee
+              </a>
+              <a href="#telemetry" className="hover:text-[#FF6B00] transition">
+                Telemetry
+              </a>
+            </div>
+
             <button
               type="button"
-              className="px-3 py-1.5 rounded-sm border border-[#848688] hover:border-white text-xs flex items-center gap-2 text-white transition cursor-pointer"
+              onClick={scrollToTop}
+              className="p-2 rounded-xl border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 text-zinc-600 hover:text-[#0F172A] transition shadow-2xs cursor-pointer flex items-center gap-1.5 text-xs font-medium px-2.5 ml-2"
+              title="Back to top"
             >
-              <Globe className="w-3.5 h-3.5 text-zinc-300" />
-              <span>🇺🇸 English</span>
-            </button>
-
-            <button
-              type="button"
-              className="px-3 py-1.5 rounded-sm border border-[#848688] hover:border-white text-xs text-white transition cursor-pointer"
-            >
-              $ USD - U.S. Dollar
-            </button>
-
-            <button
-              type="button"
-              className="px-3 py-1.5 rounded-sm border border-[#848688] hover:border-white text-xs flex items-center gap-1.5 text-white transition cursor-pointer"
-            >
-              <span className="text-sm">🇺🇸</span>
-              <span>United States</span>
+              <ArrowUp className="w-3.5 h-3.5 text-[#FF6B00]" />
+              <span className="hidden sm:inline">Top</span>
             </button>
           </div>
         </div>
-      </div>
-
-      {/* ============================================================ */}
-      {/* TIER 4: SUB-SERVICES & LEGAL STRIP (#131921)                 */}
-      {/* ============================================================ */}
-      <div className="bg-[#131921] py-8 px-4 text-[11px] text-[#999999]">
-        <div className="max-w-[1000px] mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 pb-8 border-b border-[#3a4553]/60">
-          <div>
-            <p className="font-bold text-white hover:underline cursor-pointer">Wavezly 3D Farm</p>
-            <p className="text-[10px] text-[#888888]">Precision Rapid Domestic Manufacturing</p>
-          </div>
-          <div>
-            <p className="font-bold text-white hover:underline cursor-pointer">Wavezly Prime</p>
-            <p className="text-[10px] text-[#888888]">Fast, Free Delivery on Millions of Items</p>
-          </div>
-          <div>
-            <p className="font-bold text-white hover:underline cursor-pointer">Wavezly Business</p>
-            <p className="text-[10px] text-[#888888]">Everything For Your Commercial Studio</p>
-          </div>
-          <div>
-            <p className="font-bold text-white hover:underline cursor-pointer">Wavezly Studio</p>
-            <p className="text-[10px] text-[#888888]">Parametric 3D Design to the Millimeter</p>
-          </div>
-        </div>
-
-        {/* Legal Links */}
-        <div className="max-w-[1000px] mx-auto pt-6 flex flex-col items-center gap-2 text-center">
-          <div className="flex flex-wrap justify-center gap-4 text-[11px]">
-            <span className="hover:underline cursor-pointer">Conditions of Use</span>
-            <span className="hover:underline cursor-pointer">Privacy Notice</span>
-            <span className="hover:underline cursor-pointer">Consumer Health Data Privacy Disclosure</span>
-            <span className="hover:underline cursor-pointer">Your Ads Privacy Choices</span>
-          </div>
-          <p className="text-[10px] text-[#777777] mt-1">
-            © 1996-{new Date().getFullYear()}, Wavezly.com, Inc. or its affiliates
-          </p>
-        </div>
-      </div>
+      </section>
     </footer>
   );
 };

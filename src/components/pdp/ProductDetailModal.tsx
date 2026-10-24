@@ -1,10 +1,13 @@
 /**
- * WAVEZLY AMAZON PRODUCT DETAIL MODAL (PDP)
- * 3-column Amazon detail view:
- * 1. Left image gallery with interactive thumbnail list & high-res zoom viewport
- * 2. Center product details with brand link, star rating, deal price, color swatches, and "About this item"
- * 3. Right classic Amazon Buy Box with Prime delivery ETA, In Stock indicator, Qty selector,
- *    #ffd814 Add to Cart, and #ffa41c Buy Now / Customize buttons.
+ * WAVEZLY MODERN PRODUCT DETAIL MODAL (PDP)
+ * Concept 1: Warm Minimalist DTC
+ * - Clean airy white canvas with soft rounded-2xl geometry
+ * - Studio photography & multi-perspective technical gallery
+ * - Refined typography (#0F172A) & warm amber star rating
+ * - Clear technical specs table (Material, Production Time, Origin, Tolerances)
+ * - Color finish swatches with active ring indicator
+ * - Clean Buy Box: Electric Orange (#FF6B00 / #FF7A00) Add to Bag,
+ *   Secondary "Customize Millimeters" button, and 100% Snug Fit Guarantee badge.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -17,15 +20,16 @@ import { amazonMetaFor, friendlyName } from '../../lib/storefront';
 import {
   X,
   Star,
-  MapPin,
-  Lock,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
-  CheckSquare,
-  Square,
   Sliders,
   Sparkles,
+  ShieldCheck,
+  Check,
+  Truck,
+  Minus,
+  Plus,
+  Layers,
 } from 'lucide-react';
 
 interface ProductDetailModalProps {
@@ -42,14 +46,10 @@ const FINISH_COLORS = [
   { name: 'Forest Sage Green', hex: '#4a5b48', bg: 'bg-[#4a5b48]' },
 ];
 
-/**
- * Resolve hierarchical Amazon category path dynamically based on product category & tags
- */
 function getCategoryPath(prod: Product): { primary: string; secondary: string } {
   const cat = (prod.category || '').toLowerCase();
   const title = (prod.title || '').toLowerCase();
 
-  // Trending 3D Prints / Toys / Fidgets
   if (
     cat === 'trending_3d' ||
     cat === 'toys' ||
@@ -61,71 +61,63 @@ function getCategoryPath(prod: Product): { primary: string; secondary: string } 
     title.includes('print')
   ) {
     return {
-      primary: 'Trending 3D Prints',
-      secondary: 'Toys & Fidgets',
+      primary: 'Articulated Prints & Toys',
+      secondary: 'Kinetic Creations',
     };
   }
 
-  // Home & Kitchen
   if (cat === 'kitchen') {
     return {
-      primary: 'Home & Kitchen',
-      secondary: 'Storage & Organization',
+      primary: 'Kitchen & Barista',
+      secondary: 'Custom Organization',
     };
   }
 
-  // Vanity & Personal Care
   if (cat === 'vanity') {
     return {
-      primary: 'Beauty & Personal Care',
-      secondary: 'Storage & Organization',
+      primary: 'Beauty & Vanity',
+      secondary: 'Precision Grids',
     };
   }
 
-  // Workspace & Office
   if (cat === 'workspace') {
     return {
-      primary: 'Office Products',
-      secondary: 'Storage & Organization',
+      primary: 'Workspace & Desk',
+      secondary: 'EDC Hardware',
     };
   }
 
-  // Bedside, Living, Home Decor
   if (cat === 'bedside' || cat === 'living' || cat === 'home_decor') {
     return {
-      primary: 'Home & Kitchen',
-      secondary: 'Storage & Organization',
+      primary: 'Home Architecture',
+      secondary: 'Modular Catchalls',
     };
   }
 
-  // Electronics & Peripherals
   if (cat === 'electronics') {
     return {
-      primary: 'Electronics',
-      secondary: 'Accessories & Supplies',
+      primary: 'Desk Peripherals',
+      secondary: 'Audio & Cable Rails',
     };
   }
 
-  // Automotive
   if (cat === 'car_auto') {
     return {
-      primary: 'Automotive',
-      secondary: 'Storage & Organization',
+      primary: 'Vehicle Organization',
+      secondary: 'Console Inserts',
     };
   }
 
-  // Workshop & Hardware
   if (cat === 'tools_workshop') {
     return {
-      primary: 'Tools & Home Improvement',
-      secondary: 'Storage & Organization',
+      primary: 'Workshop & Gridfinity',
+      secondary: 'Tool Systems',
     };
   }
 
-  // Default fallback for made-to-order / organizers
   return {
-    primary: 'Home & Kitchen',
-    secondary: 'Storage & Organization',
+    primary: 'Bespoke Storage',
+    secondary: 'Parametric Geometry',
   };
 }
 
@@ -137,7 +129,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState(FINISH_COLORS[0]);
   const [quantity, setQuantity] = useState(1);
-  const [isCouponClipped, setIsCouponClipped] = useState(false);
   const [addedStatus, setAddedStatus] = useState<'idle' | 'added'>('idle');
 
   const { addStandardItem, openCart } = useCartStore();
@@ -161,21 +152,35 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   if (!product) return null;
 
   const meta = amazonMetaFor(product);
-  const isCustom = product.type === 'custom_3d';
   const { images, labels: imageLabels } = getAllProductImages(product);
 
-  const cleanProductTitle = (product.title || '').replace(/SnugFit/gi, 'Wavezly');
   const displayTitle = (friendlyName(product) || product.title).replace(/SnugFit/gi, 'Wavezly');
   const categoryPath = getCategoryPath(product);
 
-  const effectivePrice = isCouponClipped && meta.couponAmount
-    ? Math.max(1, product.basePrice - meta.couponAmount)
-    : product.basePrice;
+  const effectivePrice = product.basePrice;
 
-  const priceWhole = Math.floor(effectivePrice);
-  const priceFraction = Math.round((effectivePrice - priceWhole) * 100)
-    .toString()
-    .padStart(2, '0');
+  // Technical Specs extraction with smart defaults
+  const specMaterial =
+    product.technicalSpecs?.['Material'] ||
+    (product.type === 'custom_3d'
+      ? 'Organic Matte Biopolymer (PLA+)'
+      : 'Matte Architectural Biopolymer & Resin');
+
+  const specProduction =
+    product.technicalSpecs?.['Manufacturing Time'] ||
+    product.technicalSpecs?.['Production Time'] ||
+    (product.type === 'custom_3d'
+      ? 'Made to order (2–4 hours)'
+      : 'Ships within 24 hours');
+
+  const specOrigin =
+    product.technicalSpecs?.['Origin'] ||
+    (product.supplierMeta?.warehouseOrigin
+      ? product.supplierMeta.warehouseOrigin.split('(')[0].trim()
+      : 'Boise, ID, USA (Solar Studio)');
+
+  const specTolerances =
+    product.technicalSpecs?.['Tolerances'] || '± 0.20 mm Sub-millimeter Snug Fit';
 
   const handleAddToCart = () => {
     playClickSound('success');
@@ -185,13 +190,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       setAddedStatus('idle');
       openCart();
       onClose();
-    }, 800);
-  };
-
-  const handleBuyNow = () => {
-    playClickSound('snap');
-    addStandardItem(product, quantity);
-    window.location.search = '?route=checkout';
+    }, 700);
   };
 
   const handleCustomize = () => {
@@ -202,410 +201,354 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto font-sans">
-      {/* Dark Dim Backdrop */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto font-sans">
+      {/* Warm Dark Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-[#0F172A]/50 backdrop-blur-sm transition-opacity"
         onClick={() => {
           playClickSound('tick');
           onClose();
         }}
       />
 
-      <div className="min-h-screen px-2 sm:px-4 py-6 flex items-center justify-center">
-        <div className="relative w-full max-w-6xl bg-white rounded-md border border-[#d5d9d9] shadow-2xl text-left overflow-hidden z-10">
-          {/* Top Breadcrumb & Close Bar */}
-          <div className="px-4 py-2.5 bg-[#f0f2f2] border-b border-[#d5d9d9] flex items-center justify-between text-xs text-[#565959]">
-            <div className="flex items-center gap-1.5 truncate">
-              <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer font-medium">
-                Wavezly
-              </span>
-              <span>›</span>
-              <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                {categoryPath.primary}
-              </span>
-              <span>›</span>
-              <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                {categoryPath.secondary}
-              </span>
-              <span>›</span>
-              <span className="text-[#0f1111] font-semibold truncate max-w-[240px]">
-                {cleanProductTitle || displayTitle}
-              </span>
-            </div>
+      {/* Modal Card */}
+      <div className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl border border-stone-200/80 overflow-hidden z-10 text-left my-auto max-h-[92vh] flex flex-col">
+        {/* Floating Close Button */}
+        <button
+          type="button"
+          onClick={() => {
+            playClickSound('tick');
+            onClose();
+          }}
+          className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-[#0F172A] flex items-center justify-center transition-all cursor-pointer shadow-xs"
+          aria-label="Close product modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
-            <button
-              type="button"
-              onClick={() => {
-                playClickSound('tick');
-                onClose();
-              }}
-              className="p-1 rounded text-[#565959] hover:text-[#0f1111] hover:bg-black/5 transition cursor-pointer"
-              aria-label="Close product detail"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+        {/* Scrollable Modal Content */}
+        <div className="overflow-y-auto p-6 sm:p-8 lg:p-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            {/* ============================================================ */}
+            {/* LEFT COLUMN: CLEAN GALLERY WITH STUDIO PHOTOS & BLUEPRINTS  */}
+            {/* ============================================================ */}
+            <div className="lg:col-span-6 flex flex-col gap-4">
+              {/* Main Image Viewport */}
+              <div className="relative aspect-square w-full rounded-2xl bg-[#FAFAFA] border border-stone-200/70 p-6 sm:p-8 flex items-center justify-center group overflow-hidden">
+                {/* Lens / Perspective Badge */}
+                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[#0F172A] text-xs font-medium border border-stone-200/70 shadow-xs flex items-center gap-1.5 z-10">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00]" />
+                  {imageLabels[activeImageIdx] || `Perspective ${activeImageIdx + 1}`}
+                </div>
 
-          {/* 3-Column Amazon Layout */}
-          <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white max-h-[85vh] overflow-y-auto">
-            {/* ============================================================ */}
-            {/* COLUMN 1: LEFT GALLERY (Cols 1-5)                             */}
-            {/* ============================================================ */}
-            <div className="lg:col-span-5 flex flex-col gap-3">
-              <div className="flex gap-3">
-                {/* Vertical Thumbnails */}
-                <div className="flex flex-col gap-2 w-14 shrink-0">
-                  {images.slice(0, 5).map((img, idx) => (
+                {/* Main Product Image */}
+                <img
+                  src={images[activeImageIdx]}
+                  alt={displayTitle}
+                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300 select-none"
+                />
+
+                {/* Prev / Next Arrows */}
+                {images.length > 1 && (
+                  <>
                     <button
-                      key={idx}
                       type="button"
-                      onMouseEnter={() => setActiveImageIdx(idx)}
-                      onClick={() => setActiveImageIdx(idx)}
-                      className={`w-14 h-14 rounded-sm border p-1 bg-white cursor-pointer transition ${
-                        activeImageIdx === idx
-                          ? 'border-[#e77600] ring-1 ring-[#e77600]'
-                          : 'border-[#d5d9d9] hover:border-[#a6a6a6]'
-                      }`}
+                      onClick={() =>
+                        setActiveImageIdx((prev) =>
+                          prev === 0 ? images.length - 1 : prev - 1
+                        )
+                      }
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/95 border border-stone-200 text-stone-600 hover:text-[#0F172A] flex items-center justify-center shadow-sm hover:scale-105 transition cursor-pointer"
+                      aria-label="Previous view"
                     >
-                      <img
-                        src={img}
-                        alt=""
-                        className="w-full h-full object-contain"
-                      />
+                      <ChevronLeft className="w-5 h-5" />
                     </button>
-                  ))}
-                </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveImageIdx((prev) => (prev + 1) % images.length)
+                      }
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/95 border border-stone-200 text-stone-600 hover:text-[#0F172A] flex items-center justify-center shadow-sm hover:scale-105 transition cursor-pointer"
+                      aria-label="Next view"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+              </div>
 
-                {/* Big Main Image Viewport */}
-                <div className="relative flex-1 aspect-square rounded-sm border border-[#e7e7e7] p-4 flex items-center justify-center bg-white group overflow-hidden">
-                  <img
-                    src={images[activeImageIdx]}
-                    alt={displayTitle}
-                    className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-
-                  {/* Perspective badge */}
-                  <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur-xs text-white text-[10px] font-medium">
-                    {imageLabels[activeImageIdx] || `Photo ${activeImageIdx + 1}`}
-                  </div>
-
-                  {/* Previous / Next Arrows */}
-                  {images.length > 1 && (
-                    <>
+              {/* Thumbnails Strip */}
+              {images.length > 1 && (
+                <div className="flex items-center gap-2.5 overflow-x-auto pb-1 pt-0.5">
+                  {images.map((img, idx) => {
+                    const isSelected = activeImageIdx === idx;
+                    return (
                       <button
+                        key={idx}
                         type="button"
-                        onClick={() =>
-                          setActiveImageIdx((prev) =>
-                            prev === 0 ? images.length - 1 : prev - 1
-                          )
-                        }
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 border border-[#d5d9d9] flex items-center justify-center text-[#565959] hover:text-[#0f1111] shadow-xs cursor-pointer"
-                        aria-label="Previous"
+                        onClick={() => setActiveImageIdx(idx)}
+                        className={`relative w-16 h-16 sm:w-18 sm:h-18 rounded-xl border-2 p-1.5 bg-[#FAFAFA] shrink-0 transition-all cursor-pointer ${
+                          isSelected
+                            ? 'border-[#FF6B00] ring-2 ring-[#FF6B00]/20 shadow-xs scale-102'
+                            : 'border-stone-200 hover:border-stone-400 opacity-75 hover:opacity-100'
+                        }`}
+                        title={imageLabels[idx] || `View ${idx + 1}`}
                       >
-                        <ChevronLeft className="w-4 h-4" />
+                        <img
+                          src={img}
+                          alt=""
+                          className="w-full h-full object-contain"
+                        />
                       </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setActiveImageIdx((prev) => (prev + 1) % images.length)
-                        }
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 border border-[#d5d9d9] flex items-center justify-center text-[#565959] hover:text-[#0f1111] shadow-xs cursor-pointer"
-                        aria-label="Next"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <p className="text-center text-[11px] text-[#565959]">
-                Roll over image to zoom in
-              </p>
-            </div>
-
-            {/* ============================================================ */}
-            {/* COLUMN 2: CENTER PRODUCT DETAILS (Cols 6-8)                  */}
-            {/* ============================================================ */}
-            <div className="lg:col-span-4 flex flex-col gap-3">
-              {/* Brand link */}
-              <div className="text-xs text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer font-medium">
-                Visit the Wavezly Direct Store
-              </div>
-
-              {/* Title */}
-              <h1 className="text-lg sm:text-xl font-bold text-[#0f1111] leading-snug">
-                {displayTitle}
-              </h1>
-
-              {/* Badges / Rating */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <div className="flex items-center text-[#de7921]">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star
-                      key={i}
-                      className={`w-3.5 h-3.5 ${
-                        i <= Math.floor(meta.rating)
-                          ? 'fill-[#de7921] text-[#de7921]'
-                          : 'text-zinc-300'
-                      }`}
-                    />
-                  ))}
-                  <ChevronDown className="w-3 h-3 text-[#565959] ml-0.5" />
-                </div>
-                <span className="text-xs text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                  {meta.count.toLocaleString()} ratings
-                </span>
-                <span className="text-[#565959] text-xs">|</span>
-                <span className="text-xs text-[#565959]">
-                  {meta.boughtPastMonth.toLocaleString()}+ bought in past month
-                </span>
-              </div>
-
-              {meta.badge === 'best_seller' && (
-                <div className="inline-flex items-center text-xs font-bold w-fit">
-                  <span className="bg-[#e67a00] text-white px-2 py-0.5 rounded-l-xs uppercase">
-                    #1 Best Seller
-                  </span>
-                  <span className="bg-[#fef8f2] text-[#c45500] px-2 py-0.5 border border-l-0 border-[#fbd8b5] rounded-r-xs">
-                    in {meta.badgeCategory}
-                  </span>
+                    );
+                  })}
                 </div>
               )}
 
-              <hr className="border-[#e7e7e7] my-1" />
-
-              {/* Pricing section */}
-              <div className="space-y-1">
-                {meta.hasDeal && meta.discountPercent && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold uppercase bg-[#cc0c39] text-white px-2 py-0.5 rounded-xs">
-                      Limited time deal
-                    </span>
-                    <span className="text-[#cc0c39] text-sm font-semibold">
-                      -{meta.discountPercent}% off
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex items-start text-[#0f1111]">
-                  <span className="text-sm font-semibold pt-0.5">$</span>
-                  <span className="text-3xl font-bold leading-none">{priceWhole}</span>
-                  <span className="text-sm font-semibold pt-0.5">{priceFraction}</span>
-                </div>
-
-                {meta.listPrice && (
-                  <div className="text-xs text-[#565959]">
-                    Typical price:{' '}
-                    <span className="line-through">${meta.listPrice.toFixed(2)}</span>
-                  </div>
-                )}
-
-                {/* Coupon Box */}
-                {meta.couponAmount && (
-                  <div
-                    onClick={() => setIsCouponClipped(!isCouponClipped)}
-                    className="flex items-center gap-2 pt-1 text-xs cursor-pointer select-none"
-                  >
-                    {isCouponClipped ? (
-                      <CheckSquare className="w-4 h-4 text-[#007600] fill-[#007600]/10" />
-                    ) : (
-                      <Square className="w-4 h-4 text-zinc-400" />
-                    )}
-                    <span>
-                      Apply{' '}
-                      <span className="bg-[#71b300] text-white font-bold px-1 py-0.5 rounded-xs text-[11px]">
-                        ${meta.couponAmount.toFixed(2)}
-                      </span>{' '}
-                      coupon
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <hr className="border-[#e7e7e7] my-1" />
-
-              {/* Color Finish Swatches */}
-              <div>
-                <div className="text-xs text-[#0f1111]">
-                  <span className="text-[#565959]">Color: </span>
-                  <span className="font-bold">{selectedColor.name}</span>
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                  {FINISH_COLORS.map((c) => (
-                    <button
-                      key={c.name}
-                      type="button"
-                      onClick={() => setSelectedColor(c)}
-                      className={`w-7 h-7 rounded-full border-2 transition ${c.bg} ${
-                        selectedColor.name === c.name
-                          ? 'border-[#e77600] ring-2 ring-[#e77600]/30 scale-110'
-                          : 'border-white ring-1 ring-zinc-300 hover:scale-105'
-                      }`}
-                      title={c.name}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* About this item (Amazon Bullets) */}
-              <div className="pt-2">
-                <h3 className="text-sm font-bold text-[#0f1111] mb-2">About this item</h3>
-                <ul className="space-y-1.5 text-xs text-[#0f1111] list-disc list-inside leading-relaxed">
-                  {product.features && product.features.length > 0 ? (
-                    product.features.map((feature, idx) => (
-                      <li key={idx}>
-                        {feature.replace(/SnugFit/gi, 'Wavezly')}
-                      </li>
-                    ))
-                  ) : (
-                    <>
-                      <li>
-                        <strong className="text-zinc-900">Custom Wavezly Fit:</strong> Precision tailored to eliminate drawer rattle and empty gaps.
-                      </li>
-                      <li>
-                        <strong className="text-zinc-900">Premium Organic Biopolymer:</strong> Velvety matte finish with zero glare, washable with mild soap and water.
-                      </li>
-                      <li>
-                        <strong className="text-zinc-900">Wavezly 100% Fit Guarantee:</strong> If your custom piece doesn’t slide in perfectly, we remake it free of charge.
-                      </li>
-                      <li>
-                        <strong className="text-zinc-900">Crafted in Boise, Idaho:</strong> Made to order in our domestic solar-powered studio.
-                      </li>
-                    </>
-                  )}
-                </ul>
+              {/* Studio PBR Lighting Note */}
+              <div className="flex items-center justify-between text-xs text-stone-500 pt-1 border-t border-stone-100">
+                <span className="flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
+                  Photorealistic PBR Studio Lighting
+                </span>
+                <span>{images.length} Perspectives Available</span>
               </div>
             </div>
 
             {/* ============================================================ */}
-            {/* COLUMN 3: THE CLASSIC AMAZON BUY BOX (Cols 9-12)             */}
+            {/* RIGHT COLUMN: REFINED SPECS, SWATCHES & CLEAN BUY BOX       */}
             {/* ============================================================ */}
-            <div className="lg:col-span-3">
-              <div className="p-4 rounded-md border border-[#d5d9d9] bg-white flex flex-col gap-3 shadow-xs">
-                {/* Buy Box Price */}
-                <div className="flex items-start text-[#0f1111]">
-                  <span className="text-xs font-semibold pt-0.5">$</span>
-                  <span className="text-2xl font-bold leading-none">{priceWhole}</span>
-                  <span className="text-xs font-semibold pt-0.5">{priceFraction}</span>
-                </div>
+            <div className="lg:col-span-6 flex flex-col gap-5">
+              {/* Category Eyebrow */}
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold tracking-wider text-[#FF6B00] uppercase">
+                  Wavezly Made-to-Order
+                </span>
+                <span className="text-stone-300">•</span>
+                <span className="text-xs text-stone-500">
+                  {categoryPath.primary}
+                </span>
+              </div>
 
-                {/* Prime delivery line */}
-                <div className="text-xs">
-                  <div className="flex items-center gap-1 font-bold text-[#0f1111]">
-                    <span className="inline-flex items-center text-[#00a8e1] font-black italic tracking-tighter">
-                      ✓<span className="text-[#146eb4] not-italic ml-0.5 font-bold">prime</span>
-                    </span>
-                    <span>Tomorrow, Oct 24</span>
-                  </div>
-                  <div className="text-[11px] text-[#565959] mt-0.5">
-                    Or fastest delivery <strong className="text-[#0f1111]">Today by 10 PM</strong>.
-                    Order within <span className="text-[#007600]">2 hrs 45 mins</span>.
-                  </div>
-                </div>
+              {/* Refined Product Title */}
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#0F172A] tracking-tight leading-snug">
+                {displayTitle}
+              </h1>
 
-                {/* Deliver to address */}
-                <div className="flex items-center gap-1.5 text-xs text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                  <MapPin className="w-3.5 h-3.5 text-[#0f1111]" />
-                  <span>Deliver to Seattle 98101</span>
-                </div>
-
-                {/* In Stock status */}
-                <div className="text-base font-bold text-[#007600]">
-                  In Stock
-                </div>
-
-                {/* Quantity selector */}
-                {!isCustom && (
-                  <div className="flex items-center gap-2">
-                    <label htmlFor="pdp-qty" className="text-xs text-[#565959] font-medium">
-                      Qty:
-                    </label>
-                    <select
-                      id="pdp-qty"
-                      value={quantity}
-                      onChange={(e) => setQuantity(Number(e.target.value))}
-                      className="bg-[#f0f2f2] border border-[#d5d9d9] rounded-md text-xs py-1 px-2.5 text-[#0f1111] focus:ring-1 focus:ring-[#007185] cursor-pointer"
-                    >
-                      {[1, 2, 3, 4, 5, 10].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                {/* Action Buttons: Add to Cart (Yellow) and Buy Now (Orange) */}
-                <div className="space-y-2 pt-1">
-                  {isCustom ? (
-                    <button
-                      type="button"
-                      onClick={handleCustomize}
-                      className="w-full h-10 rounded-full bg-[#ffa41c] hover:bg-[#fa8900] active:bg-[#e07e00] text-zinc-950 font-bold text-xs shadow-xs border border-[#ff8f00] flex items-center justify-center gap-1.5 transition cursor-pointer"
-                    >
-                      <Sliders className="w-4 h-4" />
-                      <span>Customize Now</span>
-                    </button>
-                  ) : (
-                    <>
-                      <button
-                        type="button"
-                        onClick={handleAddToCart}
-                        className={`w-full h-10 rounded-full text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 transition cursor-pointer ${
-                          addedStatus === 'added'
-                            ? 'bg-[#007600] text-white border border-[#006000]'
-                            : 'bg-[#ffd814] hover:bg-[#f7ca00] active:bg-[#f0b800] text-zinc-950 border border-[#fcd200]'
-                        }`}
-                      >
-                        {addedStatus === 'added' ? 'Added to Cart' : 'Add to Cart'}
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={handleBuyNow}
-                        className="w-full h-10 rounded-full bg-[#ffa41c] hover:bg-[#fa8900] active:bg-[#e07e00] text-zinc-950 font-bold text-xs shadow-xs border border-[#ff8f00] transition cursor-pointer"
-                      >
-                        Buy Now
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                {/* Fulfilled by Amazon / Wavezly Table */}
-                <div className="pt-2 text-[11px] text-[#565959] space-y-1 border-t border-[#e7e7e7]">
-                  <div className="flex justify-between">
-                    <span>Ships from</span>
-                    <span className="text-[#0f1111] font-medium">Wavezly.com</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sold by</span>
-                    <span className="text-[#007185] font-medium hover:underline cursor-pointer">
-                      Wavezly Direct
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Returns</span>
-                    <span className="text-[#007185] font-medium hover:underline cursor-pointer">
-                      30-day refund/replacement
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Payment</span>
-                    <span className="text-[#007185] font-medium flex items-center gap-1">
-                      <Lock className="w-3 h-3 text-[#565959]" /> Secure transaction
-                    </span>
-                  </div>
-                </div>
-
-                {/* Fit Guarantee Callout */}
-                <div className="mt-1 p-2 rounded bg-[#f7fafa] border border-[#d5d9d9] text-[11px] text-[#0f1111] flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#e67a00] shrink-0" />
-                  <span>
-                    <strong>Wavezly 100% Fit Guarantee:</strong> Fits your space or we remake it free.
+              {/* Warm Amber Star Rating & Stock Pill */}
+              <div className="flex flex-wrap items-center gap-3 text-sm">
+                <div className="flex items-center gap-1 text-amber-500">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i <= Math.floor(meta.rating)
+                          ? 'fill-amber-400 text-amber-400'
+                          : 'text-stone-200'
+                      }`}
+                    />
+                  ))}
+                  <span className="font-bold text-[#0F172A] ml-1">
+                    {meta.rating.toFixed(1)}
                   </span>
                 </div>
+                <span className="text-stone-300">•</span>
+                <span className="text-stone-500 text-xs">
+                  {meta.count.toLocaleString()} verified reviews
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60 ml-auto">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  In Stock • Ready to Print
+                </span>
+              </div>
+
+              {/* Price Display */}
+              <div className="flex items-baseline gap-3">
+                <span className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight">
+                  ${effectivePrice.toFixed(2)}
+                </span>
+                {meta.listPrice && meta.listPrice > effectivePrice && (
+                  <span className="text-base text-stone-400 line-through">
+                    ${meta.listPrice.toFixed(2)}
+                  </span>
+                )}
+                {meta.hasDeal && meta.discountPercent && (
+                  <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-[#FFF4ED] text-[#FF6B00] border border-[#FFE6D5]">
+                    Save {meta.discountPercent}%
+                  </span>
+                )}
+              </div>
+
+              {/* Description */}
+              <p className="text-sm text-stone-600 leading-relaxed">
+                {product.description ||
+                  'Precision-crafted organizer engineered for millimeter-perfect fit. Seamlessly integrates into your workspace, vanity, or drawer layout.'}
+              </p>
+
+              {/* Color Finish Swatches */}
+              <div className="space-y-2 pt-1 border-t border-stone-100">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-500 font-medium">Color Finish:</span>
+                  <span className="font-semibold text-[#0F172A]">
+                    {selectedColor.name}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  {FINISH_COLORS.map((c) => {
+                    const isSelected = selectedColor.name === c.name;
+                    return (
+                      <button
+                        key={c.name}
+                        type="button"
+                        onClick={() => setSelectedColor(c)}
+                        className={`w-8 h-8 rounded-full border-2 transition-all cursor-pointer relative flex items-center justify-center ${c.bg} ${
+                          isSelected
+                            ? 'ring-2 ring-offset-2 ring-[#FF6B00] border-white scale-110 shadow-sm'
+                            : 'border-white hover:scale-105 shadow-xs ring-1 ring-stone-200'
+                        }`}
+                        title={c.name}
+                      >
+                        {isSelected && (
+                          <Check
+                            className={`w-4 h-4 ${
+                              c.hex === '#e8e5dc'
+                                ? 'text-stone-800'
+                                : 'text-white'
+                            }`}
+                            strokeWidth={3}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Clear Technical Specs Table */}
+              <div className="rounded-xl bg-[#FAFAFA] border border-stone-200/80 p-4">
+                <div className="text-xs font-semibold text-[#0F172A] mb-3 uppercase tracking-wider flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-[#FF6B00]" />
+                  <span>Technical Specifications</span>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="space-y-0.5">
+                    <span className="text-stone-500 block text-[11px]">Material</span>
+                    <span className="font-semibold text-[#0F172A]">
+                      {specMaterial}
+                    </span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-stone-500 block text-[11px]">
+                      Production Time
+                    </span>
+                    <span className="font-semibold text-[#0F172A]">
+                      {specProduction}
+                    </span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-stone-500 block text-[11px]">Origin</span>
+                    <span className="font-semibold text-[#0F172A]">
+                      {specOrigin}
+                    </span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-stone-500 block text-[11px]">
+                      Tolerances
+                    </span>
+                    <span className="font-semibold text-[#0F172A]">
+                      {specTolerances}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Clean Buy Box Area */}
+              <div className="space-y-3 pt-1">
+                <div className="flex items-center gap-3">
+                  {/* Quantity Stepper */}
+                  <div className="flex items-center h-12 rounded-xl border border-stone-200 bg-[#FAFAFA] px-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                      disabled={quantity <= 1}
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 hover:text-[#0F172A] hover:bg-white disabled:opacity-30 disabled:hover:bg-transparent transition cursor-pointer"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="w-8 text-center text-sm font-semibold text-[#0F172A]">
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-stone-600 hover:text-[#0F172A] hover:bg-white transition cursor-pointer"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* High-Visibility Electric Orange "Add to Bag" Button */}
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className={`flex-1 h-12 rounded-xl font-semibold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                      addedStatus === 'added'
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-[#FF6B00] hover:bg-[#FF7A00] active:scale-[0.99] text-white hover:shadow-orange-500/25'
+                    }`}
+                  >
+                    {addedStatus === 'added' ? (
+                      <>
+                        <Check className="w-4 h-4 stroke-[3]" />
+                        <span>Added to Bag</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Add to Bag</span>
+                        <span className="opacity-80 font-normal">
+                          • ${(effectivePrice * quantity).toFixed(2)}
+                        </span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Secondary "Customize Millimeters" Button */}
+                <button
+                  type="button"
+                  onClick={handleCustomize}
+                  className="w-full h-11 rounded-xl border border-stone-300 hover:border-[#0F172A] bg-white hover:bg-stone-50 active:scale-[0.99] text-[#0F172A] font-semibold text-xs tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Sliders className="w-4 h-4 text-[#FF6B00]" />
+                  <span>Customize Millimeters (3D Parametric Studio)</span>
+                </button>
+              </div>
+
+              {/* 100% Snug Fit Guarantee Badge */}
+              <div className="p-3.5 rounded-xl bg-[#FFF9F5] border border-[#FFE6D5] flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#FF6B00]/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <ShieldCheck className="w-4 h-4 text-[#FF6B00]" />
+                </div>
+                <div className="text-xs">
+                  <div className="font-bold text-[#0F172A]">
+                    100% Snug Fit Guarantee
+                  </div>
+                  <p className="text-stone-600 mt-0.5 leading-relaxed">
+                    Tailored to your space with sub-millimeter precision. If your
+                    piece doesn’t slide in perfectly, we remake it free of charge.
+                  </p>
+                </div>
+              </div>
+
+              {/* Shipping info */}
+              <div className="flex items-center justify-between text-xs text-stone-500 pt-1">
+                <span className="flex items-center gap-1.5">
+                  <Truck className="w-3.5 h-3.5 text-stone-400" />
+                  Free US shipping on orders over $45
+                </span>
+                <span>Solar-powered domestic studio</span>
               </div>
             </div>
           </div>

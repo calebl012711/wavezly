@@ -169,7 +169,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f7f7f5] text-zinc-900 dark:text-zinc-100 selection:bg-signal-orange selection:text-white transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-brand-dark selection:bg-brand-orange selection:text-white antialiased transition-colors font-sans">
       {/* Schema.org In-DOM JSON-LD Script Tag */}
       <script
         id="wavezly-schema-vdom"
@@ -197,7 +197,7 @@ export const App: React.FC = () => {
           <Suspense
             fallback={
               <div className="min-h-[500px] flex items-center justify-center font-mono text-xs text-zinc-500 space-x-2">
-                <Loader2 className="w-4 h-4 text-signal-orange animate-spin" />
+                <Loader2 className="w-5 h-5 text-brand-orange animate-spin" />
                 <span>Loading…</span>
               </div>
             }

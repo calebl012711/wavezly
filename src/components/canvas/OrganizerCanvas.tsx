@@ -45,11 +45,11 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   const shadowScale = Math.max(300, maxDim * 2.2);
 
   return (
-    <div className="relative w-full h-full min-h-[420px] bg-gradient-to-b from-[#fbfbfd] to-[#f0f0f4] dark:bg-[#0c0c0e] rounded-xl overflow-hidden border border-zinc-200/90 dark:border-zinc-800">
+    <div className="relative w-full h-full min-h-[420px] bg-gradient-to-b from-[#FFFFFF] via-[#F8F9FA] to-[#EFF1F5] dark:from-[#111317] dark:to-[#090A0D] rounded-2xl overflow-hidden border border-slate-200/90 dark:border-zinc-800">
       {/* Precision Grid Coordinates Overlay (Clean Consumer Style) */}
-      <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center space-x-2 font-sans text-xs text-zinc-500 dark:text-zinc-400">
-        <span className="w-2 h-2 rounded-full bg-signal-orange animate-pulse" />
-        <span className="font-medium">3D Studio Viewport</span>
+      <div className="absolute top-3 left-4 z-10 pointer-events-none flex items-center space-x-2 font-sans text-xs text-slate-500 dark:text-zinc-400 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-200/60 dark:border-zinc-800 shadow-xs">
+        <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
+        <span className="font-semibold text-[#0F172A] dark:text-zinc-200">3D Studio Viewport</span>
       </div>
 
       <Canvas

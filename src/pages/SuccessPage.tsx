@@ -1,11 +1,12 @@
 /**
- * WAVEZLY POST-CHECKOUT SPLIT FULFILLMENT HUD & CELEBRATION
- * Features:
- * - Celebration Confetti Burst Animation on Mount
- * - Warm Welcome: "Your order has been received by the Wavezly workshop!"
- * - Printable "Wavezly 100% Fit Guarantee Certificate & Spec Sheet" button using orderInvoiceGenerator.ts
- * - Direct link to track both packages in real-time
- * - Consumer Trust Guarantees: Wavezly 100% Fit Guarantee, 30-Day Free Returns, Fast Domestic Shipping
+ * WAVEZLY POST-CHECKOUT CONFIRMATION & FARM HUD
+ * Concept 1: Warm Minimalist DTC
+ * - Pure airy white background (#FFFFFF / #FAFAF9)
+ * - Sleek dark charcoal typography (#0F172A)
+ * - Electric orange status indicators & accents (#FF6B00 / #FF7A00)
+ * - Live print farm progress tracker with active stage indicators
+ * - Printable PDF spec sheet button (ISO 2768-m Metrology Certification)
+ * - Dual split-fulfillment breakdown (Package 1: 3D Print Farm, Package 2: Domestic Hub)
  */
 
 import React, { useEffect, useState } from 'react';
@@ -22,6 +23,10 @@ import {
   ExternalLink,
   RotateCcw,
   Compass,
+  Clock,
+  Layers,
+  Cpu,
+  BadgeCheck,
 } from 'lucide-react';
 import { exportProductionSpecSheet, downloadSpecSheetHtml, resolveProductionSpecOrder } from '../lib/orderInvoiceGenerator';
 import { ConfettiCanvas } from '../components/common/ConfettiCanvas';
@@ -53,7 +58,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
 
     const timer = setTimeout(() => {
       setShowConfetti(false);
-    }, 8000);
+    }, 7000);
 
     // Refresh spec order data from localStorage
     try {
@@ -84,23 +89,23 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
   };
 
   return (
-    <div className="relative min-h-screen bg-[#fafafc] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-orange-500 selection:text-white py-10 sm:py-16">
+    <div className="relative min-h-screen bg-[#FAFAF9] text-[#0F172A] font-sans selection:bg-[#FF6B00] selection:text-white py-10 sm:py-16">
       {/* 1. CELEBRATION CONFETTI BURST */}
       {showConfetti && <ConfettiCanvas durationMs={5000} particleCount={110} />}
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* TOP CELEBRATION HERO BANNER */}
-        <div className="relative overflow-hidden p-8 sm:p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-xl text-center space-y-4">
-          <div className="absolute top-0 right-0 transform translate-x-8 -translate-y-8 w-48 h-48 rounded-full bg-orange-500/10 dark:bg-orange-500/5 blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 transform -translate-x-8 translate-y-8 w-48 h-48 rounded-full bg-emerald-500/10 dark:bg-emerald-500/5 blur-3xl pointer-events-none" />
+        <div className="relative overflow-hidden p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/80 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.06)] text-center space-y-5">
+          <div className="absolute top-0 right-0 transform translate-x-8 -translate-y-8 w-56 h-56 rounded-full bg-[#FF6B00]/8 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 transform -translate-x-8 translate-y-8 w-56 h-56 rounded-full bg-emerald-500/8 blur-3xl pointer-events-none" />
 
-          {/* Glowing Checkmark Badge (Click to replay celebration) */}
+          {/* Glowing Checkmark Badge */}
           <div className="relative inline-flex items-center justify-center">
             <button
               type="button"
               onClick={handleReplayConfetti}
               title="Click to replay celebration confetti"
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-sm hover:scale-105 active:scale-95 transition cursor-pointer"
             >
               <CheckCircle2 className="w-9 h-9 sm:w-11 sm:h-11" />
             </button>
@@ -111,49 +116,114 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
           </div>
 
           <div className="space-y-2">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/60 text-xs text-orange-700 dark:text-orange-400 font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>ORDER CONFIRMED & DISPATCHED</span>
+            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/60 text-xs text-[#FF6B00] font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
+              <span>ORDER CONFIRMED & QUEUED</span>
             </div>
 
             {/* WARM WELCOME MESSAGE */}
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white font-display">
+            <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0F172A]">
               Your order has been received by the Wavezly workshop!
             </h1>
 
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
-              Thank you, <strong className="text-zinc-900 dark:text-zinc-100">{specOrder.customerName}</strong>. We've routed your bespoke CAD geometry to our automated additive print farm, and domestic hardware has been queued for immediate warehouse pick.
+            <p className="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+              Thank you, <strong className="text-[#0F172A]">{specOrder.customerName}</strong>. We've routed your bespoke CAD geometry to our automated additive print farm, and domestic hardware has been queued for immediate warehouse pick.
             </p>
           </div>
 
           <div className="inline-flex flex-wrap items-center justify-center gap-2 pt-1 font-mono text-xs">
-            <span className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 font-semibold">
-              ORDER #: <span className="text-orange-600 dark:text-orange-400">{orderNumber}</span>
+            <span className="px-3.5 py-1.5 rounded-xl bg-[#FAFAF9] border border-slate-200 text-slate-800 font-bold">
+              ORDER #: <span className="text-[#FF6B00]">{orderNumber}</span>
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">
-              EMAIL: <span className="text-zinc-900 dark:text-zinc-200">{specOrder.customerEmail}</span>
+            <span className="px-3.5 py-1.5 rounded-xl bg-[#FAFAF9] border border-slate-200 text-slate-600">
+              EMAIL: <span className="text-[#0F172A] font-semibold">{specOrder.customerEmail}</span>
             </span>
           </div>
 
-          {/* 2. PRINTABLE SPEC SHEET & CERTIFICATE ACTION */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+          {/* PRINTABLE SPEC SHEET & CERTIFICATE ACTION */}
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               type="button"
               onClick={handlePrintCertificate}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs tracking-wider flex items-center justify-center space-x-2.5 shadow-lg shadow-orange-500/20 active:scale-95 transition cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#FF6B00] hover:bg-[#FF7A00] text-white font-bold text-xs tracking-wider flex items-center justify-center space-x-2.5 shadow-[0_10px_25px_-5px_rgba(255,107,0,0.35)] active:scale-95 transition cursor-pointer"
             >
               <Printer className="w-4 h-4" />
-              <span>PRINT WAVEZLY 100% FIT GUARANTEE CERTIFICATE & SPEC SHEET</span>
+              <span>PRINT 100% SNUG FIT GUARANTEE SPEC SHEET (PDF)</span>
             </button>
 
             <button
               type="button"
               onClick={handleDownloadHtml}
-              className="w-full sm:w-auto px-4 py-3.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 font-semibold text-xs tracking-wider flex items-center justify-center space-x-2 transition cursor-pointer"
+              className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs tracking-wider flex items-center justify-center space-x-2 transition cursor-pointer shadow-xs"
             >
-              <Download className="w-4 h-4 text-zinc-500" />
-              <span>SAVE BACKUP HTML</span>
+              <Download className="w-4 h-4 text-slate-500" />
+              <span>EXPORT HTML SPEC</span>
             </button>
+          </div>
+        </div>
+
+        {/* 2. LIVE PRINT FARM PROGRESS TRACKER */}
+        <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center space-x-2.5">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B00] opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#FF6B00]" />
+              </span>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+                Live Print Farm Progress Tracker
+              </h2>
+            </div>
+            <span className="text-[11px] font-mono font-bold text-[#FF6B00] bg-orange-50 px-2.5 py-0.5 rounded-full border border-orange-100">
+              SLANT 3D BOISE NODE-12 ACTIVE
+            </span>
+          </div>
+
+          {/* Stepper Progress */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+            <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Stage 01</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              </div>
+              <div className="font-bold text-xs text-[#0F172A]">CAD Validated</div>
+              <p className="text-[10px] text-slate-500">Watertight 0.2mm mesh confirmed</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200/80 space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF6B00]">Stage 02</span>
+                <Clock className="w-4 h-4 text-[#FF6B00] animate-spin" />
+              </div>
+              <div className="font-bold text-xs text-[#0F172A]">Slicing Toolpaths</div>
+              <p className="text-[10px] text-slate-500">Gyroid infill & perimeter G-code</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1 opacity-70">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Stage 03</span>
+                <Layers className="w-4 h-4 text-slate-400" />
+              </div>
+              <div className="font-bold text-xs text-slate-700">Additive Extrusion</div>
+              <p className="text-[10px] text-slate-500">Scheduled on Node Array #12</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1 opacity-70">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Stage 04</span>
+                <BadgeCheck className="w-4 h-4 text-slate-400" />
+              </div>
+              <div className="font-bold text-xs text-slate-700">Caliper QC Check</div>
+              <p className="text-[10px] text-slate-500">±0.2mm optical verification</p>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-slate-600 gap-2">
+            <div className="flex items-center space-x-2">
+              <Cpu className="w-4 h-4 text-[#FF6B00]" />
+              <span className="font-medium">Cluster telemetry: 0.20mm layer height • 18% gyroid core • 210°C nozzle</span>
+            </div>
+            <span className="text-[#FF6B00] font-bold text-[11px]">Ready for dispatch in ~24h</span>
           </div>
         </div>
 
@@ -161,63 +231,63 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-orange-500" />
-              <h2 className="text-base font-bold text-zinc-950 dark:text-white uppercase tracking-wider text-xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B00]" />
+              <h2 className="font-bold text-[#0F172A] uppercase tracking-wider text-xs">
                 Active Split Delivery Packages
               </h2>
             </div>
-            <span className="text-xs text-zinc-500">Live Dual-Stream Routing</span>
+            <span className="text-xs text-slate-500 font-medium">Live Dual-Stream Routing</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* PACKAGE 1: 3D PRINT FARM (MADE TO MEASURE) */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-orange-200/90 dark:border-orange-800/60 shadow-sm flex flex-col justify-between space-y-4">
+            <div className="p-6 rounded-3xl bg-white border border-orange-200/80 shadow-[0_4px_24px_-4px_rgba(255,107,0,0.06)] flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
-                  <div className="flex items-center space-x-2 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <div className="flex items-center space-x-2 text-[#FF6B00] text-xs font-bold uppercase tracking-wider">
                     <Box className="w-4 h-4" />
-                    <span>Package 1: Handcrafted to Measure</span>
+                    <span>Package 1: Handcrafted</span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 text-[10px] font-bold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] text-[10px] font-bold">
                     FARM_QUEUED
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-sm text-zinc-950 dark:text-white">
+                  <h3 className="font-bold text-sm text-[#0F172A]">
                     {specOrder.packageA.productTitle}
                   </h3>
-                  <p className="text-xs text-zinc-500 mt-0.5">
-                    Job ID: <span className="font-mono text-zinc-700 dark:text-zinc-300 font-semibold">{specOrder.packageA.farmJobId}</span>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Job ID: <span className="font-mono text-slate-800 font-bold">{specOrder.packageA.farmJobId}</span>
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/80 dark:border-zinc-700/60 text-xs space-y-1.5 font-mono">
+                <div className="p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 text-xs space-y-1.5 font-mono">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Bounding Envelope:</span>
-                    <span className="font-bold text-zinc-800 dark:text-zinc-200">
+                    <span className="text-slate-500">Dimensions:</span>
+                    <span className="font-bold text-slate-900">
                       {specOrder.packageA.dimensions.length}×{specOrder.packageA.dimensions.width}×{specOrder.packageA.dimensions.height} mm
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Material Formula:</span>
-                    <span className="font-medium text-zinc-800 dark:text-zinc-200">{specOrder.packageA.material.name}</span>
+                    <span className="text-slate-500">Material Formula:</span>
+                    <span className="font-semibold text-slate-900">{specOrder.packageA.material.name}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Facility:</span>
-                    <span className="text-zinc-800 dark:text-zinc-200">{specOrder.packageA.facility}</span>
+                    <span className="text-slate-500">Production Facility:</span>
+                    <span className="text-slate-900">{specOrder.packageA.facility}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Tolerance Code:</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">ISO 2768-m (±0.2mm)</span>
+                    <span className="text-slate-500">Tolerance Code:</span>
+                    <span className="text-emerald-600 font-bold">ISO 2768-m (±0.2mm)</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Est. Delivery</span>
-                  <span className="text-xs font-bold text-orange-600 dark:text-orange-400">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block">Est. Delivery</span>
+                  <span className="text-xs font-bold text-[#FF6B00]">
                     Arrives in 4–5 Business Days
                   </span>
                 </div>
@@ -225,7 +295,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
                 <button
                   type="button"
                   onClick={handleTrack}
-                  className="px-3.5 py-2 rounded-lg bg-orange-50 dark:bg-orange-950/40 hover:bg-orange-100 dark:hover:bg-orange-900/60 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800/80 text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FF6B00] border border-orange-200/80 text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer"
                 >
                   <span>Track Package 1</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -234,51 +304,51 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
             </div>
 
             {/* PACKAGE 2: IN-STOCK ACCESSORY (DOMESTIC WAREHOUSE) */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-sky-200/90 dark:border-sky-800/60 shadow-sm flex flex-col justify-between space-y-4">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] flex flex-col justify-between space-y-4">
               <div className="space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
-                  <div className="flex items-center space-x-2 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider">
-                    <Truck className="w-4 h-4" />
-                    <span>Package 2: In-Stock Accessory</span>
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <div className="flex items-center space-x-2 text-slate-700 text-xs font-bold uppercase tracking-wider">
+                    <Truck className="w-4 h-4 text-slate-600" />
+                    <span>Package 2: In-Stock</span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-[10px] font-bold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 text-[10px] font-bold">
                     DISPATCHED
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-sm text-zinc-950 dark:text-white">
+                  <h3 className="font-bold text-sm text-[#0F172A]">
                     {specOrder.packageB.productTitle}
                   </h3>
-                  <p className="text-xs text-zinc-500 mt-0.5">
-                    SKU: <span className="font-mono text-zinc-700 dark:text-zinc-300 font-semibold">{specOrder.packageB.sku}</span>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    SKU: <span className="font-mono text-slate-800 font-bold">{specOrder.packageB.sku}</span>
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/80 dark:border-zinc-700/60 text-xs space-y-1.5 font-mono">
+                <div className="p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 text-xs space-y-1.5 font-mono">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Tracking Code:</span>
-                    <span className="font-bold text-zinc-800 dark:text-zinc-200">{specOrder.packageB.trackingNumber}</span>
+                    <span className="text-slate-500">Tracking Code:</span>
+                    <span className="font-bold text-slate-900">{specOrder.packageB.trackingNumber}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Courier Service:</span>
-                    <span className="text-zinc-800 dark:text-zinc-200">USPS Ground Advantage</span>
+                    <span className="text-slate-500">Carrier Service:</span>
+                    <span className="text-slate-900">USPS Ground Advantage</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Origin Warehouse:</span>
-                    <span className="text-zinc-800 dark:text-zinc-200">Salt Lake City, UT</span>
+                    <span className="text-slate-500">Origin Warehouse:</span>
+                    <span className="text-slate-900">Salt Lake City, UT</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Handling SLA:</span>
-                    <span className="text-sky-600 dark:text-sky-400 font-bold">&lt; 24h Picked & Packed</span>
+                    <span className="text-slate-500">Handling SLA:</span>
+                    <span className="text-emerald-600 font-bold">&lt; 24h Picked & Packed</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Est. Delivery</span>
-                  <span className="text-xs font-bold text-sky-600 dark:text-sky-400">
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block">Est. Delivery</span>
+                  <span className="text-xs font-bold text-slate-700">
                     Arrives in 2–3 Business Days
                   </span>
                 </div>
@@ -286,7 +356,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
                 <button
                   type="button"
                   onClick={handleTrack}
-                  className="px-3.5 py-2 rounded-lg bg-sky-50 dark:bg-sky-950/40 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/80 text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold flex items-center space-x-1.5 transition cursor-pointer"
                 >
                   <span>Track Package 2</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -296,19 +366,19 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
           </div>
         </div>
 
-        {/* PRIMARY CTA: DIRECT LINK TO TRACK BOTH PACKAGES IN REAL-TIME */}
-        <div className="p-6 rounded-2xl bg-zinc-900 text-white dark:bg-zinc-800 border border-zinc-800 dark:border-zinc-700 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+        {/* PRIMARY CTA: DIRECT LINK TO TRACK BOTH PACKAGES */}
+        <div className="p-6 rounded-3xl bg-[#0F172A] text-white border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.2)]">
           <div className="space-y-1 text-center sm:text-left">
             <div className="flex items-center justify-center sm:justify-start space-x-2">
-              <Compass className="w-4 h-4 text-orange-400" />
-              <span className="text-xs uppercase font-bold tracking-wider text-orange-400">
-                Interactive Telemetry Radar
+              <Compass className="w-4 h-4 text-[#FF6B00]" />
+              <span className="text-xs uppercase font-bold tracking-wider text-[#FF6B00]">
+                Interactive Dual Radar
               </span>
             </div>
-            <h3 className="text-base font-bold text-white font-display">
+            <h3 className="text-base font-bold text-white">
               Track Both Packages in Real-Time
             </h3>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-slate-400">
               View live GPS coordinates, 3D farm layer progress, and domestic courier scans on our unified transit radar.
             </p>
           </div>
@@ -316,52 +386,52 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
           <button
             type="button"
             onClick={handleTrack}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-xs tracking-wider flex items-center justify-center space-x-2 shadow-sm transition active:scale-95 cursor-pointer flex-shrink-0"
+            className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-[#FF6B00] hover:bg-[#FF7A00] text-white font-bold text-xs tracking-wider flex items-center justify-center space-x-2 shadow-md transition active:scale-95 cursor-pointer flex-shrink-0"
           >
-            <span>OPEN REAL-TIME DUAL TRACKER</span>
-            <ExternalLink className="w-3.5 h-3.5 text-orange-600" />
+            <span>OPEN DUAL TELEMETRY TRACKER</span>
+            <ExternalLink className="w-3.5 h-3.5 text-white" />
           </button>
         </div>
 
         {/* 4. PROMINENT CONSUMER TRUST GUARANTEES REMINDER */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-orange-100 dark:bg-orange-950/50 flex items-center justify-center text-orange-600 dark:text-orange-400 flex-shrink-0">
+          <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex items-start space-x-3">
+            <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center text-[#FF6B00] flex-shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                Wavezly 100% Fit Guarantee
+              <h4 className="text-xs font-bold text-[#0F172A]">
+                100% Snug Fit Guarantee
               </h4>
-              <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
-                Fits your drawer perfectly or 100% money back. Guaranteed.
+              <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                Fits your drawer perfectly or 100% money back. Guaranteed ±0.2mm precision.
               </p>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
+          <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex items-start space-x-3">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 flex-shrink-0">
               <RotateCcw className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
+              <h4 className="text-xs font-bold text-[#0F172A]">
                 30-Day Free Returns
               </h4>
-              <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
+              <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
                 30-day hassle-free return window with prepaid domestic labels.
               </p>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400 flex-shrink-0">
+          <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex items-start space-x-3">
+            <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 flex-shrink-0">
               <Truck className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
+              <h4 className="text-xs font-bold text-[#0F172A]">
                 Fast Domestic Shipping
               </h4>
-              <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
+              <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
                 Dispatched in &lt;24h with tracked domestic carrier delivery.
               </p>
             </div>
@@ -369,11 +439,11 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
         </div>
 
         {/* FOOTER ACTIONS */}
-        <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-zinc-200 dark:border-zinc-800 gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-slate-200 gap-4">
           <button
             type="button"
             onClick={onContinueShopping}
-            className="text-xs text-zinc-500 hover:text-orange-600 dark:hover:text-orange-400 transition flex items-center space-x-1 cursor-pointer"
+            className="text-xs font-semibold text-slate-500 hover:text-[#FF6B00] transition flex items-center space-x-1 cursor-pointer"
           >
             <span>← Return to Hardware Catalog</span>
           </button>
@@ -382,16 +452,16 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
             <button
               type="button"
               onClick={handlePrintCertificate}
-              className="px-4 py-2.5 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:border-orange-500 text-xs font-semibold text-zinc-700 dark:text-zinc-300 transition flex items-center space-x-1.5 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-slate-200 hover:border-[#FF6B00] text-xs font-bold text-slate-700 transition flex items-center space-x-1.5 cursor-pointer bg-white shadow-xs"
             >
-              <FileText className="w-3.5 h-3.5 text-orange-500" />
+              <FileText className="w-3.5 h-3.5 text-[#FF6B00]" />
               <span>Spec Sheet (PDF)</span>
             </button>
 
             <button
               type="button"
               onClick={handleTrack}
-              className="px-5 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm"
+              className="px-5 py-2.5 rounded-xl bg-[#0F172A] hover:bg-slate-800 text-white text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm"
             >
               <span>Track Orders</span>
               <ArrowRight className="w-3.5 h-3.5" />

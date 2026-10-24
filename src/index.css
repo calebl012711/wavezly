@@ -4,19 +4,16 @@
 
 @layer base {
   :root {
-    color-scheme: light dark;
+    color-scheme: light;
   }
 
   body {
-    background-color: #fafafc;
-    color: #18181b;
+    background-color: #FAFAFA;
+    color: #0F172A;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     overflow-x: hidden;
-  }
-
-  .dark body {
-    background-color: #09090b;
-    color: #f4f4f5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Clean gentle precision scrollbars */
@@ -30,46 +27,38 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #d4d4d8;
+    background: #e2e8f0;
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1aa;
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    background: #27272a;
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background: #3f3f46;
+    background: #cbd5e1;
   }
 }
 
 /* ========================================================================= */
-/* CONSUMER REFINED BUTTONS & TACTILE FEEDBACK ANIMATIONS                    */
-/* Apple Store & Grovemade inspired: soft, tactile, inviting, zero harshness */
+/* WARM MINIMALIST DTC COMPONENTS (Clean white, electric orange, dark charcoal)*/
 /* ========================================================================= */
 @layer components {
-  /* Primary Terracotta Action Button */
-  .btn-primary {
+  /* Primary Brand Orange Action Button */
+  .btn-primary,
+  .btn-brand-orange {
     @apply inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl 
-           bg-terracotta hover:bg-terracotta-hover active:bg-terracotta-active 
-           text-white font-medium text-sm shadow-sm hover:shadow-md 
+           bg-brand-orange hover:bg-brand-orange-hover active:bg-[#e05e00] 
+           text-white font-medium text-sm shadow-sm hover:shadow-md hover:shadow-brand-orange/20 
            transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer;
   }
 
-  /* Secondary Soft Oat / Porcelain Card Button */
+  /* Secondary Clean Minimalist Card Button */
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl 
-           bg-white dark:bg-zinc-900 hover:bg-[#f7f7f5] dark:hover:bg-zinc-800 
-           text-zinc-800 dark:text-zinc-100 border border-zinc-200/80 dark:border-zinc-800 
-           hover:border-zinc-300 dark:hover:border-zinc-700 font-medium text-sm shadow-card 
+           bg-white hover:bg-zinc-50 
+           text-slate-900 border border-zinc-200/90 
+           hover:border-zinc-300 font-medium text-sm shadow-card 
            transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer;
   }
 
-  /* Warm Organic Sage Action Button */
+  /* Subtle Warm Organic Accent Button */
   .btn-sage {
     @apply inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl 
            bg-sage hover:bg-sage-hover active:bg-sage-active 
@@ -80,34 +69,38 @@
   /* Ghost Navigation / Utility Button */
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg 
-           text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white 
-           hover:bg-zinc-100/70 dark:hover:bg-zinc-800/60 font-medium text-xs 
+           text-zinc-600 hover:text-slate-900 
+           hover:bg-zinc-100/80 font-medium text-xs 
            transition-all duration-150 active:scale-[0.98] cursor-pointer;
   }
 
-  /* Cozy Consumer Surface Card */
-  .card-consumer {
-    @apply bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 
+  /* Warm Minimalist DTC Surface Card */
+  .card-consumer,
+  .card-dtc {
+    @apply bg-white border border-zinc-200/80 
            rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-200 ease-out;
   }
 
-  /* Warm Porcelain & Oat Accent Badges */
+  /* Brand Orange Accent Badges */
+  .badge-orange,
+  .badge-brand-orange,
   .badge-terracotta {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full 
-           bg-orange-50 dark:bg-orange-950/40 border border-orange-200/80 dark:border-orange-800/50 
-           text-xs font-medium text-orange-800 dark:text-orange-300;
+           bg-brand-orange-light border border-orange-200/80 
+           text-xs font-medium text-brand-orange;
   }
 
   .badge-sage {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full 
-           bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/50 
-           text-xs font-medium text-emerald-800 dark:text-emerald-300;
+           bg-emerald-50 border border-emerald-200/80 
+           text-xs font-medium text-emerald-800;
   }
 
-  .badge-oat {
+  .badge-oat,
+  .badge-neutral {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full 
-           bg-[#f7f7f5] dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700 
-           text-xs font-medium text-zinc-700 dark:text-zinc-300;
+           bg-zinc-100 border border-zinc-200 
+           text-xs font-medium text-zinc-700;
   }
 }
 
@@ -132,48 +125,43 @@
   }
 }
 
-/* Consumer Tactile Range Slider Track (Warm Terracotta & Soft Oat) */
+/* Tactile Range Slider Track with Electric Brand Orange Thumb */
 input[type='range'] {
   -webkit-appearance: none;
-  background: #e4e4e7;
+  background: #e2e8f0;
   border-radius: 9999px;
   height: 6px;
-}
-
-.dark input[type='range'] {
-  background: #27272a;
 }
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  background: #ea580c;
+  background: #FF6B00;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.35);
   border: 2px solid #ffffff;
   transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
 }
 
 input[type='range']::-webkit-slider-thumb:hover {
   transform: scale(1.15);
-  background: #c2410c;
+  background: #FF7A00;
 }
 
 input[type='range']::-moz-range-thumb {
   width: 18px;
   height: 18px;
-  background: #ea580c;
+  background: #FF6B00;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.35);
   border: 2px solid #ffffff;
   transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
 }
 
 input[type='range']::-moz-range-thumb:hover {
   transform: scale(1.15);
-  background: #c2410c;
+  background: #FF7A00;
 }
-

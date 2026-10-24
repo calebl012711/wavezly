@@ -234,10 +234,10 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* Preset Direct Illumination & Directional Shadow Rigs */}
       {activePreset === 'daylight' && (
         <>
-          <ambientLight intensity={0.55} color="#ffffff" />
+          <ambientLight intensity={0.65} color="#ffffff" />
           <directionalLight
             position={[140, 240, 160]}
-            intensity={1.75}
+            intensity={1.85}
             color="#ffffff"
             castShadow
             shadow-mapSize-width={2048}
@@ -252,24 +252,24 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
           />
           <directionalLight
             position={[-180, 120, -120]}
-            intensity={0.65}
-            color="#e0f2fe"
+            intensity={0.7}
+            color="#f1f5f9"
           />
           <spotLight
             position={[0, 280, -220]}
-            intensity={1.2}
+            intensity={1.25}
             angle={0.6}
             penumbra={0.8}
             color="#ffffff"
           />
           <ContactShadows
             position={[0, -0.1, 0]}
-            opacity={0.68}
+            opacity={0.38}
             scale={shadowScale}
-            blur={1.8}
-            far={60}
+            blur={2.4}
+            far={80}
             resolution={1024}
-            color="#050507"
+            color="#1c1917"
           />
         </>
       )}

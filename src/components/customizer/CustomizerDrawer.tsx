@@ -135,15 +135,15 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
   };
 
   return (
-    <div className="w-full lg:w-96 bg-white dark:bg-[#121214] border border-zinc-200/90 dark:border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-lg font-sans">
+    <div className="w-full lg:w-96 bg-white dark:bg-[#121214] border border-slate-200/90 dark:border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.04)] font-sans">
       {/* Drawer Top Header & Quick Reset */}
       <div>
-        <div className="flex items-center justify-between pb-3 border-b border-zinc-200/80 dark:border-zinc-800">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-zinc-800">
           <div>
-            <span className="text-[10px] text-orange-600 dark:text-orange-400 uppercase tracking-widest font-semibold block">
+            <span className="text-[10px] text-[#FF6B00] dark:text-[#FF7A00] uppercase tracking-widest font-semibold block">
               CUSTOM SPECIFICATIONS
             </span>
-            <h2 className="text-base font-semibold text-zinc-950 dark:text-white tracking-tight">
+            <h2 className="text-base font-bold text-[#0F172A] dark:text-white tracking-tight">
               {currentProduct.title}
             </h2>
           </div>
@@ -155,10 +155,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                 toggleSoundMute();
               }}
               title={muted ? 'Unmute Tactile Sound FX' : 'Mute Tactile Sound FX'}
-              className={`p-1.5 rounded border transition ${
+              className={`p-1.5 rounded-lg border transition ${
                 muted
-                  ? 'border-zinc-800 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
-                  : 'border-signal-orange/40 text-signal-orange bg-signal-orange/10'
+                  ? 'border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800'
+                  : 'border-[#FF6B00]/40 text-[#FF6B00] bg-orange-50/70 dark:bg-orange-950/40'
               }`}
             >
               {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -170,10 +170,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                 toggleWireframe();
               }}
               title={wireframe ? 'Solid PBR Render' : 'Holographic CAD Wireframe'}
-              className={`p-1.5 rounded border transition ${
+              className={`p-1.5 rounded-lg border transition ${
                 wireframe
-                  ? 'border-signal-cyan text-signal-cyan bg-signal-cyan/10'
-                  : 'border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800'
+                  ? 'border-sky-500 text-sky-600 bg-sky-50 dark:bg-sky-950/30'
+                  : 'border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800'
               }`}
             >
               <Box className="w-4 h-4" />
@@ -185,10 +185,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                 toggleAutoRotate();
               }}
               title={autoRotate ? 'Pause Rotation' : 'Auto Rotate View'}
-              className={`p-1.5 rounded border transition ${
+              className={`p-1.5 rounded-lg border transition ${
                 autoRotate
-                  ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                  : 'border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800'
+                  ? 'border-[#FF6B00] text-[#FF6B00] bg-orange-50/70 dark:bg-orange-950/40'
+                  : 'border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800'
               }`}
             >
               <Compass className="w-4 h-4" />
@@ -200,7 +200,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                 resetDefaults();
               }}
               title="Reset to Factory Blueprint"
-              className="p-1.5 rounded border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
+              className="p-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800 transition"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -208,17 +208,17 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
         </div>
 
         {/* Tab Selection */}
-        <div className="grid grid-cols-5 gap-1 my-3 p-1 bg-black/50 rounded-lg border border-zinc-800/80 text-[10px]">
+        <div className="grid grid-cols-5 gap-1 my-3 p-1 bg-slate-100/90 dark:bg-zinc-900 rounded-xl border border-slate-200/80 dark:border-zinc-800 text-[10px] shadow-xs">
           <button
             type="button"
             onClick={() => {
               playClickSound('snap');
               setActiveTab('dimensions');
             }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded font-medium transition ${
+            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
               activeTab === 'dimensions'
-                ? 'bg-zinc-800 text-precision-white shadow-tactile'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
             }`}
           >
             <Sliders className="w-3 h-3" />
@@ -231,10 +231,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               playClickSound('snap');
               setActiveTab('grid');
             }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded font-medium transition ${
+            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
               activeTab === 'grid'
-                ? 'bg-zinc-800 text-precision-white shadow-tactile'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
             }`}
           >
             <Grid className="w-3 h-3" />
@@ -247,10 +247,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               playClickSound('snap');
               setActiveTab('materials');
             }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded font-medium transition ${
+            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
               activeTab === 'materials'
-                ? 'bg-zinc-800 text-precision-white shadow-tactile'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
             }`}
           >
             <Palette className="w-3 h-3" />
@@ -263,16 +263,16 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               playClickSound('snap');
               setActiveTab('inspect');
             }}
-            className={`relative flex items-center justify-center space-x-1 py-1.5 rounded font-medium transition ${
+            className={`relative flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
               activeTab === 'inspect'
-                ? 'bg-signal-orange/20 text-signal-orange shadow-tactile'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
             }`}
           >
             <Layers className="w-3 h-3" />
             <span>Layers</span>
             {(sliceHeight < 100 || explodedOffset > 0) && (
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-signal-orange animate-pulse" />
+              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
             )}
           </button>
 
@@ -282,10 +282,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               playClickSound('snap');
               setActiveTab('presets');
             }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded font-medium transition ${
+            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
               activeTab === 'presets'
-                ? 'bg-zinc-800 text-precision-white shadow-tactile'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
+                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
             }`}
           >
             <Sparkles className="w-3 h-3" />
@@ -752,10 +752,10 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
       </div>
 
       {/* Drawer Action Triggers */}
-      <div className="pt-4 mt-4 border-t border-surface-border space-y-2">
-        <div className="flex items-center justify-between font-mono text-xs text-zinc-400 mb-1">
+      <div className="pt-4 mt-4 border-t border-slate-200/80 dark:border-zinc-800 space-y-2">
+        <div className="flex items-center justify-between font-sans text-xs text-slate-500 dark:text-zinc-400 mb-1">
           <span>Manufacturing Price:</span>
-          <span className="text-base font-bold text-signal-orange">
+          <span className="text-base font-bold text-[#FF6B00]">
             ${telemetry.finalPriceUsd.toFixed(2)} USD
           </span>
         </div>
@@ -768,17 +768,17 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               type="button"
               onClick={handleExportStl}
               disabled={isExportingStl}
-              className="flex items-center justify-center space-x-1.5 py-2.5 px-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono text-[11px] font-medium transition disabled:opacity-50"
+              className="flex items-center justify-center space-x-1.5 py-2.5 px-2 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white hover:bg-slate-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-[#0F172A] dark:text-zinc-200 font-sans text-[11px] font-medium transition shadow-xs disabled:opacity-50 cursor-pointer"
               title="Download 3D Print File (.STL)"
             >
               {downloadSuccess ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-signal-lime shrink-0" />
-                  <span className="text-signal-lime truncate">STL SAVED</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span className="text-emerald-600 truncate">STL SAVED</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 shrink-0" />
+                  <Download className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-400 shrink-0" />
                   <span className="truncate">{isExportingStl ? 'PREPARING...' : 'EXPORT .STL'}</span>
                 </>
               )}
@@ -792,20 +792,20 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                   playClickSound('snap');
                   setShowSlicerMenu((prev) => !prev);
                 }}
-                className={`w-full flex items-center justify-between space-x-1 py-2.5 px-2.5 rounded-lg border transition font-mono text-[11px] font-semibold ${
+                className={`w-full flex items-center justify-between space-x-1 py-2.5 px-2.5 rounded-xl border transition font-sans text-[11px] font-semibold cursor-pointer shadow-xs ${
                   slicerSuccess
-                    ? 'border-signal-lime/50 bg-signal-lime/10 text-signal-lime'
+                    ? 'border-emerald-500/50 bg-emerald-50 text-emerald-600'
                     : showSlicerMenu
-                    ? 'border-signal-orange bg-signal-orange/20 text-signal-orange shadow-glow-orange'
-                    : 'border-signal-orange/40 bg-signal-orange/10 hover:bg-signal-orange/20 text-signal-orange'
+                    ? 'border-[#FF6B00] bg-orange-50/70 text-[#FF6B00] shadow-xs'
+                    : 'border-orange-200/80 bg-orange-50/50 hover:bg-orange-100/60 text-[#FF6B00]'
                 }`}
                 title="Export 3D Print Settings (Bambu / Prusa / Klipper)"
               >
                 <div className="flex items-center space-x-1.5 truncate">
                   {slicerSuccess ? (
-                    <CheckCircle2 className="w-3.5 h-3.5 text-signal-lime shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   ) : (
-                    <FileCode className="w-3.5 h-3.5 text-signal-orange shrink-0" />
+                    <FileCode className="w-3.5 h-3.5 text-[#FF6B00] shrink-0" />
                   )}
                   <span className="truncate">
                     {slicerSuccess ? 'CAM SAVED' : 'SLICER PROFILES'}
@@ -820,12 +820,12 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
 
               {/* Slicer Profile Ecosystem Flyout / Dropdown Menu */}
               {showSlicerMenu && (
-                <div className="absolute right-0 bottom-full mb-2 w-80 bg-zinc-950/95 backdrop-blur-xl border border-zinc-700/80 rounded-xl p-3 shadow-2xl z-50 font-mono space-y-2.5 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
-                    <span className="text-[10px] uppercase font-bold text-signal-orange tracking-wider flex items-center gap-1.5">
+                <div className="absolute right-0 bottom-full mb-2 w-80 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border border-slate-200 dark:border-zinc-700/80 rounded-2xl p-3 shadow-xl z-50 font-sans space-y-2.5 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-2">
+                    <span className="text-[10px] uppercase font-bold text-[#FF6B00] tracking-wider flex items-center gap-1.5">
                       <Cpu className="w-3.5 h-3.5" /> 3D Slicer CAM Presets
                     </span>
-                    <span className="text-[9px] text-zinc-400">0.4mm Nozzle // 0.20mm</span>
+                    <span className="text-[9px] text-slate-400">0.4mm Nozzle // 0.20mm</span>
                   </div>
 
                   <div className="space-y-1.5 text-xs">
@@ -833,18 +833,18 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                     <button
                       type="button"
                       onClick={() => handleExportSlicer('all')}
-                      className="w-full text-left p-2 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-signal-orange/60 transition group"
+                      className="w-full text-left p-2 rounded-xl bg-slate-50 dark:bg-zinc-900/90 hover:bg-orange-50/60 dark:hover:bg-zinc-800 border border-slate-200/80 dark:border-zinc-800 hover:border-[#FF6B00]/60 transition group cursor-pointer"
                     >
-                      <div className="flex items-center justify-between text-zinc-200 font-bold group-hover:text-signal-orange">
+                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-bold group-hover:text-[#FF6B00]">
                         <span className="flex items-center gap-1.5">
-                          <Download className="w-3.5 h-3.5 text-signal-orange" />
+                          <Download className="w-3.5 h-3.5 text-[#FF6B00]" />
                           Complete CAM Archive (.zip)
                         </span>
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-signal-orange/20 text-signal-orange font-normal">
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-orange-100 text-[#FF6B00] font-normal">
                           All In One
                         </span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
                         Bambu JSON, Prusa INI, Voron Klipper cfg, & CAM print instructions.
                       </p>
                     </button>
@@ -853,13 +853,13 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                     <button
                       type="button"
                       onClick={() => handleExportSlicer('bambu')}
-                      className="w-full text-left p-2 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800/80 hover:border-emerald-500/60 transition group"
+                      className="w-full text-left p-2 rounded-xl bg-slate-50/60 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200/60 dark:border-zinc-800/80 hover:border-emerald-500/60 transition group cursor-pointer"
                     >
-                      <div className="flex items-center justify-between text-zinc-200 font-semibold group-hover:text-emerald-400">
+                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-semibold group-hover:text-emerald-600">
                         <span>Bambu Lab (X1C / P1S / A1)</span>
-                        <span className="text-[9px] text-zinc-500">.json</span>
+                        <span className="text-[9px] text-slate-400">.json</span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
                         0.20mm Standard, 18% gyroid, 3 perimeters, flow 0.98.
                       </p>
                     </button>
@@ -868,13 +868,13 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                     <button
                       type="button"
                       onClick={() => handleExportSlicer('prusa')}
-                      className="w-full text-left p-2 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800/80 hover:border-orange-500/60 transition group"
+                      className="w-full text-left p-2 rounded-xl bg-slate-50/60 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200/60 dark:border-zinc-800/80 hover:border-[#FF6B00]/60 transition group cursor-pointer"
                     >
-                      <div className="flex items-center justify-between text-zinc-200 font-semibold group-hover:text-orange-400">
+                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-semibold group-hover:text-[#FF6B00]">
                         <span>PrusaSlicer (MK4 / XL / CoreXY)</span>
-                        <span className="text-[9px] text-zinc-500">.ini (IS)</span>
+                        <span className="text-[9px] text-slate-400">.ini (IS)</span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
                         Input Shaping structural profile, 215°C PLA / 55°C bed.
                       </p>
                     </button>
@@ -883,21 +883,21 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
                     <button
                       type="button"
                       onClick={() => handleExportSlicer('voron')}
-                      className="w-full text-left p-2 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800/80 hover:border-cyan-500/60 transition group"
+                      className="w-full text-left p-2 rounded-xl bg-slate-50/60 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200/60 dark:border-zinc-800/80 hover:border-cyan-500/60 transition group cursor-pointer"
                     >
-                      <div className="flex items-center justify-between text-zinc-200 font-semibold group-hover:text-cyan-400">
+                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-semibold group-hover:text-cyan-600">
                         <span>Voron 2.4 / RatRig (Klipper)</span>
-                        <span className="text-[9px] text-zinc-500">.ini</span>
+                        <span className="text-[9px] text-slate-400">.ini</span>
                       </div>
-                      <p className="text-[10px] text-zinc-400 mt-0.5 font-sans">
+                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
                         High-speed CoreXY speeds, tuned pressure advance & fan curves.
                       </p>
                     </button>
                   </div>
 
-                  <div className="pt-2 border-t border-zinc-800/80 text-[10px] text-zinc-400 flex items-center justify-between">
-                    <span>Est. Filament: <strong className="text-zinc-200">{telemetry.totalWeightGrams.toFixed(1)}g</strong></span>
-                    <span>Nozzle: <strong className="text-zinc-200">215°C</strong> | Bed: <strong className="text-zinc-200">55°C</strong></span>
+                  <div className="pt-2 border-t border-slate-100 dark:border-zinc-800/80 text-[10px] text-slate-500 flex items-center justify-between">
+                    <span>Est. Filament: <strong className="text-[#0F172A] dark:text-zinc-200">{telemetry.totalWeightGrams.toFixed(1)}g</strong></span>
+                    <span>Nozzle: <strong className="text-[#0F172A] dark:text-zinc-200">215°C</strong> | Bed: <strong className="text-[#0F172A] dark:text-zinc-200">55°C</strong></span>
                   </div>
                 </div>
               )}
@@ -911,7 +911,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
               playClickSound('success');
               if (onAddToCart) onAddToCart();
             }}
-            className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-signal-orange hover:bg-orange-600 text-white font-sans text-xs font-semibold tracking-wide shadow-md hover:shadow-lg transition cursor-pointer"
+            className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF7A00] hover:from-[#FF7A00] hover:to-[#FF851A] text-white font-sans text-xs font-bold tracking-wide shadow-[0_4px_16px_rgba(255,107,0,0.28)] hover:shadow-[0_6px_22px_rgba(255,107,0,0.36)] transition-all cursor-pointer"
           >
             <ShoppingCart className="w-4 h-4" />
             <span>Add Custom Tray to Bag</span>

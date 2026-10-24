@@ -1,12 +1,14 @@
 /**
- * WAVEZLY INTEGRATED CHECKOUT PAGE
- * Elite DTC Checkout (Shopify Plus / Stripe Checkout style)
- * Features:
- * - Express Checkout Pills (Apple Pay, Shop Pay, PayPal simulation)
- * - Clear Split Delivery Breakdown (Package 1: Handcrafted to Measure vs Package 2: In-Stock Accessory)
- * - Prominent Consumer Trust Guarantees (Wavezly 100% Fit Guarantee, 30-Day Free Returns, Fast Domestic Shipping)
- * - Discount / Voucher Code Engine
- * - 100% TypeScript safe & responsive
+ * WAVEZLY INTEGRATED DTC CHECKOUT EXPERIENCE
+ * Concept 1: Warm Minimalist DTC
+ * - Pure airy white canvas (#FFFFFF / #FAFAF9)
+ * - Sleek dark charcoal typography (#0F172A)
+ * - Electric orange primary accents (#FF6B00 / #FF7A00)
+ * - Soft warm micro-shadows, zero Amazon clutter
+ * - Express Checkout simulation (Apple Pay, Shop Pay, PayPal)
+ * - Split Delivery schedule breakdown
+ * - Sticky order summary with high-res thumbnail previews
+ * - 100% Snug Fit Guarantee badge & legal ISO 2768-m assurance
  */
 
 import React, { useState } from 'react';
@@ -32,6 +34,7 @@ import {
   Info,
   Sparkles,
   ShoppingBag,
+  BadgeCheck,
 } from 'lucide-react';
 
 interface CheckoutPageProps {
@@ -120,7 +123,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
 
     if (code === 'DRAWERFIT' || code === 'PERFECTFIT') {
       playClickSound('snap');
-      setAppliedDiscount({ code, percent: 15, label: '15% Off 30-Day Fit Launch Special' });
+      setAppliedDiscount({ code, percent: 15, label: '15% Off Launch Special' });
       setDiscountInput('');
     } else if (code === 'WELCOME10') {
       playClickSound('snap');
@@ -137,7 +140,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
     setDiscountError(null);
   };
 
-  // Quick load demo set if cart is empty so tester can review the checkout page
+  // Quick load demo set if cart is empty
   const handleLoadDemoCart = () => {
     playClickSound('cart');
     const customProduct = SEED_PRODUCTS[0];
@@ -189,7 +192,6 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
       });
 
       if (response.isMock) {
-        // Cache order details in localStorage for client-side invoice and tracking specs
         try {
           const cachedData = JSON.stringify({
             orderNumber: response.orderNumber,
@@ -256,14 +258,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafc] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-white text-[#0F172A] font-sans selection:bg-[#FF6B00] selection:text-white">
       {/* EXPRESS CHECKOUT INTERACTIVE MODAL */}
       {activeExpressModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md p-6 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-200 dark:border-zinc-800 space-y-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/50 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-md p-6 bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(15,23,42,0.18)] border border-slate-100 space-y-5">
             <button
               onClick={() => setActiveExpressModal(null)}
-              className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition"
+              className="absolute top-4 right-4 text-slate-400 hover:text-[#0F172A] transition p-1"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -272,33 +274,33 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
             {activeExpressModal === 'apple_pay' && (
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <span className="text-xl font-bold font-sans tracking-tight"> Pay</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-medium">
-                    Touch ID / Face ID
+                  <span className="text-xl font-bold font-sans tracking-tight text-[#0F172A]"> Pay</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">
+                    Biometric Verified
                   </span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/80 dark:border-zinc-700/60 text-xs space-y-2">
+                <div className="p-4 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 text-xs space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Card:</span>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">Apple Card (•••• 9842)</span>
+                    <span className="text-slate-500">Card:</span>
+                    <span className="font-semibold text-[#0F172A]">Apple Card (•••• 9842)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Ship to:</span>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">404 Industrial Pkwy, SF CA</span>
+                    <span className="text-slate-500">Ship to:</span>
+                    <span className="font-semibold text-[#0F172A]">404 Industrial Pkwy, SF CA</span>
                   </div>
-                  <div className="flex justify-between border-t border-zinc-200 dark:border-zinc-700 pt-2 font-bold text-sm">
-                    <span>Pay Wavezly:</span>
-                    <span className="text-orange-600 dark:text-orange-400">${finalTotal.toFixed(2)} USD</span>
+                  <div className="flex justify-between border-t border-slate-200/80 pt-2 font-bold text-sm">
+                    <span className="text-[#0F172A]">Pay Wavezly:</span>
+                    <span className="text-[#FF6B00] font-extrabold">${finalTotal.toFixed(2)} USD</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-zinc-500 text-center">
-                  Double Click Side Button or Confirm with Touch ID to authorize order.
+                <p className="text-[11px] text-slate-500 text-center">
+                  Double Click Side Button or Confirm with Touch ID to complete order.
                 </p>
                 <button
                   type="button"
                   disabled={expressProcessing}
                   onClick={handleConfirmExpress}
-                  className="w-full py-3.5 px-4 rounded-xl bg-black hover:bg-zinc-800 text-white font-semibold text-sm flex items-center justify-center space-x-2 transition cursor-pointer shadow-lg disabled:opacity-60"
+                  className="w-full py-4 px-4 rounded-xl bg-black hover:bg-slate-900 text-white font-semibold text-sm flex items-center justify-center space-x-2 transition cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-60"
                 >
                   {expressProcessing ? (
                     <>
@@ -306,9 +308,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                       <span>Authorizing Apple Pay...</span>
                     </>
                   ) : (
-                    <>
-                      <span>Pay with  Pay • ${finalTotal.toFixed(2)}</span>
-                    </>
+                    <span>Pay with  Pay • ${finalTotal.toFixed(2)}</span>
                   )}
                 </button>
               </div>
@@ -317,30 +317,30 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
             {activeExpressModal === 'shop_pay' && (
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <div className="bg-[#5A31F4] text-white px-2 py-0.5 rounded text-xs font-bold italic">
+                  <div className="bg-[#5A31F4] text-white px-2.5 py-1 rounded-md text-xs font-bold italic tracking-tight">
                     shop Pay
                   </div>
-                  <span className="text-xs text-zinc-500">1-Click Fast Checkout</span>
+                  <span className="text-xs text-slate-500 font-medium">1-Click Fast Checkout</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/40 text-xs space-y-2">
+                <div className="p-4 rounded-2xl bg-purple-50/40 border border-purple-100 text-xs space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Account:</span>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">{form.email}</span>
+                    <span className="text-slate-500">Account:</span>
+                    <span className="font-semibold text-[#0F172A]">{form.email}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Default Card:</span>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">Visa ending in 4242</span>
+                    <span className="text-slate-500">Card:</span>
+                    <span className="font-semibold text-[#0F172A]">Visa ending in 4242</span>
                   </div>
-                  <div className="flex justify-between border-t border-purple-200 dark:border-purple-800/60 pt-2 font-bold text-sm">
-                    <span>Total:</span>
-                    <span className="text-purple-600 dark:text-purple-400">${finalTotal.toFixed(2)} USD</span>
+                  <div className="flex justify-between border-t border-purple-200/60 pt-2 font-bold text-sm">
+                    <span className="text-[#0F172A]">Total:</span>
+                    <span className="text-[#5A31F4] font-extrabold">${finalTotal.toFixed(2)} USD</span>
                   </div>
                 </div>
                 <button
                   type="button"
                   disabled={expressProcessing}
                   onClick={handleConfirmExpress}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#5A31F4] hover:bg-[#4d27d9] text-white font-semibold text-sm flex items-center justify-center space-x-2 transition cursor-pointer shadow-lg disabled:opacity-60"
+                  className="w-full py-4 px-4 rounded-xl bg-[#5A31F4] hover:bg-[#4d27d9] text-white font-semibold text-sm flex items-center justify-center space-x-2 transition cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-60"
                 >
                   {expressProcessing ? (
                     <>
@@ -358,28 +358,28 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
                   <span className="text-lg font-bold text-[#003087]">PayPal</span>
-                  <span className="text-xs text-zinc-500">Express Checkout</span>
+                  <span className="text-xs text-slate-500 font-medium">Express Checkout</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/40 text-xs space-y-2">
+                <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/60 text-xs space-y-2">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">PayPal Balance / Linked Bank</span>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">alexander@braun-audio.de</span>
+                    <span className="text-slate-500">Account:</span>
+                    <span className="font-semibold text-[#0F172A]">{form.email}</span>
                   </div>
-                  <div className="flex justify-between border-t border-amber-200 dark:border-amber-800/60 pt-2 font-bold text-sm">
-                    <span>Total to Authorize:</span>
-                    <span className="text-amber-600 dark:text-amber-400">${finalTotal.toFixed(2)} USD</span>
+                  <div className="flex justify-between border-t border-amber-200/80 pt-2 font-bold text-sm">
+                    <span className="text-[#0F172A]">Total:</span>
+                    <span className="text-amber-700 font-extrabold">${finalTotal.toFixed(2)} USD</span>
                   </div>
                 </div>
                 <button
                   type="button"
                   disabled={expressProcessing}
                   onClick={handleConfirmExpress}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#FFC439] hover:bg-[#f4b82d] text-zinc-950 font-bold text-sm flex items-center justify-center space-x-2 transition cursor-pointer shadow-md disabled:opacity-60"
+                  className="w-full py-4 px-4 rounded-xl bg-[#FFC439] hover:bg-[#f4b82d] text-[#003087] font-bold text-sm flex items-center justify-center space-x-2 transition cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-60"
                 >
                   {expressProcessing ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin text-zinc-900" />
-                      <span>Processing PayPal Checkout...</span>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#003087]" />
+                      <span>Authorizing PayPal...</span>
                     </>
                   ) : (
                     <span>Authorize with PayPal • ${finalTotal.toFixed(2)}</span>
@@ -392,34 +392,34 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
       )}
 
       {/* TOP HEADER: BRANDING & PROGRESS */}
-      <header className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-900/80 backdrop-blur sticky top-0 z-30">
+      <header className="border-b border-slate-100 bg-white sticky top-0 z-30 shadow-[0_1px_3px_rgba(15,23,42,0.02)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <span className="font-extrabold tracking-tight text-xl text-zinc-950 dark:text-white font-display">
-              Wavezly
+            <span className="font-black tracking-tight text-xl text-[#0F172A]">
+              Wavezly<span className="text-[#FF6B00]">.</span>
             </span>
-            <span className="hidden sm:inline-block h-4 w-px bg-zinc-300 dark:bg-zinc-700" />
-            <span className="hidden sm:inline-flex items-center text-xs text-zinc-500 space-x-1">
-              <Lock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>256-Bit SSL Encrypted Checkout</span>
+            <span className="hidden sm:inline-block h-4 w-px bg-slate-200" />
+            <span className="hidden sm:inline-flex items-center text-xs text-slate-500 space-x-1.5">
+              <Lock className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="font-medium">256-Bit SSL Encrypted Checkout</span>
             </span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <nav className="hidden md:flex items-center space-x-2 text-xs font-medium text-zinc-400">
-              <span className="text-zinc-600 dark:text-zinc-400">Cart</span>
+            <nav className="hidden md:flex items-center space-x-2 text-xs font-medium text-slate-400">
+              <span className="text-slate-600">Cart</span>
               <ChevronRight className="w-3.5 h-3.5" />
-              <span className="text-zinc-600 dark:text-zinc-400">Information</span>
+              <span className="text-slate-600">Information</span>
               <ChevronRight className="w-3.5 h-3.5" />
-              <span className="text-zinc-600 dark:text-zinc-400">Shipping</span>
+              <span className="text-slate-600">Shipping</span>
               <ChevronRight className="w-3.5 h-3.5" />
-              <span className="text-orange-600 dark:text-orange-400 font-bold">Payment</span>
+              <span className="text-[#FF6B00] font-bold">Payment</span>
             </nav>
 
             <button
               type="button"
               onClick={onCancel}
-              className="text-xs text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition flex items-center space-x-1"
+              className="text-xs font-semibold text-slate-500 hover:text-[#FF6B00] transition flex items-center space-x-1 cursor-pointer"
             >
               <span>← Return to Catalog</span>
             </button>
@@ -433,14 +433,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
           {/* LEFT COLUMN: EXPRESS CHECKOUT + FORM + TRUST GUARANTEES (7 COLS) */}
           <div className="lg:col-span-7 space-y-8">
             {/* 1. EXPRESS CHECKOUT PILL BUTTONS */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-sm space-y-4">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-wider font-bold text-zinc-500 dark:text-zinc-400">
+                <span className="text-xs uppercase tracking-wider font-bold text-slate-500">
                   Express Checkout
                 </span>
-                <span className="text-[11px] text-zinc-400 flex items-center space-x-1">
-                  <Sparkles className="w-3 h-3 text-orange-500" />
-                  <span>1-Click Verification</span>
+                <span className="text-[11px] text-slate-500 flex items-center space-x-1 font-medium">
+                  <Sparkles className="w-3 h-3 text-[#FF6B00]" />
+                  <span>Instant 1-Click Verification</span>
                 </span>
               </div>
 
@@ -450,7 +450,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                 <button
                   type="button"
                   onClick={() => handleTriggerExpress('apple_pay')}
-                  className="h-12 rounded-xl bg-black hover:bg-zinc-800 text-white flex items-center justify-center transition active:scale-[0.98] shadow-sm group cursor-pointer"
+                  className="h-12 rounded-xl bg-black hover:bg-slate-900 text-white flex items-center justify-center transition active:scale-[0.98] shadow-sm cursor-pointer"
                   aria-label="Pay with Apple Pay"
                 >
                   <span className="font-semibold text-sm flex items-center space-x-1">
@@ -463,7 +463,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                 <button
                   type="button"
                   onClick={() => handleTriggerExpress('shop_pay')}
-                  className="h-12 rounded-xl bg-[#5A31F4] hover:bg-[#4b25df] text-white flex items-center justify-center transition active:scale-[0.98] shadow-sm group cursor-pointer"
+                  className="h-12 rounded-xl bg-[#5A31F4] hover:bg-[#4b25df] text-white flex items-center justify-center transition active:scale-[0.98] shadow-sm cursor-pointer"
                   aria-label="Pay with Shop Pay"
                 >
                   <span className="font-bold text-sm tracking-tight italic flex items-center">
@@ -476,7 +476,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                 <button
                   type="button"
                   onClick={() => handleTriggerExpress('paypal')}
-                  className="h-12 rounded-xl bg-[#FFC439] hover:bg-[#f5b82a] text-[#003087] flex items-center justify-center transition active:scale-[0.98] shadow-sm group cursor-pointer"
+                  className="h-12 rounded-xl bg-[#FFC439] hover:bg-[#f5b82a] text-[#003087] flex items-center justify-center transition active:scale-[0.98] shadow-sm cursor-pointer"
                   aria-label="Pay with PayPal"
                 >
                   <span className="font-extrabold text-sm italic tracking-tight text-[#003087]">
@@ -487,85 +487,87 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
 
               {/* Or Divider */}
               <div className="relative flex items-center justify-center pt-2">
-                <div className="w-full border-t border-zinc-200 dark:border-zinc-800" />
-                <span className="absolute px-3 bg-white dark:bg-zinc-900 text-[11px] font-medium text-zinc-400 uppercase tracking-widest">
-                  OR PAY WITH CREDIT CARD
+                <div className="w-full border-t border-slate-200" />
+                <span className="absolute px-3 bg-white text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+                  OR PAY WITH CARD
                 </span>
               </div>
             </div>
 
             {/* 2. SPLIT DELIVERY TIMELINE BREAKDOWN */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-sm space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-orange-500" />
-                  <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+                  <span className="w-2 h-2 rounded-full bg-[#FF6B00]" />
+                  <h2 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
                     Split Delivery Schedule & Routing
                   </h2>
                 </div>
-                <span className="text-[11px] font-mono text-zinc-500">2 PACKAGES SHIP SEPARATELY</span>
+                <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+                  DUAL-STREAM DISPATCH
+                </span>
               </div>
 
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 To guarantee zero wait time for standard items and metrology-grade tolerances for custom pieces, your order is dispatched across two dedicated logistics streams:
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                 {/* PACKAGE 1: HANDCRAFTED TO MEASURE */}
-                <div className="p-4 rounded-xl bg-orange-50/60 dark:bg-orange-950/20 border border-orange-200/80 dark:border-orange-800/50 space-y-2.5">
+                <div className="p-4 rounded-2xl bg-orange-50/50 border border-orange-200/70 space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wide">
+                    <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#FF6B00] uppercase tracking-wide">
                       <Box className="w-3.5 h-3.5" />
-                      <span>Package 1: Handcrafted to Measure</span>
+                      <span>Package 1: Handcrafted</span>
                     </span>
-                    <span className="px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] text-[10px] font-bold">
                       Arrives in 4–5 days
                     </span>
                   </div>
 
-                  <div className="space-y-1 text-xs text-zinc-700 dark:text-zinc-300">
-                    <div className="font-semibold text-zinc-900 dark:text-zinc-100">
+                  <div className="space-y-1 text-xs text-slate-700">
+                    <div className="font-bold text-[#0F172A]">
                       {pkgA.length > 0 ? pkgA[0].product.title : 'Custom Parametric Desk Organizer'}
                     </div>
-                    <div className="text-[11px] text-zinc-500 dark:text-zinc-400 space-y-0.5">
+                    <div className="text-[11px] text-slate-500 space-y-0.5">
                       <div>• Origin: Slant 3D High-Volume Cluster (Boise, ID)</div>
                       <div>• Fabrication: ISO 2768-m Precision Additive Toolpaths</div>
                       <div>• Handling: Sliced, manufactured & cured to order</div>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-orange-200/60 dark:border-orange-800/40 flex items-center justify-between text-[11px] text-orange-700 dark:text-orange-400 font-medium">
+                  <div className="pt-2 border-t border-orange-200/60 flex items-center justify-between text-[11px] text-[#FF6B00] font-medium">
                     <span>Priority Production Dispatch</span>
                     <span className="font-bold">INCLUDED</span>
                   </div>
                 </div>
 
                 {/* PACKAGE 2: IN-STOCK ACCESSORY */}
-                <div className="p-4 rounded-xl bg-sky-50/60 dark:bg-sky-950/20 border border-sky-200/80 dark:border-sky-800/50 space-y-2.5">
+                <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70 space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-sky-700 dark:text-sky-400 uppercase tracking-wide">
-                      <Truck className="w-3.5 h-3.5" />
-                      <span>Package 2: In-Stock Accessory</span>
+                    <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-700 uppercase tracking-wide">
+                      <Truck className="w-3.5 h-3.5 text-slate-600" />
+                      <span>Package 2: In-Stock</span>
                     </span>
-                    <span className="px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-slate-200/80 text-slate-700 text-[10px] font-bold">
                       Arrives in 2–3 days
                     </span>
                   </div>
 
-                  <div className="space-y-1 text-xs text-zinc-700 dark:text-zinc-300">
-                    <div className="font-semibold text-zinc-900 dark:text-zinc-100">
+                  <div className="space-y-1 text-xs text-slate-700">
+                    <div className="font-bold text-[#0F172A]">
                       {pkgB.length > 0 ? pkgB[0].product.title : 'Precision Aluminum Desk ScreenBar'}
                     </div>
-                    <div className="text-[11px] text-zinc-500 dark:text-zinc-400 space-y-0.5">
+                    <div className="text-[11px] text-slate-500 space-y-0.5">
                       <div>• Origin: US Domestic Hub (Salt Lake City, UT)</div>
                       <div>• Courier: USPS Ground Advantage Tracked</div>
                       <div>• Handling: Picked & packed in &lt; 24 hours</div>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-sky-200/60 dark:border-sky-800/40 flex items-center justify-between text-[11px] text-sky-700 dark:text-sky-400 font-medium">
+                  <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between text-[11px] text-slate-700 font-medium">
                     <span>Domestic Courier Tracking</span>
-                    <span className="font-bold">FREE</span>
+                    <span className="font-bold text-emerald-600">FREE</span>
                   </div>
                 </div>
               </div>
@@ -574,17 +576,17 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
             {/* 3. STANDARD CHECKOUT FORM */}
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* CONTACT & SHIPPING DETAILS */}
-              <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-sm space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800">
-                  <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+              <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <h2 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
                     01. Contact & Shipping Address
                   </h2>
-                  <span className="text-xs text-zinc-400">US & International</span>
+                  <span className="text-xs text-slate-400 font-medium">US & International</span>
                 </div>
 
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                    <label className="block text-xs font-bold text-[#0F172A] mb-1">
                       Email Address (for dispatch tracking & spec sheet)
                     </label>
                     <input
@@ -593,22 +595,22 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       placeholder="alexander@example.com"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                     />
-                    <label className="flex items-center space-x-2 mt-2 cursor-pointer text-xs text-zinc-500">
+                    <label className="flex items-center space-x-2 mt-2 cursor-pointer text-xs text-slate-500">
                       <input
                         type="checkbox"
                         checked={emailOffers}
                         onChange={(e) => setEmailOffers(e.target.checked)}
-                        className="rounded border-zinc-300 text-orange-600 focus:ring-orange-500"
+                        className="rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00]"
                       />
                       <span>Email me with manufacturing updates and future release drops</span>
                     </label>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                      <label className="block text-xs font-bold text-[#0F172A] mb-1">
                         Full Recipient Name
                       </label>
                       <input
@@ -616,18 +618,18 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         required
                         value={form.fullName}
                         onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                      <label className="block text-xs font-bold text-[#0F172A] mb-1">
                         Country / Region
                       </label>
                       <select
                         value={form.country}
                         onChange={(e) => setForm({ ...form, country: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                       >
                         <option value="US">United States (Domestic Ground)</option>
                         <option value="CA">Canada (International Tracked)</option>
@@ -639,7 +641,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                    <label className="block text-xs font-bold text-[#0F172A] mb-1">
                       Street Address
                     </label>
                     <input
@@ -648,13 +650,13 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                       value={form.line1}
                       onChange={(e) => setForm({ ...form, line1: e.target.value })}
                       placeholder="123 Industrial Parkway"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                     />
                   </div>
 
                   <div className="grid grid-cols-3 gap-3">
                     <div className="col-span-1">
-                      <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                      <label className="block text-xs font-bold text-[#0F172A] mb-1">
                         City
                       </label>
                       <input
@@ -662,12 +664,12 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         required
                         value={form.city}
                         onChange={(e) => setForm({ ...form, city: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                       />
                     </div>
 
                     <div className="col-span-1">
-                      <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                      <label className="block text-xs font-bold text-[#0F172A] mb-1">
                         State
                       </label>
                       <input
@@ -675,12 +677,12 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         required
                         value={form.state}
                         onChange={(e) => setForm({ ...form, state: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                       />
                     </div>
 
                     <div className="col-span-1">
-                      <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                      <label className="block text-xs font-bold text-[#0F172A] mb-1">
                         ZIP / Postal Code
                       </label>
                       <input
@@ -688,7 +690,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         required
                         value={form.postalCode}
                         onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                       />
                     </div>
                   </div>
@@ -696,21 +698,21 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               </div>
 
               {/* PAYMENT INFORMATION */}
-              <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-sm space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800">
+              <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div className="flex items-center space-x-2">
-                    <CreditCard className="w-4 h-4 text-orange-600" />
-                    <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900 dark:text-white">
+                    <CreditCard className="w-4 h-4 text-[#FF6B00]" />
+                    <h2 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
                       02. Payment Method
                     </h2>
                   </div>
-                  <span className="text-xs text-zinc-500 flex items-center space-x-1">
+                  <span className="text-xs text-slate-500 flex items-center space-x-1 font-medium">
                     <Lock className="w-3 h-3 text-emerald-600" />
                     <span>Encrypted & Verified</span>
                   </span>
                 </div>
 
-                <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-700/80 bg-zinc-50/70 dark:bg-zinc-800/40 space-y-3">
+                <div className="p-4 rounded-2xl border border-slate-200/80 bg-[#FAFAF9] space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <input
@@ -718,20 +720,20 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         id="payment-card"
                         name="payment-type"
                         defaultChecked
-                        className="text-orange-600 focus:ring-orange-500"
+                        className="text-[#FF6B00] focus:ring-[#FF6B00]"
                       />
-                      <label htmlFor="payment-card" className="text-xs font-bold text-zinc-900 dark:text-white">
+                      <label htmlFor="payment-card" className="text-xs font-bold text-[#0F172A]">
                         Credit / Debit Card
                       </label>
                     </div>
-                    <div className="flex space-x-1.5 opacity-80 text-[10px] font-mono font-bold text-zinc-600 dark:text-zinc-400">
-                      <span className="px-1.5 py-0.5 rounded bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700">
+                    <div className="flex space-x-1.5 opacity-90 text-[10px] font-mono font-bold text-slate-600">
+                      <span className="px-1.5 py-0.5 rounded bg-white border border-slate-200">
                         VISA
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700">
+                      <span className="px-1.5 py-0.5 rounded bg-white border border-slate-200">
                         MC
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700">
+                      <span className="px-1.5 py-0.5 rounded bg-white border border-slate-200">
                         AMEX
                       </span>
                     </div>
@@ -745,7 +747,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         value={cardNumber}
                         onChange={handleCardNumberChange}
                         maxLength={19}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 font-mono transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] font-mono transition"
                       />
                     </div>
 
@@ -757,7 +759,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                           value={cardExp}
                           onChange={handleExpChange}
                           maxLength={5}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 font-mono transition"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] font-mono transition"
                         />
                       </div>
                       <div>
@@ -767,7 +769,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                           value={cardCvc}
                           onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, '').substring(0, 4))}
                           maxLength={4}
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 font-mono transition"
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] font-mono transition"
                         />
                       </div>
                     </div>
@@ -778,19 +780,19 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         placeholder="Name on Card"
                         value={cardName}
                         onChange={(e) => setCardName(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] transition"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-zinc-500 pt-1">
-                  <label className="flex items-center space-x-2 cursor-pointer">
+                <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
+                  <label className="flex items-center space-x-2 cursor-pointer font-medium">
                     <input
                       type="checkbox"
                       checked={saveInfo}
                       onChange={(e) => setSaveInfo(e.target.checked)}
-                      className="rounded border-zinc-300 text-orange-600 focus:ring-orange-500"
+                      className="rounded border-slate-300 text-[#FF6B00] focus:ring-[#FF6B00]"
                     />
                     <span>Save my information for 1-click checkout in the future</span>
                   </label>
@@ -798,17 +800,17 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               </div>
 
               {errorMessage && (
-                <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-xs text-red-600 dark:text-red-400 flex items-center space-x-2">
+                <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-600 flex items-center space-x-2">
                   <Info className="w-4 h-4 flex-shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
               )}
 
-              {/* SUBMIT BUTTON */}
+              {/* ELECTRIC ORANGE SUBMIT BUTTON */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 px-6 rounded-xl bg-orange-600 hover:bg-orange-700 active:scale-[0.99] text-white font-bold text-sm tracking-wide flex items-center justify-center space-x-2 shadow-lg shadow-orange-500/20 transition cursor-pointer disabled:opacity-60"
+                className="w-full py-4 px-6 rounded-2xl bg-[#FF6B00] hover:bg-[#FF7A00] active:scale-[0.99] text-white font-bold text-sm tracking-wide flex items-center justify-center space-x-2 shadow-[0_10px_25px_-5px_rgba(255,107,0,0.35)] transition cursor-pointer disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
@@ -828,46 +830,46 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
             {/* 4. PROMINENT CONSUMER TRUST GUARANTEES */}
             <div className="pt-2">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {/* Guarantee 1: Wavezly 100% Fit Guarantee */}
-                <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-950/50 flex items-center justify-center text-orange-600 dark:text-orange-400">
+                {/* Guarantee 1: 100% Snug Fit Guarantee */}
+                <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-orange-50 flex items-center justify-center text-[#FF6B00]">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-zinc-900 dark:text-white">
-                      Wavezly 100% Fit Guarantee
+                    <h3 className="text-xs font-bold text-[#0F172A]">
+                      100% Snug Fit Guarantee
                     </h3>
-                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug mt-0.5">
-                      Fits your drawer or 100% money back. Guaranteed ±0.2mm tolerance.
+                    <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                      Fits your drawer perfectly or 100% refund. Guaranteed ±0.2mm precision.
                     </p>
                   </div>
                 </div>
 
                 {/* Guarantee 2: 30-Day Free Returns */}
-                <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
                     <RotateCcw className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-zinc-900 dark:text-white">
+                    <h3 className="text-xs font-bold text-[#0F172A]">
                       30-Day Free Returns
                     </h3>
-                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug mt-0.5">
-                      Prepaid return labels on all standard domestic items. Zero questions asked.
+                    <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                      Prepaid return labels on all domestic items. Zero questions asked.
                     </p>
                   </div>
                 </div>
 
                 {/* Guarantee 3: Fast Domestic Shipping */}
-                <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400">
+                <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-2">
+                  <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
                     <Truck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-zinc-900 dark:text-white">
+                    <h3 className="text-xs font-bold text-[#0F172A]">
                       Fast Domestic Shipping
                     </h3>
-                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug mt-0.5">
+                    <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
                       Dispatched in &lt;24h with tracked domestic carrier delivery.
                     </p>
                   </div>
@@ -878,16 +880,16 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
 
           {/* RIGHT COLUMN: STICKY ORDER SUMMARY (SHOPIFY PLUS STYLE - 5 COLS) */}
           <div className="lg:col-span-5 sticky top-20 space-y-4">
-            <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 shadow-sm space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800">
-                <span className="text-xs uppercase tracking-wider font-bold text-zinc-900 dark:text-white">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-5">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <span className="text-xs uppercase tracking-wider font-bold text-[#0F172A]">
                   Order Summary ({items.length} {items.length === 1 ? 'item' : 'items'})
                 </span>
                 {items.length === 0 && (
                   <button
                     type="button"
                     onClick={handleLoadDemoCart}
-                    className="text-xs text-orange-600 hover:underline font-semibold cursor-pointer"
+                    className="text-xs text-[#FF6B00] hover:underline font-bold cursor-pointer"
                   >
                     + Load Sample Setup
                   </button>
@@ -897,26 +899,26 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               {/* Items List */}
               {items.length === 0 ? (
                 <div className="py-8 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto text-zinc-400">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
                     <ShoppingBag className="w-6 h-6" />
                   </div>
-                  <p className="text-xs text-zinc-500">Your cart currently has no items.</p>
+                  <p className="text-xs text-slate-500">Your cart currently has no items.</p>
                   <button
                     type="button"
                     onClick={handleLoadDemoCart}
-                    className="px-4 py-2 rounded-lg bg-orange-600 text-white text-xs font-semibold hover:bg-orange-700 transition cursor-pointer"
+                    className="px-4 py-2.5 rounded-xl bg-[#FF6B00] text-white text-xs font-bold hover:bg-[#FF7A00] transition cursor-pointer shadow-sm"
                   >
                     Add Sample Custom Organizer & ScreenBar
                   </button>
                 </div>
               ) : (
-                <div className="space-y-3 max-h-80 overflow-y-auto pr-1 divide-y divide-zinc-100 dark:divide-zinc-800/80">
+                <div className="space-y-3 max-h-80 overflow-y-auto pr-1 divide-y divide-slate-100">
                   {items.map((i) => {
                     const isCustom = i.product.type === 'custom_3d';
                     const specs = i.customSpecs?.dimensions;
                     return (
                       <div key={i.cartItemId} className="pt-3 first:pt-0 flex items-center justify-between gap-3">
-                        <div className="relative w-14 h-14 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                        <div className="relative w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200/80 flex-shrink-0 flex items-center justify-center overflow-hidden">
                           {i.product.images && i.product.images[0] ? (
                             <img
                               src={i.product.images[0]}
@@ -924,28 +926,28 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <Box className="w-6 h-6 text-zinc-400" />
+                            <Box className="w-6 h-6 text-slate-400" />
                           )}
-                          {/* Shopify style quantity badge */}
-                          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-zinc-700 text-white text-[10px] font-bold flex items-center justify-center">
+                          {/* DTC quantity badge */}
+                          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#0F172A] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
                             {i.quantity}
                           </span>
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">
+                          <h4 className="text-xs font-bold text-[#0F172A] truncate">
                             {i.product.title}
                           </h4>
-                          <p className="text-[11px] text-zinc-500 truncate">
+                          <p className="text-[11px] text-slate-500 truncate">
                             {isCustom && specs
                               ? `${specs.length}×${specs.width}×${specs.height}mm • ${i.customSpecs?.material.name || 'Matte PLA'}`
                               : 'US Domestic Fast-Ship Item'}
                           </p>
                           <span
-                            className={`inline-block mt-0.5 text-[9px] px-1.5 py-0.2 rounded font-bold uppercase ${
+                            className={`inline-block mt-0.5 text-[9px] px-1.5 py-0.2 rounded-md font-bold uppercase ${
                               isCustom
-                                ? 'bg-orange-100 dark:bg-orange-950/50 text-orange-700 dark:text-orange-400'
-                                : 'bg-sky-100 dark:bg-sky-950/50 text-sky-700 dark:text-sky-400'
+                                ? 'bg-orange-50 text-[#FF6B00] border border-orange-100'
+                                : 'bg-slate-100 text-slate-700 border border-slate-200'
                             }`}
                           >
                             {isCustom ? 'Package 1 (Farm)' : 'Package 2 (Domestic)'}
@@ -953,7 +955,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         </div>
 
                         <div className="text-right flex-shrink-0">
-                          <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
+                          <span className="text-xs font-extrabold text-[#0F172A]">
                             ${(i.calculatedPrice * i.quantity).toFixed(2)}
                           </span>
                         </div>
@@ -964,18 +966,18 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               )}
 
               {/* DISCOUNT CODE INPUT */}
-              <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800">
+              <div className="pt-2 border-t border-slate-100">
                 {appliedDiscount ? (
-                  <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-300">
+                  <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
                     <div className="flex items-center space-x-1.5">
-                      <Tag className="w-3.5 h-3.5" />
+                      <Tag className="w-3.5 h-3.5 text-emerald-600" />
                       <span className="font-bold">{appliedDiscount.code}</span>
-                      <span className="text-[11px]">({appliedDiscount.percent}% OFF)</span>
+                      <span className="text-[11px] font-semibold text-emerald-600">({appliedDiscount.percent}% OFF)</span>
                     </div>
                     <button
                       type="button"
                       onClick={removeDiscount}
-                      className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition cursor-pointer"
+                      className="text-slate-400 hover:text-slate-600 transition cursor-pointer"
                       aria-label="Remove code"
                     >
                       <X className="w-3.5 h-3.5" />
@@ -989,87 +991,91 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                         placeholder="Discount code (e.g. DRAWERFIT)"
                         value={discountInput}
                         onChange={(e) => setDiscountInput(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs focus:outline-none focus:ring-1 focus:ring-orange-500 uppercase font-mono"
+                        className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs text-[#0F172A] focus:outline-none focus:ring-1 focus:ring-[#FF6B00] uppercase font-mono"
                       />
                     </div>
                     <button
                       type="submit"
-                      className="px-3.5 py-2 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition cursor-pointer"
+                      className="px-3.5 py-2 rounded-xl bg-[#0F172A] text-white text-xs font-bold hover:bg-slate-800 transition cursor-pointer"
                     >
                       Apply
                     </button>
                   </form>
                 )}
                 {discountError && (
-                  <p className="text-[11px] text-red-500 mt-1">{discountError}</p>
+                  <p className="text-[11px] text-red-500 mt-1 font-medium">{discountError}</p>
                 )}
               </div>
 
               {/* FINANCIALS BREAKDOWN */}
-              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-2 text-xs">
-                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
+              <div className="pt-3 border-t border-slate-100 space-y-2 text-xs">
+                <div className="flex justify-between text-slate-600">
                   <span>Subtotal</span>
-                  <span className="font-medium text-zinc-900 dark:text-zinc-100">
+                  <span className="font-semibold text-[#0F172A]">
                     ${baseSubtotal.toFixed(2)}
                   </span>
                 </div>
 
                 {appliedDiscount && (
-                  <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-medium">
+                  <div className="flex justify-between text-emerald-600 font-semibold">
                     <span>Discount ({appliedDiscount.code})</span>
                     <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
 
-                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
+                <div className="flex justify-between text-slate-600">
                   <div className="flex items-center space-x-1">
                     <span>Package 1 Handcrafted Delivery</span>
-                    <span className="text-[10px] text-zinc-400">(4–5 Days)</span>
+                    <span className="text-[10px] text-slate-400">(4–5 Days)</span>
                   </div>
-                  <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                  <span className="font-semibold text-emerald-600">
                     FREE
                   </span>
                 </div>
 
-                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
+                <div className="flex justify-between text-slate-600">
                   <div className="flex items-center space-x-1">
                     <span>Package 2 Domestic Delivery</span>
-                    <span className="text-[10px] text-zinc-400">(2–3 Days)</span>
+                    <span className="text-[10px] text-slate-400">(2–3 Days)</span>
                   </div>
-                  <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                  <span className="font-semibold text-emerald-600">
                     FREE
                   </span>
                 </div>
 
-                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
+                <div className="flex justify-between text-slate-600">
                   <span>Estimated Taxes</span>
-                  <span className="text-zinc-400">Calculated at dispatch</span>
+                  <span className="text-slate-400">Calculated at dispatch</span>
                 </div>
 
-                <div className="pt-3 border-t border-zinc-200 dark:border-zinc-700 flex justify-between items-baseline">
+                <div className="pt-3 border-t border-slate-200 flex justify-between items-baseline">
                   <div>
-                    <span className="text-sm font-bold text-zinc-900 dark:text-white">
+                    <span className="text-sm font-bold text-[#0F172A]">
                       Total
                     </span>
-                    <span className="text-[10px] text-zinc-400 ml-1.5 uppercase">USD</span>
+                    <span className="text-[10px] text-slate-400 ml-1.5 uppercase font-medium">USD</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-2xl font-extrabold text-orange-600 dark:text-orange-400 font-sans tracking-tight">
+                    <span className="text-2xl font-black text-[#FF6B00] font-sans tracking-tight">
                       ${finalTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* SECURITY & GUARANTEE CALLOUT UNDER SUMMARY */}
-              <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/80 dark:border-zinc-700/60 space-y-1.5 text-[11px] text-zinc-500">
-                <div className="flex items-center space-x-1.5 text-zinc-900 dark:text-zinc-200 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Backed by Wavezly 100% Fit Guarantee</span>
+              {/* 100% SNUG FIT GUARANTEE BADGE */}
+              <div className="p-4 rounded-2xl bg-[#FAFAF9] border border-orange-200/60 space-y-2">
+                <div className="flex items-center space-x-2 text-[#0F172A]">
+                  <BadgeCheck className="w-5 h-5 text-[#FF6B00] flex-shrink-0" />
+                  <span className="text-xs font-bold tracking-tight">Wavezly 100% Snug Fit Guarantee</span>
                 </div>
-                <p className="leading-snug">
-                  Every order includes the printable ISO 2768-m Guaranteed Fit Certificate & Spec Sheet directly after checkout.
+                <p className="text-[11px] text-slate-600 leading-snug">
+                  Precision engineered to within ±0.2mm tolerance. If your bespoke insert doesn't slide into your drawer with a satisfying snug fit, we'll recraft it at zero cost or refund 100%.
                 </p>
+                <div className="pt-1 flex items-center space-x-1.5 text-[10px] text-slate-500 font-mono font-medium">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  <span>ISO 2768-m Spec Sheet & Inspection Certificate included</span>
+                </div>
               </div>
             </div>
           </div>
