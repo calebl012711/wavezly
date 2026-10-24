@@ -169,7 +169,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-brand-dark selection:bg-brand-orange selection:text-white antialiased transition-colors font-sans">
+    <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-brand-dark selection:bg-brand-orange selection:text-white antialiased transition-colors font-sans overflow-x-hidden w-full">
       {/* Schema.org In-DOM JSON-LD Script Tag */}
       <script
         id="wavezly-schema-vdom"
