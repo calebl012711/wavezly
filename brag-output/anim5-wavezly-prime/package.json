@@ -1,0 +1,9 @@
+{
+  "name": "anim5-wavezly-prime",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "hyperframes check",
+    "render": "hyperframes render"
+  }
+}

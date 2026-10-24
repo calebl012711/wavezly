@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'Inter', sans-serif;">
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="grid-controller-dock-lifestyle" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#18181b" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#27272a"/>
+    </pattern>
+    <!-- Radial Spotlight -->
+    <radialGradient id="spot-controller-dock-lifestyle" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#1f1f23" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="1"/>
+    </radialGradient>
+    <!-- Linear Product Gradient -->
+    <linearGradient id="bodyGrad-controller-dock" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c2c31"/>
+      <stop offset="50%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <filter id="shadow-controller-dock" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="25" stdDeviation="25" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="900" fill="url(#spot-controller-dock-lifestyle)"/>
+  <rect width="1200" height="900" fill="url(#grid-controller-dock-lifestyle)"/>
+
+  <!-- Technical Frame & Crop Marks -->
+  <g stroke="#3f3f46" stroke-width="1" opacity="0.6">
+    <path d="M 40 60 L 40 40 L 60 40"/>
+    <path d="M 1160 60 L 1160 40 L 1140 40"/>
+    <path d="M 40 840 L 40 860 L 60 860"/>
+    <path d="M 1160 840 L 1160 860 L 1140 860"/>
+    <line x1="600" y1="40" x2="600" y2="55" stroke-dasharray="3,3"/>
+    <line x1="600" y1="845" x2="600" y2="860" stroke-dasharray="3,3"/>
+    <line x1="40" y1="450" x2="55" y2="450" stroke-dasharray="3,3"/>
+    <line x1="1145" y1="450" x2="1160" y2="450" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- Header Telemetry Readouts -->
+  <text x="60" y="70" fill="#8b5cf6" font-size="12" font-weight="700" letter-spacing="2">SNUGDESK // GAMING & MEDIA SANCTUARY</text>
+  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SKU: SD-CONTROLLER-DOCK</text>
+  <line x1="60" y1="85" x2="1140" y2="85" stroke="#27272a" stroke-width="1"/>
+
+  <!-- Product Name Banner -->
+  <text x="60" y="125" fill="#f4f4f5" font-size="24" font-weight="800" font-family="'Space Grotesk', sans-serif" letter-spacing="-0.5">DUAL CONTROLLER & REMOTE PLINTH</text>
+  <text x="60" y="148" fill="#a1a1aa" font-size="12" letter-spacing="1">05 // IN-SITU DESK SETUP</text>
+
+  <!-- ================= VARIANT GRAPHICS ================= -->
+  
+      <!-- In-Situ Modern Industrial Desk Setup Context -->
+      <g transform="translate(600, 480)">
+        <!-- Minimal Desk Mat Surface -->
+        <rect x="-420" y="-190" width="840" height="380" rx="16" fill="#18181b" stroke="#27272a" stroke-width="2"/>
+
+        <!-- Product Sitting on Desk Mat -->
+        <g transform="translate(-120, -10)" filter="url(#shadow-controller-dock)">
+          <rect x="-160" y="-110" width="320" height="220" rx="12" fill="#222226" stroke="#3f3f46" stroke-width="2"/>
+          <rect x="-140" y="-90" width="130" height="90" rx="6" fill="#09090b" stroke="#8b5cf6" stroke-width="1"/>
+          <rect x="10" y="-90" width="130" height="90" rx="6" fill="#09090b" stroke="#3f3f46" stroke-width="1"/>
+          <rect x="-140" y="20" width="280" height="70" rx="6" fill="#09090b" stroke="#3f3f46" stroke-width="1"/>
+        </g>
+
+        <!-- Mechanical Keyboard Accompaniment -->
+        <g transform="translate(220, -10)" opacity="0.45">
+          <rect x="-140" y="-120" width="280" height="240" rx="10" fill="#121214" stroke="#27272a" stroke-width="1.5"/>
+          <rect x="-120" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-85" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-50" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-15" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="20" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="55" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="90" y="-100" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-120" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-85" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-50" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-15" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="20" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="55" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="90" y="-65" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-120" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-85" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-50" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-15" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="20" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="55" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="90" y="-30" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-120" y="5" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-85" y="5" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-50" y="5" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="-15" y="5" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="20" y="5" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="55" y="5" width="28" height="28" rx="4" fill="#1f1f23"/><rect x="90" y="5" width="28" height="28" rx="4" fill="#1f1f23"/>
+        </g>
+
+        <!-- Brass Pen / Accessory -->
+        <line x1="-240" y1="45" x2="-20" y2="45" stroke="#f59e0b" stroke-width="5" stroke-linecap="round"/>
+
+        <!-- Context Stamp -->
+        <text x="380" y="160" text-anchor="end" fill="#52525b" font-size="10">STUDIO DESK CURATION // SNUGDESK</text>
+      </g>
+      
+
+  <!-- Footer Specs & Telemetry -->
+  <line x1="60" y1="810" x2="1140" y2="810" stroke="#27272a" stroke-width="1"/>
+  <g fill="#71717a" font-size="11">
+    <text x="60" y="835">MATERIAL: <tspan fill="#f4f4f5">HEAVY DAMPED BIOPOLYMER</tspan></text>
+    <text x="500" y="835">DIMENSIONS: <tspan fill="#f4f4f5">210 × 140 × 65 MM</tspan></text>
+    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="#8b5cf6">CUSTOM MADE ON DEMAND (2–4 DAYS)</tspan></text>
+  </g>
+</svg>

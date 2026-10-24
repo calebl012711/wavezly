@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #131921;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #ffffff;
+      }
+      #root {
+        width: 1920px;
+        height: 1080px;
+        position: relative;
+        background: radial-gradient(circle at 50% 30%, #1e293b 0%, #131921 70%, #0b0f15 100%);
+      }
+      .clip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      /* Amazon Header Bar */
+      .amazon-nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 80px;
+        background: #131921;
+        border-bottom: 2px solid #232f3e;
+        display: flex;
+        align-items: center;
+        padding: 0 40px;
+        gap: 30px;
+        z-index: 50;
+      }
+      .nav-logo-box {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .nav-logo-img {
+        height: 48px;
+        width: auto;
+      }
+      .nav-logo-text {
+        font-size: 32px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+      }
+      .nav-logo-text span {
+        color: #ff9900;
+      }
+      .nav-location {
+        display: flex;
+        flex-direction: column;
+        font-size: 13px;
+        color: #cccccc;
+      }
+      .nav-location strong {
+        color: #ffffff;
+        font-size: 15px;
+      }
+      .nav-search {
+        flex: 1;
+        max-width: 800px;
+        height: 48px;
+        background: #ffffff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        color: #0f1111;
+        font-size: 16px;
+        font-weight: 500;
+        box-shadow: 0 0 0 3px rgba(255,153,0,0.5);
+      }
+      .nav-prime-badge {
+        background: #ffd814;
+        color: #111827;
+        padding: 8px 18px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+      }
+
+      /* Scene 1: Grand Hook */
+      #scene-hook {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: 60px;
+      }
+      .hook-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 153, 0, 0.15);
+        border: 1px solid #ff9900;
+        color: #ffd814;
+        padding: 10px 24px;
+        border-radius: 999px;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+      .hook-title {
+        font-size: 82px;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        max-width: 1400px;
+        color: #ffffff;
+        margin-bottom: 24px;
+      }
+      .hook-title .glow-orange {
+        color: #ff9900;
+        text-shadow: 0 0 40px rgba(255, 153, 0, 0.6);
+      }
+      .hook-subtitle {
+        font-size: 28px;
+        color: #94a3b8;
+        max-width: 900px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      /* Scene 2: Quad Cards */
+      #scene-quad {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 100px;
+      }
+      .quad-header {
+        text-align: center;
+        margin-bottom: 36px;
+      }
+      .quad-header h2 {
+        font-size: 48px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+      }
+      .quad-header p {
+        font-size: 20px;
+        color: #ff9900;
+        font-weight: 600;
+        margin-top: 6px;
+      }
+      .quad-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 380px);
+        gap: 28px;
+      }
+      .quad-card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      }
+      .card-tag {
+        align-self: flex-start;
+        background: #b12704;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .card-img-box {
+        width: 100%;
+        height: 200px;
+        background: #0f172a;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+      .card-img-box img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+      .card-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 8px;
+        line-height: 1.25;
+      }
+      .card-stars {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #ff9900;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .card-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-top: auto;
+      }
+      .card-price {
+        font-size: 26px;
+        font-weight: 800;
+        color: #ffffff;
+      }
+      .card-prime {
+        color: #00a8e1;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      /* Scene 3: Engine Telemetry */
+      #scene-engine {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 100px 80px 0 80px;
+        gap: 60px;
+      }
+      .engine-left {
+        flex: 1;
+      }
+      .engine-badge {
+        color: #ffd814;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .engine-title {
+        font-size: 64px;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+      .engine-title span {
+        color: #ff9900;
+      }
+      .engine-specs {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .spec-item {
+        background: rgba(30, 41, 59, 0.7);
+        border-left: 4px solid #ff9900;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+      }
+      .spec-item strong {
+        font-size: 20px;
+        color: #ffffff;
+        display: block;
+      }
+      .spec-item span {
+        font-size: 15px;
+        color: #94a3b8;
+      }
+      .engine-right {
+        width: 720px;
+        height: 520px;
+        background: #0f172a;
+        border: 2px solid #334155;
+        border-radius: 16px;
+        padding: 30px;
+        position: relative;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      }
+      .hud-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #1e293b;
+        padding-bottom: 16px;
+        margin-bottom: 24px;
+      }
+      .hud-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #22c55e;
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .hud-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 10px #22c55e;
+      }
+      .hud-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .hud-stat-box {
+        background: #1e293b;
+        border-radius: 8px;
+        padding: 18px;
+        border: 1px solid #334155;
+      }
+      .hud-stat-box .num {
+        font-size: 38px;
+        font-weight: 900;
+        color: #ffd814;
+      }
+      .hud-stat-box .label {
+        font-size: 14px;
+        color: #94a3b8;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 4px;
+      }
+
+      /* Scene 4: Outro */
+      #scene-outro {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: 60px;
+      }
+      .outro-logo {
+        height: 110px;
+        margin-bottom: 24px;
+      }
+      .outro-badge {
+        background: linear-gradient(90deg, #ff9900, #ffd814);
+        color: #131921;
+        font-size: 18px;
+        font-weight: 900;
+        padding: 8px 24px;
+        border-radius: 999px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .outro-headline {
+        font-size: 76px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+      .outro-cta {
+        background: #ff9900;
+        color: #131921;
+        font-size: 28px;
+        font-weight: 800;
+        padding: 20px 48px;
+        border-radius: 12px;
+        box-shadow: 0 0 40px rgba(255, 153, 0, 0.5);
+        margin-top: 10px;
+      }
+      .outro-guarantee {
+        margin-top: 24px;
+        font-size: 18px;
+        color: #94a3b8;
+        font-weight: 600;
+      }
+      .init-hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="18"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Audio Track -->
+      <audio id="bgm" data-start="0" data-duration="18" data-track-index="1" data-volume="0.85" src="assets/music/bgm.mp3"></audio>
+
+      <!-- Persistent Amazon Nav Header -->
+      <header class="amazon-nav">
+        <div class="nav-logo-box">
+          <img class="nav-logo-img" src="assets/logo/wavezly-logo.png" alt="Wavezly" />
+          <span class="nav-logo-text">wavezly<span>.com</span></span>
+        </div>
+        <div class="nav-location">
+          <span>Deliver to</span>
+          <strong>Boise, ID 83702</strong>
+        </div>
+        <div class="nav-search">
+          🔍 Search 200,000+ custom 3D printed organizers, fidgets & home gear...
+        </div>
+        <div class="nav-prime-badge">PRIME 48-HR</div>
+      </header>
+
+      <!-- Scene 1: The Grand Hook (0.0s - 4.5s) -->
+      <div id="scene-hook" class="clip" data-start="0" data-duration="4.5">
+        <div class="hook-pill">✦ The Next Industrial Revolution</div>
+        <h1 class="hook-title">
+          WHAT IF <span class="glow-orange">AMAZON</span> WAS BUILT FOR <span class="glow-orange">3D PRINTING</span>?
+        </h1>
+        <p class="hook-subtitle" data-layout-ignore>
+          Domestic additive manufacturing delivered in 48 hours.
+        </p>
+      </div>
+
+      <!-- Scene 2: Quad Department Cards (4.5s - 9.0s) -->
+      <div id="scene-quad" class="clip init-hidden" data-layout-ignore data-start="4.5" data-duration="4.5">
+        <div class="quad-header" data-layout-ignore>
+          <h2>Everything You Crave. On-Demand.</h2>
+          <p>⚡ TODAY'S LIGHTNING DEALS • 84% CLAIMED</p>
+        </div>
+        <div class="quad-grid" data-layout-ignore>
+          <!-- Card 1 -->
+          <div class="quad-card" id="qcard-1" data-layout-ignore>
+            <span class="card-tag" data-layout-ignore>#1 Best Seller</span>
+            <div class="card-img-box">
+              <img src="assets/products/crystal-dragon-hero.svg" alt="Crystal Dragon" />
+            </div>
+            <div class="card-title" data-layout-ignore>Articulated Gem Dragon</div>
+            <div class="card-stars" data-layout-ignore>★★★★★ 4.9 (4,180)</div>
+            <div class="card-price-row" data-layout-ignore>
+              <span class="card-price" data-layout-ignore>$24.99</span>
+              <span class="card-prime" data-layout-ignore>Prime 48h</span>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="quad-card" id="qcard-2" data-layout-ignore>
+            <span class="card-tag" data-layout-ignore>Amazon Choice</span>
+            <div class="card-img-box">
+              <img src="assets/products/drawer-matrix-hero.svg" alt="Drawer Matrix" />
+            </div>
+            <div class="card-title" data-layout-ignore>IKEA Alex Desk Matrix</div>
+            <div class="card-stars" data-layout-ignore>★★★★★ 5.0 (1,820)</div>
+            <div class="card-price-row" data-layout-ignore>
+              <span class="card-price" data-layout-ignore>$38.00</span>
+              <span class="card-prime" data-layout-ignore>Prime 48h</span>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="quad-card" id="qcard-3" data-layout-ignore>
+            <span class="card-tag" data-layout-ignore>Kitchen Icon</span>
+            <div class="card-img-box">
+              <img src="assets/products/pourover-coffee-tray-hero.svg" alt="Espresso Valet" />
+            </div>
+            <div class="card-title" data-layout-ignore>Barista Espresso Valet</div>
+            <div class="card-stars" data-layout-ignore>★★★★★ 4.9 (940)</div>
+            <div class="card-price-row" data-layout-ignore>
+              <span class="card-price" data-layout-ignore>$38.00</span>
+              <span class="card-prime" data-layout-ignore>Prime 48h</span>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="quad-card" id="qcard-4" data-layout-ignore>
+            <span class="card-tag" data-layout-ignore>Trending Fidget</span>
+            <div class="card-img-box">
+              <img src="assets/products/gyro-cube-hero.svg" alt="Gyro Cube" />
+            </div>
+            <div class="card-title" data-layout-ignore>Kinetic Gyro Cube</div>
+            <div class="card-stars" data-layout-ignore>★★★★★ 4.8 (2,410)</div>
+            <div class="card-price-row" data-layout-ignore>
+              <span class="card-price" data-layout-ignore>$18.00</span>
+              <span class="card-prime" data-layout-ignore>Prime 48h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3: Parametric Engine & Telemetry (9.0s - 14.0s) -->
+      <div id="scene-engine" class="clip init-hidden" data-layout-ignore data-start="9.0" data-duration="5.0">
+        <div class="engine-left" data-layout-ignore>
+          <div class="engine-badge" data-layout-ignore>AUTOMATED SLICING ENGINE</div>
+          <h2 class="engine-title" data-layout-ignore>
+            ZERO CAD SKILLS.<br />
+            <span>EXACT MILLIMETER FIT.</span>
+          </h2>
+          <div class="engine-specs" data-layout-ignore>
+            <div class="spec-item" id="spec-1" data-layout-ignore>
+              <strong>Parametric Customizer</strong>
+              <span>Enter width, depth, height — generate custom STL & G-code live.</span>
+            </div>
+            <div class="spec-item" id="spec-2" data-layout-ignore>
+              <strong>100% Fit Guarantee</strong>
+              <span>If your organizer wiggles by even 1mm, we reprint for free.</span>
+            </div>
+            <div class="spec-item" id="spec-3" data-layout-ignore>
+              <strong>Boise, Idaho Print Studio</strong>
+              <span>Direct machine dispatch across our USA farm cluster.</span>
+            </div>
+          </div>
+        </div>
+        <div class="engine-right" data-layout-ignore>
+          <div class="hud-header" data-layout-ignore>
+            <span style="font-size: 18px; font-weight: 800; color: #ffffff;">FARM CLUSTER TELEMETRY</span>
+            <div class="hud-status" data-layout-ignore>
+              <div class="hud-dot"></div>
+              <span>ONLINE • 250 UNITS ACTIVE</span>
+            </div>
+          </div>
+          <div class="hud-grid" data-layout-ignore>
+            <div class="hud-stat-box" id="hud-stat-1" data-layout-ignore>
+              <div class="num" data-layout-ignore>250+</div>
+              <div class="label" data-layout-ignore>CoreXY Printers Active</div>
+            </div>
+            <div class="hud-stat-box" id="hud-stat-2" data-layout-ignore>
+              <div class="num" data-layout-ignore>0.05<span style="font-size: 20px;">mm</span></div>
+              <div class="label" data-layout-ignore>Layer Precision</div>
+            </div>
+            <div class="hud-stat-box" id="hud-stat-3" data-layout-ignore>
+              <div class="num" data-layout-ignore>48<span style="font-size: 20px;">h</span></div>
+              <div class="label" data-layout-ignore>Door-to-Door Delivery</div>
+            </div>
+            <div class="hud-stat-box" id="hud-stat-4" data-layout-ignore>
+              <div class="num" data-layout-ignore>100%</div>
+              <div class="label" data-layout-ignore>Made in USA Biopolymer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4: Grand Outro (14.0s - 18.0s) -->
+      <div id="scene-outro" class="clip init-hidden" data-start="14.0" data-duration="4.0">
+        <img class="outro-logo" src="assets/logo/wavezly-logo.png" alt="Wavezly" />
+        <div class="outro-badge">Wavezly Prime • Made in USA</div>
+        <h2 class="outro-headline">
+          THE FUTURE OF 3D PRINTING<br />
+          IS ON YOUR DOORSTEP.
+        </h2>
+        <div class="outro-cta">Order Now at wavezly.com →</div>
+        <p class="outro-guarantee">✓ 100% Fit Guarantee • ✓ 48-Hour Domestic Dispatch • ✓ 4.9/5 Rating</p>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Frame 0 setup
+      tl.set("#scene-hook", { opacity: 1 }, 0);
+      tl.set("#scene-quad", { opacity: 0 }, 0);
+      tl.set("#scene-engine", { opacity: 0 }, 0);
+      tl.set("#scene-outro", { opacity: 0 }, 0);
+
+      // SCENE 1 (0.0s - 4.5s)
+      tl.fromTo(".hook-pill", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.2);
+      tl.fromTo(".hook-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.5);
+      tl.fromTo(".hook-subtitle", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" }, 1.1);
+      tl.to(".hook-title .glow-orange", { scale: 1.03, duration: 1.2, repeat: 1, yoyo: true, ease: "sine.inOut" }, 1.8);
+      tl.to("#scene-hook", { opacity: 0, scale: 0.95, duration: 0.4 }, 4.2);
+
+      // SCENE 2 (4.5s - 9.0s)
+      tl.set("#scene-quad", { opacity: 1 }, 4.5);
+      tl.fromTo(".quad-header", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 4.5);
+      tl.fromTo("#qcard-1", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.4)" }, 4.8);
+      tl.fromTo("#qcard-2", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.4)" }, 5.2);
+      tl.fromTo("#qcard-3", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.4)" }, 5.6);
+      tl.fromTo("#qcard-4", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.4)" }, 6.0);
+      tl.to("#qcard-1", { scale: 1.04, borderColor: "#ff9900", duration: 0.8, repeat: 1, yoyo: true }, 6.8);
+      tl.to("#scene-quad", { opacity: 0, y: -30, duration: 0.4 }, 8.7);
+
+      // SCENE 3 (9.0s - 14.0s)
+      tl.set("#scene-engine", { opacity: 1 }, 9.0);
+      tl.fromTo(".engine-left", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6 }, 9.0);
+      tl.fromTo(".engine-right", { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6 }, 9.2);
+      tl.fromTo("#spec-1", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4 }, 9.6);
+      tl.fromTo("#spec-2", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4 }, 10.0);
+      tl.fromTo("#spec-3", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4 }, 10.4);
+      tl.fromTo("#hud-stat-1", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4 }, 10.2);
+      tl.fromTo("#hud-stat-2", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4 }, 10.6);
+      tl.fromTo("#hud-stat-3", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4 }, 11.0);
+      tl.fromTo("#hud-stat-4", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4 }, 11.4);
+      tl.to(".hud-dot", { scale: 1.5, opacity: 0.5, duration: 0.6, repeat: 3, yoyo: true }, 11.0);
+      tl.to("#scene-engine", { opacity: 0, scale: 1.05, duration: 0.4 }, 13.7);
+
+      // SCENE 4: Outro (14.0s - 18.0s)
+      tl.set("#scene-outro", { opacity: 1 }, 14.0);
+      tl.fromTo(".outro-logo", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 14.0);
+      tl.fromTo(".outro-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 14.4);
+      tl.fromTo(".outro-headline", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 14.7);
+      tl.fromTo(".outro-cta", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.6)" }, 15.3);
+      tl.fromTo(".outro-guarantee", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 15.8);
+      tl.to(".outro-cta", { scale: 1.05, boxShadow: "0 0 60px rgba(255, 153, 0, 0.8)", duration: 0.8, repeat: 1, yoyo: true }, 16.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

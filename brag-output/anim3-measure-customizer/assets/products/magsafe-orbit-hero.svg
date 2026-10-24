@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'Inter', sans-serif;">
+  <defs>
+    <pattern id="grid-magsafe-orbit" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#18181b" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#27272a"/>
+    </pattern>
+    <radialGradient id="spot-magsafe-orbit" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="orbit-ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="puck-base-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3f3f46"/>
+      <stop offset="100%" stop-color="#18181b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#spot-magsafe-orbit)"/>
+  <rect width="1200" height="900" fill="url(#grid-magsafe-orbit)"/>
+  <text x="60" y="70" fill="#38bdf8" font-size="12" font-weight="700" letter-spacing="2">WAVEZLY // WIRELESS POWER & PHONE DOCKS</text>
+  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SKU: WV-MAGSAFE-ORBIT</text>
+  <line x1="60" y1="85" x2="1140" y2="85" stroke="#27272a" stroke-width="1"/>
+  <text x="60" y="125" fill="#f4f4f5" font-size="24" font-weight="800" letter-spacing="-0.5">MAGSAFE ORBIT DOCK</text>
+  <text x="60" y="148" fill="#a1a1aa" font-size="12" letter-spacing="1">01 // FLOATING MAGNETIC CANTILEVER ARM WITH BALL-JOINT PIVOT</text>
+
+  <!-- MagSafe Dock Illustration -->
+  <g transform="translate(600, 480)">
+    <!-- Base Shadow -->
+    <ellipse cx="0" cy="180" rx="200" ry="35" fill="#000000" opacity="0.6"/>
+
+    <!-- Weighted Base Puck -->
+    <ellipse cx="0" cy="150" rx="140" ry="40" fill="url(#puck-base-grad)" stroke="#52525b" stroke-width="2"/>
+    <path d="M -140 150 C -140 170 140 170 140 150 L 140 165 C 140 185 -140 185 -140 165 Z" fill="#18181b" stroke="#3f3f46"/>
+    <ellipse cx="0" cy="150" rx="110" ry="28" fill="#09090b" stroke="#27272a"/>
+
+    <!-- Cantilever Sculpted Arm -->
+    <path d="M 0 150 C 40 100 80 40 60 -30 C 50 -60 20 -80 0 -90" fill="none" stroke="#52525b" stroke-width="22" stroke-linecap="round"/>
+    <path d="M 0 150 C 40 100 80 40 60 -30 C 50 -60 20 -80 0 -90" fill="none" stroke="#71717a" stroke-width="12" stroke-linecap="round"/>
+
+    <!-- MagSafe Charging Disc Head (Angled 20deg for viewing) -->
+    <g transform="translate(0, -90) rotate(-15)">
+      <!-- Backplate -->
+      <ellipse cx="0" cy="0" rx="85" ry="85" fill="#27272a" stroke="#52525b" stroke-width="3"/>
+      <!-- Soft silicone ring -->
+      <circle cx="0" cy="0" r="72" fill="#18181b"/>
+      <!-- Magnetic Array Ring -->
+      <circle cx="0" cy="0" r="54" fill="none" stroke="url(#orbit-ring-grad)" stroke-width="8" stroke-dasharray="14 4"/>
+      <!-- Alignment Magnet Pill -->
+      <rect x="-4" y="32" width="8" height="18" rx="4" fill="#38bdf8"/>
+      <!-- Wireless Inductive Core Glow -->
+      <circle cx="0" cy="0" r="24" fill="#38bdf8" opacity="0.15"/>
+      <circle cx="0" cy="0" r="14" fill="#0284c7" opacity="0.4"/>
+      <!-- Center Indicator -->
+      <circle cx="0" cy="0" r="4" fill="#38bdf8"/>
+    </g>
+
+    <!-- Cable routing channel groove -->
+    <path d="M 0 150 C 35 100 70 40 50 -30" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+  </g>
+  <text x="600" y="740" text-anchor="middle" fill="#94a3b8" font-size="14" font-family="monospace">N52 NEODYMIUM MAGNET MATRIX • 15W FAST CHARGE COMPATIBLE</text>
+</svg>

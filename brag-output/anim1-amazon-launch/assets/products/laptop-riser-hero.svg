@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" style="background:#09090b; font-family:'Inter', sans-serif;">
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="grid-laptop-riser-hero" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#18181b" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#27272a"/>
+    </pattern>
+    <!-- Radial Spotlight -->
+    <radialGradient id="spot-laptop-riser-hero" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#1f1f23" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="1"/>
+    </radialGradient>
+    <!-- Linear Product Gradient -->
+    <linearGradient id="bodyGrad-laptop-riser" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c2c31"/>
+      <stop offset="50%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <filter id="shadow-laptop-riser" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="25" stdDeviation="25" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="900" fill="url(#spot-laptop-riser-hero)"/>
+  <rect width="1200" height="900" fill="url(#grid-laptop-riser-hero)"/>
+
+  <!-- Technical Frame & Crop Marks -->
+  <g stroke="#3f3f46" stroke-width="1" opacity="0.6">
+    <path d="M 40 60 L 40 40 L 60 40"/>
+    <path d="M 1160 60 L 1160 40 L 1140 40"/>
+    <path d="M 40 840 L 40 860 L 60 860"/>
+    <path d="M 1160 840 L 1160 860 L 1140 860"/>
+    <line x1="600" y1="40" x2="600" y2="55" stroke-dasharray="3,3"/>
+    <line x1="600" y1="845" x2="600" y2="860" stroke-dasharray="3,3"/>
+    <line x1="40" y1="450" x2="55" y2="450" stroke-dasharray="3,3"/>
+    <line x1="1145" y1="450" x2="1160" y2="450" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- Header Telemetry Readouts -->
+  <text x="60" y="70" fill="#0284c7" font-size="12" font-weight="700" letter-spacing="2">SNUGDESK // ERGONOMIC ELEVATION</text>
+  <text x="1140" y="70" text-anchor="end" fill="#71717a" font-size="11">SKU: SD-LAPTOP-RISER</text>
+  <line x1="60" y1="85" x2="1140" y2="85" stroke="#27272a" stroke-width="1"/>
+
+  <!-- Product Name Banner -->
+  <text x="60" y="125" fill="#f4f4f5" font-size="24" font-weight="800" font-family="'Space Grotesk', sans-serif" letter-spacing="-0.5">ANODIZED ALUMINUM LAPTOP RISER</text>
+  <text x="60" y="148" fill="#a1a1aa" font-size="12" letter-spacing="1">01 // PERSPECTIVE VIEW</text>
+
+  <!-- ================= VARIANT GRAPHICS ================= -->
+  
+      <!-- 3D Perspective Hero Render with Chamfers and Inlay -->
+      <g transform="translate(600, 470) scale(1.15)" filter="url(#shadow-laptop-riser)">
+        <!-- Main Chassis Body Isometric Base -->
+        <polygon points="-280,-40 0,-180 280,-40 0,100" fill="url(#bodyGrad-laptop-riser)" stroke="#3f3f46" stroke-width="2"/>
+        
+        <!-- Extruded Depth Side Faces -->
+        <polygon points="-280,-40 0,100 0,160 -280,20" fill="#141417" stroke="#27272a" stroke-width="1.5"/>
+        <polygon points="0,100 280,-40 280,20 0,160" fill="#1e1e22" stroke="#27272a" stroke-width="1.5"/>
+
+        <!-- Top Compartment Cavities (Chamfered Dividers) -->
+        <polygon points="-220,-45 -40,-135 -40,-35 -220,55" fill="#0d0d0f" stroke="#3f3f46" stroke-width="1.5"/>
+        <polygon points="-210,-40 -50,-120 -50,-40 -210,40" fill="#0284c7" opacity="0.35"/>
+        
+        <polygon points="40,-135 220,-45 220,55 40,-35" fill="#0d0d0f" stroke="#3f3f46" stroke-width="1.5"/>
+        <polygon points="50,-120 210,-40 210,40 50,-40" fill="#0284c7" opacity="0.2"/>
+
+        <polygon points="-180,60 180,60 0,135" fill="#0c0c0e" stroke="#3f3f46" stroke-width="1.5"/>
+
+        <!-- Precision Center Indicator -->
+        <circle cx="0" cy="100" r="4" fill="#0284c7"/>
+        <line x1="0" y1="100" x2="60" y2="125" stroke="#0284c7" stroke-width="1.5"/>
+        <text x="70" y="130" fill="#0284c7" font-size="10">PERFECT FIT</text>
+      </g>
+      
+
+  <!-- Footer Specs & Telemetry -->
+  <line x1="60" y1="810" x2="1140" y2="810" stroke="#27272a" stroke-width="1"/>
+  <g fill="#71717a" font-size="11">
+    <text x="60" y="835">MATERIAL: <tspan fill="#f4f4f5">AEROSPACE 6061-T6 ALLOY</tspan></text>
+    <text x="500" y="835">DIMENSIONS: <tspan fill="#f4f4f5">260 × 225 × 65 MM</tspan></text>
+    <text x="1140" y="835" text-anchor="end">FULFILLMENT: <tspan fill="#0284c7">FAST SHIP IN-STOCK (2–3 DAYS)</tspan></text>
+  </g>
+</svg>

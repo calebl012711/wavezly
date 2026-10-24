@@ -1,0 +1,824 @@
+{
+  "version": 1,
+  "historyId": "76124990-ecd4-43b6-ad3e-21fcb13c1e94",
+  "currentRevision": "ed21dce5-1101-4a8c-8fff-f2c0438d727a",
+  "pendingChanges": false,
+  "files": {
+    "assets/images/audiophile_dac_plinth_setup_1792630045086.jpg": {
+      "hash": "b7676419bb06f3999b2fcb79cfc71035d01cfca5be875f8327587c7371b79a73",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b7/b7676419bb06f3999b2fcb79cfc71035d01cfca5be875f8327587c7371b79a73"
+    },
+    "assets/images/desk-coasters-real.jpg": {
+      "hash": "6b34c6528a5b05f84f111df11d36bffa184be112258d36fb75147189831474b0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6b/6b34c6528a5b05f84f111df11d36bffa184be112258d36fb75147189831474b0"
+    },
+    "assets/images/desk-vacuum-real.jpg": {
+      "hash": "26ab7c40f3507e78180caad42760454d8afb0bda93cdd71a3d94bba7d6f9c23b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/26/26ab7c40f3507e78180caad42760454d8afb0bda93cdd71a3d94bba7d6f9c23b"
+    },
+    "assets/images/keeb-lube-station-real.jpg": {
+      "hash": "1c0223bfa7e873ecf56a838e224d642aa6a273e0c75e5c23f63ce877383ca8a5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/1c/1c0223bfa7e873ecf56a838e224d642aa6a273e0c75e5c23f63ce877383ca8a5"
+    },
+    "assets/images/modular_workbench_drawer_organizer_1792630047708.jpg": {
+      "hash": "a03813375bb6e5009943b954d5cd54b7c10e3b25a1e5f8a63c9a5ce106ed38b6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a0/a03813375bb6e5009943b954d5cd54b7c10e3b25a1e5f8a63c9a5ce106ed38b6"
+    },
+    "assets/images/monitor_light_bar_product_shot_1792630024465.jpg": {
+      "hash": "5d8b3e542284e8768654ea29e0ef35816bc6b03c6b5645fb6f1fe009ab603e7f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/5d/5d8b3e542284e8768654ea29e0ef35816bc6b03c6b5645fb6f1fe009ab603e7f"
+    },
+    "assets/images/premium_dual_sided_desk_mat_1792630029691.jpg": {
+      "hash": "7412d46abadb329cd7394059160c114485fda0345c70f0ee5299d56529ca676b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/74/7412d46abadb329cd7394059160c114485fda0345c70f0ee5299d56529ca676b"
+    },
+    "assets/images/snugdesk_barista_valet_1792707440897.jpg": {
+      "hash": "15f3c85eeafa7a093fabc5e19c82a930debe09264e9b3905f94f455096909354",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/15/15f3c85eeafa7a093fabc5e19c82a930debe09264e9b3905f94f455096909354"
+    },
+    "assets/images/snugdesk_caddy_nightstand_1792707393867.jpg": {
+      "hash": "de55e9e32f28f0df2a690f2c74f9e4c686b5f4db68cfdb601894d3b75cee8a07",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/de/de55e9e32f28f0df2a690f2c74f9e4c686b5f4db68cfdb601894d3b75cee8a07"
+    },
+    "assets/images/snugdesk_controller_plinth_1792707348796.jpg": {
+      "hash": "aaf90f8e964337328414f55f00b1c03239793ddbecd7822ea6583d5e83e92776",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/aa/aaf90f8e964337328414f55f00b1c03239793ddbecd7822ea6583d5e83e92776"
+    },
+    "assets/images/test_image_1792629046052.jpg": {
+      "hash": "b5325f93ea70cefd81a0e43e76a85ff325c6a6ee9e1876d508113e63a63adca7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b5/b5325f93ea70cefd81a0e43e76a85ff325c6a6ee9e1876d508113e63a63adca7"
+    },
+    "assets/images/titanium_pen_stand_switch_puller_1792630033974.jpg": {
+      "hash": "4df8ff67937db55ad1f0f68f001339ee84b84437e045763a2b8172c081a52a8e",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/4d/4df8ff67937db55ad1f0f68f001339ee84b84437e045763a2b8172c081a52a8e"
+    },
+    "assets/images/vanity_matrix_real_1792706825559.jpg": {
+      "hash": "ed643e1fbb63173184f92877c2cab05469d1941582660c5075478f51da902d2a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ed/ed643e1fbb63173184f92877c2cab05469d1941582660c5075478f51da902d2a"
+    },
+    "assets/logo/wavezly-logo.png": {
+      "hash": "e5c23347ba7a4edf8b47b02689038b4c7ee485e51f30e267c9abd9ae38a2dcc9",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e5/e5c23347ba7a4edf8b47b02689038b4c7ee485e51f30e267c9abd9ae38a2dcc9"
+    },
+    "assets/logo/wavezly-mark.png": {
+      "hash": "e5c23347ba7a4edf8b47b02689038b4c7ee485e51f30e267c9abd9ae38a2dcc9",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e5/e5c23347ba7a4edf8b47b02689038b4c7ee485e51f30e267c9abd9ae38a2dcc9"
+    },
+    "assets/products/acoustic-desk-divider-detail.svg": {
+      "hash": "e76a0a782b3b7876c103f040219c479b7cca1ad8e269f1dbbb02f786404e663d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e7/e76a0a782b3b7876c103f040219c479b7cca1ad8e269f1dbbb02f786404e663d"
+    },
+    "assets/products/acoustic-desk-divider-hero.svg": {
+      "hash": "240e91af7de559e3ac907507035fa1b803c8106edb9dcf68dd43841c00d212a3",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/24/240e91af7de559e3ac907507035fa1b803c8106edb9dcf68dd43841c00d212a3"
+    },
+    "assets/products/acoustic-desk-divider-lifestyle.svg": {
+      "hash": "5920b350ce1c5822ce5236d822b22ba4fd3577740b065511ebbf68037e151a77",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/59/5920b350ce1c5822ce5236d822b22ba4fd3577740b065511ebbf68037e151a77"
+    },
+    "assets/products/acoustic-desk-divider-schematic.svg": {
+      "hash": "79129c31dc38f619a3e9d822e4c4a50a576c62058fc74206e5879a042b95fc38",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/79/79129c31dc38f619a3e9d822e4c4a50a576c62058fc74206e5879a042b95fc38"
+    },
+    "assets/products/acoustic-desk-divider-top.svg": {
+      "hash": "fb44fc680f517cd3124f3380793e09b0db09435e780af44617d42aa1bd537115",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/fb/fb44fc680f517cd3124f3380793e09b0db09435e780af44617d42aa1bd537115"
+    },
+    "assets/products/ambient-backlight-detail.svg": {
+      "hash": "a1b45a4c8543aae408825f59a4394d884c679adf6487d70fd93ef5cab90883f9",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a1/a1b45a4c8543aae408825f59a4394d884c679adf6487d70fd93ef5cab90883f9"
+    },
+    "assets/products/ambient-backlight-hero.svg": {
+      "hash": "0138ff84ae3f0d6cc9fa1e5abfa57b277c66fb6f7228906e9b84c5f1c956d491",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/01/0138ff84ae3f0d6cc9fa1e5abfa57b277c66fb6f7228906e9b84c5f1c956d491"
+    },
+    "assets/products/ambient-backlight-lifestyle.svg": {
+      "hash": "7998a7cc0a1811ed12269ad69b6ad96229a57102cfa968dded3fc57c4ea5005c",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/79/7998a7cc0a1811ed12269ad69b6ad96229a57102cfa968dded3fc57c4ea5005c"
+    },
+    "assets/products/ambient-backlight-schematic.svg": {
+      "hash": "58dcf643ba742f3a9b447478e85079c252b08b4dc9f28d0e3eb5aa34f7ae56cd",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/58/58dcf643ba742f3a9b447478e85079c252b08b4dc9f28d0e3eb5aa34f7ae56cd"
+    },
+    "assets/products/ambient-backlight-top.svg": {
+      "hash": "425b9160d0585078beabf3aecfa990358b69bd96d0a7dc85a0c04c5abc00e90d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/42/425b9160d0585078beabf3aecfa990358b69bd96d0a7dc85a0c04c5abc00e90d"
+    },
+    "assets/products/artisan-wrist-rest-detail.svg": {
+      "hash": "487199b222f15f63e71343e114542265a7705bb4897997727144634449601d0b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/48/487199b222f15f63e71343e114542265a7705bb4897997727144634449601d0b"
+    },
+    "assets/products/artisan-wrist-rest-hero.svg": {
+      "hash": "90bb211a2bdc7aa3b344745f77e19880be65c1e49fea51bcc1d527a0fec660ac",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/90/90bb211a2bdc7aa3b344745f77e19880be65c1e49fea51bcc1d527a0fec660ac"
+    },
+    "assets/products/artisan-wrist-rest-lifestyle.svg": {
+      "hash": "e8fbe6a0a8061488931dc5d78957d2338f739f5f5e03ed30ce4650077b58c558",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e8/e8fbe6a0a8061488931dc5d78957d2338f739f5f5e03ed30ce4650077b58c558"
+    },
+    "assets/products/artisan-wrist-rest-schematic.svg": {
+      "hash": "6ec91869e2dbb164974d31e98be5f766c2c9698e30673215ef19b277a27f2eff",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6e/6ec91869e2dbb164974d31e98be5f766c2c9698e30673215ef19b277a27f2eff"
+    },
+    "assets/products/artisan-wrist-rest-top.svg": {
+      "hash": "2d8676c706e02d8e38be7fdde443f5a2a75e1b6003372780f6f96f092240b721",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/2d/2d8676c706e02d8e38be7fdde443f5a2a75e1b6003372780f6f96f092240b721"
+    },
+    "assets/products/cable-anchor-detail.svg": {
+      "hash": "371c20d6f08447973975d58e847e1dacb073ea3d69b022eff1730f56de35b7eb",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/37/371c20d6f08447973975d58e847e1dacb073ea3d69b022eff1730f56de35b7eb"
+    },
+    "assets/products/cable-anchor-hero.svg": {
+      "hash": "45991bca5ccb72736ca406ac25c3edc70555a285bbf38acce7e3433a80bff9f6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/45/45991bca5ccb72736ca406ac25c3edc70555a285bbf38acce7e3433a80bff9f6"
+    },
+    "assets/products/cable-anchor-lifestyle.svg": {
+      "hash": "cd4fea8681bbe07deddb17192b3c2b66fd300516441862951cfdceb90b589092",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/cd/cd4fea8681bbe07deddb17192b3c2b66fd300516441862951cfdceb90b589092"
+    },
+    "assets/products/cable-anchor-schematic.svg": {
+      "hash": "82064293cd1ad66fda2747f21528922e51b3a365c3063f73a58e6a18850923dc",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/82/82064293cd1ad66fda2747f21528922e51b3a365c3063f73a58e6a18850923dc"
+    },
+    "assets/products/cable-anchor-top.svg": {
+      "hash": "96f2929ee2b408f25b109a0d182a54a154e3bc2c4fde3068c75803915a746ba0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/96/96f2929ee2b408f25b109a0d182a54a154e3bc2c4fde3068c75803915a746ba0"
+    },
+    "assets/products/controller-dock-detail.svg": {
+      "hash": "86947387a91f649f81a520ff46d8258506ba2887823e57e7ba06ab0ce1f2fa43",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/86/86947387a91f649f81a520ff46d8258506ba2887823e57e7ba06ab0ce1f2fa43"
+    },
+    "assets/products/controller-dock-hero.svg": {
+      "hash": "42701ff93d174e9b38493de3df6cd571923044f519c1f545e591861d05702f9d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/42/42701ff93d174e9b38493de3df6cd571923044f519c1f545e591861d05702f9d"
+    },
+    "assets/products/controller-dock-lifestyle.svg": {
+      "hash": "47ee0c64cd32490975c49a3e307da117e4e092faf2f5f25c3bb458ff499f352f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/47/47ee0c64cd32490975c49a3e307da117e4e092faf2f5f25c3bb458ff499f352f"
+    },
+    "assets/products/controller-dock-real.jpg": {
+      "hash": "aaf90f8e964337328414f55f00b1c03239793ddbecd7822ea6583d5e83e92776",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/aa/aaf90f8e964337328414f55f00b1c03239793ddbecd7822ea6583d5e83e92776"
+    },
+    "assets/products/controller-dock-schematic.svg": {
+      "hash": "87102b5b8bea7783ec55ee76436463834a08e78242e263bf929d574fb4d0b35b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/87/87102b5b8bea7783ec55ee76436463834a08e78242e263bf929d574fb4d0b35b"
+    },
+    "assets/products/controller-dock-top.svg": {
+      "hash": "69e6b3d624b2b89dca9a790dd2bd75fb40253b0fbff7c5b919e53659841aca57",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/69/69e6b3d624b2b89dca9a790dd2bd75fb40253b0fbff7c5b919e53659841aca57"
+    },
+    "assets/products/crystal-dragon-hero.svg": {
+      "hash": "c453de5be64598c1d885332016cd37d29d657b4c49b9343f27991dde11ed3578",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/c4/c453de5be64598c1d885332016cd37d29d657b4c49b9343f27991dde11ed3578"
+    },
+    "assets/products/desk-coasters-detail.svg": {
+      "hash": "67ebfed618b550687d8dea1c5512c3c90f99a2add53d7d374191c0f241c55fcb",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/67/67ebfed618b550687d8dea1c5512c3c90f99a2add53d7d374191c0f241c55fcb"
+    },
+    "assets/products/desk-coasters-hero.svg": {
+      "hash": "a9a68d5e37b80361cc6a4761adcf47131be52dfc3f5b743bd347d0d0bf9f3eb3",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a9/a9a68d5e37b80361cc6a4761adcf47131be52dfc3f5b743bd347d0d0bf9f3eb3"
+    },
+    "assets/products/desk-coasters-lifestyle.svg": {
+      "hash": "43fccd31039c606776611871f8f35a4176ee701024e462955fb9d7ade5307dbc",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/43/43fccd31039c606776611871f8f35a4176ee701024e462955fb9d7ade5307dbc"
+    },
+    "assets/products/desk-coasters-real.jpg": {
+      "hash": "6b34c6528a5b05f84f111df11d36bffa184be112258d36fb75147189831474b0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6b/6b34c6528a5b05f84f111df11d36bffa184be112258d36fb75147189831474b0"
+    },
+    "assets/products/desk-coasters-schematic.svg": {
+      "hash": "558128a7af3390c6d804dc74ab3062d76c4053ce6dd09b0005b025ad8238ac0a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/55/558128a7af3390c6d804dc74ab3062d76c4053ce6dd09b0005b025ad8238ac0a"
+    },
+    "assets/products/desk-coasters-top.svg": {
+      "hash": "c54c5fb4b308e8ab07e2217e865bb931fbf162307f8fbd77894ddcf723c64033",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/c5/c54c5fb4b308e8ab07e2217e865bb931fbf162307f8fbd77894ddcf723c64033"
+    },
+    "assets/products/desk-vacuum-detail.svg": {
+      "hash": "72fb3b102da507f187802ef4d52a27550fba948856f752a9ca6c7325eb71a365",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/72/72fb3b102da507f187802ef4d52a27550fba948856f752a9ca6c7325eb71a365"
+    },
+    "assets/products/desk-vacuum-hero.svg": {
+      "hash": "3a642bb335ea833a54493c409597085dc835fa849732d2c86aa063df427e2a09",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/3a/3a642bb335ea833a54493c409597085dc835fa849732d2c86aa063df427e2a09"
+    },
+    "assets/products/desk-vacuum-lifestyle.svg": {
+      "hash": "aaf0a91031beae666b2b6d307969deaeaa8b3b1b4fa7c8ba3c5b6f918a5f1951",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/aa/aaf0a91031beae666b2b6d307969deaeaa8b3b1b4fa7c8ba3c5b6f918a5f1951"
+    },
+    "assets/products/desk-vacuum-real.jpg": {
+      "hash": "26ab7c40f3507e78180caad42760454d8afb0bda93cdd71a3d94bba7d6f9c23b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/26/26ab7c40f3507e78180caad42760454d8afb0bda93cdd71a3d94bba7d6f9c23b"
+    },
+    "assets/products/desk-vacuum-schematic.svg": {
+      "hash": "8728d073ff534001994eb11495b7557a1d08012cc84a831650032c556bef1ff0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/87/8728d073ff534001994eb11495b7557a1d08012cc84a831650032c556bef1ff0"
+    },
+    "assets/products/desk-vacuum-top.svg": {
+      "hash": "cb331164f3f0457cb908408090ba5450680aaeef997f9db8161e98198b98f9e5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/cb/cb331164f3f0457cb908408090ba5450680aaeef997f9db8161e98198b98f9e5"
+    },
+    "assets/products/drawer-matrix-detail.svg": {
+      "hash": "b99b3637d02a8dfae57afd614cd32dfd82c41fdbfa5abc94dc827847638c3dc0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b9/b99b3637d02a8dfae57afd614cd32dfd82c41fdbfa5abc94dc827847638c3dc0"
+    },
+    "assets/products/drawer-matrix-hero.svg": {
+      "hash": "b7acacc1c1b9bffe8464f6cb833e0dfa905aeea046d27286252465489d288c9a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b7/b7acacc1c1b9bffe8464f6cb833e0dfa905aeea046d27286252465489d288c9a"
+    },
+    "assets/products/drawer-matrix-lifestyle.svg": {
+      "hash": "507abd78f7e59bcf57f8b76d41c26955c22adf6edf57149bb0000ba2c571222e",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/50/507abd78f7e59bcf57f8b76d41c26955c22adf6edf57149bb0000ba2c571222e"
+    },
+    "assets/products/drawer-matrix-real.jpg": {
+      "hash": "a03813375bb6e5009943b954d5cd54b7c10e3b25a1e5f8a63c9a5ce106ed38b6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a0/a03813375bb6e5009943b954d5cd54b7c10e3b25a1e5f8a63c9a5ce106ed38b6"
+    },
+    "assets/products/drawer-matrix-schematic.svg": {
+      "hash": "cda5631b4e15324125fdd6eaf687a49bb046535901e0a9518de749edc2c6d69c",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/cd/cda5631b4e15324125fdd6eaf687a49bb046535901e0a9518de749edc2c6d69c"
+    },
+    "assets/products/drawer-matrix-top.svg": {
+      "hash": "153c2449216bf85a1e9a6d461c458d96db61b4b2d9c3f394fd392b64b97500ba",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/15/153c2449216bf85a1e9a6d461c458d96db61b4b2d9c3f394fd392b64b97500ba"
+    },
+    "assets/products/entryway-catchall-detail.svg": {
+      "hash": "ced8a1c2def7978129fdef9020dd57b41087b8b56622a4a1214cda5e05a6590b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ce/ced8a1c2def7978129fdef9020dd57b41087b8b56622a4a1214cda5e05a6590b"
+    },
+    "assets/products/entryway-catchall-hero.svg": {
+      "hash": "db8308e1dba3dfa297e26b1ad8ccb046414b200db672d8329ab6d31bebcbe357",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/db/db8308e1dba3dfa297e26b1ad8ccb046414b200db672d8329ab6d31bebcbe357"
+    },
+    "assets/products/entryway-catchall-lifestyle.svg": {
+      "hash": "6e03898e176d652f8403cee775b574f48a117e106dbb4631e590c2377ae6a57d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6e/6e03898e176d652f8403cee775b574f48a117e106dbb4631e590c2377ae6a57d"
+    },
+    "assets/products/entryway-catchall-schematic.svg": {
+      "hash": "ffe2f030b63dfd7ed75389360c3eba5353cb981ab234b41ab6de71ab39b0c00e",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ff/ffe2f030b63dfd7ed75389360c3eba5353cb981ab234b41ab6de71ab39b0c00e"
+    },
+    "assets/products/entryway-catchall-top.svg": {
+      "hash": "f55cd3879da7861d1efcd505590872504ac6851cf5afcbcfbdf929533830b3d3",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f5/f55cd3879da7861d1efcd505590872504ac6851cf5afcbcfbdf929533830b3d3"
+    },
+    "assets/products/felt-mat-detail.svg": {
+      "hash": "9a92fb019da709f4a3cda9e5a8e3a4deb796474f7c3cfbdc1126a91c1a4a04e8",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/9a/9a92fb019da709f4a3cda9e5a8e3a4deb796474f7c3cfbdc1126a91c1a4a04e8"
+    },
+    "assets/products/felt-mat-hero.svg": {
+      "hash": "2b46d5c72bc06743d45a9163ba5933276f4e53a4d9aff28a24ce02ef0868b17a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/2b/2b46d5c72bc06743d45a9163ba5933276f4e53a4d9aff28a24ce02ef0868b17a"
+    },
+    "assets/products/felt-mat-lifestyle.svg": {
+      "hash": "daca6b415a387e6ffbb4cefbc2a48a3b5dd6fe67205d1dce1b5919e3b5784f0a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/da/daca6b415a387e6ffbb4cefbc2a48a3b5dd6fe67205d1dce1b5919e3b5784f0a"
+    },
+    "assets/products/felt-mat-real.jpg": {
+      "hash": "7412d46abadb329cd7394059160c114485fda0345c70f0ee5299d56529ca676b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/74/7412d46abadb329cd7394059160c114485fda0345c70f0ee5299d56529ca676b"
+    },
+    "assets/products/felt-mat-schematic.svg": {
+      "hash": "9ce6fd82481d79c8cff161f21552f176b7d9d5422ab0b3626f565352cd485fca",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/9c/9ce6fd82481d79c8cff161f21552f176b7d9d5422ab0b3626f565352cd485fca"
+    },
+    "assets/products/felt-mat-top.svg": {
+      "hash": "a49fcdb0d9d16c6e15ca8314df2d765ba1a04433c336f7849db00e147738af6b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a4/a49fcdb0d9d16c6e15ca8314df2d765ba1a04433c336f7849db00e147738af6b"
+    },
+    "assets/products/grooming-stand-detail.svg": {
+      "hash": "e923891c81d458ca37d9d60cc33cb7f7ccb4460ba00f3f79d95a73b306e1576f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e9/e923891c81d458ca37d9d60cc33cb7f7ccb4460ba00f3f79d95a73b306e1576f"
+    },
+    "assets/products/grooming-stand-hero.svg": {
+      "hash": "e581f28b396b069aa978fea5c38c8f16c04d2aa20b187ab050ca2f0e38e17c4b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e5/e581f28b396b069aa978fea5c38c8f16c04d2aa20b187ab050ca2f0e38e17c4b"
+    },
+    "assets/products/grooming-stand-lifestyle.svg": {
+      "hash": "6a375c63257b2ed80003674153ef5e7020a93e8f4db82fc8bd1eaee5a1b3393d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6a/6a375c63257b2ed80003674153ef5e7020a93e8f4db82fc8bd1eaee5a1b3393d"
+    },
+    "assets/products/grooming-stand-schematic.svg": {
+      "hash": "6de7a6846be4513920b99ab53ede47224ea7ecb5c66d3506b4ffcbbc22804774",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6d/6de7a6846be4513920b99ab53ede47224ea7ecb5c66d3506b4ffcbbc22804774"
+    },
+    "assets/products/grooming-stand-top.svg": {
+      "hash": "45c35d7231425f64ee1935b06648ff3886317a28a55dbdd70a6b2f5c609d6a2d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/45/45c35d7231425f64ee1935b06648ff3886317a28a55dbdd70a6b2f5c609d6a2d"
+    },
+    "assets/products/gyro-cube-hero.svg": {
+      "hash": "f8b3e60d48b3e8ad4a5e98ba9c8af874307309ee1c06ece0a32b59af9bcae3f4",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f8/f8b3e60d48b3e8ad4a5e98ba9c8af874307309ee1c06ece0a32b59af9bcae3f4"
+    },
+    "assets/products/headphone-plinth-detail.svg": {
+      "hash": "8b721ded36cd730ff3069a882985cd75fd5991412c640b5394737fb5edabbeb6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/8b/8b721ded36cd730ff3069a882985cd75fd5991412c640b5394737fb5edabbeb6"
+    },
+    "assets/products/headphone-plinth-hero.svg": {
+      "hash": "55d9b1b81f22b57753a72757de5ba665fb713f0b81aa8d77b740b3cab8265f75",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/55/55d9b1b81f22b57753a72757de5ba665fb713f0b81aa8d77b740b3cab8265f75"
+    },
+    "assets/products/headphone-plinth-lifestyle.svg": {
+      "hash": "9ef214c4710a3018a223eec2a9e7c6accfaa64770e7606494a38bb699040ea3c",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/9e/9ef214c4710a3018a223eec2a9e7c6accfaa64770e7606494a38bb699040ea3c"
+    },
+    "assets/products/headphone-plinth-real.jpg": {
+      "hash": "b7676419bb06f3999b2fcb79cfc71035d01cfca5be875f8327587c7371b79a73",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b7/b7676419bb06f3999b2fcb79cfc71035d01cfca5be875f8327587c7371b79a73"
+    },
+    "assets/products/headphone-plinth-schematic.svg": {
+      "hash": "f2f004fd4f4ed9758212b4c1f1f393d29700d4865183eb333d1529df11eb93f7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f2/f2f004fd4f4ed9758212b4c1f1f393d29700d4865183eb333d1529df11eb93f7"
+    },
+    "assets/products/headphone-plinth-top.svg": {
+      "hash": "846a8e0c5a16e62bde738c29c32fc605cbd0732cff2d90753c87eabd4e1643d7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/84/846a8e0c5a16e62bde738c29c32fc605cbd0732cff2d90753c87eabd4e1643d7"
+    },
+    "assets/products/hex-bit-tray-detail.svg": {
+      "hash": "a1f4b1283884b6fbb2a1b558862428a591dd304538572a2a7ddd910358b05b22",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a1/a1f4b1283884b6fbb2a1b558862428a591dd304538572a2a7ddd910358b05b22"
+    },
+    "assets/products/hex-bit-tray-hero.svg": {
+      "hash": "ae5fdf03d4289418e58302f219910c2cd4d14fb30b705d2f5d13f1b46447e926",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ae/ae5fdf03d4289418e58302f219910c2cd4d14fb30b705d2f5d13f1b46447e926"
+    },
+    "assets/products/hex-bit-tray-lifestyle.svg": {
+      "hash": "914a25a74a94e6854890e8c4363e7864e36a1a7a6d1fe9899ffbe2c5c80e85fe",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/91/914a25a74a94e6854890e8c4363e7864e36a1a7a6d1fe9899ffbe2c5c80e85fe"
+    },
+    "assets/products/hex-bit-tray-schematic.svg": {
+      "hash": "3253a815aee853a894feb0b82af84a91f7e90ceea1166f287f7124bbb2ca2067",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/32/3253a815aee853a894feb0b82af84a91f7e90ceea1166f287f7124bbb2ca2067"
+    },
+    "assets/products/hex-bit-tray-top.svg": {
+      "hash": "e3084b5b326774a845df3be693eb5e0034b7aa5d8d51815e1c2558f425269ae5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e3/e3084b5b326774a845df3be693eb5e0034b7aa5d8d51815e1c2558f425269ae5"
+    },
+    "assets/products/keeb-lube-station-detail.svg": {
+      "hash": "26676b7024a02e4f347476f9e8535f58e62298aab14ce52ee4cc937efd644546",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/26/26676b7024a02e4f347476f9e8535f58e62298aab14ce52ee4cc937efd644546"
+    },
+    "assets/products/keeb-lube-station-hero.svg": {
+      "hash": "8af976d1f7f82278268ba275ef3dbf0d37a13f181ad9ddfe22520df8e5f9e7ec",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/8a/8af976d1f7f82278268ba275ef3dbf0d37a13f181ad9ddfe22520df8e5f9e7ec"
+    },
+    "assets/products/keeb-lube-station-lifestyle.svg": {
+      "hash": "b4938983b6e24b729e3a861a8c44919245f46a0a5379a0c05eb91c81079fd06f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b4/b4938983b6e24b729e3a861a8c44919245f46a0a5379a0c05eb91c81079fd06f"
+    },
+    "assets/products/keeb-lube-station-real.jpg": {
+      "hash": "1c0223bfa7e873ecf56a838e224d642aa6a273e0c75e5c23f63ce877383ca8a5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/1c/1c0223bfa7e873ecf56a838e224d642aa6a273e0c75e5c23f63ce877383ca8a5"
+    },
+    "assets/products/keeb-lube-station-schematic.svg": {
+      "hash": "b3be179b9c55c7383e90eb3f29245c9619320350c6d518c52943ed43ae4bf24e",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b3/b3be179b9c55c7383e90eb3f29245c9619320350c6d518c52943ed43ae4bf24e"
+    },
+    "assets/products/keeb-lube-station-top.svg": {
+      "hash": "b1edd72a676c095f4f97752fee9e663b756ab325c59b78cf390b73c7df025ff0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b1/b1edd72a676c095f4f97752fee9e663b756ab325c59b78cf390b73c7df025ff0"
+    },
+    "assets/products/kitchen-cutlery-matrix-detail.svg": {
+      "hash": "ef48bac7641371a5e3497addf108edc249e78b4a6ada6f5b1e859ae25b1c9d69",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ef/ef48bac7641371a5e3497addf108edc249e78b4a6ada6f5b1e859ae25b1c9d69"
+    },
+    "assets/products/kitchen-cutlery-matrix-hero.svg": {
+      "hash": "a671357a3740405d11248f429265598e0ad6c2a29287fb48bc86206c26257070",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a6/a671357a3740405d11248f429265598e0ad6c2a29287fb48bc86206c26257070"
+    },
+    "assets/products/kitchen-cutlery-matrix-lifestyle.svg": {
+      "hash": "d66e81012c197a166868880604246fe135eb527b703cefec73d3089a84ad2007",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/d6/d66e81012c197a166868880604246fe135eb527b703cefec73d3089a84ad2007"
+    },
+    "assets/products/kitchen-cutlery-matrix-schematic.svg": {
+      "hash": "950f6e747edfa105779c37aa7fda28ef3216040ab55a4154e547ef34af646e10",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/95/950f6e747edfa105779c37aa7fda28ef3216040ab55a4154e547ef34af646e10"
+    },
+    "assets/products/kitchen-cutlery-matrix-top.svg": {
+      "hash": "a33b48870c9dc7c7e7d41fe0306e1a3709a5e5c074865900e0bc85383b83f4f7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a3/a33b48870c9dc7c7e7d41fe0306e1a3709a5e5c074865900e0bc85383b83f4f7"
+    },
+    "assets/products/laptop-riser-detail.svg": {
+      "hash": "ac5eaf645ee7f401a0246855d2f8e758ebf129ba178e7d0648222abbfbb38a58",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ac/ac5eaf645ee7f401a0246855d2f8e758ebf129ba178e7d0648222abbfbb38a58"
+    },
+    "assets/products/laptop-riser-hero.svg": {
+      "hash": "45a6d1ae32147759e22ba5e7d7456dff5a79e08f44861db114384488a1d1a812",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/45/45a6d1ae32147759e22ba5e7d7456dff5a79e08f44861db114384488a1d1a812"
+    },
+    "assets/products/laptop-riser-lifestyle.svg": {
+      "hash": "05ea32371556437fa48895bf53fce278de2b26f5ad075fa6a12cc893cec52c59",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/05/05ea32371556437fa48895bf53fce278de2b26f5ad075fa6a12cc893cec52c59"
+    },
+    "assets/products/laptop-riser-schematic.svg": {
+      "hash": "2b100bbd0020cccb7d57ec433aab68ea6802a5da6569ac0dfc5ad0ce2195f624",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/2b/2b100bbd0020cccb7d57ec433aab68ea6802a5da6569ac0dfc5ad0ce2195f624"
+    },
+    "assets/products/laptop-riser-top.svg": {
+      "hash": "d059f1a40e67928c11dae9a59dd75a45c1fbc8dbbadd0ef925c60492a4b0239f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/d0/d059f1a40e67928c11dae9a59dd75a45c1fbc8dbbadd0ef925c60492a4b0239f"
+    },
+    "assets/products/low-poly-planter-hero.svg": {
+      "hash": "0e86fe8b913b5ab4de6844772da931a9ce098558c99e544258ffb7a8ff4eb7d1",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/0e/0e86fe8b913b5ab4de6844772da931a9ce098558c99e544258ffb7a8ff4eb7d1"
+    },
+    "assets/products/mag-cable-clips-detail.svg": {
+      "hash": "9feb64160eb2b4276cf85156dcb50cb79b9a88ceef95ec598ebc724fa8ed2fa0",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/9f/9feb64160eb2b4276cf85156dcb50cb79b9a88ceef95ec598ebc724fa8ed2fa0"
+    },
+    "assets/products/mag-cable-clips-hero.svg": {
+      "hash": "494cc3b6d143f26ec853a2270d9b99bb78e2b5b6e70f532a3188e6ca17a6cb6f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/49/494cc3b6d143f26ec853a2270d9b99bb78e2b5b6e70f532a3188e6ca17a6cb6f"
+    },
+    "assets/products/mag-cable-clips-lifestyle.svg": {
+      "hash": "cd8f5a8425f117c0b2beedcf91898bd3d2de139cace251d7081f9036100c57a6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/cd/cd8f5a8425f117c0b2beedcf91898bd3d2de139cace251d7081f9036100c57a6"
+    },
+    "assets/products/mag-cable-clips-schematic.svg": {
+      "hash": "ee9cbfdb9339b12357196798d404f11be616931af8e46bbf6e12f68513f3a978",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ee/ee9cbfdb9339b12357196798d404f11be616931af8e46bbf6e12f68513f3a978"
+    },
+    "assets/products/mag-cable-clips-top.svg": {
+      "hash": "88c09878363af847cd2f8ca68becfbd0d04f0d468b8f5552ee57625c86388918",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/88/88c09878363af847cd2f8ca68becfbd0d04f0d468b8f5552ee57625c86388918"
+    },
+    "assets/products/magnetic-dock-detail.svg": {
+      "hash": "5a70303bd4bba1a9c6ad52e2ade0c2fe22442b1b5a13c739864a6e842a73a8c7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/5a/5a70303bd4bba1a9c6ad52e2ade0c2fe22442b1b5a13c739864a6e842a73a8c7"
+    },
+    "assets/products/magnetic-dock-hero.svg": {
+      "hash": "5f80d117b3ba9ff41b7dd01aed7903e01bc2dd4124f5d9bb41c2858aabf3f878",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/5f/5f80d117b3ba9ff41b7dd01aed7903e01bc2dd4124f5d9bb41c2858aabf3f878"
+    },
+    "assets/products/magnetic-dock-lifestyle.svg": {
+      "hash": "7de951ff64af4c7907f864489bd43532b276551e78790b4e0295b7d30315c5b6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/7d/7de951ff64af4c7907f864489bd43532b276551e78790b4e0295b7d30315c5b6"
+    },
+    "assets/products/magnetic-dock-schematic.svg": {
+      "hash": "45af1d236987a24ebb2f9acd8043746165e0f260c6715584e7921bdccd021d01",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/45/45af1d236987a24ebb2f9acd8043746165e0f260c6715584e7921bdccd021d01"
+    },
+    "assets/products/magnetic-dock-top.svg": {
+      "hash": "07813d2aba9f054ab72dbe9e72ef8b64f697336492a42f41e9c94c40a82c50d7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/07/07813d2aba9f054ab72dbe9e72ef8b64f697336492a42f41e9c94c40a82c50d7"
+    },
+    "assets/products/magsafe-orbit-hero.svg": {
+      "hash": "f4eb85e64c3070b71f5822b2b13d6af04a8157a06db2f0bb4843c501a8f88f73",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f4/f4eb85e64c3070b71f5822b2b13d6af04a8157a06db2f0bb4843c501a8f88f73"
+    },
+    "assets/products/pourover-coffee-tray-detail.svg": {
+      "hash": "2e0fb3ce75afb51e5509c76a6c139a9f6363a03f60b0871592a5c7a7c28e7b6c",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/2e/2e0fb3ce75afb51e5509c76a6c139a9f6363a03f60b0871592a5c7a7c28e7b6c"
+    },
+    "assets/products/pourover-coffee-tray-hero.svg": {
+      "hash": "2e42ae52fbffe43661f2de4aee88de942ea62dfbdd9d40f6c18ae614a3976195",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/2e/2e42ae52fbffe43661f2de4aee88de942ea62dfbdd9d40f6c18ae614a3976195"
+    },
+    "assets/products/pourover-coffee-tray-lifestyle.svg": {
+      "hash": "e2b932f3a94d656ed29b08d3b301d89acb78ab3c6493913eadea8b7bd9977f9f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e2/e2b932f3a94d656ed29b08d3b301d89acb78ab3c6493913eadea8b7bd9977f9f"
+    },
+    "assets/products/pourover-coffee-tray-real.jpg": {
+      "hash": "15f3c85eeafa7a093fabc5e19c82a930debe09264e9b3905f94f455096909354",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/15/15f3c85eeafa7a093fabc5e19c82a930debe09264e9b3905f94f455096909354"
+    },
+    "assets/products/pourover-coffee-tray-schematic.svg": {
+      "hash": "88a15679b3335067b6e0fd68d0fbb672a18ab987bb10f5e48c93c28b21a4956d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/88/88a15679b3335067b6e0fd68d0fbb672a18ab987bb10f5e48c93c28b21a4956d"
+    },
+    "assets/products/pourover-coffee-tray-top.svg": {
+      "hash": "ee8b25c81b338b5b15347509bec0ea5cec62a737f4e7433140c5c2b382b4a77c",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ee/ee8b25c81b338b5b15347509bec0ea5cec62a737f4e7433140c5c2b382b4a77c"
+    },
+    "assets/products/screenbar-detail.svg": {
+      "hash": "af524eeb2c0f4f33b408bd8b0d23a577b4294dd51d0b1909296fcff3c449c057",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/af/af524eeb2c0f4f33b408bd8b0d23a577b4294dd51d0b1909296fcff3c449c057"
+    },
+    "assets/products/screenbar-hero.svg": {
+      "hash": "cd68062f804e80c9cdb7f88b96017a9e66a1e9b3827a2a4490e0a663dd4a47a8",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/cd/cd68062f804e80c9cdb7f88b96017a9e66a1e9b3827a2a4490e0a663dd4a47a8"
+    },
+    "assets/products/screenbar-lifestyle.svg": {
+      "hash": "78a1f44530b799a9bcfba43778751c6adaf82b27969e70df3f25173d7f7ff85d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/78/78a1f44530b799a9bcfba43778751c6adaf82b27969e70df3f25173d7f7ff85d"
+    },
+    "assets/products/screenbar-real.jpg": {
+      "hash": "5d8b3e542284e8768654ea29e0ef35816bc6b03c6b5645fb6f1fe009ab603e7f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/5d/5d8b3e542284e8768654ea29e0ef35816bc6b03c6b5645fb6f1fe009ab603e7f"
+    },
+    "assets/products/screenbar-schematic.svg": {
+      "hash": "c9c752a9caa9e7cb15c29a10229ec1f0ef9741183b6383fc93659e82e131f8df",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/c9/c9c752a9caa9e7cb15c29a10229ec1f0ef9741183b6383fc93659e82e131f8df"
+    },
+    "assets/products/screenbar-top.svg": {
+      "hash": "e29c4d126f253d3e6aaed0cfe84d79da82f934ce0a902913170d40276ad45669",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e2/e29c4d126f253d3e6aaed0cfe84d79da82f934ce0a902913170d40276ad45669"
+    },
+    "assets/products/smart-cable-spine-detail.svg": {
+      "hash": "b8fd4d1ad32e8d0518904d1106017d4a1f3a84cd6076cb2ce318aacb6a857503",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b8/b8fd4d1ad32e8d0518904d1106017d4a1f3a84cd6076cb2ce318aacb6a857503"
+    },
+    "assets/products/smart-cable-spine-hero.svg": {
+      "hash": "608f51c6682f969af729201ee699c0f50cf04b8209ab9a8a193a4e4d9bf8fe42",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/60/608f51c6682f969af729201ee699c0f50cf04b8209ab9a8a193a4e4d9bf8fe42"
+    },
+    "assets/products/smart-cable-spine-lifestyle.svg": {
+      "hash": "8bccdd5fd28200db307737dd10a3ba4524f3667c466d2c285534ccf9e13d14f2",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/8b/8bccdd5fd28200db307737dd10a3ba4524f3667c466d2c285534ccf9e13d14f2"
+    },
+    "assets/products/smart-cable-spine-schematic.svg": {
+      "hash": "a23f910eee5026629f249e9ae2b416ff38a2b6395d8734c244a31b7c2d185fd9",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a2/a23f910eee5026629f249e9ae2b416ff38a2b6395d8734c244a31b7c2d185fd9"
+    },
+    "assets/products/smart-cable-spine-top.svg": {
+      "hash": "e3dcfef52bed57258fd9b766a512541920bc9d246630a7e48c250be249561624",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e3/e3dcfef52bed57258fd9b766a512541920bc9d246630a7e48c250be249561624"
+    },
+    "assets/products/solenoid-key-lock-detail.svg": {
+      "hash": "6cbffdc9903fa398e599cada27c618f159725b2f018cf183b98a8d36edbfa162",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6c/6cbffdc9903fa398e599cada27c618f159725b2f018cf183b98a8d36edbfa162"
+    },
+    "assets/products/solenoid-key-lock-hero.svg": {
+      "hash": "45605e18725ff3ce302004ebcfa07d4c979a785d4a77dd4d284e42b7a1889539",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/45/45605e18725ff3ce302004ebcfa07d4c979a785d4a77dd4d284e42b7a1889539"
+    },
+    "assets/products/solenoid-key-lock-lifestyle.svg": {
+      "hash": "7cb432cdee52c64471aa3e216a927ae06b543a6065526d1cf49aac4bace13160",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/7c/7cb432cdee52c64471aa3e216a927ae06b543a6065526d1cf49aac4bace13160"
+    },
+    "assets/products/solenoid-key-lock-schematic.svg": {
+      "hash": "3f46588f2cad1d827eaf7d0340351321cb024e1fc08c1d1cfba7d0db69d6fbc9",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/3f/3f46588f2cad1d827eaf7d0340351321cb024e1fc08c1d1cfba7d0db69d6fbc9"
+    },
+    "assets/products/solenoid-key-lock-top.svg": {
+      "hash": "7dc5637507c78e4e576b537824ddd2d8e0132706fc73567b5d77bc16080538e1",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/7d/7dc5637507c78e4e576b537824ddd2d8e0132706fc73567b5d77bc16080538e1"
+    },
+    "assets/products/spice-pantry-tier-detail.svg": {
+      "hash": "d658614617acfd764ecd200a65cee9be16bdd1db500d466dddf3cca284086b99",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/d6/d658614617acfd764ecd200a65cee9be16bdd1db500d466dddf3cca284086b99"
+    },
+    "assets/products/spice-pantry-tier-hero.svg": {
+      "hash": "4e6ee3b0d3cbd4214db467e04e83ccbb556de010824178d043e3b669a76dff86",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/4e/4e6ee3b0d3cbd4214db467e04e83ccbb556de010824178d043e3b669a76dff86"
+    },
+    "assets/products/spice-pantry-tier-lifestyle.svg": {
+      "hash": "a0871aab3faae7f755bba37c0096ca963abef1e9efd2d07abceb4bc4ee7cf088",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a0/a0871aab3faae7f755bba37c0096ca963abef1e9efd2d07abceb4bc4ee7cf088"
+    },
+    "assets/products/spice-pantry-tier-schematic.svg": {
+      "hash": "10e58488d7bd7d0fb8b95a92e1fc1323ab0814d0f4f729a9feb5326af0c4b0ce",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/10/10e58488d7bd7d0fb8b95a92e1fc1323ab0814d0f4f729a9feb5326af0c4b0ce"
+    },
+    "assets/products/spice-pantry-tier-top.svg": {
+      "hash": "69c2f598615632ffdbf1679c2c2a0bb759ba640b7c758f3fb7737be2cec9a4f5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/69/69c2f598615632ffdbf1679c2c2a0bb759ba640b7c758f3fb7737be2cec9a4f5"
+    },
+    "assets/products/titanium-pen-stand-detail.svg": {
+      "hash": "745a07448403e93f05e25ac266e56a81fb367f57d72e5def29914f1c3a0dd853",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/74/745a07448403e93f05e25ac266e56a81fb367f57d72e5def29914f1c3a0dd853"
+    },
+    "assets/products/titanium-pen-stand-hero.svg": {
+      "hash": "0cb4ea207f5b32d37ebc0c04a0c0c83044a2c7224702984f67e937f319ece988",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/0c/0cb4ea207f5b32d37ebc0c04a0c0c83044a2c7224702984f67e937f319ece988"
+    },
+    "assets/products/titanium-pen-stand-lifestyle.svg": {
+      "hash": "aa70a1f24109252569a7663599f07afca0f8adb2fd75f6aa16423859a3c45871",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/aa/aa70a1f24109252569a7663599f07afca0f8adb2fd75f6aa16423859a3c45871"
+    },
+    "assets/products/titanium-pen-stand-schematic.svg": {
+      "hash": "8c09f0ef09a78f98c6ea532cb813ac460c0092200059fca25cd9661da064aa06",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/8c/8c09f0ef09a78f98c6ea532cb813ac460c0092200059fca25cd9661da064aa06"
+    },
+    "assets/products/titanium-pen-stand-top.svg": {
+      "hash": "44db92d2dee5620cc30f2d84b957de75dcc5122cc08d0d4b6ad5ca41de59caf5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/44/44db92d2dee5620cc30f2d84b957de75dcc5122cc08d0d4b6ad5ca41de59caf5"
+    },
+    "assets/products/titanium-stand-real.jpg": {
+      "hash": "4df8ff67937db55ad1f0f68f001339ee84b84437e045763a2b8172c081a52a8e",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/4d/4df8ff67937db55ad1f0f68f001339ee84b84437e045763a2b8172c081a52a8e"
+    },
+    "assets/products/under-desk-drawer-detail.svg": {
+      "hash": "a499eb3ab696b98c43942bfd85d544d8c4af6d3cf23fd6c675b86b42dfa6b5f7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a4/a499eb3ab696b98c43942bfd85d544d8c4af6d3cf23fd6c675b86b42dfa6b5f7"
+    },
+    "assets/products/under-desk-drawer-hero.svg": {
+      "hash": "80e4ec8f47dbc99c96ba5ab2b4b2864d86249d7e281df3224a4a85fd9961d687",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/80/80e4ec8f47dbc99c96ba5ab2b4b2864d86249d7e281df3224a4a85fd9961d687"
+    },
+    "assets/products/under-desk-drawer-lifestyle.svg": {
+      "hash": "564017e27c0123b9379d03de8e5ceafa39fe4c63ffb131d5af038943235ac08a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/56/564017e27c0123b9379d03de8e5ceafa39fe4c63ffb131d5af038943235ac08a"
+    },
+    "assets/products/under-desk-drawer-schematic.svg": {
+      "hash": "05c2eb59a030f9d6ebef3984f98e0b561a946015542f0d7d006f8cad4e7b0db9",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/05/05c2eb59a030f9d6ebef3984f98e0b561a946015542f0d7d006f8cad4e7b0db9"
+    },
+    "assets/products/under-desk-drawer-top.svg": {
+      "hash": "bb97f6fceaa0eae02fc8357abc429e8ea2e2dd0702d41c2dd4666cb7d4b2f8b5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/bb/bb97f6fceaa0eae02fc8357abc429e8ea2e2dd0702d41c2dd4666cb7d4b2f8b5"
+    },
+    "assets/products/valet-pro-detail.svg": {
+      "hash": "fdc26724f8b88a4c2b280f29e0de67aae16c928cbd628e76cda4a0f7ce124897",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/fd/fdc26724f8b88a4c2b280f29e0de67aae16c928cbd628e76cda4a0f7ce124897"
+    },
+    "assets/products/valet-pro-hero.svg": {
+      "hash": "cb6af51a108e8b544cf615316397a7f15c34290e7e95112c0c2133acb1432260",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/cb/cb6af51a108e8b544cf615316397a7f15c34290e7e95112c0c2133acb1432260"
+    },
+    "assets/products/valet-pro-lifestyle.svg": {
+      "hash": "09ca36de5eda49f9ab3d9b8d2cc45fdff900e0859a761a7653ba6eb1e8423096",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/09/09ca36de5eda49f9ab3d9b8d2cc45fdff900e0859a761a7653ba6eb1e8423096"
+    },
+    "assets/products/valet-pro-real.jpg": {
+      "hash": "b5325f93ea70cefd81a0e43e76a85ff325c6a6ee9e1876d508113e63a63adca7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/b5/b5325f93ea70cefd81a0e43e76a85ff325c6a6ee9e1876d508113e63a63adca7"
+    },
+    "assets/products/valet-pro-schematic.svg": {
+      "hash": "fa4c2cb537d258bbc9b197faafb6fb0740eab7b6959f6ebcd92ffd668e6304fb",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/fa/fa4c2cb537d258bbc9b197faafb6fb0740eab7b6959f6ebcd92ffd668e6304fb"
+    },
+    "assets/products/valet-pro-top.svg": {
+      "hash": "04b13d6998b25c7f03026ccad05f59325954aa8b493fe35139e2cf2065308fd8",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/04/04b13d6998b25c7f03026ccad05f59325954aa8b493fe35139e2cf2065308fd8"
+    },
+    "assets/products/vanity-matrix-detail.svg": {
+      "hash": "6428420e5d98ef9dfc4356d92a8ffd75f67ca69938b08164d5243692a574f78b",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/64/6428420e5d98ef9dfc4356d92a8ffd75f67ca69938b08164d5243692a574f78b"
+    },
+    "assets/products/vanity-matrix-hero.svg": {
+      "hash": "5ea61d12fc0a25bd7098e2082dc8961f05e2cee5e6881130830de4956274c160",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/5e/5ea61d12fc0a25bd7098e2082dc8961f05e2cee5e6881130830de4956274c160"
+    },
+    "assets/products/vanity-matrix-lifestyle.svg": {
+      "hash": "6b8e0a279e0176f688213838b6b599a0cbb320a05fcf5647d504b7adf2597916",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/6b/6b8e0a279e0176f688213838b6b599a0cbb320a05fcf5647d504b7adf2597916"
+    },
+    "assets/products/vanity-matrix-real.jpg": {
+      "hash": "ed643e1fbb63173184f92877c2cab05469d1941582660c5075478f51da902d2a",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/ed/ed643e1fbb63173184f92877c2cab05469d1941582660c5075478f51da902d2a"
+    },
+    "assets/products/vanity-matrix-schematic.svg": {
+      "hash": "77a67b05fadc80bb4a6da3fb083b366aac45e242919f7b4446d5cef8abdea7d3",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/77/77a67b05fadc80bb4a6da3fb083b366aac45e242919f7b4446d5cef8abdea7d3"
+    },
+    "assets/products/vanity-matrix-top.svg": {
+      "hash": "df787366c5119cc0d7e419596c6c46a13a8d74b3c3498153b155b27977663da5",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/df/df787366c5119cc0d7e419596c6c46a13a8d74b3c3498153b155b27977663da5"
+    },
+    "assets/products/watch-jewelry-caddy-detail.svg": {
+      "hash": "24b4d2b66c2a2ec63ce9d461c4d4419d342f29b7a74076264975f98c1ff65598",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/24/24b4d2b66c2a2ec63ce9d461c4d4419d342f29b7a74076264975f98c1ff65598"
+    },
+    "assets/products/watch-jewelry-caddy-hero.svg": {
+      "hash": "7b688fbb00f39d82436486a107a5d8711daf900fc97db3cb7ff27232d3c1e7bc",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/7b/7b688fbb00f39d82436486a107a5d8711daf900fc97db3cb7ff27232d3c1e7bc"
+    },
+    "assets/products/watch-jewelry-caddy-lifestyle.svg": {
+      "hash": "d7d662183687c685acebffdf0957ab56822d637c384f556fa517de8c1470ba6f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/d7/d7d662183687c685acebffdf0957ab56822d637c384f556fa517de8c1470ba6f"
+    },
+    "assets/products/watch-jewelry-caddy-real.jpg": {
+      "hash": "de55e9e32f28f0df2a690f2c74f9e4c686b5f4db68cfdb601894d3b75cee8a07",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/de/de55e9e32f28f0df2a690f2c74f9e4c686b5f4db68cfdb601894d3b75cee8a07"
+    },
+    "assets/products/watch-jewelry-caddy-schematic.svg": {
+      "hash": "84d77c0895e4ea5542fdd0c44e4cc6ab6cf2f588bd9367d67d07a3bbbaadae43",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/84/84d77c0895e4ea5542fdd0c44e4cc6ab6cf2f588bd9367d67d07a3bbbaadae43"
+    },
+    "assets/products/watch-jewelry-caddy-top.svg": {
+      "hash": "dc4235a39ee107c2def63820c63a056a7db83eebc64edaa50ed9a01ef72ad46d",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/dc/dc4235a39ee107c2def63820c63a056a7db83eebc64edaa50ed9a01ef72ad46d"
+    },
+    "assets/products/wireless-charging-puck-detail.svg": {
+      "hash": "351d2684e782da9e5a5f669586adb83d9de4898b49c7a349e365245fd3aadda8",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/35/351d2684e782da9e5a5f669586adb83d9de4898b49c7a349e365245fd3aadda8"
+    },
+    "assets/products/wireless-charging-puck-hero.svg": {
+      "hash": "a1bb0f93cc27b37d639db1ba43e0e193ae1538a4165a1030fdcb8210585e6193",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/a1/a1bb0f93cc27b37d639db1ba43e0e193ae1538a4165a1030fdcb8210585e6193"
+    },
+    "assets/products/wireless-charging-puck-lifestyle.svg": {
+      "hash": "26fe58ecfd8d70819f79bc27290839208dc1691d1a847a44029edb861173a019",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/26/26fe58ecfd8d70819f79bc27290839208dc1691d1a847a44029edb861173a019"
+    },
+    "assets/products/wireless-charging-puck-schematic.svg": {
+      "hash": "8647494b585867bde9f545749b94df30c6924d0892a0ddda8c22f235d3680a67",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/86/8647494b585867bde9f545749b94df30c6924d0892a0ddda8c22f235d3680a67"
+    },
+    "assets/products/wireless-charging-puck-top.svg": {
+      "hash": "8fd24aff616a56d7845d4b31588451f9d3e289ec07212bfe49eefc51fb43fe40",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/8f/8fd24aff616a56d7845d4b31588451f9d3e289ec07212bfe49eefc51fb43fe40"
+    },
+    "hyperframes.json": {
+      "hash": "e3482479a509c30ea36cc4251a9bdcc286ce656f08471ba1015ca5bb212fd306",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e3/e3482479a509c30ea36cc4251a9bdcc286ce656f08471ba1015ca5bb212fd306"
+    },
+    "index.html": {
+      "hash": "f9a3b4774a963ffdbdcc6dd0da81671e03cfc914e12d1d7ff9bddcdabe0a9d84",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f9/f9a3b4774a963ffdbdcc6dd0da81671e03cfc914e12d1d7ff9bddcdabe0a9d84"
+    },
+    "meta.json": {
+      "hash": "e5d0d898da24d9017697463629bb8a383f89e6dab6ce3d2490cf199abc21863f",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e5/e5d0d898da24d9017697463629bb8a383f89e6dab6ce3d2490cf199abc21863f"
+    },
+    "package.json": {
+      "hash": "f14c4ec7c6c983164ae68a26fa59c90d5efd73405242745280b39793eb276873",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f1/f14c4ec7c6c983164ae68a26fa59c90d5efd73405242745280b39793eb276873"
+    },
+    "assets/music/bgm.mp3": {
+      "hash": "f9912f2c962ada1e579f5ccc5a7d854d67e5e81ee96a7dd8c885a8480ae58d09",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f9/f9912f2c962ada1e579f5ccc5a7d854d67e5e81ee96a7dd8c885a8480ae58d09"
+    }
+  },
+  "revisions": {
+    "ed21dce5-1101-4a8c-8fff-f2c0438d727a": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792801731087,
+      "endedAt": 1792801731093,
+      "files": {
+        "index.html": {
+          "before": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/e5/e5619c57c568cf17fc5fec88cc7b2f3bf79a5382a3f38eb2020513127c754fe2",
+          "after": "/Users/caleblickteig/.cache/hyperframes/history/76124990-ecd4-43b6-ad3e-21fcb13c1e94/blobs/f9/f9a3b4774a963ffdbdcc6dd0da81671e03cfc914e12d1d7ff9bddcdabe0a9d84"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "ed21dce5-1101-4a8c-8fff-f2c0438d727a",
+      "id": "c5e66966-132e-45e9-a17a-2ea3a1af3be8"
+    },
+    "revisions": {
+      "ed21dce5-1101-4a8c-8fff-f2c0438d727a": [
+        {
+          "id": "c5e66966-132e-45e9-a17a-2ea3a1af3be8",
+          "scope": "project",
+          "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim2-viral-gadgets/.hyperframes/artifacts/checks/c5e66966-132e-45e9-a17a-2ea3a1af3be8.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 10,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792801750182,
+          "contentHash": "19c8996120c222a1df885dde34f62c7dfa60dc35279f77ba08a7870eb9a60004",
+          "revision": "ed21dce5-1101-4a8c-8fff-f2c0438d727a",
+          "inputFingerprint": "01633cd788ae19eff9445ebdcf6ac844d172ff77d9ee8ae407c47c43390c6b98",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "54057c4d-8f09-4110-a874-9c1ff81cec1b",
+        "scope": "project",
+        "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim2-viral-gadgets/.hyperframes/artifacts/checks/54057c4d-8f09-4110-a874-9c1ff81cec1b.json",
+        "metadata": {
+          "ok": false,
+          "browserSkipped": true,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 10,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792801720080,
+        "contentHash": "561c8f5b19f3c29f142cbe1390c428f63249dbc06f16751cf1a304173957af8d",
+        "revision": null,
+        "inputFingerprint": "67e2c9fc9be55fe0c64be642b0162602a5c17b2d108210231acda1d155fc2177",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  }
+}

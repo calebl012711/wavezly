@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0f172a;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #ffffff;
+      }
+      #root {
+        width: 1920px;
+        height: 1080px;
+        position: relative;
+        background: linear-gradient(135deg, #090d16 0%, #1e293b 100%);
+      }
+      .clip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px;
+      }
+
+      /* Clean Tech Pill */
+      .app-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid #38bdf8;
+        color: #38bdf8;
+        padding: 8px 20px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      /* Scene 1: The Problem */
+      #scene-gap {
+        flex-direction: column;
+        text-align: center;
+      }
+      .gap-headline {
+        font-size: 72px;
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 30px;
+      }
+      .gap-headline span {
+        color: #ef4444;
+      }
+      .gap-visual-box {
+        width: 800px;
+        height: 280px;
+        background: #1e293b;
+        border: 2px dashed #475569;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        padding: 24px;
+        gap: 20px;
+        position: relative;
+      }
+      .tray-block {
+        width: 60%;
+        height: 100%;
+        background: #334155;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 700;
+        color: #94a3b8;
+      }
+      .waste-zone {
+        flex: 1;
+        height: 100%;
+        background: rgba(239, 68, 68, 0.15);
+        border: 2px solid #ef4444;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #f87171;
+        font-weight: 800;
+        font-size: 22px;
+      }
+
+      /* Scene 2: Customizer Simulator */
+      #scene-customizer {
+        gap: 60px;
+      }
+      .cust-ui-card {
+        width: 580px;
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 20px;
+        padding: 36px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+      .cust-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 28px;
+      }
+      .preset-chip {
+        background: #0284c7;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 800;
+        padding: 6px 14px;
+        border-radius: 6px;
+      }
+      .slider-group {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .slider-row {
+        background: #0f172a;
+        padding: 16px 20px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .slider-label {
+        font-size: 18px;
+        font-weight: 600;
+        color: #94a3b8;
+      }
+      .slider-val {
+        font-size: 26px;
+        font-weight: 800;
+        color: #38bdf8;
+        font-family: monospace;
+      }
+      .mesh-preview-card {
+        width: 780px;
+        height: 540px;
+        background: #0f172a;
+        border: 2px solid #38bdf8;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 60px rgba(56, 189, 248, 0.2);
+      }
+      .mesh-grid-3d {
+        width: 560px;
+        height: 360px;
+        border: 3px solid #ff9900;
+        border-radius: 12px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 12px;
+        padding: 16px;
+        background: rgba(255, 153, 0, 0.05);
+        box-shadow: inset 0 0 40px rgba(255, 153, 0, 0.1);
+      }
+      .grid-cell {
+        border: 2px dashed rgba(255, 153, 0, 0.4);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffd814;
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .mesh-tag {
+        position: absolute;
+        bottom: 24px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid #334155;
+        padding: 8px 24px;
+        border-radius: 999px;
+        font-size: 16px;
+        color: #94a3b8;
+      }
+      .mesh-tag strong {
+        color: #38bdf8;
+      }
+
+      /* Scene 3: Zero-Gap Fit */
+      #scene-fit {
+        flex-direction: column;
+        text-align: center;
+      }
+      .fit-badge {
+        background: #22c55e;
+        color: #000000;
+        font-size: 20px;
+        font-weight: 900;
+        padding: 8px 24px;
+        border-radius: 999px;
+        letter-spacing: 0.05em;
+        margin-bottom: 24px;
+      }
+      .fit-headline {
+        font-size: 76px;
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
+      .fit-headline span {
+        color: #22c55e;
+      }
+      .fit-card-box {
+        width: 840px;
+        height: 380px;
+        background: #1e293b;
+        border: 3px solid #22c55e;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 0 60px rgba(34, 197, 94, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .fit-card-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+      .guarantee-sub {
+        font-size: 24px;
+        color: #94a3b8;
+        margin-top: 24px;
+        max-width: 800px;
+      }
+
+      /* Scene 4: Outro */
+      #scene-outro {
+        flex-direction: column;
+        text-align: center;
+      }
+      .outro-title {
+        font-size: 80px;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+      .outro-title span {
+        color: #ff9900;
+      }
+      .app-store-cta {
+        background: #38bdf8;
+        color: #0f172a;
+        font-size: 32px;
+        font-weight: 900;
+        padding: 22px 56px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(56, 189, 248, 0.5);
+      }
+      .init-hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="16"
+      data-width="1920"
+      data-height="1080"
+    >
+      <audio id="bgm" data-start="0" data-duration="16" data-track-index="1" data-volume="0.85" src="assets/music/bgm.mp3"></audio>
+
+      <!-- Scene 1: The Problem (0.0s - 4.0s) -->
+      <div id="scene-gap" class="clip" data-start="0" data-duration="4.0">
+        <div class="app-pill">The Drawer Organizer Dilemma</div>
+        <h1 class="gap-headline">
+          TIRED OF TRAYS THAT <span>"ALMOST"</span> FIT?
+        </h1>
+        <div class="gap-visual-box">
+          <div class="tray-block">Store-Bought Fixed Size (240mm)</div>
+          <div class="waste-zone">
+            <span>⚠️ 55mm DEAD GAP</span>
+            <span style="font-size: 15px; font-weight: 600; margin-top: 6px;">Wiggles & rattles every open</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2: Customizer Simulator (4.0s - 8.5s) -->
+      <div id="scene-customizer" class="clip init-hidden" data-layout-ignore data-start="4.0" data-duration="4.5">
+        <div class="cust-ui-card" data-layout-ignore>
+          <div class="cust-header" data-layout-ignore>
+            <span style="font-size: 22px; font-weight: 800;">Parametric Customizer</span>
+            <span class="preset-chip" data-layout-ignore>IKEA ALEX PRESET</span>
+          </div>
+          <div class="slider-group" data-layout-ignore>
+            <div class="slider-row" data-layout-ignore>
+              <span class="slider-label" data-layout-ignore>Width (X)</span>
+              <span class="slider-val" id="val-w" data-layout-ignore>295 mm</span>
+            </div>
+            <div class="slider-row" data-layout-ignore>
+              <span class="slider-label" data-layout-ignore>Depth (Y)</span>
+              <span class="slider-val" id="val-d" data-layout-ignore>524 mm</span>
+            </div>
+            <div class="slider-row" data-layout-ignore>
+              <span class="slider-label" data-layout-ignore>Height (Z)</span>
+              <span class="slider-val" id="val-h" data-layout-ignore>65 mm</span>
+            </div>
+            <div class="slider-row" data-layout-ignore>
+              <span class="slider-label" data-layout-ignore>Dividers</span>
+              <span class="slider-val" data-layout-ignore style="color: #ffd814;">3 x 4 Matrix</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mesh-preview-card" data-layout-ignore>
+          <div class="mesh-grid-3d" data-layout-ignore>
+            <div class="grid-cell" data-layout-ignore>Slot 01</div>
+            <div class="grid-cell" data-layout-ignore>Slot 02</div>
+            <div class="grid-cell" data-layout-ignore>Slot 03</div>
+            <div class="grid-cell" data-layout-ignore>Slot 04</div>
+            <div class="grid-cell" data-layout-ignore>Slot 05</div>
+            <div class="grid-cell" data-layout-ignore>Slot 06</div>
+          </div>
+          <div class="mesh-tag" data-layout-ignore>
+            Tolerance: <strong>±0.1 mm</strong> • Slicing: <strong>Instant G-Code</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3: Zero-Gap Fit Guarantee (8.5s - 12.5s) -->
+      <div id="scene-fit" class="clip init-hidden" data-layout-ignore data-start="8.5" data-duration="4.0">
+        <div class="fit-badge" data-layout-ignore>100% FIT GUARANTEE</div>
+        <h2 class="fit-headline">
+          PERFECT ZERO-GAP <span>PRECISION</span>.
+        </h2>
+        <div class="fit-card-box">
+          <img src="assets/products/drawer-matrix-real.jpg" alt="Drawer Matrix Real" />
+        </div>
+        <p class="guarantee-sub" data-layout-ignore>
+          If your organizer wiggles by even 1 millimeter, we reprint and ship a replacement for free.
+        </p>
+      </div>
+
+      <!-- Scene 4: Outro (12.5s - 16.0s) -->
+      <div id="scene-outro" class="clip init-hidden" data-start="12.5" data-duration="3.5">
+        <div class="app-pill" style="border-color: #ff9900; color: #ff9900;">Wavezly 3D Studio</div>
+        <h2 class="outro-title">
+          MEASURE ONCE.<br />
+          <span>FIT FOREVER.</span>
+        </h2>
+        <div class="app-store-cta">LAUNCH THE 3D CUSTOMIZER →</div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Frame 0 setup
+      tl.set("#scene-gap", { opacity: 1 }, 0);
+      tl.set("#scene-customizer", { opacity: 0 }, 0);
+      tl.set("#scene-fit", { opacity: 0 }, 0);
+      tl.set("#scene-outro", { opacity: 0 }, 0);
+
+      // SCENE 1 (0.0s - 4.0s)
+      tl.fromTo(".gap-headline", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.2);
+      tl.fromTo(".gap-visual-box", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.4)" }, 0.5);
+      tl.fromTo(".waste-zone", { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 }, 0.9);
+      tl.to(".waste-zone", { scale: 1.04, duration: 0.8, repeat: 1, yoyo: true }, 1.5);
+      tl.to("#scene-gap", { opacity: 0, scale: 0.95, duration: 0.35 }, 3.7);
+
+      // SCENE 2 (4.0s - 8.5s)
+      tl.set("#scene-customizer", { opacity: 1 }, 4.0);
+      tl.fromTo(".cust-ui-card", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.0);
+      tl.fromTo(".mesh-preview-card", { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.2);
+      tl.fromTo("#val-w", { textContent: "100 mm" }, { textContent: "295 mm", duration: 1.2, snap: { textContent: 1 } }, 4.8);
+      tl.fromTo("#val-d", { textContent: "200 mm" }, { textContent: "524 mm", duration: 1.2, snap: { textContent: 1 } }, 5.2);
+      tl.fromTo(".grid-cell", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, stagger: 0.1 }, 5.2);
+      tl.to(".mesh-grid-3d", { scale: 1.05, duration: 0.8, repeat: 1, yoyo: true }, 6.5);
+      tl.to("#scene-customizer", { opacity: 0, scale: 1.05, duration: 0.35 }, 8.2);
+
+      // SCENE 3 (8.5s - 12.5s)
+      tl.set("#scene-fit", { opacity: 1 }, 8.5);
+      tl.fromTo(".fit-badge", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4 }, 8.5);
+      tl.fromTo(".fit-headline", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 8.7);
+      tl.fromTo(".fit-card-box", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.2)" }, 9.0);
+      tl.fromTo(".guarantee-sub", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 9.6);
+      tl.to("#scene-fit", { opacity: 0, y: -30, duration: 0.35 }, 12.2);
+
+      // SCENE 4: Outro (12.5s - 16.0s)
+      tl.set("#scene-outro", { opacity: 1 }, 12.5);
+      tl.fromTo(".outro-title", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.4)" }, 12.6);
+      tl.fromTo(".app-store-cta", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.6)" }, 13.0);
+      tl.to(".app-store-cta", { scale: 1.05, duration: 0.7, repeat: 1, yoyo: true }, 13.8);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

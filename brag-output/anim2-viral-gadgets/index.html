@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: 'Impact';
+        src: local('Impact');
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #090d16;
+        font-family: Impact, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #ffffff;
+      }
+      #root {
+        width: 1080px;
+        height: 1920px;
+        position: relative;
+        background: radial-gradient(circle at 50% 40%, #1e1b4b 0%, #090d16 75%);
+      }
+      .clip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 40px;
+        text-align: center;
+      }
+
+      /* TikTok / Reel UI Overlays */
+      .tiktok-header {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        z-index: 100;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      .brand-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(19, 25, 33, 0.9);
+        border: 2px solid #ff9900;
+        border-radius: 999px;
+        padding: 8px 20px;
+      }
+      .brand-pill img {
+        height: 28px;
+        width: auto;
+      }
+      .brand-pill span {
+        font-size: 18px;
+        font-weight: 800;
+        color: #ffffff;
+      }
+      .live-views {
+        background: #ef4444;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 900;
+        padding: 6px 16px;
+        border-radius: 999px;
+        letter-spacing: 0.05em;
+        animation: pulse 1s infinite alternate;
+      }
+
+      /* Scene 1: Chaotic Hook */
+      .alert-banner {
+        background: #dc2626;
+        color: #ffffff;
+        font-size: 32px;
+        font-weight: 900;
+        padding: 12px 32px;
+        border-radius: 8px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+        box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+      }
+      .big-headline {
+        font-size: 96px;
+        line-height: 0.95;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        margin-bottom: 30px;
+      }
+      .yellow-highlight {
+        color: #ffd814;
+        text-shadow: 0 0 30px rgba(255, 216, 20, 0.7);
+      }
+      .orange-highlight {
+        color: #ff9900;
+        text-shadow: 0 0 30px rgba(255, 153, 0, 0.7);
+      }
+      .hero-fidget-preview {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(255,153,0,0.2) 0%, transparent 70%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .hero-fidget-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      /* Scene 2: Dragon */
+      .product-title-badge {
+        background: #ffd814;
+        color: #0f1111;
+        font-size: 36px;
+        font-weight: 900;
+        padding: 10px 28px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      .dragon-showcase {
+        width: 680px;
+        height: 680px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+      .dragon-showcase img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 20px 40px rgba(255,153,0,0.4));
+      }
+      .spec-pill-row {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+        max-width: 700px;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      .spec-pill {
+        background: #1e293b;
+        border: 2px solid #334155;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-size: 24px;
+        font-weight: 800;
+        display: flex;
+        justify-content: space-between;
+      }
+      .spec-pill span:last-child {
+        color: #ff9900;
+      }
+
+      /* Scene 3: Viral Grid */
+      .viral-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        width: 100%;
+        max-width: 800px;
+        margin-top: 30px;
+      }
+      .viral-card {
+        background: #1e293b;
+        border: 2px solid #334155;
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .viral-card img {
+        width: 240px;
+        height: 240px;
+        object-fit: contain;
+        margin-bottom: 16px;
+      }
+      .viral-card h3 {
+        font-size: 28px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+      .viral-card p {
+        font-size: 18px;
+        font-family: -apple-system, sans-serif;
+        color: #ffd814;
+        font-weight: 700;
+        margin-top: 6px;
+      }
+
+      /* Scene 4: Punchline Outro */
+      .outro-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .punchline-callout {
+        font-size: 64px;
+        line-height: 1.1;
+        text-transform: uppercase;
+      }
+      .cta-tiktok-btn {
+        background: linear-gradient(135deg, #ff9900 0%, #ffd814 100%);
+        color: #000000;
+        font-size: 44px;
+        font-weight: 900;
+        padding: 28px 60px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        box-shadow: 0 15px 50px rgba(255, 153, 0, 0.7);
+      }
+      .prime-shipping-tag {
+        font-family: -apple-system, sans-serif;
+        font-size: 24px;
+        font-weight: 800;
+        color: #38bdf8;
+      }
+      .init-hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1080"
+      data-height="1920"
+    >
+      <audio id="bgm" data-start="0" data-duration="15" data-track-index="1" data-volume="0.9" src="assets/music/bgm.mp3"></audio>
+
+      <!-- Persistent UI Header -->
+      <div class="tiktok-header" data-layout-ignore>
+        <div class="brand-pill" data-layout-ignore>
+          <img src="assets/logo/wavezly-logo.png" alt="Wavezly" />
+          <span>WAVEZLY.COM</span>
+        </div>
+        <div class="live-views" data-layout-ignore>🔥 42 SOLD THIS HOUR</div>
+      </div>
+
+      <!-- Scene 1: Chaotic Hook (0.0s - 3.5s) -->
+      <div id="scene-hook" class="clip" data-start="0" data-duration="3.5">
+        <div class="alert-banner" data-layout-ignore>⚠️ DO NOT BUY A 3D PRINTER ⚠️</div>
+        <h1 class="big-headline">
+          WE PRINT THE<br />
+          <span class="yellow-highlight">COOLEST TOYS</span><br />
+          FOR YOU.
+        </h1>
+        <div class="hero-fidget-preview">
+          <img src="assets/products/crystal-dragon-hero.svg" alt="Crystal Dragon" />
+        </div>
+      </div>
+
+      <!-- Scene 2: Dragon Print-in-Place (3.5s - 7.5s) -->
+      <div id="scene-dragon" class="clip init-hidden" data-layout-ignore data-start="3.5" data-duration="4.0">
+        <div class="product-title-badge" data-layout-ignore>Articulated Gem Dragon</div>
+        <h2 class="big-headline" style="font-size: 72px;">
+          PRINTED IN <span class="orange-highlight">ONE PIECE</span>.<br />
+          ZERO ASSEMBLY.
+        </h2>
+        <div class="dragon-showcase">
+          <img src="assets/products/crystal-dragon-hero.svg" alt="Dragon" />
+        </div>
+        <div class="spec-pill-row" data-layout-ignore>
+          <div class="spec-pill" data-layout-ignore>
+            <span>Material</span>
+            <span>Silk Multi-Color PLA</span>
+          </div>
+          <div class="spec-pill" data-layout-ignore>
+            <span>Joints</span>
+            <span>Fluid Print-in-Place Articulation</span>
+          </div>
+          <div class="spec-pill" data-layout-ignore>
+            <span>Price</span>
+            <span>Only $24.99</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3: Viral Gadgets (7.5s - 11.5s) -->
+      <div id="scene-viral" class="clip init-hidden" data-layout-ignore data-start="7.5" data-duration="4.0">
+        <h2 class="big-headline" style="font-size: 72px;">
+          SATISFYING <span class="yellow-highlight">SENSORY</span><br />
+          GADGETS
+        </h2>
+        <div class="viral-split" data-layout-ignore>
+          <div class="viral-card" id="vcard-1" data-layout-ignore>
+            <img src="assets/products/gyro-cube-hero.svg" alt="Gyro Cube" />
+            <h3 data-layout-ignore>Kinetic Gyro Cube</h3>
+            <p data-layout-ignore>Infinite 60FPS Spin • $18</p>
+          </div>
+          <div class="viral-card" id="vcard-2" data-layout-ignore>
+            <img src="assets/products/low-poly-planter-hero.svg" alt="Planter" />
+            <h3 data-layout-ignore>Low-Poly Planter</h3>
+            <p data-layout-ignore>Dual-Chamber Self-Watering • $19.99</p>
+          </div>
+        </div>
+        <div class="spec-pill-row" data-layout-ignore style="margin-top: 30px;">
+          <div class="spec-pill" data-layout-ignore>
+            <span>Origin</span>
+            <span>Boise, Idaho USA Print Studio</span>
+          </div>
+          <div class="spec-pill" data-layout-ignore>
+            <span>Delivery</span>
+            <span>Ships in 48 Hours ⚡</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4: Punchline Outro (11.5s - 15.0s) -->
+      <div id="scene-outro" class="clip init-hidden" data-start="11.5" data-duration="3.5">
+        <div class="outro-box">
+          <div class="alert-banner" style="background: #ff9900; color: #000;">NO CALIBRATION • NO MESS</div>
+          <h2 class="punchline-callout">
+            JUST UNBOX<br />
+            AND <span class="yellow-highlight">PLAY</span>.
+          </h2>
+          <div class="cta-tiktok-btn">SHOP ON WAVEZLY.COM →</div>
+          <div class="prime-shipping-tag">🚀 48-Hour Domestic USA Dispatch</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Frame 0 setup
+      tl.set("#scene-hook", { opacity: 1 }, 0);
+      tl.set("#scene-dragon", { opacity: 0 }, 0);
+      tl.set("#scene-viral", { opacity: 0 }, 0);
+      tl.set("#scene-outro", { opacity: 0 }, 0);
+
+      // SCENE 1 (0.0s - 3.5s)
+      tl.fromTo(".alert-banner", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2)" }, 0.1);
+      tl.fromTo(".big-headline", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, 0.3);
+      tl.fromTo(".hero-fidget-preview", { scale: 0.5, rotation: -20, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.6, ease: "elastic.out(1, 0.7)" }, 0.6);
+      tl.to(".hero-fidget-preview img", { rotation: 10, duration: 0.8, repeat: 1, yoyo: true, ease: "sine.inOut" }, 1.4);
+      tl.to("#scene-hook", { scale: 1.1, opacity: 0, duration: 0.3 }, 3.2);
+
+      // SCENE 2 (3.5s - 7.5s)
+      tl.set("#scene-dragon", { opacity: 1 }, 3.5);
+      tl.fromTo(".product-title-badge", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "back.out(1.5)" }, 3.5);
+      tl.fromTo(".dragon-showcase", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.3)" }, 3.8);
+      tl.to(".dragon-showcase img", { scale: 1.08, duration: 1.2, repeat: 1, yoyo: true }, 4.4);
+      tl.fromTo(".spec-pill-row .spec-pill", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, stagger: 0.15 }, 4.2);
+      tl.to("#scene-dragon", { opacity: 0, x: -100, duration: 0.35 }, 7.15);
+
+      // SCENE 3 (7.5s - 11.5s)
+      tl.set("#scene-viral", { opacity: 1 }, 7.5);
+      tl.fromTo("#vcard-1", { y: 60, opacity: 0, rotation: -5 }, { y: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "back.out(1.4)" }, 7.6);
+      tl.fromTo("#vcard-2", { y: 60, opacity: 0, rotation: 5 }, { y: 0, opacity: 1, rotation: 0, duration: 0.45, ease: "back.out(1.4)" }, 7.9);
+      tl.to("#vcard-1 img", { rotation: 15, duration: 0.8, repeat: 1, yoyo: true }, 8.4);
+      tl.to("#vcard-2 img", { scale: 1.05, duration: 0.8, repeat: 1, yoyo: true }, 8.8);
+      tl.to("#scene-viral", { opacity: 0, scale: 0.9, duration: 0.35 }, 11.15);
+
+      // SCENE 4: Outro (11.5s - 15.0s)
+      tl.set("#scene-outro", { opacity: 1 }, 11.5);
+      tl.fromTo(".punchline-callout", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.5)" }, 11.6);
+      tl.fromTo(".cta-tiktok-btn", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.6)" }, 12.0);
+      tl.to(".cta-tiktok-btn", { scale: 1.06, duration: 0.5, repeat: 2, yoyo: true }, 12.6);
+      tl.fromTo(".prime-shipping-tag", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 12.4);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

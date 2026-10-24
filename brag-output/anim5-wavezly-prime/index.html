@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #050811;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #ffffff;
+      }
+      #root {
+        width: 1920px;
+        height: 1080px;
+        position: relative;
+        background: radial-gradient(circle at 50% 40%, #172554 0%, #050811 80%);
+      }
+      .clip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px;
+        text-align: center;
+      }
+
+      /* Cinematic Letterbox effect */
+      .letterbox-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: #000000;
+        z-index: 100;
+      }
+      .letterbox-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: #000000;
+        z-index: 100;
+      }
+
+      /* Scene 1: Cinematic Trailer Hook */
+      .cinema-sub {
+        font-size: 20px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #ff9900;
+        font-weight: 800;
+        margin-bottom: 24px;
+      }
+      .cinema-headline {
+        font-size: 88px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        max-width: 1500px;
+      }
+      .cinema-headline .highlight-amber {
+        color: #ff9900;
+        text-shadow: 0 0 50px rgba(255, 153, 0, 0.7);
+      }
+      .cinema-headline .highlight-gold {
+        color: #ffd814;
+        text-shadow: 0 0 50px rgba(255, 216, 20, 0.7);
+      }
+
+      /* Scene 2: Boise Idaho Farm */
+      .farm-split {
+        display: flex;
+        align-items: center;
+        gap: 80px;
+        text-align: left;
+        max-width: 1500px;
+      }
+      .farm-info h2 {
+        font-size: 64px;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+      .farm-metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .farm-card {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        border-left: 4px solid #ff9900;
+      }
+      .farm-card .val {
+        font-size: 44px;
+        font-weight: 900;
+        color: #ffd814;
+      }
+      .farm-card .lbl {
+        font-size: 15px;
+        color: #94a3b8;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 4px;
+      }
+      .farm-visual-terminal {
+        width: 600px;
+        height: 440px;
+        background: #020617;
+        border: 2px solid #1e293b;
+        border-radius: 16px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 0 80px rgba(255, 153, 0, 0.15);
+      }
+      .terminal-row {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #1e293b;
+        padding-bottom: 12px;
+        font-family: monospace;
+        font-size: 16px;
+      }
+      .terminal-row span:last-child {
+        color: #22c55e;
+        font-weight: 700;
+      }
+
+      /* Scene 3: Logistics Velocity */
+      .map-card {
+        width: 1000px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 2px solid #38bdf8;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 0 80px rgba(56, 189, 248, 0.25);
+      }
+      .transit-headline {
+        font-size: 44px;
+        font-weight: 900;
+        margin-bottom: 24px;
+      }
+      .transit-nodes {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 30px;
+      }
+      .node-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .node-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #0284c7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 0 30px #0284c7;
+      }
+      .node-name {
+        font-size: 18px;
+        font-weight: 700;
+      }
+      .node-time {
+        font-size: 14px;
+        color: #38bdf8;
+      }
+
+      /* Scene 4: Cinematic Outro */
+      .prime-crest {
+        height: 120px;
+        margin-bottom: 24px;
+      }
+      .prime-gold-badge {
+        background: linear-gradient(90deg, #ffd814 0%, #ff9900 100%);
+        color: #000000;
+        font-size: 20px;
+        font-weight: 900;
+        padding: 8px 30px;
+        border-radius: 999px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+      .anthem-title {
+        font-size: 80px;
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 30px;
+      }
+      .prime-cta {
+        background: #ff9900;
+        color: #050811;
+        font-size: 34px;
+        font-weight: 900;
+        padding: 22px 64px;
+        border-radius: 16px;
+        letter-spacing: 0.02em;
+        box-shadow: 0 0 50px rgba(255, 153, 0, 0.7);
+      }
+      .init-hidden {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20"
+      data-width="1920"
+      data-height="1080"
+    >
+      <audio id="bgm" data-start="0" data-duration="20" data-track-index="1" data-volume="0.85" src="assets/music/bgm.mp3"></audio>
+
+      <!-- Letterbox borders -->
+      <div class="letterbox-top"></div>
+      <div class="letterbox-bottom"></div>
+
+      <!-- Scene 1: Trailer Hook (0.0s - 4.5s) -->
+      <div id="scene-hook" class="clip" data-start="0" data-duration="4.5">
+        <div class="cinema-sub" data-layout-ignore>WAVEZLY PRIME MANIFESTO</div>
+        <h1 class="cinema-headline">
+          GLOBAL SUPPLY CHAINS TAKE <span class="highlight-amber">6 WEEKS</span>.<br />
+          WAVEZLY TAKES <span class="highlight-gold">48 HOURS</span>.
+        </h1>
+      </div>
+
+      <!-- Scene 2: Boise Idaho Farm (4.5s - 9.5s) -->
+      <div id="scene-farm" class="clip init-hidden" data-layout-ignore data-start="4.5" data-duration="5.0">
+        <div class="farm-split" data-layout-ignore>
+          <div class="farm-info" data-layout-ignore>
+            <div class="cinema-sub" data-layout-ignore style="margin-bottom: 12px;">BOISE, IDAHO PRINT STUDIO</div>
+            <h2 data-layout-ignore>The Additive Revolution.</h2>
+            <div class="farm-metrics" data-layout-ignore>
+              <div class="farm-card" data-layout-ignore>
+                <div class="val" data-layout-ignore>250+</div>
+                <div class="lbl" data-layout-ignore>Automated CoreXY Units</div>
+              </div>
+              <div class="farm-card" data-layout-ignore>
+                <div class="val" data-layout-ignore>0.05mm</div>
+                <div class="lbl" data-layout-ignore>Aerospace Layer Slicing</div>
+              </div>
+              <div class="farm-card" data-layout-ignore>
+                <div class="val" data-layout-ignore>100%</div>
+                <div class="lbl" data-layout-ignore>Domestic USA Filament</div>
+              </div>
+              <div class="farm-card" data-layout-ignore>
+                <div class="val" data-layout-ignore>48h</div>
+                <div class="lbl" data-layout-ignore>Dispatch Guarantee</div>
+              </div>
+            </div>
+          </div>
+          <div class="farm-visual-terminal" data-layout-ignore>
+            <div data-layout-ignore style="font-weight: 800; font-size: 20px; color: #ffd814; border-bottom: 1px solid #334155; padding-bottom: 12px;">
+              REAL-TIME PRODUCTION PIPELINE
+            </div>
+            <div class="terminal-row" data-layout-ignore><span>COREXY CLUSTER 01</span><span>ACTIVE • 42 PRINTERS</span></div>
+            <div class="terminal-row" data-layout-ignore><span>COREXY CLUSTER 02</span><span>ACTIVE • 64 PRINTERS</span></div>
+            <div class="terminal-row" data-layout-ignore><span>COREXY CLUSTER 03</span><span>ACTIVE • 58 PRINTERS</span></div>
+            <div class="terminal-row" data-layout-ignore><span>AI OPTICAL INSPECTION</span><span>100% PASS RATE</span></div>
+            <div class="terminal-row" data-layout-ignore><span>AUTO BED CLEARING</span><span>SYNCHRONIZED</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3: Logistics Velocity (9.5s - 15.0s) -->
+      <div id="scene-logistics" class="clip init-hidden" data-layout-ignore data-start="9.5" data-duration="5.5">
+        <div class="map-card" data-layout-ignore>
+          <div class="cinema-sub" data-layout-ignore style="margin-bottom: 8px;">DOMESTIC LOGISTICS TRANSIT</div>
+          <h2 class="transit-headline" data-layout-ignore>From Boise Print Bed to Your Doorstep</h2>
+          <div class="transit-nodes" data-layout-ignore>
+            <div class="node-box" id="node-1" data-layout-ignore>
+              <div class="node-circle" data-layout-ignore>⚡</div>
+              <span class="node-name" data-layout-ignore>Print Farm Queue</span>
+              <span class="node-time" data-layout-ignore>Hour 0 – Sliced</span>
+            </div>
+            <div style="font-size: 32px; color: #38bdf8;" data-layout-ignore>➔</div>
+            <div class="node-box" id="node-2" data-layout-ignore>
+              <div class="node-circle" data-layout-ignore>🖨️</div>
+              <span class="node-name" data-layout-ignore>Precision Print</span>
+              <span class="node-time" data-layout-ignore>Hour 4 – Cured</span>
+            </div>
+            <div style="font-size: 32px; color: #38bdf8;" data-layout-ignore>➔</div>
+            <div class="node-box" id="node-3" data-layout-ignore>
+              <div class="node-circle" data-layout-ignore>🔍</div>
+              <span class="node-name" data-layout-ignore>AI Optical QC</span>
+              <span class="node-time" data-layout-ignore>Hour 6 – Verified</span>
+            </div>
+            <div style="font-size: 32px; color: #38bdf8;" data-layout-ignore>➔</div>
+            <div class="node-box" id="node-4" data-layout-ignore>
+              <div class="node-circle" data-layout-ignore>📦</div>
+              <span class="node-name" data-layout-ignore>Priority Dispatch</span>
+              <span class="node-time" data-layout-ignore>Hour 48 – Delivered</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4: Cinematic Outro (15.0s - 20.0s) -->
+      <div id="scene-outro" class="clip init-hidden" data-start="15.0" data-duration="5.0">
+        <img class="prime-crest" src="assets/logo/wavezly-logo.png" alt="Wavezly" />
+        <div class="prime-gold-badge">WAVEZLY PRIME • LOCAL AMERICAN PRODUCTION</div>
+        <h2 class="anthem-title">
+          THE FUTURE OF 3D PRINTING<br />
+          IS DOMESTIC.
+        </h2>
+        <div class="prime-cta">EXPLORE WAVEZLY PRIME →</div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Frame 0 setup
+      tl.set("#scene-hook", { opacity: 1 }, 0);
+      tl.set(".cinema-headline", { opacity: 1 }, 0);
+      tl.set("#scene-farm", { opacity: 0 }, 0);
+      tl.set("#scene-logistics", { opacity: 0 }, 0);
+      tl.set("#scene-outro", { opacity: 0 }, 0);
+
+      // SCENE 1 (0.0s - 4.5s)
+      tl.fromTo(".cinema-sub", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.2);
+      tl.fromTo(".cinema-headline", { scale: 0.95 }, { scale: 1, duration: 0.8, ease: "power2.out" }, 0.4);
+      tl.to(".cinema-headline .highlight-amber", { scale: 1.03, duration: 1.0, repeat: 1, yoyo: true }, 1.4);
+      tl.to("#scene-hook", { opacity: 0, scale: 0.95, duration: 0.4 }, 4.1);
+
+      // SCENE 2 (4.5s - 9.5s)
+      tl.set("#scene-farm", { opacity: 1 }, 4.5);
+      tl.fromTo(".farm-info", { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.5);
+      tl.fromTo(".farm-visual-terminal", { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.7);
+      tl.fromTo(".farm-card", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, stagger: 0.1 }, 5.2);
+      tl.fromTo(".terminal-row", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.25, stagger: 0.15 }, 5.6);
+      tl.to("#scene-farm", { opacity: 0, y: -30, duration: 0.4 }, 9.1);
+
+      // SCENE 3 (9.5s - 15.0s)
+      tl.set("#scene-logistics", { opacity: 1 }, 9.5);
+      tl.fromTo(".map-card", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power3.out" }, 9.5);
+      tl.fromTo("#node-1", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 10.2);
+      tl.fromTo("#node-2", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 10.7);
+      tl.fromTo("#node-3", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 11.2);
+      tl.fromTo("#node-4", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 11.7);
+      tl.to("#scene-logistics", { opacity: 0, scale: 1.05, duration: 0.4 }, 14.6);
+
+      // SCENE 4: Outro (15.0s - 20.0s)
+      tl.set("#scene-outro", { opacity: 1 }, 15.0);
+      tl.fromTo(".prime-crest", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 15.0);
+      tl.fromTo(".prime-gold-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 15.4);
+      tl.fromTo(".anthem-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 15.7);
+      tl.fromTo(".prime-cta", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "elastic.out(1, 0.6)" }, 16.3);
+      tl.to(".prime-cta", { scale: 1.05, duration: 0.8, repeat: 1, yoyo: true }, 17.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
