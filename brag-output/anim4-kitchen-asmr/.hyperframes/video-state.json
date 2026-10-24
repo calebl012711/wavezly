@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "c8cdbe64-6f88-4477-bd4e-18340a66735c",
-  "currentRevision": "21232b39-1000-46ce-b8c0-b3850e2c70ef",
+  "currentRevision": "f3b23182-b074-4879-b649-16f8b3b32134",
   "pendingChanges": false,
   "files": {
     "assets/images/audiophile_dac_plinth_setup_1792630045086.jpg": {
@@ -717,8 +717,8 @@
       "content": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/e3/e3482479a509c30ea36cc4251a9bdcc286ce656f08471ba1015ca5bb212fd306"
     },
     "index.html": {
-      "hash": "aa7f8f240541e30afb9f0e764203a6a5156558ca018f57372417828eacd29679",
-      "content": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/aa/aa7f8f240541e30afb9f0e764203a6a5156558ca018f57372417828eacd29679"
+      "hash": "a1bfc029fb55f64d14304def79dcce47584ad70cfcaaf75a24c834771ea68526",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/a1/a1bfc029fb55f64d14304def79dcce47584ad70cfcaaf75a24c834771ea68526"
     },
     "meta.json": {
       "hash": "454485d99fe2492c73c9e7f7836c9befdcc1e3443099c798991fb37ee5231066",
@@ -729,8 +729,8 @@
       "content": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/de/dea72e76a94dca28a180d22bc0015186b81fd8492aea213753993f46ece4d524"
     },
     "assets/music/bgm.mp3": {
-      "hash": "5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1",
-      "content": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/58/5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1"
+      "hash": "364a546834db4c0c2e3b3240eb6df03e98b7362230154b04c5c614442f6660d7",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/36/364a546834db4c0c2e3b3240eb6df03e98b7362230154b04c5c614442f6660d7"
     }
   },
   "revisions": {
@@ -748,19 +748,37 @@
           "after": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/aa/aa7f8f240541e30afb9f0e764203a6a5156558ca018f57372417828eacd29679"
         }
       }
+    },
+    "f3b23182-b074-4879-b649-16f8b3b32134": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792802764838,
+      "endedAt": 1792802764846,
+      "files": {
+        "assets/music/bgm.mp3": {
+          "before": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/58/5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1",
+          "after": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/36/364a546834db4c0c2e3b3240eb6df03e98b7362230154b04c5c614442f6660d7"
+        },
+        "index.html": {
+          "before": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/aa/aa7f8f240541e30afb9f0e764203a6a5156558ca018f57372417828eacd29679",
+          "after": "/Users/caleblickteig/.cache/hyperframes/history/c8cdbe64-6f88-4477-bd4e-18340a66735c/blobs/a1/a1bfc029fb55f64d14304def79dcce47584ad70cfcaaf75a24c834771ea68526"
+        }
+      }
     }
   },
   "checks": {
     "latest": {
-      "revision": "21232b39-1000-46ce-b8c0-b3850e2c70ef",
-      "id": "cdd03b52-4f81-479b-813a-f42bffb073be"
+      "revision": "f3b23182-b074-4879-b649-16f8b3b32134",
+      "id": "e58bffa2-aa85-4bfb-934d-6cf628ea2951"
     },
     "revisions": {
       "21232b39-1000-46ce-b8c0-b3850e2c70ef": [
         {
           "id": "b26c4529-0cb7-4980-882f-9ba09d1217d5",
           "scope": "project",
-          "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim4-kitchen-asmr/.hyperframes/artifacts/checks/b26c4529-0cb7-4980-882f-9ba09d1217d5.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -782,12 +800,13 @@
           "revision": "21232b39-1000-46ce-b8c0-b3850e2c70ef",
           "inputFingerprint": "4add295cfdc7426386dac0d7a14f8059145f04b68901c707418e96050be7b62e",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "5bdce180-7bef-4cc0-be91-93e9b0c46c69"
         },
         {
           "id": "cdd03b52-4f81-479b-813a-f42bffb073be",
           "scope": "project",
-          "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim4-kitchen-asmr/.hyperframes/artifacts/checks/cdd03b52-4f81-479b-813a-f42bffb073be.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -808,6 +827,65 @@
           "contentHash": "0bcc5b5c537b1cf07be9dd3b029a0c2902512eadf466de21a89c523b551150bd",
           "revision": "21232b39-1000-46ce-b8c0-b3850e2c70ef",
           "inputFingerprint": "4add295cfdc7426386dac0d7a14f8059145f04b68901c707418e96050be7b62e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "5bdce180-7bef-4cc0-be91-93e9b0c46c69"
+        },
+        {
+          "id": "8194ba2d-2721-430f-ba1b-4a36f3631a7a",
+          "scope": "project",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792802601182,
+          "contentHash": "e78ecd83e968fc7f57ce0b449959601123303761067a1d8586f483c79622f8b0",
+          "revision": "21232b39-1000-46ce-b8c0-b3850e2c70ef",
+          "inputFingerprint": "4add295cfdc7426386dac0d7a14f8059145f04b68901c707418e96050be7b62e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "5bdce180-7bef-4cc0-be91-93e9b0c46c69"
+        }
+      ],
+      "f3b23182-b074-4879-b649-16f8b3b32134": [
+        {
+          "id": "e58bffa2-aa85-4bfb-934d-6cf628ea2951",
+          "scope": "project",
+          "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim4-kitchen-asmr/.hyperframes/artifacts/checks/e58bffa2-aa85-4bfb-934d-6cf628ea2951.json",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792802784948,
+          "contentHash": "1bf263e66360860630cc7b97a428ba3c7fdc5ede79eb354cf0b5d8957ff1b7f2",
+          "revision": "f3b23182-b074-4879-b649-16f8b3b32134",
+          "inputFingerprint": "b0b6e4f6835f429fac7302fafec3f40bc3dba82dce39a19e8416153d08eddbae",
           "inputScope": "local-project-files",
           "attribution": "recorded-revision"
         }
@@ -847,5 +925,18 @@
     "latest": null,
     "revisions": {},
     "unversioned": []
-  }
+  },
+  "renders": {
+    "latest": {
+      "id": "5bdce180-7bef-4cc0-be91-93e9b0c46c69",
+      "completedAt": 1792802974613,
+      "output": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/public/assets/videos/anim4-kitchen-asmr.mp4",
+      "status": "completed_with_warnings",
+      "revision": "f3b23182-b074-4879-b649-16f8b3b32134"
+    },
+    "retainedRevisions": [
+      "f3b23182-b074-4879-b649-16f8b3b32134"
+    ]
+  },
+  "pendingArtifactCleanup": []
 }

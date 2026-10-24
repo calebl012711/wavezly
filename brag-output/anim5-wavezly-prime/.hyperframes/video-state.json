@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "af76ab06-1b49-400c-b96f-ac2b3d7c2f7c",
-  "currentRevision": "2f2f9b12-ceb2-4d21-9c7b-aff0478692eb",
+  "currentRevision": "041f280c-5139-4e60-9130-d2b2564e0a98",
   "pendingChanges": false,
   "files": {
     "assets/images/audiophile_dac_plinth_setup_1792630045086.jpg": {
@@ -717,8 +717,8 @@
       "content": "/Users/caleblickteig/.cache/hyperframes/history/af76ab06-1b49-400c-b96f-ac2b3d7c2f7c/blobs/e3/e3482479a509c30ea36cc4251a9bdcc286ce656f08471ba1015ca5bb212fd306"
     },
     "index.html": {
-      "hash": "af251575f770c30aeeab031d3c3822afd819bcfb0bd2c9a89f90a5419ff8cc55",
-      "content": "/Users/caleblickteig/.cache/hyperframes/history/af76ab06-1b49-400c-b96f-ac2b3d7c2f7c/blobs/af/af251575f770c30aeeab031d3c3822afd819bcfb0bd2c9a89f90a5419ff8cc55"
+      "hash": "480fe329c8924a5c5c65c12aebc9204fb9f7f6eaee132ec5122e0a6cecc38cd6",
+      "content": "/Users/caleblickteig/.cache/hyperframes/history/af76ab06-1b49-400c-b96f-ac2b3d7c2f7c/blobs/48/480fe329c8924a5c5c65c12aebc9204fb9f7f6eaee132ec5122e0a6cecc38cd6"
     },
     "meta.json": {
       "hash": "2b4a3be3e272c8bfbe65dff04cccaa2b03211b5c09bdc0c690bf3768d86d7779",
@@ -767,19 +767,33 @@
           "after": "/Users/caleblickteig/.cache/hyperframes/history/af76ab06-1b49-400c-b96f-ac2b3d7c2f7c/blobs/af/af251575f770c30aeeab031d3c3822afd819bcfb0bd2c9a89f90a5419ff8cc55"
         }
       }
+    },
+    "041f280c-5139-4e60-9130-d2b2564e0a98": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792802983119,
+      "endedAt": 1792802983122,
+      "files": {
+        "index.html": {
+          "before": "/Users/caleblickteig/.cache/hyperframes/history/af76ab06-1b49-400c-b96f-ac2b3d7c2f7c/blobs/af/af251575f770c30aeeab031d3c3822afd819bcfb0bd2c9a89f90a5419ff8cc55",
+          "after": "/Users/caleblickteig/.cache/hyperframes/history/af76ab06-1b49-400c-b96f-ac2b3d7c2f7c/blobs/48/480fe329c8924a5c5c65c12aebc9204fb9f7f6eaee132ec5122e0a6cecc38cd6"
+        }
+      }
     }
   },
   "checks": {
     "latest": {
-      "revision": "2f2f9b12-ceb2-4d21-9c7b-aff0478692eb",
-      "id": "c9d13bc2-49f4-4f47-b4c4-30e60831dda5"
+      "revision": null,
+      "id": "57a3263d-b7ee-4d5a-bc22-cf52e934d11b"
     },
     "revisions": {
       "3e7ff2ff-9e1d-4b1e-a1f3-848f74aaab94": [
         {
           "id": "7fe59e26-b904-445d-99ac-697d09464bbf",
           "scope": "project",
-          "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim5-wavezly-prime/.hyperframes/artifacts/checks/7fe59e26-b904-445d-99ac-697d09464bbf.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -801,14 +815,15 @@
           "revision": "3e7ff2ff-9e1d-4b1e-a1f3-848f74aaab94",
           "inputFingerprint": "70b85ef6b79fc390ac8b285177cf3c05ea3c2ec668fca8d290311a4b3f7bb2c2",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "2a32f9a8-fb78-4804-a9be-b3df90155b70"
         }
       ],
       "2f2f9b12-ceb2-4d21-9c7b-aff0478692eb": [
         {
           "id": "c9d13bc2-49f4-4f47-b4c4-30e60831dda5",
           "scope": "project",
-          "report": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/brag-output/anim5-wavezly-prime/.hyperframes/artifacts/checks/c9d13bc2-49f4-4f47-b4c4-30e60831dda5.json",
           "metadata": {
             "ok": false,
             "browserSkipped": false,
@@ -830,7 +845,37 @@
           "revision": "2f2f9b12-ceb2-4d21-9c7b-aff0478692eb",
           "inputFingerprint": "64567fc29de8aad96e852efae769074b906f8298c9a17ec90502b6e107e47b45",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "2a32f9a8-fb78-4804-a9be-b3df90155b70"
+        },
+        {
+          "id": "00d8d5c5-fa0c-4177-a2b1-393e8f4ea27b",
+          "scope": "project",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792802661064,
+          "contentHash": "edda6120dc4db48a2253c4856b0ab6972414ee6949c38a25adb47606ae62566f",
+          "revision": "2f2f9b12-ceb2-4d21-9c7b-aff0478692eb",
+          "inputFingerprint": "64567fc29de8aad96e852efae769074b906f8298c9a17ec90502b6e107e47b45",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "2a32f9a8-fb78-4804-a9be-b3df90155b70"
         }
       ]
     },
@@ -868,5 +913,18 @@
     "latest": null,
     "revisions": {},
     "unversioned": []
-  }
+  },
+  "renders": {
+    "latest": {
+      "id": "2a32f9a8-fb78-4804-a9be-b3df90155b70",
+      "completedAt": 1792803148063,
+      "output": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/public/assets/videos/anim5-wavezly-prime.mp4",
+      "status": "completed",
+      "revision": "041f280c-5139-4e60-9130-d2b2564e0a98"
+    },
+    "retainedRevisions": [
+      "041f280c-5139-4e60-9130-d2b2564e0a98"
+    ]
+  },
+  "pendingArtifactCleanup": []
 }

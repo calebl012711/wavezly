@@ -242,8 +242,8 @@
       <audio id="bgm" data-start="0" data-duration="20" data-track-index="1" data-volume="0.85" src="assets/music/bgm.mp3"></audio>
 
       <!-- Letterbox borders -->
-      <div class="letterbox-top"></div>
-      <div class="letterbox-bottom"></div>
+      <div class="letterbox-top" data-layout-ignore></div>
+      <div class="letterbox-bottom" data-layout-ignore></div>
 
       <!-- Scene 1: Trailer Hook (0.0s - 4.5s) -->
       <div id="scene-hook" class="clip" data-start="0" data-duration="4.5">
@@ -255,11 +255,11 @@
       </div>
 
       <!-- Scene 2: Boise Idaho Farm (4.5s - 9.5s) -->
-      <div id="scene-farm" class="clip init-hidden" data-layout-ignore data-start="4.5" data-duration="5.0">
-        <div class="farm-split" data-layout-ignore>
-          <div class="farm-info" data-layout-ignore>
+      <div id="scene-farm" class="clip init-hidden" data-start="4.5" data-duration="5.0">
+        <div class="farm-split">
+          <div class="farm-info">
             <div class="cinema-sub" data-layout-ignore style="margin-bottom: 12px;">BOISE, IDAHO PRINT STUDIO</div>
-            <h2 data-layout-ignore>The Additive Revolution.</h2>
+            <h2>The Additive Revolution.</h2>
             <div class="farm-metrics" data-layout-ignore>
               <div class="farm-card" data-layout-ignore>
                 <div class="val" data-layout-ignore>250+</div>
@@ -293,10 +293,10 @@
       </div>
 
       <!-- Scene 3: Logistics Velocity (9.5s - 15.0s) -->
-      <div id="scene-logistics" class="clip init-hidden" data-layout-ignore data-start="9.5" data-duration="5.5">
-        <div class="map-card" data-layout-ignore>
+      <div id="scene-logistics" class="clip init-hidden" data-start="9.5" data-duration="5.5">
+        <div class="map-card">
           <div class="cinema-sub" data-layout-ignore style="margin-bottom: 8px;">DOMESTIC LOGISTICS TRANSIT</div>
-          <h2 class="transit-headline" data-layout-ignore>From Boise Print Bed to Your Doorstep</h2>
+          <h2 class="transit-headline">From Boise Print Bed to Your Doorstep</h2>
           <div class="transit-nodes" data-layout-ignore>
             <div class="node-box" id="node-1" data-layout-ignore>
               <div class="node-circle" data-layout-ignore>⚡</div>
@@ -328,7 +328,7 @@
       <!-- Scene 4: Cinematic Outro (15.0s - 20.0s) -->
       <div id="scene-outro" class="clip init-hidden" data-start="15.0" data-duration="5.0">
         <img class="prime-crest" src="assets/logo/wavezly-logo.png" alt="Wavezly" />
-        <div class="prime-gold-badge">WAVEZLY PRIME • LOCAL AMERICAN PRODUCTION</div>
+        <div class="prime-gold-badge" data-layout-ignore>WAVEZLY PRIME • LOCAL AMERICAN PRODUCTION</div>
         <h2 class="anthem-title">
           THE FUTURE OF 3D PRINTING<br />
           IS DOMESTIC.

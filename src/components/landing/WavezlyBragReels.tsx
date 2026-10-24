@@ -1,53 +1,69 @@
-import React, { useState, useRef, useEffect } from 'react';
+/**
+ * WAVEZLY BRAG REELS & X-STYLE LAUNCH ANIMATIONS SHOWCASE
+ * Features 5 distinct high-converting launch animations built with /brag & Hyperframes:
+ * 1. "The Amazon of 3D Printing Launch" (Tone: polished, 18s)
+ * 2. "Trending 3D Toys & Viral Gadgets" (Tone: chaotic, 15s)
+ * 3. "Measure Anything in 3D" (Tone: app-store, 16s)
+ * 4. "Kitchen & Home Reset ASMR" (Tone: default, 18s)
+ * 5. "Wavezly Prime: Made in USA in 48 Hours" (Tone: cinematic, 20s)
+ *
+ * Provides real-time scrubbing, play/pause, soundtrack audio playback,
+ * speed adjustments, and instant 1-click X/Twitter share copy copy-to-clipboard.
+ */
+
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Play,
   Pause,
   RotateCcw,
   Volume2,
   VolumeX,
-  ExternalLink,
+  Share2,
   Copy,
   Check,
-  Film,
   Sparkles,
+  Sliders,
+  Tv,
 } from 'lucide-react';
+import { playClickSound } from '../../lib/soundEffects';
 
-export interface BragVideo {
+export interface BragReel {
   id: string;
   number: number;
   title: string;
-  tagline: string;
-  tone: string;
+  subtitle: string;
+  tone: 'polished' | 'chaotic' | 'app-store' | 'default' | 'cinematic';
+  toneLabel: string;
+  toneColor: string;
+  aspect: '16:9' | '9:16' | '1:1';
   duration: number; // in seconds
-  aspectRatio: '16:9' | '9:16' | '1:1';
-  musicFile: string;
-  bgmPath: string;
-  compositionPath: string;
+  audioSrc: string;
+  videoSrc?: string;
+  features: string[];
+  xCopy: string;
   tags: string[];
-  keyVisual: string;
-  launchPost: string;
-  storyboard: {
-    time: string;
-    label: string;
-    description: string;
-  }[];
 }
 
-export const BRAG_VIDEOS: BragVideo[] = [
+export const BRAG_REELS: BragReel[] = [
   {
     id: 'anim1-amazon-launch',
     number: 1,
     title: 'The Amazon of 3D Printing Launch',
-    tagline: 'What if Amazon was engineered from scratch for on-demand 3D printing?',
-    tone: 'Polished',
+    subtitle: 'Over 200,000 custom organizer variations & viral toys with 48-hour USA dispatch.',
+    tone: 'polished',
+    toneLabel: 'Polished Launch',
+    toneColor: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+    aspect: '16:9',
     duration: 18,
-    aspectRatio: '16:9',
-    musicFile: 'Happy Beats Business Moves Vol. 1',
-    bgmPath: '/assets/audio/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3',
-    compositionPath: '/brag-output/anim1-amazon-launch/index.html',
-    tags: ['#3DPrinting', '#HardwareStartup', '#AdditiveManufacturing', '#MadeInUSA', '#ProductLaunch'],
-    keyVisual: 'Amazon Smile-Swoosh Logo Lockup + 4-Quad Department Cards + Parametric Customizer',
-    launchPost: `What if Amazon was built from scratch for on-demand 3D printing?
+    audioSrc: '/assets/audio/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3',
+    videoSrc: '/assets/videos/anim1-amazon-launch.mp4',
+    features: [
+      'Amazon dark navigation & Prime 48h badge',
+      'Quad Department Cards with Lightning Deal ticker',
+      'Boise, Idaho 250+ CoreXY Print Farm Telemetry',
+      '100% Fit Guarantee & Slicing Engine',
+    ],
+    xCopy: `What if Amazon was built from scratch for on-demand 3D printing?
 
 Meet @Wavezly. 🌊
 
@@ -63,27 +79,27 @@ Traditional manufacturing is officially obsolete.
 Try the customizer live → wavezly.com
 
 #3DPrinting #HardwareStartup #AdditiveManufacturing #MadeInUSA #ProductLaunch #IndustrialDesign`,
-    storyboard: [
-      { time: '0.0s - 3.0s', label: 'Hook', description: 'Bold text: WHAT IF AMAZON WAS BUILT FOR 3D PRINTING? Wavezly amber logo locks into view.' },
-      { time: '3.0s - 7.5s', label: 'The Departments', description: 'Amazon 4-Quad department cards fly in: Trending 3D, Kitchen, Electronics, Custom Studio (4.9 ★ 4,180 reviews).' },
-      { time: '7.5s - 13.0s', label: 'The Additive Engine', description: 'Real-time 3D parametric customizer wireframe slicing + Boise Idaho farm telemetry HUD.' },
-      { time: '13.0s - 18.0s', label: 'Prime Guarantee', description: '100% Fit Guarantee badge + 48-Hour Domestic Dispatch payoff lockup.' },
-    ],
+    tags: ['#3DPrinting', '#HardwareStartup', '#AdditiveManufacturing'],
   },
   {
     id: 'anim2-viral-gadgets',
     number: 2,
     title: 'Trending 3D Toys & Viral Gadgets',
-    tagline: 'Print-in-place articulation. Zero assembly. Straight to your doorstep.',
-    tone: 'Chaotic / Viral TikTok',
+    subtitle: 'Articulated Gem Dragon & Sensory Fidgets printed in one piece with zero assembly.',
+    tone: 'chaotic',
+    toneLabel: 'High-Retention TikTok',
+    toneColor: 'bg-red-500/10 text-red-400 border-red-500/30',
+    aspect: '9:16',
     duration: 15,
-    aspectRatio: '9:16',
-    musicFile: 'Happy Beats Business Moves Vol. 10',
-    bgmPath: '/assets/audio/happy-beats-business-moves-vol-10-by-ende-dot-app.mp3',
-    compositionPath: '/brag-output/anim2-viral-gadgets/index.html',
-    tags: ['#3DPrinting', '#FidgetToy', '#ArticulatedDragon', '#TikTokMadeMeBuyIt', '#PrintInPlace'],
-    keyVisual: 'Silk Rainbow Articulated Dragon + Dual-Axis Gyro Cube + Low-Poly Planter',
-    launchPost: `STOP SCROLLING: This was 3D printed in ONE single piece without assembly 🐉✨
+    audioSrc: '/assets/audio/happy-beats-business-moves-vol-10-by-ende-dot-app.mp3',
+    videoSrc: '/assets/videos/anim2-viral-gadgets.mp4',
+    features: [
+      'Red alert hook: "DO NOT BUY A 3D PRINTER"',
+      'Print-in-Place Multi-Segment Gem Dragon',
+      'Kinetic Gyro Cube & Self-Watering Low-Poly Planters',
+      'Rapid TikTok cuts with uppercase Impact titles',
+    ],
+    xCopy: `STOP SCROLLING: This was 3D printed in ONE single piece without assembly 🐉✨
 
 No screws. No glue. 100% print-in-place articulation.
 
@@ -95,27 +111,27 @@ Drop what we should print next in the replies 👇
 Shop viral gadgets → wavezly.com/trending
 
 #3DPrinting #FidgetToy #ArticulatedDragon #TikTokMadeMeBuyIt #Satisfying #OddlySatisfying #PrintInPlace`,
-    storyboard: [
-      { time: '0.0s - 2.5s', label: 'Alert Hook', description: 'Red warning: DO NOT BUY A 3D PRINTER! Articulated dragon leaps onto screen.' },
-      { time: '2.5s - 6.5s', label: 'Dragon Articulation', description: 'Print-in-place multi-segment joints bend smoothly; 42 sold this hour ticker.' },
-      { time: '6.5s - 10.5s', label: 'Kinetic Fidgets', description: 'Dual-Axis Gyro Cube spins at 60fps; Low-Poly self-watering planter drops in.' },
-      { time: '10.5s - 15.0s', label: 'The Punchline', description: 'No calibration. No bed leveling. Just unbox and enjoy. Ships in 48h.' },
-    ],
+    tags: ['#TikTokMadeMeBuyIt', '#ArticulatedDragon', '#OddlySatisfying'],
   },
   {
     id: 'anim3-measure-customizer',
     number: 3,
     title: 'Measure Anything in 3D',
-    tagline: 'Stop settling for "almost fits". Custom millimeter-precision organizers in 30 seconds.',
-    tone: 'App-Store Precision',
+    subtitle: 'Millimeter-precise customizer for IKEA Alex drawers with 100% Fit Guarantee.',
+    tone: 'app-store',
+    toneLabel: 'App-Store Tech Demo',
+    toneColor: 'bg-sky-500/10 text-sky-400 border-sky-500/30',
+    aspect: '16:9',
     duration: 16,
-    aspectRatio: '16:9',
-    musicFile: 'Happy Beats Business Moves Vol. 11',
-    bgmPath: '/assets/audio/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3',
-    compositionPath: '/brag-output/anim3-measure-customizer/index.html',
-    tags: ['#DeskSetup', '#OrganizationHacks', '#IKEAOrganizers', '#IKEAAlex', '#Productivity'],
-    keyVisual: 'Tape Measure Snap + IKEA Alex Preset + Millimeter Tolerance Caliper HUD',
-    launchPost: `The dirty secret of drawer organization:
+    audioSrc: '/assets/audio/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3',
+    videoSrc: '/assets/videos/anim3-measure-customizer.mp4',
+    features: [
+      'Visualized 55mm dead gap problem',
+      'IKEA Alex One-Tap Preset & slider animations',
+      'Real-time parametric 3D grid wireframe',
+      '100% Fit Guarantee zero-wiggle promise',
+    ],
+    xCopy: `The dirty secret of drawer organization:
 "Standard sizes" never fit standard drawers. There’s always an awkward 1.5-inch gap where things slide around.
 
 Wavezly fixed this with parametric code:
@@ -129,27 +145,26 @@ Wavezly fixed this with parametric code:
 Design yours in 30 seconds → wavezly.com/customizer
 
 #DeskSetup #OrganizationHacks #IKEAOrganizers #IKEAAlex #Productivity #MinimalistDesk #Workspace`,
-    storyboard: [
-      { time: '0.0s - 3.0s', label: 'Problem Hook', description: 'Tape measure animation: STOP SETTLING FOR ALMOST FITS.' },
-      { time: '3.0s - 7.5s', label: 'IKEA Alex Preset', description: 'One-tap Alex selection: Width 295mm × Depth 524mm × Height 65mm.' },
-      { time: '7.5s - 12.0s', label: 'Zero-Gap Mesh', description: 'Parametric grid locks into the drawer with 0.1mm tolerance.' },
-      { time: '12.0s - 16.0s', label: 'Fit Guarantee', description: 'If it wiggles by 1mm, we reprint free. 100% Fit Guarantee.' },
-    ],
+    tags: ['#DeskSetup', '#OrganizationHacks', '#IKEAAlex'],
   },
   {
     id: 'anim4-kitchen-asmr',
     number: 4,
     title: 'Kitchen & Home Reset ASMR',
-    tagline: 'Sculpted cutlery slots, dedicated espresso valets, and zero rattle.',
-    tone: 'Satisfying ASMR',
+    subtitle: 'Zero-rattle Cutlery Matrix & Barista Espresso Valet drop-in satisfaction.',
+    tone: 'default',
+    toneLabel: 'Organization ASMR',
+    toneColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+    aspect: '16:9',
     duration: 18,
-    aspectRatio: '1:1',
-    musicFile: 'Happy Beats Business Moves Vol. 12',
-    bgmPath: '/assets/audio/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3',
-    compositionPath: '/brag-output/anim4-kitchen-asmr/index.html',
-    tags: ['#KitchenReset', '#OrganizationASMR', '#CoffeeSetup', '#EspressoPorn', '#CleanTok'],
-    keyVisual: 'Cutlery Matrix Drawer Slide + Barista Portafilter Dock + Basalt Coasters',
-    launchPost: `Sunday Kitchen Reset ASMR 🧼☕✨
+    audioSrc: '/assets/audio/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3',
+    features: [
+      'Deep sculpted Cutlery Matrix channels',
+      'Food-safe & dishwasher-safe biopolymers',
+      'Barista Espresso Valet with 54mm/58mm docks',
+      'Basalt magnetic coasters zero-slip base',
+    ],
+    xCopy: `Sunday Kitchen Reset ASMR 🧼☕✨
 
 Say goodbye to loose cutlery rattling in drawers and espresso gear scattered across the counter.
 
@@ -162,27 +177,26 @@ Made from food-safe, dishwasher-safe biopolymers.
 Reset your space → wavezly.com/kitchen
 
 #KitchenReset #OrganizationASMR #CoffeeSetup #EspressoPorn #CleanTok #HomeAesthetics #InteriorDetails`,
-    storyboard: [
-      { time: '0.0s - 3.0s', label: 'Before & After', description: 'Cluttered silverware drawer vs. sculpted Wavezly matrix.' },
-      { time: '3.0s - 8.0s', label: 'Cutlery Lock-in', description: 'Chefs knives, soup spoons, salad forks nest without an ounce of wiggle.' },
-      { time: '8.0s - 13.0s', label: 'Barista Valet', description: '58mm stainless portafilter + WDT needle dock neatly next to espresso machine.' },
-      { time: '13.0s - 18.0s', label: 'Living Reset', description: 'Food-safe biopolymers. Dishwasher tested. Wavezly Home.' },
-    ],
+    tags: ['#KitchenReset', '#OrganizationASMR', '#EspressoPorn'],
   },
   {
     id: 'anim5-wavezly-prime',
     number: 5,
     title: 'Wavezly Prime: Made in USA in 48 Hours',
-    tagline: 'Traditional manufacturing takes 6 weeks. Wavezly Prime takes 48 hours.',
-    tone: 'Cinematic Trailer',
+    subtitle: 'Cinematic trailer exploring the Boise, Idaho automated additive print studio.',
+    tone: 'cinematic',
+    toneLabel: 'Cinematic Trailer',
+    toneColor: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    aspect: '16:9',
     duration: 20,
-    aspectRatio: '16:9',
-    musicFile: 'Happy Beats Business Moves Vol. 9',
-    bgmPath: '/assets/audio/happy-beats-business-moves-vol-9-by-ende-dot-app.mp3',
-    compositionPath: '/brag-output/anim5-wavezly-prime/index.html',
-    tags: ['#AmericanManufacturing', '#AdditiveManufacturing', '#LocalProduction', '#SupplyChain', '#Wavezly'],
-    keyVisual: 'CoreXY Nozzle Glow + Boise Idaho Print Farm Telemetry + Domestic Map Dispatch',
-    launchPost: `Global supply chains take 8 to 12 weeks.
+    audioSrc: '/assets/audio/happy-beats-business-moves-vol-9-by-ende-dot-app.mp3',
+    features: [
+      'Trailer hook: "6 Weeks vs 48 Hours"',
+      'Inside the Boise, Idaho 250+ unit print farm',
+      'Domestic transit nodes: Sliced to Delivered in 48h',
+      'Wavezly Prime Gold Crest & American Additive Anthem',
+    ],
+    xCopy: `Global supply chains take 8 to 12 weeks.
 Wavezly Prime takes 48 hours.
 
 Inside our Boise, Idaho print studio:
@@ -199,357 +213,689 @@ Welcome to Wavezly Prime.
 Experience local manufacturing → wavezly.com
 
 #AmericanManufacturing #AdditiveManufacturing #LocalProduction #SupplyChain #CoreXY #TechTrailer #Wavezly`,
-    storyboard: [
-      { time: '0.0s - 4.0s', label: 'Trailer Hook', description: 'Nozzle heat glow: TRADITIONAL MANUFACTURING TAKES 6 WEEKS. WE TAKE 48 HOURS.' },
-      { time: '4.0s - 9.0s', label: 'The Print Farm', description: 'Boise Idaho automated studio: 250+ CoreXY units, 0.05mm layer precision.' },
-      { time: '9.0s - 14.5s', label: 'Logistics Route', description: 'Door-to-door domestic route map with USPS Priority telemetry.' },
-      { time: '14.5s - 20.0s', label: 'The Anthem', description: 'Wavezly Prime: The future of additive manufacturing is local. wavezly.com' },
-    ],
+    tags: ['#AmericanManufacturing', '#AdditiveManufacturing', '#CoreXY'],
   },
 ];
 
-export const WavezlyBragReels: React.FC = () => {
-  const [selectedAnim, setSelectedAnim] = useState<BragVideo>(BRAG_VIDEOS[0]);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
-  const [copied, setCopied] = useState<boolean>(false);
+interface WavezlyBragReelsProps {
+  onNavigateToCustomizer?: () => void;
+  onNavigateToShop?: () => void;
+}
 
+export const WavezlyBragReels: React.FC<WavezlyBragReelsProps> = ({
+  onNavigateToCustomizer,
+  onNavigateToShop,
+}) => {
+  const [activeReelIndex, setActiveReelIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [playbackSpeed, setPlaybackSpeed] = useState<1 | 1.25 | 1.5>(1);
+  const [isMuted, setIsMuted] = useState(true);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'interactive' | 'video'>('interactive');
+
+  const activeReel = BRAG_REELS[activeReelIndex];
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const animFrameRef = useRef<number | null>(null);
-  const lastTickRef = useRef<number>(performance.now());
+  const requestRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number | null>(null);
 
-  // Handle play/pause and time updates
+  // Sync Audio playback with playback state
   useEffect(() => {
-    let active = true;
-    const tick = () => {
-      if (!active) return;
-      const now = performance.now();
-      const delta = (now - lastTickRef.current) / 1000;
-      lastTickRef.current = now;
+    if (audioRef.current) {
+      audioRef.current.currentTime = currentTime;
+      if (isPlaying && !isMuted) {
+        audioRef.current.play().catch(() => {});
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, isMuted, activeReelIndex]);
 
-      if (isPlaying) {
+  // Audio track change on reel switch
+  useEffect(() => {
+    setCurrentTime(0);
+    setIsPlaying(true);
+  }, [activeReelIndex]);
+
+  // Animation Loop / Time update
+  useEffect(() => {
+    const updateProgress = (timestamp: number) => {
+      if (lastTimeRef.current != null && isPlaying) {
+        const delta = (timestamp - lastTimeRef.current) / 1000;
         setCurrentTime((prev) => {
           const next = prev + delta * playbackSpeed;
-          if (next >= selectedAnim.duration) {
-            return 0; // Loop
+          if (next >= activeReel.duration) {
+            return 0; // Loop seamlessly
           }
           return next;
         });
       }
-      animFrameRef.current = requestAnimationFrame(tick);
+      lastTimeRef.current = timestamp;
+      requestRef.current = requestAnimationFrame(updateProgress);
     };
 
-    lastTickRef.current = performance.now();
-    animFrameRef.current = requestAnimationFrame(tick);
-
+    requestRef.current = requestAnimationFrame(updateProgress);
     return () => {
-      active = false;
-      if (animFrameRef.current) {
-        cancelAnimationFrame(animFrameRef.current);
-      }
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [isPlaying, playbackSpeed, selectedAnim.duration]);
-
-  // Handle audio play/sync
-  useEffect(() => {
-    if (!audioRef.current) return;
-    audioRef.current.playbackRate = playbackSpeed;
-    if (isPlaying && !isMuted) {
-      audioRef.current.play().catch(() => {});
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying, isMuted, playbackSpeed]);
-
-  // Reset time on animation switch
-  const handleSelectAnim = (anim: BragVideo) => {
-    setSelectedAnim(anim);
-    setCurrentTime(0);
-    setIsPlaying(true);
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      if (!isMuted) {
-        audioRef.current.play().catch(() => {});
-      }
-    }
-  };
-
-  const handleCopyPost = () => {
-    navigator.clipboard.writeText(selectedAnim.launchPost);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
-  };
+  }, [isPlaying, playbackSpeed, activeReel.duration]);
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
-    setCurrentTime(val);
+    const newTime = parseFloat(e.target.value);
+    setCurrentTime(newTime);
     if (audioRef.current) {
-      audioRef.current.currentTime = val % (audioRef.current.duration || selectedAnim.duration);
+      audioRef.current.currentTime = newTime;
     }
   };
 
-  // Find active storyboard segment
-  const activeStoryboardIndex = Math.min(
-    Math.floor((currentTime / selectedAnim.duration) * selectedAnim.storyboard.length),
-    selectedAnim.storyboard.length - 1
-  );
+  const togglePlay = () => {
+    playClickSound();
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleCopyX = (reel: BragReel) => {
+    playClickSound();
+    navigator.clipboard.writeText(reel.xCopy);
+    setCopiedId(reel.id);
+    setTimeout(() => setCopiedId(null), 2500);
+  };
+
+  const formatSeconds = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  // Render Scene Graphics based on activeReel and currentTime
+  const renderInteractiveScene = () => {
+    const t = currentTime;
+
+    if (viewMode === 'video' && activeReel.videoSrc) {
+      return (
+        <video
+          src={activeReel.videoSrc}
+          controls
+          autoPlay={isPlaying}
+          muted={isMuted}
+          className="w-full h-full object-contain"
+        />
+      );
+    }
+
+    switch (activeReel.id) {
+      case 'anim1-amazon-launch': {
+        // 4 Phases: Hook (0-4.5s), Quad (4.5-9s), Engine (9-14s), Outro (14-18s)
+        if (t < 4.5) {
+          return (
+            <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 bg-radial from-slate-900 via-[#131921] to-black transition-all">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold uppercase tracking-wider mb-4 animate-pulse">
+                ✦ The Next Industrial Revolution
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight max-w-2xl">
+                WHAT IF <span className="text-[#ff9900] drop-shadow-[0_0_25px_rgba(255,153,0,0.6)]">AMAZON</span> WAS BUILT FOR <span className="text-[#ff9900] drop-shadow-[0_0_25px_rgba(255,153,0,0.6)]">3D PRINTING</span>?
+              </h2>
+              <p className="text-zinc-400 mt-4 text-sm sm:text-base max-w-lg">
+                Zero overseas molds. Direct USA additive manufacturing delivered in 48 hours.
+              </p>
+            </div>
+          );
+        } else if (t < 9.0) {
+          return (
+            <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-6 bg-[#131921]">
+              <div className="text-center mb-4">
+                <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
+                  ⚡ Lightning Deals • 84% Claimed
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white">
+                  Trending 3D Departments
+                </h3>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-3xl">
+                {[
+                  { title: 'Articulated Dragon', price: '$24.99', img: '/assets/products/crystal-dragon-hero.svg', tag: '#1 Best Seller' },
+                  { title: 'IKEA Alex Matrix', price: '$38.00', img: '/assets/products/drawer-matrix-hero.svg', tag: 'Amazon Choice' },
+                  { title: 'Barista Valet', price: '$38.00', img: '/assets/products/pourover-coffee-tray-hero.svg', tag: 'Kitchen Icon' },
+                  { title: 'Gyro Cube', price: '$18.00', img: '/assets/products/gyro-cube-hero.svg', tag: 'Trending' },
+                ].map((item, i) => (
+                  <div key={i} className="bg-slate-800/90 border border-slate-700 rounded-lg p-2.5 flex flex-col items-center shadow-lg transform transition hover:scale-105">
+                    <span className="text-[10px] font-bold bg-[#b12704] text-white px-2 py-0.5 rounded self-start mb-1">
+                      {item.tag}
+                    </span>
+                    <div className="w-20 h-20 bg-slate-900/60 rounded flex items-center justify-center my-1 overflow-hidden">
+                      <img src={item.img} alt={item.title} className="max-w-[85%] max-h-[85%] object-contain" />
+                    </div>
+                    <span className="text-xs font-bold text-zinc-100 text-center truncate w-full">{item.title}</span>
+                    <div className="flex items-center justify-between w-full mt-2">
+                      <span className="text-xs font-extrabold text-amber-400">{item.price}</span>
+                      <span className="text-[10px] font-black text-[#00a8e1]">Prime 48h</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        } else if (t < 14.0) {
+          return (
+            <div className="w-full h-full flex flex-col sm:flex-row items-center justify-center p-6 gap-6 bg-[#0f172a]">
+              <div className="flex-1 text-left space-y-2">
+                <span className="text-xs font-bold text-amber-400 uppercase tracking-widest">
+                  AUTOMATED SLICING ENGINE
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                  ZERO CAD SKILLS.<br />
+                  <span className="text-[#ff9900]">EXACT MILLIMETER FIT.</span>
+                </h3>
+                <p className="text-xs text-zinc-400">
+                  Custom STL generated dynamically in your browser. Sliced directly for Boise Idaho print farm cluster.
+                </p>
+              </div>
+              <div className="w-full sm:w-72 bg-slate-900 border border-slate-700 rounded-xl p-4 shadow-xl font-mono text-xs space-y-3">
+                <div className="flex justify-between items-center border-b border-slate-800 pb-2">
+                  <span className="font-bold text-zinc-300">FARM TELEMETRY</span>
+                  <span className="flex items-center gap-1.5 text-emerald-400 font-bold text-[10px]">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> ONLINE
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-slate-800/80 p-2 rounded border border-slate-700/50">
+                    <div className="text-lg font-black text-amber-400">250+</div>
+                    <div className="text-[9px] text-zinc-400">CoreXY Units</div>
+                  </div>
+                  <div className="bg-slate-800/80 p-2 rounded border border-slate-700/50">
+                    <div className="text-lg font-black text-sky-400">0.05mm</div>
+                    <div className="text-[9px] text-zinc-400">Layer Precision</div>
+                  </div>
+                  <div className="bg-slate-800/80 p-2 rounded border border-slate-700/50">
+                    <div className="text-lg font-black text-emerald-400">48h</div>
+                    <div className="text-[9px] text-zinc-400">Domestic Ship</div>
+                  </div>
+                  <div className="bg-slate-800/80 p-2 rounded border border-slate-700/50">
+                    <div className="text-lg font-black text-yellow-300">100%</div>
+                    <div className="text-[9px] text-zinc-400">USA Made</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        } else {
+          return (
+            <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-radial from-slate-900 to-black">
+              <img src="/assets/logo/wavezly-logo.png" alt="Wavezly" className="h-14 sm:h-16 mb-3 object-contain drop-shadow-lg" />
+              <div className="px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-black text-xs uppercase tracking-wider mb-2">
+                Wavezly Prime • Made in USA
+              </div>
+              <h3 className="text-2xl sm:text-4xl font-black text-white max-w-xl leading-tight">
+                THE FUTURE OF 3D PRINTING IS ON YOUR DOORSTEP.
+              </h3>
+              <button
+                type="button"
+                onClick={onNavigateToShop}
+                className="mt-4 px-6 py-2.5 rounded-lg bg-[#ff9900] hover:bg-[#ffaa22] text-black font-extrabold text-sm shadow-[0_0_30px_rgba(255,153,0,0.5)] transition transform hover:scale-105"
+              >
+                Order Now at wavezly.com →
+              </button>
+            </div>
+          );
+        }
+      }
+
+      case 'anim2-viral-gadgets': {
+        // Vertical 9:16 layout
+        return (
+          <div className="w-full h-full flex flex-col items-center justify-between p-6 bg-gradient-to-b from-[#1e1b4b] via-[#090d16] to-black text-center font-sans">
+            <div className="w-full flex justify-between items-center text-xs font-bold text-zinc-300 border-b border-indigo-900/50 pb-3">
+              <div className="flex items-center gap-1.5">
+                <img src="/assets/logo/wavezly-logo.png" alt="Wavezly" className="h-5 w-auto" />
+                <span className="text-white font-extrabold">WAVEZLY.COM</span>
+              </div>
+              <span className="px-2.5 py-0.5 rounded-full bg-red-600 text-white font-black text-[11px] animate-pulse">
+                🔥 42 SOLD THIS HOUR
+              </span>
+            </div>
+
+            {t < 4.0 ? (
+              <div className="my-auto space-y-4">
+                <div className="inline-block bg-red-600 text-white font-black text-sm uppercase px-4 py-1.5 rounded-md shadow-lg">
+                  ⚠️ DO NOT BUY A 3D PRINTER ⚠️
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white leading-tight">
+                  WE PRINT THE<br />
+                  <span className="text-yellow-300 drop-shadow-[0_0_20px_rgba(253,224,71,0.6)]">COOLEST TOYS</span><br />
+                  FOR YOU.
+                </h2>
+                <div className="w-40 h-40 mx-auto bg-amber-500/10 rounded-full flex items-center justify-center p-2 animate-bounce">
+                  <img src="/assets/products/crystal-dragon-hero.svg" alt="Crystal Dragon" className="w-full h-full object-contain" />
+                </div>
+              </div>
+            ) : t < 8.0 ? (
+              <div className="my-auto space-y-3">
+                <span className="px-3 py-1 bg-yellow-400 text-black font-black text-xs rounded uppercase">
+                  Articulated Gem Dragon
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black uppercase text-white leading-tight">
+                  PRINTED IN <span className="text-[#ff9900]">ONE PIECE</span>.<br />
+                  ZERO ASSEMBLY.
+                </h3>
+                <div className="w-48 h-48 mx-auto flex items-center justify-center p-2">
+                  <img src="/assets/products/crystal-dragon-hero.svg" alt="Crystal Dragon" className="w-full h-full object-contain drop-shadow-[0_15px_30px_rgba(255,153,0,0.4)]" />
+                </div>
+                <div className="bg-slate-900/80 border border-slate-700 rounded-lg p-2.5 text-xs text-zinc-300 space-y-1 max-w-xs mx-auto">
+                  <div className="flex justify-between"><span>Material</span><strong className="text-amber-400">Silk Tri-Color PLA</strong></div>
+                  <div className="flex justify-between"><span>Price</span><strong className="text-emerald-400">$24.99</strong></div>
+                </div>
+              </div>
+            ) : (
+              <div className="my-auto space-y-4">
+                <div className="bg-amber-500 text-black font-black text-xs uppercase px-3 py-1 rounded">
+                  NO CALIBRATION • NO JAMS
+                </div>
+                <h3 className="text-3xl font-black uppercase text-white leading-tight">
+                  JUST UNBOX<br />
+                  AND <span className="text-yellow-300">PLAY</span>.
+                </h3>
+                <div className="flex justify-center gap-4">
+                  <div className="w-24 h-24 bg-slate-900 rounded-lg p-2 border border-slate-700">
+                    <img src="/assets/products/gyro-cube-hero.svg" alt="Gyro" className="w-full h-full object-contain" />
+                  </div>
+                  <div className="w-24 h-24 bg-slate-900 rounded-lg p-2 border border-slate-700">
+                    <img src="/assets/products/low-poly-planter-hero.svg" alt="Planter" className="w-full h-full object-contain" />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={onNavigateToShop}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-black text-base uppercase shadow-xl hover:scale-105 transition"
+                >
+                  SHOP ON WAVEZLY.COM →
+                </button>
+              </div>
+            )}
+
+            <div className="text-[11px] font-bold text-sky-400 uppercase tracking-wider">
+              🚀 48-Hour Domestic USA Dispatch
+            </div>
+          </div>
+        );
+      }
+
+      case 'anim3-measure-customizer': {
+        return (
+          <div className="w-full h-full flex flex-col sm:flex-row items-center justify-center p-6 gap-6 bg-gradient-to-br from-[#090d16] to-[#1e293b]">
+            <div className="flex-1 space-y-3 text-left">
+              <span className="px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-400 text-xs font-bold uppercase tracking-wider">
+                Parametric Customizer
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                STOP SETTLING FOR <span className="text-red-400">"ALMOST FITS"</span>.
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Enter your exact drawer millimeters (or pick IKEA Alex presets). 3D parametric engine generates zero-wiggle divider trays.
+              </p>
+              <div className="bg-slate-900/90 border border-slate-700 rounded-lg p-3 space-y-1.5 font-mono text-xs">
+                <div className="flex justify-between text-zinc-400"><span>Width (X)</span><span className="text-sky-400 font-bold">295 mm</span></div>
+                <div className="flex justify-between text-zinc-400"><span>Depth (Y)</span><span className="text-sky-400 font-bold">524 mm</span></div>
+                <div className="flex justify-between text-zinc-400"><span>Height (Z)</span><span className="text-sky-400 font-bold">65 mm</span></div>
+              </div>
+            </div>
+
+            <div className="w-full sm:w-80 h-56 bg-slate-950 border-2 border-sky-500 rounded-xl flex flex-col items-center justify-center p-4 relative shadow-[0_0_40px_rgba(56,189,248,0.2)]">
+              <div className="grid grid-cols-3 grid-rows-2 gap-2 w-48 h-32 border-2 border-amber-500 rounded p-2 bg-amber-500/5">
+                {[1, 2, 3, 4, 5, 6].map((cell) => (
+                  <div key={cell} className="border border-dashed border-amber-400/50 rounded flex items-center justify-center text-[10px] text-amber-300 font-bold">
+                    Slot {cell}
+                  </div>
+                ))}
+              </div>
+              <div className="absolute bottom-2 text-[10px] text-zinc-400 font-mono">
+                Tolerance: <strong className="text-sky-400">±0.1 mm</strong> • Slicing: <strong className="text-emerald-400">Live</strong>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case 'anim4-kitchen-asmr': {
+        return (
+          <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-radial from-slate-900 to-[#0f172a]">
+            <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-400/40 text-purple-300 text-xs font-bold uppercase tracking-wider mb-2">
+              ✨ Kitchen Reset ASMR
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight max-w-lg mb-4">
+              THE MOST <span className="text-[#ff9900]">SATISFYING</span> ZERO-RATTLE RESET.
+            </h3>
+            <div className="flex justify-center gap-4 w-full max-w-md">
+              <div className="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl p-3 flex flex-col items-center">
+                <img src="/assets/products/kitchen-cutlery-matrix-hero.svg" alt="Cutlery" className="h-24 object-contain mb-2" />
+                <span className="text-xs font-bold text-white">Cutlery Matrix</span>
+                <span className="text-[10px] text-emerald-400 font-semibold">Zero Rattle • Food Safe</span>
+              </div>
+              <div className="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl p-3 flex flex-col items-center">
+                <img src="/assets/products/pourover-coffee-tray-real.jpg" alt="Barista Valet" className="h-24 w-full object-cover rounded mb-2" />
+                <span className="text-xs font-bold text-white">Barista Valet</span>
+                <span className="text-[10px] text-amber-400 font-semibold">54mm/58mm Recesses</span>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      case 'anim5-wavezly-prime':
+      default: {
+        return (
+          <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-radial from-blue-950 via-[#050811] to-black relative">
+            <span className="text-xs font-extrabold tracking-widest text-[#ff9900] uppercase mb-2">
+              WAVEZLY PRIME MANIFESTO
+            </span>
+            <h3 className="text-2xl sm:text-4xl font-black text-white max-w-xl leading-tight">
+              GLOBAL SUPPLY CHAINS TAKE <span className="text-amber-400">6 WEEKS</span>.<br />
+              WAVEZLY TAKES <span className="text-yellow-300">48 HOURS</span>.
+            </h3>
+            <div className="flex items-center justify-center gap-6 mt-4 text-xs font-mono text-zinc-300">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Boise Idaho Studio
+              </div>
+              <div>•</div>
+              <div>250+ CoreXY Printers</div>
+              <div>•</div>
+              <div className="text-sky-400 font-bold">100% Domestic</div>
+            </div>
+          </div>
+        );
+      }
+    }
+  };
 
   return (
     <section className="max-w-[1520px] mx-auto px-3 sm:px-6 mb-12">
-      <div className="bg-[#131921] text-white rounded-lg border border-[#232f3e] shadow-xl overflow-hidden">
-        {/* Top Header Strip */}
-        <div className="bg-[#232f3e] px-4 sm:px-8 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#374151]">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-[#febd69]/10 border border-[#febd69]/30 text-[#febd69]">
-              <Film className="w-5 h-5" />
+      {/* Hidden audio element for synchronous soundtrack preview */}
+      <audio ref={audioRef} src={activeReel.audioSrc} preload="auto" loop />
+
+      {/* Container Box */}
+      <div className="bg-[#131921] border border-[#232f3e] rounded-sm p-4 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        {/* Glow backdrop */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-zinc-800 pb-6 gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-0.5 rounded text-[11px] font-black bg-[#ff9900] text-black uppercase tracking-wider">
+                X / TIKTOK LAUNCH ENGINE
+              </span>
+              <span className="text-xs text-zinc-400 font-medium flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Powered by /brag & Hyperframes
+              </span>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-wider font-bold text-[#febd69] bg-[#febd69]/10 px-2 py-0.5 rounded">
-                  Wavezly Motion Studio
-                </span>
-                <span className="text-xs text-gray-400">• Hyperframes Engine</span>
-              </div>
-              <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2 mt-0.5">
-                5 Official X / TikTok Style Launch Animations
-              </h2>
-            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Wavezly Viral Launch Animations
+            </h2>
+            <p className="text-zinc-400 text-xs sm:text-sm mt-1 max-w-2xl">
+              5 high-converting, motion-graphics launch variations engineered for X (Twitter), TikTok, and Reels.
+              Scrub timelines, toggle soundtracks, and copy viral share copy in one click.
+            </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Quick CTA Actions */}
+          <div className="flex items-center gap-2.5">
+            {onNavigateToCustomizer && (
+              <button
+                type="button"
+                onClick={onNavigateToCustomizer}
+                className="px-4 py-2 rounded bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs flex items-center gap-1.5 transition"
+              >
+                <Sliders className="w-3.5 h-3.5" /> Launch Customizer
+              </button>
+            )}
             <button
               type="button"
-              onClick={handleCopyPost}
-              className="flex items-center gap-2 text-xs font-semibold px-3.5 py-2 rounded bg-[#374151] hover:bg-[#4b5563] text-gray-200 transition cursor-pointer"
+              onClick={() => handleCopyX(activeReel)}
+              className="px-4 py-2 rounded bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white font-bold text-xs flex items-center gap-1.5 transition"
             >
-              {copied ? (
+              {copiedId === activeReel.id ? (
                 <>
-                  <Check className="w-4 h-4 text-emerald-400" />
-                  <span className="text-emerald-400">Post Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" /> Copied X Post!
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4" />
-                  <span>Copy X Launch Post</span>
+                  <Copy className="w-3.5 h-3.5 text-zinc-400" /> Copy X Launch Copy
                 </>
               )}
             </button>
-            <a
-              href={selectedAnim.compositionPath}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded bg-[#ffd814] hover:bg-[#f7ca00] text-[#0f1111] transition shadow-xs cursor-pointer"
-            >
-              <span>Full Screen</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
           </div>
         </div>
 
-        {/* Animation Tab Pills */}
-        <div className="px-4 sm:px-8 py-3 bg-[#1a2332] border-b border-[#2d3748] flex items-center gap-2 overflow-x-auto scrollbar-none">
-          {BRAG_VIDEOS.map((anim) => {
-            const isSelected = selectedAnim.id === anim.id;
+        {/* 5 Reel Navigation Tabs */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 my-6">
+          {BRAG_REELS.map((reel, idx) => {
+            const isCurrent = idx === activeReelIndex;
             return (
               <button
-                key={anim.id}
+                key={reel.id}
                 type="button"
-                onClick={() => handleSelectAnim(anim)}
-                className={`flex items-center gap-2.5 px-4 py-2 rounded-md text-xs font-semibold whitespace-nowrap transition cursor-pointer ${
-                  isSelected
-                    ? 'bg-[#febd69] text-[#131921] shadow-md font-bold'
-                    : 'bg-[#232f3e] text-gray-300 hover:bg-[#2d3748] hover:text-white'
+                onClick={() => {
+                  playClickSound();
+                  setActiveReelIndex(idx);
+                }}
+                className={`p-3 rounded-lg border text-left transition relative flex flex-col justify-between ${
+                  isCurrent
+                    ? 'bg-[#232f3e] border-[#ff9900] shadow-[0_0_20px_rgba(255,153,0,0.2)]'
+                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/50'
                 }`}
               >
-                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black ${
-                  isSelected ? 'bg-[#131921] text-[#febd69]' : 'bg-[#374151] text-gray-300'
-                }`}>
-                  {anim.number}
-                </span>
-                <span>{anim.title}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono uppercase ${
-                  isSelected ? 'bg-black/20 text-[#131921]' : 'bg-black/30 text-gray-400'
-                }`}>
-                  {anim.tone}
-                </span>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-black text-zinc-400">REEL 0{reel.number}</span>
+                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${reel.toneColor}`}>
+                      {reel.tone}
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-bold text-white line-clamp-1">{reel.title}</h4>
+                </div>
+                <div className="flex items-center justify-between mt-3 text-[10px] text-zinc-400">
+                  <span>{reel.aspect}</span>
+                  <span className="font-mono text-amber-400 font-semibold">{reel.duration}s</span>
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Main Studio Interactive Stage */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-          {/* Left: The Motion Canvas / Player (7 cols) */}
-          <div className="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between bg-black/40 border-b lg:border-b-0 lg:border-r border-[#2d3748]">
-            <div className="relative w-full rounded-lg overflow-hidden bg-[#0a0f18] border border-[#2d3748] shadow-inner aspect-video flex items-center justify-center">
-              {/* Live Preview Screen */}
-              <iframe
-                title={selectedAnim.title}
-                src={selectedAnim.compositionPath}
-                className="w-full h-full border-0 pointer-events-auto"
-                allow="autoplay"
-              />
-
-              {/* Aspect Ratio Badge */}
-              <div className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-mono text-gray-300 border border-white/10">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Hyperframes • {selectedAnim.aspectRatio}</span>
+        {/* Main Stage Grid: Player on Left, Telemetry & Share Copy on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Main Player Preview Screen (7 Cols) */}
+          <div className="lg:col-span-7 flex flex-col bg-black rounded-xl border border-slate-800 overflow-hidden shadow-2xl">
+            {/* Screen Header Bar */}
+            <div className="bg-slate-900/90 border-b border-slate-800 px-4 py-2.5 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                <span className="text-xs font-mono text-zinc-400 ml-2">
+                  {activeReel.id} • {activeReel.aspect}
+                </span>
               </div>
-
-              {/* Tone Badge */}
-              <div className="absolute top-3 right-3 z-10 bg-[#ff9900]/90 text-black px-2.5 py-1 rounded text-[11px] font-black uppercase tracking-wider shadow-sm">
-                Tone: {selectedAnim.tone}
+              <div className="flex items-center gap-2">
+                {activeReel.videoSrc && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playClickSound();
+                      setViewMode(viewMode === 'interactive' ? 'video' : 'interactive');
+                    }}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 border transition ${
+                      viewMode === 'video'
+                        ? 'bg-amber-500 text-black border-amber-400'
+                        : 'bg-slate-800 text-zinc-300 border-slate-700 hover:text-white'
+                    }`}
+                  >
+                    <Tv className="w-3 h-3" />
+                    <span>{viewMode === 'video' ? 'MP4 Video' : 'Live Reel'}</span>
+                  </button>
+                )}
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-amber-400 border border-slate-700">
+                  {formatSeconds(currentTime)} / {formatSeconds(activeReel.duration)}
+                </span>
               </div>
             </div>
 
-            {/* Scrubber & Controls */}
-            <div className="mt-4 bg-[#1a2332] p-4 rounded-lg border border-[#2d3748] space-y-3">
-              {/* Timeline Progress Bar */}
-              <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs font-mono text-gray-400">
-                  <span className="text-[#febd69] font-bold">{currentTime.toFixed(1)}s</span>
-                  <span>{selectedAnim.duration.toFixed(1)}s</span>
-                </div>
+            {/* Video / Interactive Canvas Box */}
+            <div
+              className={`relative w-full overflow-hidden flex items-center justify-center select-none ${
+                activeReel.aspect === '9:16' ? 'h-[460px] sm:h-[520px]' : 'h-[360px] sm:h-[420px]'
+              }`}
+            >
+              {renderInteractiveScene()}
+            </div>
+
+            {/* Controls Toolbar */}
+            <div className="bg-slate-900 border-t border-slate-800 p-3 sm:p-4 space-y-3">
+              {/* Scrub Slider */}
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono text-zinc-400 w-10 text-right">
+                  {formatSeconds(currentTime)}
+                </span>
                 <input
                   type="range"
                   min="0"
-                  max={selectedAnim.duration}
-                  step="0.1"
+                  max={activeReel.duration}
+                  step="0.05"
                   value={currentTime}
                   onChange={handleSeek}
-                  className="w-full h-2 bg-[#2d3748] rounded-lg appearance-none cursor-pointer accent-[#febd69]"
+                  className="flex-1 accent-[#ff9900] h-1.5 bg-slate-700 rounded-lg cursor-pointer"
                 />
+                <span className="text-xs font-mono text-zinc-400 w-10">
+                  {formatSeconds(activeReel.duration)}
+                </span>
               </div>
 
-              {/* Playback Controls Row */}
-              <div className="flex items-center justify-between pt-1">
+              {/* Bottom Buttons Bar */}
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => setIsPlaying(!isPlaying)}
-                    className="p-2 rounded-md bg-[#febd69] hover:bg-[#f3a847] text-[#131921] transition cursor-pointer font-bold"
+                    onClick={togglePlay}
+                    className="p-2 rounded-lg bg-[#ff9900] hover:bg-[#ffaa22] text-black font-bold transition cursor-pointer"
+                    title={isPlaying ? 'Pause' : 'Play'}
                   >
-                    {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+                    {isPlaying ? <Pause className="w-4 h-4 fill-black" /> : <Play className="w-4 h-4 fill-black ml-0.5" />}
                   </button>
 
                   <button
                     type="button"
                     onClick={() => {
+                      playClickSound();
                       setCurrentTime(0);
-                      setIsPlaying(true);
-                      if (audioRef.current) audioRef.current.currentTime = 0;
                     }}
-                    className="p-2 rounded-md bg-[#232f3e] hover:bg-[#2d3748] text-gray-300 transition cursor-pointer"
-                    title="Restart"
+                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-zinc-300 transition cursor-pointer"
+                    title="Rewind"
                   >
                     <RotateCcw className="w-4 h-4" />
                   </button>
 
+                  {/* Audio Soundtrack Toggle */}
                   <button
                     type="button"
-                    onClick={() => setIsMuted(!isMuted)}
-                    className="p-2 rounded-md bg-[#232f3e] hover:bg-[#2d3748] text-gray-300 transition cursor-pointer"
-                    title={isMuted ? 'Unmute' : 'Mute'}
+                    onClick={() => {
+                      playClickSound();
+                      setIsMuted(!isMuted);
+                    }}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition cursor-pointer ${
+                      !isMuted
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                        : 'bg-slate-800 text-zinc-400 hover:text-zinc-200'
+                    }`}
+                    title="Toggle Soundtrack"
                   >
-                    {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#febd69]" />}
+                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-400" />}
+                    <span>{isMuted ? 'Muted' : 'Sound On'}</span>
+                  </button>
+
+                  {/* Playback Speed */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playClickSound();
+                      setPlaybackSpeed((prev) => (prev === 1 ? 1.25 : prev === 1.25 ? 1.5 : 1));
+                    }}
+                    className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-zinc-300 text-xs font-mono font-bold transition cursor-pointer"
+                  >
+                    {playbackSpeed}x
                   </button>
                 </div>
 
-                {/* Speed Toggle */}
-                <div className="flex items-center gap-1.5 text-xs text-gray-400">
-                  <span>Speed:</span>
-                  {[1, 1.5, 2].map((spd) => (
-                    <button
-                      key={spd}
-                      type="button"
-                      onClick={() => setPlaybackSpeed(spd)}
-                      className={`px-2 py-0.5 rounded text-xs font-mono font-bold transition cursor-pointer ${
-                        playbackSpeed === spd
-                          ? 'bg-[#febd69] text-[#131921]'
-                          : 'bg-[#232f3e] text-gray-300 hover:bg-[#2d3748]'
-                      }`}
-                    >
-                      {spd}x
-                    </button>
-                  ))}
+                <div className="flex items-center gap-2 text-xs text-zinc-400">
+                  <span className="hidden sm:inline">Tone:</span>
+                  <span className="font-bold text-zinc-200 uppercase">{activeReel.tone}</span>
                 </div>
               </div>
             </div>
-
-            {/* Hidden Audio Player for BGM */}
-            <audio
-              ref={audioRef}
-              src={selectedAnim.bgmPath}
-              loop
-              preload="auto"
-            />
           </div>
 
-          {/* Right: Storyboard & X/Twitter Launch Post (5 cols) */}
-          <div className="lg:col-span-5 p-4 sm:p-6 flex flex-col justify-between bg-[#131921] space-y-6">
-            {/* Storyboard Progression */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-wider font-bold text-gray-400">
-                  Live Storyboard Beats
+          {/* Reel Metadata, Features & Share Copy Drawer (5 Cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            {/* Story & Specifications Card */}
+            <div className="bg-[#1e293b] border border-slate-700 rounded-xl p-5 shadow-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded border ${activeReel.toneColor}`}>
+                  {activeReel.toneLabel}
                 </span>
-                <span className="text-xs font-mono text-[#febd69]">
-                  {selectedAnim.duration}s Cut
-                </span>
+                <span className="text-xs text-zinc-400 font-mono">Hyperframes v0.8</span>
               </div>
+              <h3 className="text-lg font-bold text-white">{activeReel.title}</h3>
+              <p className="text-xs text-zinc-300 mt-1 leading-relaxed">{activeReel.subtitle}</p>
 
-              <div className="space-y-2">
-                {selectedAnim.storyboard.map((beat, idx) => {
-                  const isActive = idx === activeStoryboardIndex;
-                  return (
-                    <div
-                      key={idx}
-                      className={`p-3 rounded border transition ${
-                        isActive
-                          ? 'bg-[#1e293b] border-[#febd69] text-white shadow-md'
-                          : 'bg-[#1a2332]/50 border-[#2d3748] text-gray-400'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between text-xs mb-1">
-                        <span className={`font-mono font-bold ${isActive ? 'text-[#febd69]' : 'text-gray-500'}`}>
-                          {beat.time}
-                        </span>
-                        <span className={`text-[10px] uppercase font-bold px-1.5 py-0.2 rounded ${
-                          isActive ? 'bg-[#febd69]/20 text-[#febd69]' : 'bg-black/30 text-gray-500'
-                        }`}>
-                          {beat.label}
-                        </span>
-                      </div>
-                      <p className="text-xs leading-relaxed">
-                        {beat.description}
-                      </p>
-                    </div>
-                  );
-                })}
+              <div className="mt-4 pt-3 border-t border-slate-700/80">
+                <span className="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider block mb-2">
+                  Composition Beats & Highlights
+                </span>
+                <ul className="space-y-1.5">
+                  {activeReel.features.map((feat, i) => (
+                    <li key={i} className="text-xs text-zinc-300 flex items-start gap-2">
+                      <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            {/* Formatted X / Twitter Launch Post */}
-            <div className="space-y-2 pt-2 border-t border-[#2d3748]">
-              <div className="flex items-center justify-between">
-                <span className="text-xs uppercase tracking-wider font-bold text-gray-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#febd69]" />
-                  <span>X / Twitter Launch Post</span>
-                </span>
-                <button
-                  type="button"
-                  onClick={handleCopyPost}
-                  className="text-xs text-[#febd69] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? 'Copied' : 'Copy'}</span>
-                </button>
+            {/* X / Twitter Launch Copy Card with 1-Click Copy */}
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between shadow-lg">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-black text-[#1d9bf0] flex items-center gap-1.5">
+                    <Share2 className="w-3.5 h-3.5" /> X / Twitter Launch Post
+                  </span>
+                  <span className="text-[10px] text-zinc-400 font-mono">Ready to Broadcast</span>
+                </div>
+                <div className="bg-black/60 border border-slate-800 rounded-lg p-3 font-mono text-[11px] text-zinc-300 whitespace-pre-wrap leading-relaxed max-h-48 overflow-y-auto">
+                  {activeReel.xCopy}
+                </div>
               </div>
 
-              <div className="p-3 bg-[#0a0f18] rounded border border-[#2d3748] text-xs font-mono text-gray-300 leading-relaxed whitespace-pre-wrap max-h-48 overflow-y-auto">
-                {selectedAnim.launchPost}
+              <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between gap-3">
+                <div className="flex flex-wrap gap-1">
+                  {activeReel.tags.map((tag, idx) => (
+                    <span key={idx} className="text-[10px] text-sky-400 font-medium">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopyX(activeReel)}
+                  className="px-4 py-2 rounded-lg bg-[#1d9bf0] hover:bg-[#1a8cd8] text-white font-bold text-xs flex items-center gap-1.5 transition shrink-0 cursor-pointer"
+                >
+                  {copiedId === activeReel.id ? (
+                    <>
+                      <Check className="w-3.5 h-3.5" /> Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" /> Copy Post
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>

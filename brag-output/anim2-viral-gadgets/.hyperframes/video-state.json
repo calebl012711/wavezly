@@ -820,5 +820,18 @@
     "latest": null,
     "revisions": {},
     "unversioned": []
-  }
+  },
+  "renders": {
+    "latest": {
+      "id": "3e38a3f3-10ea-4361-9d02-da4af2e4c981",
+      "completedAt": 1792802398098,
+      "output": "/Users/caleblickteig/Documents/antigravity/sharp-pasteur/public/assets/videos/anim2-viral-gadgets.mp4",
+      "status": "completed_with_warnings",
+      "revision": "ed21dce5-1101-4a8c-8fff-f2c0438d727a"
+    },
+    "retainedRevisions": [
+      "ed21dce5-1101-4a8c-8fff-f2c0438d727a"
+    ]
+  },
+  "pendingArtifactCleanup": []
 }

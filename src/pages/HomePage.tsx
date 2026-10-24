@@ -506,7 +506,10 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* 4.5. WAVEZLY MOTION STUDIO (5 X/TIKTOK LAUNCH ANIMATIONS) */}
-      <WavezlyBragReels />
+      <WavezlyBragReels
+        onNavigateToCustomizer={onNavigateToCustomizer}
+        onNavigateToShop={scrollToShop}
+      />
 
       {/* 5. AMAZON VERIFIED CUSTOMER REVIEWS */}
       <section className="max-w-[1520px] mx-auto px-3 sm:px-6 mb-12">
