@@ -48,7 +48,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
                 key={mat.id}
                 type="button"
                 onClick={() => onSelectFilament(mat)}
-                className={`relative group flex flex-col items-center p-2 rounded-lg border text-center transition-all ${
+                className={`relative group flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all min-h-[62px] cursor-pointer active:scale-95 ${
                   isSelected
                     ? 'border-[#FF6B00] bg-white dark:bg-zinc-900 shadow-[0_2px_12px_rgba(255,107,0,0.14)] ring-1 ring-[#FF6B00]'
                     : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60 hover:border-slate-300 dark:hover:border-zinc-700 shadow-2xs'
@@ -56,7 +56,7 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
               >
                 {/* Tactical Color Dot */}
                 <div
-                  className="w-7 h-7 rounded-full border border-black/10 dark:border-white/20 shadow-xs flex items-center justify-center transition-transform group-hover:scale-105"
+                  className="w-7 h-7 rounded-full border border-black/10 dark:border-white/20 shadow-xs flex items-center justify-center transition-transform group-hover:scale-105 shrink-0"
                   style={{ backgroundColor: mat.hexColor }}
                 >
                   {isSelected && (
@@ -94,18 +94,18 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
           {/* Option: None */}
           <button
             type="button"
             onClick={() => onSelectResin(null)}
-            className={`flex flex-col items-center p-2 rounded-lg border transition-all ${
+            className={`flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl border transition-all min-h-[54px] cursor-pointer active:scale-95 ${
               selectedResin === null
                 ? 'border-sky-500 bg-white dark:bg-zinc-900 shadow-xs ring-1 ring-sky-500'
                 : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60 hover:border-slate-300 dark:hover:border-zinc-700 shadow-2xs'
             }`}
           >
-            <div className="w-6 h-6 rounded-full border border-dashed border-slate-400 dark:border-zinc-600 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full border border-dashed border-slate-400 dark:border-zinc-600 flex items-center justify-center shrink-0">
               <span className="font-mono text-[9px] text-slate-400 dark:text-zinc-500">OFF</span>
             </div>
             <span className="mt-1 font-sans text-[10px] font-medium text-slate-600 dark:text-zinc-400">None</span>
@@ -119,14 +119,14 @@ export const MaterialSelector: React.FC<MaterialSelectorProps> = ({
                 key={resin.id}
                 type="button"
                 onClick={() => onSelectResin(resin)}
-                className={`relative group flex flex-col items-center p-2 rounded-lg border transition-all ${
+                className={`relative group flex flex-col items-center justify-center p-1.5 sm:p-2 rounded-xl border transition-all min-h-[54px] cursor-pointer active:scale-95 ${
                   isSelected
                     ? 'border-sky-500 bg-white dark:bg-zinc-900 shadow-xs ring-1 ring-sky-500'
                     : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60 hover:border-slate-300 dark:hover:border-zinc-700 shadow-2xs'
                 }`}
               >
                 <div
-                  className="w-6 h-6 rounded-full border border-black/10 dark:border-white/30 flex items-center justify-center opacity-90 shadow-2xs group-hover:scale-105 transition-transform"
+                  className="w-6 h-6 rounded-full border border-black/10 dark:border-white/30 flex items-center justify-center opacity-90 shadow-2xs group-hover:scale-105 transition-transform shrink-0"
                   style={{
                     backgroundColor: resin.hexColor,
                     boxShadow: `0 0 10px ${resin.hexColor}40`,

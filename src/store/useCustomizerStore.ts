@@ -1,6 +1,7 @@
 /**
  * FORMGRID PARAMETRIC CUSTOMIZER REACTIVE STATE STORE
- * Real-time continuous dimension recalculation, telemetry pricing, wireframe mode, and preset blueprints
+ * Real-time continuous dimension recalculation, telemetry pricing, wireframe mode,
+ * iconic drawer presets & real-world drawer models calibration.
  */
 
 import { create } from 'zustand';
@@ -16,6 +17,23 @@ import { calculateSlicingTelemetry, SlicingTelemetry } from '../lib/parametricMa
 import { exportMeshToBinarySTL, triggerStlDownload } from '../lib/stlExporter';
 
 export type LightingPreset = 'daylight' | 'laboratory' | 'warm' | 'cyberpunk';
+export type CustomizerViewMode = 'desk' | 'closeup';
+
+export interface DrawerModel {
+  id: string;
+  name: string;
+  brand: string;
+  category: 'desk' | 'kitchen' | 'workshop';
+  drawerWidthMm: number;
+  drawerDepthMm: number;
+  drawerHeightMm: number;
+  compartments: {
+    cols: number;
+    rows: number;
+  };
+  recommendedPresetId: string;
+  description: string;
+}
 
 export interface StudioBlueprintPreset {
   id: string;
@@ -26,108 +44,185 @@ export interface StudioBlueprintPreset {
   resinId: string | null;
   engravedText: string;
   lightingPreset?: LightingPreset;
+  drawerModelId?: string;
 }
 
+/**
+ * ICONIC REAL-WORLD DRAWER MODELS
+ * Calibrated precisely for real-world drawers and furniture lines
+ */
+export const DRAWER_MODELS: DrawerModel[] = [
+  {
+    id: 'drawer_ikea_alex_shallow',
+    name: 'IKEA Alex Shallow Drawer',
+    brand: 'IKEA',
+    category: 'desk',
+    drawerWidthMm: 290,
+    drawerDepthMm: 520,
+    drawerHeightMm: 50,
+    compartments: { cols: 3, rows: 2 },
+    recommendedPresetId: 'preset_ikea_alex_shallow',
+    description: 'Iconic under-desk drawer unit (290 × 520 × 50 mm). 3x2 compartments for everyday desk stationery.',
+  },
+  {
+    id: 'drawer_ikea_alex_deep',
+    name: 'IKEA Alex Deep Drawer',
+    brand: 'IKEA',
+    category: 'desk',
+    drawerWidthMm: 290,
+    drawerDepthMm: 520,
+    drawerHeightMm: 110,
+    compartments: { cols: 2, rows: 2 },
+    recommendedPresetId: 'preset_ikea_alex_deep',
+    description: 'Deep bottom Alex drawer unit (290 × 520 × 110 mm). 2x2 compartments for bulky tech gear.',
+  },
+  {
+    id: 'drawer_kitchen_cutlery',
+    name: 'Kitchen Cutlery Tray',
+    brand: 'Universal Kitchen',
+    category: 'kitchen',
+    drawerWidthMm: 320,
+    drawerDepthMm: 480,
+    drawerHeightMm: 55,
+    compartments: { cols: 4, rows: 1 },
+    recommendedPresetId: 'preset_kitchen_cutlery',
+    description: 'Standard culinary flatware drawer insert (320 × 480 × 55 mm). 4 longitudinal channels.',
+  },
+  {
+    id: 'drawer_compact_catchall',
+    name: 'Compact Desk Catchall',
+    brand: 'Wavezly Studio',
+    category: 'desk',
+    drawerWidthMm: 220,
+    drawerDepthMm: 180,
+    drawerHeightMm: 40,
+    compartments: { cols: 2, rows: 1 },
+    recommendedPresetId: 'preset_desk_catchall',
+    description: 'Compact 2-compartment catchall (220 × 180 × 40 mm) for shallow desktop trays and EDC pocket dump.',
+  },
+  {
+    id: 'drawer_workshop_gridfinity',
+    name: 'Workshop Gridfinity Drawer',
+    brand: 'Gridfinity Spec',
+    category: 'workshop',
+    drawerWidthMm: 400,
+    drawerDepthMm: 300,
+    drawerHeightMm: 50,
+    compartments: { cols: 3, rows: 3 },
+    recommendedPresetId: 'preset_workshop_gridfinity',
+    description: 'Standard 3x3 modular hardware chest drawer (400 × 300 × 50 mm) for fasteners, calipers, and hand tools.',
+  },
+];
+
+/**
+ * REAL-WORLD ICONIC BLUEPRINT PRESETS
+ * Calibrated dimensions, wall thicknesses, and compartment divisions
+ */
 export const BLUEPRINT_PRESETS: StudioBlueprintPreset[] = [
   {
-    id: 'preset_edc_valet',
-    name: 'EDC Pocket Dump & Watch Stand',
-    description: 'Optimized for watch cushions, titanium folding knives, wallet, and keys.',
+    id: 'preset_ikea_alex_shallow',
+    name: 'IKEA Alex Shallow Drawer',
+    description: 'Iconic under-desk drawer fit (Width 290mm, Depth 520mm, Height 50mm, 3x2 compartments). Ideal for cables, pens, and desk essentials.',
     dimensions: {
-      length: 175,
-      width: 125,
-      height: 38,
+      length: 290,
+      width: 520,
+      height: 50,
       wallThickness: 2.8,
       bottomThickness: 2.4,
       rows: 2,
       cols: 3,
+      cornerFilletRadius: 6,
+      inlayPocketDepth: 0,
+    },
+    materialId: 'mat_pla_obsidian',
+    resinId: null,
+    engravedText: 'IKEA ALEX // SHALLOW',
+    lightingPreset: 'daylight',
+    drawerModelId: 'drawer_ikea_alex_shallow',
+  },
+  {
+    id: 'preset_ikea_alex_deep',
+    name: 'IKEA Alex Deep Drawer',
+    description: 'Deep bottom Alex drawer unit (Width 290mm, Depth 520mm, Height 110mm, 2x2 compartments). High-capacity bays for cameras, audio gear, and tools.',
+    dimensions: {
+      length: 290,
+      width: 520,
+      height: 110,
+      wallThickness: 3.2,
+      bottomThickness: 2.8,
+      rows: 2,
+      cols: 2,
+      cornerFilletRadius: 8,
+      inlayPocketDepth: 0,
+    },
+    materialId: 'mat_pla_concrete',
+    resinId: null,
+    engravedText: 'IKEA ALEX // DEEP',
+    lightingPreset: 'warm',
+    drawerModelId: 'drawer_ikea_alex_deep',
+  },
+  {
+    id: 'preset_kitchen_cutlery',
+    name: 'Kitchen Cutlery Tray',
+    description: 'Standard culinary flatware insert (Width 320mm, Depth 480mm, Height 55mm, 4x1 compartments). Full-length channels for knives, forks, spoons, and utensils.',
+    dimensions: {
+      length: 320,
+      width: 480,
+      height: 55,
+      wallThickness: 3.0,
+      bottomThickness: 2.4,
+      rows: 1,
+      cols: 4,
+      cornerFilletRadius: 10,
+      inlayPocketDepth: 0,
+    },
+    materialId: 'mat_pla_studio_white',
+    resinId: null,
+    engravedText: 'KITCHEN // CUTLERY',
+    lightingPreset: 'daylight',
+    drawerModelId: 'drawer_kitchen_cutlery',
+  },
+  {
+    id: 'preset_desk_catchall',
+    name: 'Compact Desk Catchall',
+    description: 'Space-saving EDC organizer (Width 220mm, Depth 180mm, Height 40mm, 2x1 compartments). Dual pocket dump for watch, keys, wallet, and AirPods.',
+    dimensions: {
+      length: 220,
+      width: 180,
+      height: 40,
+      wallThickness: 2.8,
+      bottomThickness: 2.4,
+      rows: 1,
+      cols: 2,
       cornerFilletRadius: 8,
       inlayPocketDepth: 2.5,
     },
     materialId: 'mat_pla_obsidian',
     resinId: 'mat_resin_cobalt',
-    engravedText: 'EDC-VALET // 01',
-    lightingPreset: 'daylight',
+    engravedText: 'DESK // CATCHALL',
+    lightingPreset: 'laboratory',
+    drawerModelId: 'drawer_compact_catchall',
   },
   {
-    id: 'preset_keeb_station',
-    name: 'Mechanical Keyboard Switch Matrix',
-    description: 'High-density compartments for MX switch stems, springs, lubes, and keycaps.',
+    id: 'preset_workshop_gridfinity',
+    name: 'Workshop Gridfinity Drawer',
+    description: 'Heavy-duty modular chest drawer (Width 400mm, Depth 300mm, Height 50mm, 3x3 compartments). Rigid grid for M2/M3 screws, calipers, and hand tools.',
     dimensions: {
-      length: 220,
-      width: 140,
-      height: 32,
-      wallThickness: 3.0,
-      bottomThickness: 2.4,
-      rows: 3,
-      cols: 5,
-      cornerFilletRadius: 6,
-      inlayPocketDepth: 0,
-    },
-    materialId: 'mat_pla_concrete',
-    resinId: null,
-    engravedText: 'KEEB-LAB // 68%',
-    lightingPreset: 'cyberpunk',
-  },
-  {
-    id: 'preset_audio_plinth',
-    name: 'Audiophile DAC & IEM Dock',
-    description: 'Heavy dampening walls for desktop headphone amplifiers and 3.5mm/4.4mm adapters.',
-    dimensions: {
-      length: 190,
-      width: 130,
-      height: 44,
-      wallThickness: 3.4,
-      bottomThickness: 2.8,
-      rows: 2,
-      cols: 2,
-      cornerFilletRadius: 10,
-      inlayPocketDepth: 3.0,
-    },
-    materialId: 'mat_pla_obsidian',
-    resinId: 'mat_resin_amber',
-    engravedText: 'AUDIO-PLINTH // 32BIT',
-    lightingPreset: 'warm',
-  },
-  {
-    id: 'preset_maker_bench',
-    name: 'Precision Hardware & SMD Matrix',
-    description: 'Deep anti-spill chambers for M2/M3 screws, soldering tips, and tweezers.',
-    dimensions: {
-      length: 240,
-      width: 160,
-      height: 48,
+      length: 400,
+      width: 300,
+      height: 50,
       wallThickness: 3.2,
       bottomThickness: 2.6,
       rows: 3,
-      cols: 4,
+      cols: 3,
       cornerFilletRadius: 6,
       inlayPocketDepth: 0,
     },
     materialId: 'mat_pla_signal_orange',
     resinId: null,
-    engravedText: 'MAKER-BENCH // M2-M3',
+    engravedText: 'WORKSHOP // GRIDFINITY',
     lightingPreset: 'cyberpunk',
-  },
-  {
-    id: 'preset_fountain_pen',
-    name: 'Minimalist Calligraphy & Pen Dock',
-    description: 'Long longitudinal chambers with optical clear resin dampening bed for fine fountain pens.',
-    dimensions: {
-      length: 150,
-      width: 75,
-      height: 26,
-      wallThickness: 2.8,
-      bottomThickness: 2.2,
-      rows: 1,
-      cols: 3,
-      cornerFilletRadius: 10,
-      inlayPocketDepth: 2.0,
-    },
-    materialId: 'mat_pla_studio_white',
-    resinId: 'mat_resin_clear',
-    engravedText: 'PEN-DOCK // ROTRING',
-    lightingPreset: 'laboratory',
+    drawerModelId: 'drawer_workshop_gridfinity',
   },
 ];
 
@@ -146,6 +241,10 @@ export interface CustomizerStoreState {
   sliceHeight: number; // 0 to 100 percentage build height
   explodedOffset: number; // 0 to 80 mm lift for dividers and resin inlays
 
+  // Drawer & Environmental View Mode State
+  viewMode: 'desk' | 'closeup';
+  isDrawerOpen: boolean;
+
   // Actions
   setDimension: (key: keyof ParametricOrganizerDimensions, value: number) => void;
   setDimensions: (dims: Partial<ParametricOrganizerDimensions>) => void;
@@ -159,6 +258,9 @@ export interface CustomizerStoreState {
   setEngravedText: (text: string) => void;
   setSliceHeight: (val: number) => void;
   setExplodedOffset: (val: number) => void;
+  setViewMode: (mode: 'desk' | 'closeup') => void;
+  toggleDrawerOpen: () => void;
+  setIsDrawerOpen: (isOpen: boolean) => void;
   applyPreset: (presetId: string) => void;
   resetDefaults: () => void;
   exportStlFile: (filename?: string) => Promise<{ blob: Blob; url: string }>;
@@ -167,15 +269,15 @@ export interface CustomizerStoreState {
 
 const defaultProduct = SEED_PRODUCTS[0]; // Modular Desk Valet Pro
 const defaultDims: ParametricOrganizerDimensions = {
-  length: 160,
-  width: 120,
-  height: 40,
+  length: 290,
+  width: 520,
+  height: 50,
   wallThickness: 2.8,
   bottomThickness: 2.4,
   rows: 2,
   cols: 3,
-  cornerFilletRadius: 8,
-  inlayPocketDepth: 2.5,
+  cornerFilletRadius: 6,
+  inlayPocketDepth: 0,
 };
 
 const defaultFilament = SEED_MATERIALS[0]; // Obsidian Black
@@ -194,9 +296,13 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
   isExportingStl: false,
   autoRotate: false,
   wireframe: false,
-  engravedText: 'SNUGDESK // 01',
+  engravedText: 'IKEA ALEX // SHALLOW',
   sliceHeight: 100,
   explodedOffset: 0,
+
+  // Environmental Drawer & View Mode State
+  viewMode: 'closeup',
+  isDrawerOpen: true,
 
   setDimension: (key, value) => {
     const { dimensions, selectedMaterial, selectedResin } = get();
@@ -291,9 +397,33 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
     set({ explodedOffset: clamped });
   },
 
+  setViewMode: (mode) => {
+    set({ viewMode: mode });
+  },
+
+  toggleDrawerOpen: () => {
+    set((state) => ({ isDrawerOpen: !state.isDrawerOpen }));
+  },
+
+  setIsDrawerOpen: (isOpen) => {
+    set({ isDrawerOpen: isOpen });
+  },
+
   applyPreset: (presetId) => {
-    const preset = BLUEPRINT_PRESETS.find((p) => p.id === presetId);
-    if (!preset) return;
+    // Map legacy or shorthand IDs
+    const legacyMap: Record<string, string> = {
+      preset_edc_valet: 'preset_desk_catchall',
+      preset_keeb_station: 'preset_workshop_gridfinity',
+      preset_audio_plinth: 'preset_ikea_alex_deep',
+      preset_maker_bench: 'preset_workshop_gridfinity',
+      preset_fountain_pen: 'preset_desk_catchall',
+      preset_ikea_alex: 'preset_ikea_alex_shallow',
+      preset_cutlery: 'preset_kitchen_cutlery',
+      preset_catchall: 'preset_desk_catchall',
+    };
+
+    const targetId = legacyMap[presetId] || presetId;
+    const preset = BLUEPRINT_PRESETS.find((p) => p.id === targetId) || BLUEPRINT_PRESETS[0];
 
     const filament =
       SEED_MATERIALS.find((m) => m.id === preset.materialId) || get().selectedMaterial;
@@ -325,9 +455,11 @@ export const useCustomizerStore = create<CustomizerStoreState>((set, get) => ({
       selectedResin: null,
       lightingPreset: 'daylight',
       wireframe: false,
-      engravedText: 'SNUGDESK // 01',
+      engravedText: 'IKEA ALEX // SHALLOW',
       sliceHeight: 100,
       explodedOffset: 0,
+      viewMode: 'closeup',
+      isDrawerOpen: true,
       telemetry,
     });
   },

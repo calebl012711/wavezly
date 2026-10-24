@@ -15,6 +15,8 @@ interface DimensionSliderProps {
   max: number;
   step?: number;
   unit?: string;
+  showInches?: boolean;
+  secondaryDisplay?: string;
   onChange: (val: number) => void;
   description?: string;
 }
@@ -27,9 +29,12 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
   max,
   step = 1,
   unit = 'mm',
+  showInches = false,
+  secondaryDisplay,
   onChange,
   description,
 }) => {
+  const inchesDisplay = showInches || unit === 'mm' ? `${(value / 25.4).toFixed(1)} in` : null;
   const handleDecrement = () => {
     const newVal = Math.max(min, Number((value - step).toFixed(1)));
     playClickSound('tick');
@@ -65,8 +70,8 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
           </span>
         </div>
 
-        {/* Tactile Numeric Readout Box */}
-        <div className="flex items-center space-x-1 bg-white dark:bg-zinc-950 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-zinc-800 shadow-2xs">
+        {/* Tactile Numeric Readout Box with Dual mm / in Display */}
+        <div className="flex items-center space-x-1.5 bg-white dark:bg-zinc-950 px-2.5 py-1 sm:py-0.5 rounded-lg border border-slate-200 dark:border-zinc-800 shadow-2xs min-h-[36px] sm:min-h-0">
           <input
             type="number"
             min={min}
@@ -77,22 +82,27 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
             className="w-12 bg-transparent text-right font-mono text-xs text-[#0F172A] dark:text-white font-bold focus:outline-none focus:text-[#FF6B00]"
           />
           <span className="font-mono text-[11px] text-slate-400 dark:text-zinc-500">{unit}</span>
+          {(secondaryDisplay || inchesDisplay) && (
+            <span className="font-sans text-[10px] text-zinc-400 dark:text-zinc-500 border-l border-zinc-200 dark:border-zinc-700 pl-1.5">
+              {secondaryDisplay || inchesDisplay}
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Slider Bar & Micro Increment Buttons */}
-      <div className="flex items-center space-x-3">
+      {/* Slider Bar & Micro Increment Buttons with 44x44px Mobile Tap Targets */}
+      <div className="flex items-center space-x-2.5 sm:space-x-3">
         <button
           type="button"
           onClick={handleDecrement}
           disabled={value <= min}
-          className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed transition shadow-2xs"
+          className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-200 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition shadow-2xs shrink-0 cursor-pointer"
           aria-label="Decrease value"
         >
-          <Minus className="w-3.5 h-3.5" />
+          <Minus className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
         </button>
 
-        <div className="relative flex-1 flex items-center">
+        <div className="relative flex-1 flex items-center py-2">
           <input
             type="range"
             min={min}
@@ -103,7 +113,7 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
               playClickSound('tick');
               onChange(parseFloat(e.target.value));
             }}
-            className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#FF6B00] focus:outline-none"
+            className="w-full h-2 sm:h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#FF6B00] focus:outline-none"
           />
         </div>
 
@@ -111,10 +121,10 @@ export const DimensionSlider: React.FC<DimensionSliderProps> = ({
           type="button"
           onClick={handleIncrement}
           disabled={value >= max}
-          className="p-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed transition shadow-2xs"
+          className="w-11 h-11 sm:w-8 sm:h-8 flex items-center justify-center rounded-xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-zinc-200 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition shadow-2xs shrink-0 cursor-pointer"
           aria-label="Increase value"
         >
-          <Plus className="w-3.5 h-3.5" />
+          <Plus className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
         </button>
       </div>
 
