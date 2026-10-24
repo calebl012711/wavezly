@@ -25,7 +25,6 @@ import {
   Compass,
   Clock,
   Layers,
-  Cpu,
   BadgeCheck,
 } from 'lucide-react';
 import { exportProductionSpecSheet, downloadSpecSheetHtml, resolveProductionSpecOrder } from '../lib/orderInvoiceGenerator';
@@ -118,16 +117,16 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
           <div className="space-y-2">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/60 text-xs text-[#FF6B00] font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
-              <span>ORDER CONFIRMED & QUEUED</span>
+              <span>ORDER CONFIRMED</span>
             </div>
 
             {/* WARM WELCOME MESSAGE */}
             <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-[#0F172A]">
-              Your order has been received by the Wavezly workshop!
+              Thank you for your order!
             </h1>
 
             <p className="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
-              Thank you, <strong className="text-[#0F172A]">{specOrder.customerName}</strong>. We've routed your bespoke CAD geometry to our automated additive print farm, and domestic hardware has been queued for immediate warehouse pick.
+              We've received your order, <strong className="text-[#0F172A]">{specOrder.customerName}</strong>. Our workshop is preparing your items and will dispatch them within 48 hours. A confirmation receipt has been sent to your email.
             </p>
           </div>
 
@@ -162,20 +161,17 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
           </div>
         </div>
 
-        {/* 2. LIVE PRINT FARM PROGRESS TRACKER */}
+        {/* 2. ORDER PROGRESS TIMELINE */}
         <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] space-y-5">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div className="flex items-center space-x-2.5">
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B00] opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#FF6B00]" />
-              </span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B00]" />
               <h2 className="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
-                Live Print Farm Progress Tracker
+                Production & Delivery Timeline
               </h2>
             </div>
-            <span className="text-[11px] font-mono font-bold text-[#FF6B00] bg-orange-50 px-2.5 py-0.5 rounded-full border border-orange-100">
-              SLANT 3D BOISE NODE-12 ACTIVE
+            <span className="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              On Schedule
             </span>
           </div>
 
@@ -183,47 +179,44 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
             <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 space-y-1">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Stage 01</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Step 01</span>
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               </div>
-              <div className="font-bold text-xs text-[#0F172A]">CAD Validated</div>
-              <p className="text-[10px] text-slate-500">Watertight 0.2mm mesh confirmed</p>
+              <div className="font-bold text-xs text-[#0F172A]">Order Confirmed</div>
+              <p className="text-[10px] text-slate-500">Dimensions & specs saved</p>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200/80 space-y-1">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF6B00]">Stage 02</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF6B00]">Step 02</span>
                 <Clock className="w-4 h-4 text-[#FF6B00] animate-spin" />
               </div>
-              <div className="font-bold text-xs text-[#0F172A]">Slicing Toolpaths</div>
-              <p className="text-[10px] text-slate-500">Gyroid infill & perimeter G-code</p>
+              <div className="font-bold text-xs text-[#0F172A]">Crafting & Printing</div>
+              <p className="text-[10px] text-slate-500">Printed with plant-based PLA</p>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1 opacity-70">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Stage 03</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 03</span>
                 <Layers className="w-4 h-4 text-slate-400" />
               </div>
-              <div className="font-bold text-xs text-slate-700">Additive Extrusion</div>
-              <p className="text-[10px] text-slate-500">Scheduled on Node Array #12</p>
+              <div className="font-bold text-xs text-slate-700">Quality Inspection</div>
+              <p className="text-[10px] text-slate-500">Hand-checked for snug fit</p>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1 opacity-70">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Stage 04</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Step 04</span>
                 <BadgeCheck className="w-4 h-4 text-slate-400" />
               </div>
-              <div className="font-bold text-xs text-slate-700">Caliper QC Check</div>
-              <p className="text-[10px] text-slate-500">±0.2mm optical verification</p>
+              <div className="font-bold text-xs text-slate-700">Dispatch & Delivery</div>
+              <p className="text-[10px] text-slate-500">Ships with USPS Priority</p>
             </div>
           </div>
 
           <div className="p-3 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-slate-600 gap-2">
-            <div className="flex items-center space-x-2">
-              <Cpu className="w-4 h-4 text-[#FF6B00]" />
-              <span className="font-medium">Cluster telemetry: 0.20mm layer height • 18% gyroid core • 210°C nozzle</span>
-            </div>
-            <span className="text-[#FF6B00] font-bold text-[11px]">Ready for dispatch in ~24h</span>
+            <span className="font-medium text-slate-600">Standard domestic shipping included • 100% Fit Guarantee</span>
+            <span className="text-[#FF6B00] font-bold text-[11px]">Estimated dispatch: Within 48 hours</span>
           </div>
         </div>
 

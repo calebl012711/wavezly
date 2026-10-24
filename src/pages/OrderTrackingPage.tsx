@@ -1,262 +1,229 @@
 /**
- * WAVEZLY REAL-TIME SPLIT ORDER TRACKING PORTAL
- * Concept 1: Warm Minimalist DTC
- * - Clean airy white & warm neutral backdrop (#FFFFFF / #FAFAF9)
- * - Sleek dark charcoal typography (#0F172A)
- * - Electric orange status indicators & progress radar (#FF6B00 / #FF7A00)
- * - Live print farm telemetry (Boise ID Cluster Node 12)
- * - Dual package split logistics monitoring
- * - Printable PDF spec sheet trigger
+ * WAVEZLY ORDER TRACKING PORTAL
+ * Clean, consumer-friendly order tracking.
+ * Replaced developer telemetry with real shipment milestones and package details.
  */
 
 import React, { useState } from 'react';
 import {
-  Box,
+  Package,
   Truck,
-  CheckCircle2,
-  Clock,
-  ExternalLink,
-  Printer,
-  Cpu,
+  Copy,
+  Check,
+  MapPin,
   ShieldCheck,
-  Search,
 } from 'lucide-react';
-import { LogisticsTransitMap } from '../components/tracking/LogisticsTransitMap';
-import { exportProductionSpecSheet } from '../lib/orderInvoiceGenerator';
-import { playClickSound } from '../lib/soundEffects';
 
 interface OrderTrackingPageProps {
   initialOrderNumber?: string;
 }
 
 export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({
-  initialOrderNumber = 'FG-849201-B3X',
+  initialOrderNumber = 'WVZ-849201',
 }) => {
   const [query, setQuery] = useState(initialOrderNumber);
-  const [activeOrder, setActiveOrder] = useState<string | null>(initialOrderNumber);
-  const [focusedStream, setFocusedStream] = useState<'A' | 'B' | null>(null);
+  const [activeOrder, setActiveOrder] = useState<string>(initialOrderNumber);
+  const [copied, setCopied] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      playClickSound('snap');
       setActiveOrder(query.trim().toUpperCase());
     }
   };
 
-  const handlePrintSpec = () => {
-    if (activeOrder) {
-      playClickSound('download');
-      exportProductionSpecSheet(activeOrder);
-    }
+  const copyTrackingNumber = () => {
+    navigator.clipboard.writeText('9400 1289 4820 9182 04');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-[#0F172A] font-sans selection:bg-[#FF6B00] selection:text-white py-10 sm:py-16">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div className="min-h-screen bg-[#FAFAFA] text-[#0F172A] font-sans py-8 sm:py-14">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6">
         {/* Search Header */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/70 text-xs text-[#FF6B00] font-bold">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF6B00] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF6B00]" />
-            </span>
-            <span>DUAL LOGISTICS TELEMETRY RADAR</span>
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-[#FF6B00] text-xs font-semibold">
+            <Package className="w-3.5 h-3.5" />
+            <span>Order Status</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#0F172A]">
-            Wavezly Live Delivery & Workshop Tracking
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0F172A]">
+            Track Your Wavezly Order
           </h1>
-          <p className="text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
-            Enter your Wavezly order number to monitor made-to-measure 3D additive fabrication and domestic courier transit in real-time.
+          <p className="text-xs sm:text-sm text-zinc-500 max-w-md mx-auto">
+            Check the live crafting and shipping status of your 3D printed items.
           </p>
 
-          {/* Input Bar */}
-          <form onSubmit={handleSearch} className="max-w-md mx-auto flex items-center space-x-2 pt-2">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="e.g. FG-849201-B3X"
-                className="w-full bg-white px-4 py-3 rounded-2xl border border-slate-200 text-sm text-[#0F172A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] shadow-[0_2px_8px_rgba(15,23,42,0.03)] font-mono uppercase transition"
-              />
-            </div>
+          {/* Search Input Bar */}
+          <form onSubmit={handleSearch} className="max-w-md mx-auto flex items-center gap-2 pt-2">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="e.g. WVZ-849201"
+              className="flex-1 bg-white px-4 py-2.5 rounded-xl border border-zinc-200 text-xs sm:text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-[#FF6B00] shadow-xs uppercase font-mono"
+            />
             <button
               type="submit"
-              className="px-6 py-3 rounded-2xl bg-[#0F172A] hover:bg-slate-800 text-white font-bold text-xs tracking-wider transition cursor-pointer shadow-sm flex items-center space-x-1.5"
+              className="px-5 py-2.5 rounded-xl bg-[#0F172A] hover:bg-zinc-800 text-white font-bold text-xs transition cursor-pointer shrink-0"
             >
-              <Search className="w-3.5 h-3.5" />
-              <span>Locate</span>
+              Track
             </button>
           </form>
         </div>
 
-        {/* Active Order Dual Tracking View */}
+        {/* Active Order Card */}
         {activeOrder && (
-          <div className="space-y-6">
-            <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-              <div className="flex items-center space-x-3">
-                <span className="text-slate-400 uppercase tracking-wider font-semibold text-[11px]">Tracking:</span>
-                <span className="font-mono font-black text-[#0F172A] text-base">{activeOrder}</span>
-                <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span>Dual Stream Active</span>
+          <div className="bg-white rounded-2xl border border-zinc-200 p-5 sm:p-7 shadow-xs space-y-6">
+            {/* Top Order Overview */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-zinc-100">
+              <div>
+                <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">
+                  Order Number
+                </span>
+                <span className="text-lg font-mono font-extrabold text-[#0F172A]">
+                  #{activeOrder}
                 </span>
               </div>
 
-              <div className="flex items-center space-x-3">
-                <button
-                  type="button"
-                  onClick={handlePrintSpec}
-                  className="px-3.5 py-1.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FF6B00] font-bold text-xs flex items-center space-x-1.5 transition border border-orange-200/70 cursor-pointer"
-                >
-                  <Printer className="w-3.5 h-3.5" />
-                  <span>Print Spec Sheet (PDF)</span>
-                </button>
+              <div className="sm:text-right">
+                <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block">
+                  Estimated Delivery
+                </span>
+                <span className="text-sm font-bold text-emerald-600 flex items-center sm:justify-end gap-1.5">
+                  <Truck className="w-4 h-4" />
+                  Friday, October 28
+                </span>
               </div>
             </div>
 
-            {/* GEOSPATIAL LOGISTICS TELEMETRY RADAR & TRANSIT MAP */}
-            <div className="rounded-3xl overflow-hidden border border-slate-200/80 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] bg-white">
-              <LogisticsTransitMap
-                orderId={activeOrder}
-                onSelectRoute={(route) => setFocusedStream(route)}
-              />
+            {/* Visual Delivery Stepper */}
+            <div>
+              <span className="text-xs font-bold text-zinc-800 block mb-4">
+                Shipment Progress
+              </span>
+
+              <div className="relative">
+                {/* Connecting Line */}
+                <div className="absolute top-4 left-4 right-4 h-0.5 bg-zinc-200 -z-0 hidden sm:block" />
+                <div className="absolute top-4 left-4 w-2/3 h-0.5 bg-[#FF6B00] -z-0 hidden sm:block" />
+
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-2 relative z-10">
+                  {/* Step 1 */}
+                  <div className="flex sm:flex-col items-center sm:text-center gap-3 sm:gap-1.5">
+                    <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <Check className="w-4 h-4 stroke-[3]" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-zinc-900 block">Confirmed</span>
+                      <span className="text-[11px] text-zinc-400">Oct 22, 10:45 AM</span>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex sm:flex-col items-center sm:text-center gap-3 sm:gap-1.5">
+                    <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <Check className="w-4 h-4 stroke-[3]" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-zinc-900 block">3D Printed</span>
+                      <span className="text-[11px] text-zinc-400">Oct 23, 2:15 PM</span>
+                    </div>
+                  </div>
+
+                  {/* Step 3 (Current) */}
+                  <div className="flex sm:flex-col items-center sm:text-center gap-3 sm:gap-1.5">
+                    <div className="w-8 h-8 rounded-full bg-[#FF6B00] text-white flex items-center justify-center shrink-0 ring-4 ring-orange-100 shadow-xs">
+                      <Truck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-[#FF6B00] block">In Transit</span>
+                      <span className="text-[11px] text-zinc-500">USPS Priority Mail</span>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="flex sm:flex-col items-center sm:text-center gap-3 sm:gap-1.5 opacity-40">
+                    <div className="w-8 h-8 rounded-full bg-zinc-200 text-zinc-500 flex items-center justify-center shrink-0">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-zinc-600 block">Delivered</span>
+                      <span className="text-[11px] text-zinc-400">Expected Oct 28</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* STREAM 1: PRINT FARM QUEUE */}
-              <div
-                className={`p-6 rounded-3xl bg-white border transition-all duration-200 space-y-4 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] ${
-                  focusedStream === 'A'
-                    ? 'border-[#FF6B00] ring-4 ring-[#FF6B00]/10 shadow-[0_8px_30px_rgba(255,107,0,0.12)]'
-                    : 'border-slate-200/80'
-                }`}
+            {/* Courier & Tracking Details Box */}
+            <div className="bg-zinc-50 rounded-xl p-4 border border-zinc-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div>
+                <span className="text-zinc-400 text-[11px] block">Carrier & Tracking Number</span>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="font-mono font-bold text-zinc-800">
+                    USPS: 9400 1289 4820 9182 04
+                  </span>
+                  <button
+                    type="button"
+                    onClick={copyTrackingNumber}
+                    className="p-1 text-zinc-400 hover:text-zinc-700 transition cursor-pointer"
+                    title="Copy tracking number"
+                  >
+                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-[11px] border border-emerald-200">
+                  On Schedule
+                </span>
+              </div>
+            </div>
+
+            {/* Items in this shipment */}
+            <div className="space-y-3 pt-2">
+              <span className="text-xs font-bold text-zinc-800 block">
+                Items in This Shipment
+              </span>
+
+              <div className="flex items-center gap-3 p-3 rounded-xl border border-zinc-100 hover:border-zinc-200 transition">
+                <img
+                  src="/assets/products/drawer-matrix-real.jpg"
+                  alt="Custom Drawer Organizer"
+                  className="w-14 h-14 rounded-lg object-cover bg-zinc-50 border border-zinc-100"
+                />
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs sm:text-sm font-bold text-zinc-900 truncate">
+                    Wavezly Custom Drawer Matrix
+                  </h4>
+                  <p className="text-[11px] text-zinc-500">
+                    Dimensions: 320 × 240 × 45 mm • Matte Obsidian Black
+                  </p>
+                  <span className="text-[11px] font-bold text-zinc-800 mt-0.5 block">
+                    Qty: 1 • $39.00
+                  </span>
+                </div>
+                <div className="shrink-0 text-right">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                    <ShieldCheck className="w-3 h-3" />
+                    Guaranteed Fit
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Need Help Footer */}
+            <div className="pt-4 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+              <span>Have questions about your delivery?</span>
+              <a
+                href="#support"
+                className="text-[#FF6B00] font-semibold hover:underline"
               >
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div className="flex items-center space-x-2 text-[#FF6B00] text-xs font-bold uppercase tracking-wider">
-                    <Box className="w-4 h-4" />
-                    <span>Package A: Made to Measure 3D</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-[#FF6B00] font-bold bg-orange-50 px-2.5 py-0.5 rounded-full border border-orange-100">
-                    STAGE 2 OF 4: SLICING
-                  </span>
-                </div>
-
-                {/* Step Progression Timeline */}
-                <div className="space-y-3.5 text-xs">
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-[#0F172A]">Custom 3D Blueprint Validated</div>
-                      <div className="text-[11px] text-slate-500">Watertight 0.20mm layer code computed</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <Clock className="w-4 h-4 text-[#FF6B00] animate-spin flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-[#FF6B00]">3D Printing in Progress (Node 12)</div>
-                      <div className="text-[11px] text-slate-600">High-density matte bio-polymer extrusion</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3 opacity-40">
-                    <div className="w-4 h-4 rounded-full border-2 border-slate-300 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-slate-600">Acoustic Base Inlay Cast</div>
-                      <div className="text-[11px] text-slate-400">UV chamber curing</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3 opacity-40">
-                    <div className="w-4 h-4 rounded-full border-2 border-slate-300 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-slate-600">Caliper Quality Check & Dispatch</div>
-                      <div className="text-[11px] text-slate-400">±0.20mm ISO 2768-m optical inspection</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 text-[11px] text-slate-600 flex items-center justify-between">
-                  <div className="flex items-center space-x-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-[#FF6B00]" />
-                    <span>Boise, Idaho Studio Cluster</span>
-                  </div>
-                  <span className="text-[#FF6B00] font-bold">Ready to Ship in ~24h</span>
-                </div>
-              </div>
-
-              {/* STREAM 2: FAST-SHIP ACCESSORIES */}
-              <div
-                className={`p-6 rounded-3xl bg-white border transition-all duration-200 space-y-4 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.04)] ${
-                  focusedStream === 'B'
-                    ? 'border-slate-800 ring-4 ring-slate-800/10 shadow-[0_8px_30px_rgba(15,23,42,0.12)]'
-                    : 'border-slate-200/80'
-                }`}
-              >
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div className="flex items-center space-x-2 text-slate-700 text-xs font-bold uppercase tracking-wider">
-                    <Truck className="w-4 h-4 text-slate-600" />
-                    <span>Package B: Studio Accessories</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-slate-700 font-bold bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200">
-                    STAGE 3 OF 4: IN TRANSIT
-                  </span>
-                </div>
-
-                {/* Step Progression Timeline */}
-                <div className="space-y-3.5 text-xs">
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-[#0F172A]">Order Verified & Reserved</div>
-                      <div className="text-[11px] text-slate-500">US warehouse stock reserved</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-[#0F172A]">USPS Ground Advantage Label Created</div>
-                      <div className="text-[11px] text-slate-500">Salt Lake City Hub (Bay 4A)</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3">
-                    <Truck className="w-4 h-4 text-slate-800 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-slate-800">In Transit with Carrier</div>
-                      <div className="text-[11px] text-slate-600">Scanned at USPS Regional Sorting Hub</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-3 opacity-40">
-                    <div className="w-4 h-4 rounded-full border-2 border-slate-300 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="font-bold text-slate-600">Delivered to Doorstep</div>
-                      <div className="text-[11px] text-slate-400">Expected in 1–2 business days</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200/70 text-[11px] text-slate-600 flex items-center justify-between">
-                  <span className="font-mono text-slate-700 font-semibold">USPS 940011189922...</span>
-                  <span className="text-[#FF6B00] font-bold flex items-center gap-1 cursor-pointer">
-                    Live Carrier Scan <ExternalLink className="w-3 h-3" />
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* GUARANTEE FOOTNOTE */}
-            <div className="p-4 rounded-2xl bg-white border border-slate-200/70 shadow-xs flex items-center justify-between text-xs text-slate-500">
-              <div className="flex items-center space-x-2 text-[#0F172A] font-semibold">
-                <ShieldCheck className="w-4 h-4 text-[#FF6B00]" />
-                <span>Protected by Wavezly 100% Snug Fit Guarantee (±0.2mm Conformance)</span>
-              </div>
-              <span className="font-mono text-[10px] text-slate-400">ISO 2768-m PASS</span>
+                Contact Support →
+              </a>
             </div>
           </div>
         )}

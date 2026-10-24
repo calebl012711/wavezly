@@ -1,83 +1,46 @@
 /**
- * WAVEZLY CUSTOM 3D STUDIO - CUSTOMIZER CONTROL DRAWER
- * Precision accordion panels for physical bounding, grid topology, material swatches, curated presets, and cart dispatch
+ * WAVEZLY CUSTOMIZER CONTROL DRAWER
+ * Clean, consumer-friendly product customization panel.
+ * Removed developer jargon, raw CAD toolbars, and sound ticks.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCustomizerStore, BLUEPRINT_PRESETS } from '../../store/useCustomizerStore';
 import { DimensionSlider } from './DimensionSlider';
 import { MaterialSelector } from './MaterialSelector';
-import { playClickSound, isSoundMuted, toggleSoundMute, subscribeToMuteState } from '../../lib/soundEffects';
 import {
   Sliders,
   Grid,
   Palette,
-  Download,
   ShoppingCart,
-  RotateCcw,
-  Compass,
-  CheckCircle2,
-  Sparkles,
   Type,
-  Box,
-  Volume2,
-  VolumeX,
-  Layers,
-  FileCode,
-  ChevronDown,
-  Cpu,
-  Sun,
+  Check,
+  ShieldCheck,
+  Truck,
+  RotateCcw,
 } from 'lucide-react';
-import {
-  LIGHTING_PRESETS_METADATA,
-  LIGHTING_PRESET_KEYS,
-} from '../canvas/StudioEnvironment';
-import {
-  downloadSlicerProfile,
-  SlicerProfileContext,
-  SlicerEcosystem,
-} from '../../lib/slicerProfileGenerator';
 
 interface CustomizerDrawerProps {
   onAddToCart?: () => void;
 }
 
 export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart }) => {
-  const [activeTab, setActiveTab] = useState<'dimensions' | 'grid' | 'materials' | 'inspect' | 'presets'>('dimensions');
-  const [downloadSuccess, setDownloadSuccess] = useState(false);
-  const [slicerSuccess, setSlicerSuccess] = useState(false);
-  const [showSlicerMenu, setShowSlicerMenu] = useState(false);
-  const [muted, setMuted] = useState(isSoundMuted());
-
-  useEffect(() => {
-    return subscribeToMuteState((m) => setMuted(m));
-  }, []);
+  const [activeTab, setActiveTab] = useState<'dimensions' | 'grid' | 'materials' | 'text'>('dimensions');
+  const [isAdded, setIsAdded] = useState(false);
 
   const {
     currentProduct,
     dimensions,
     selectedMaterial,
     selectedResin,
-    lightingPreset,
     telemetry,
-    wireframe,
     engravedText,
-    sliceHeight,
-    explodedOffset,
     setDimension,
     setMaterial,
     setResin,
-    setLightingPreset,
-    setSliceHeight,
-    setExplodedOffset,
     resetDefaults,
-    toggleAutoRotate,
-    toggleWireframe,
     setEngravedText,
     applyPreset,
-    autoRotate,
-    exportStlFile,
-    isExportingStl,
   } = useCustomizerStore();
 
   const constraints = currentProduct.parametricConstraints || {
@@ -93,830 +56,260 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({ onAddToCart 
     maxCols: 6,
   };
 
-  const handleExportStl = async () => {
-    try {
-      playClickSound('snap');
-      await exportStlFile();
-      playClickSound('success');
-      setDownloadSuccess(true);
-      setTimeout(() => setDownloadSuccess(false), 3000);
-    } catch (err) {
-      console.error('Failed to export STL:', err);
-    }
-  };
-
-  const handleExportSlicer = (ecosystem: SlicerEcosystem = 'all') => {
-    try {
-      playClickSound('snap');
-      const slicerCtx: SlicerProfileContext = {
-        productTitle: currentProduct.title,
-        productSlug: currentProduct.slug,
-        dimensions,
-        material: selectedMaterial,
-        estimatedGrams: telemetry.totalWeightGrams,
-        estimatedHours: telemetry.estimatedPrintHours,
-        nozzleDiameterMm: 0.4,
-        layerHeightMm: 0.2,
-        infillDensityPercent: 18,
-        perimeters: 3,
-        flowRatio: 0.98,
-        nozzleTempC: 215,
-        bedTempC: 55,
-      };
-
-      downloadSlicerProfile(slicerCtx, ecosystem);
-      playClickSound('success');
-      setSlicerSuccess(true);
-      setShowSlicerMenu(false);
-      setTimeout(() => setSlicerSuccess(false), 3000);
-    } catch (err) {
-      console.error('Failed to export slicer profile:', err);
+  const handleAdd = () => {
+    if (onAddToCart) {
+      onAddToCart();
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 2000);
     }
   };
 
   return (
-    <div className="w-full lg:w-96 bg-white dark:bg-[#121214] border border-slate-200/90 dark:border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.04)] font-sans">
-      {/* Drawer Top Header & Quick Reset */}
+    <div className="w-full bg-white border border-zinc-200/90 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-xs font-sans">
       <div>
-        <div className="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-zinc-800">
+        {/* Header */}
+        <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
           <div>
-            <span className="text-[10px] text-[#FF6B00] dark:text-[#FF7A00] uppercase tracking-widest font-semibold block">
-              CUSTOM SPECIFICATIONS
+            <span className="text-[10px] text-[#FF6B00] uppercase tracking-wider font-bold block">
+              Made-to-Measure
             </span>
-            <h2 className="text-base font-bold text-[#0F172A] dark:text-white tracking-tight">
+            <h2 className="text-base font-bold text-[#0F172A] tracking-tight">
               {currentProduct.title}
             </h2>
           </div>
 
-          <div className="flex items-center space-x-1">
-            <button
-              type="button"
-              onClick={() => {
-                toggleSoundMute();
-              }}
-              title={muted ? 'Unmute Tactile Sound FX' : 'Mute Tactile Sound FX'}
-              className={`p-1.5 rounded-lg border transition ${
-                muted
-                  ? 'border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-800'
-                  : 'border-[#FF6B00]/40 text-[#FF6B00] bg-orange-50/70 dark:bg-orange-950/40'
-              }`}
-            >
-              {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                playClickSound('snap');
-                toggleWireframe();
-              }}
-              title={wireframe ? 'Solid PBR Render' : 'Holographic CAD Wireframe'}
-              className={`p-1.5 rounded-lg border transition ${
-                wireframe
-                  ? 'border-sky-500 text-sky-600 bg-sky-50 dark:bg-sky-950/30'
-                  : 'border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800'
-              }`}
-            >
-              <Box className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                playClickSound('snap');
-                toggleAutoRotate();
-              }}
-              title={autoRotate ? 'Pause Rotation' : 'Auto Rotate View'}
-              className={`p-1.5 rounded-lg border transition ${
-                autoRotate
-                  ? 'border-[#FF6B00] text-[#FF6B00] bg-orange-50/70 dark:bg-orange-950/40'
-                  : 'border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800'
-              }`}
-            >
-              <Compass className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                playClickSound('snap');
-                resetDefaults();
-              }}
-              title="Reset to Factory Blueprint"
-              className="p-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 text-slate-400 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800 transition"
-            >
-              <RotateCcw className="w-4 h-4" />
-            </button>
+          <button
+            type="button"
+            onClick={resetDefaults}
+            title="Reset dimensions"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition cursor-pointer flex items-center gap-1 text-xs"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span className="text-[11px] font-medium hidden sm:inline">Reset</span>
+          </button>
+        </div>
+
+        {/* Popular Presets Chips */}
+        <div className="pt-3 pb-1">
+          <span className="text-[11px] text-zinc-400 font-medium block mb-1.5">
+            Quick Drawer Presets:
+          </span>
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+            {BLUEPRINT_PRESETS.map((preset) => (
+              <button
+                key={preset.id}
+                type="button"
+                onClick={() => applyPreset(preset.id)}
+                className="px-2.5 py-1 rounded-md text-[11px] font-medium bg-zinc-100/80 hover:bg-zinc-200/80 text-zinc-700 whitespace-nowrap transition cursor-pointer"
+              >
+                {preset.name}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Tab Selection */}
-        <div className="grid grid-cols-5 gap-1 my-3 p-1 bg-slate-100/90 dark:bg-zinc-900 rounded-xl border border-slate-200/80 dark:border-zinc-800 text-[10px] shadow-xs">
+        {/* 4 Clean Tabs */}
+        <div className="grid grid-cols-4 gap-1 my-3 p-1 bg-zinc-100 rounded-xl text-xs font-medium">
           <button
             type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setActiveTab('dimensions');
-            }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
+            onClick={() => setActiveTab('dimensions')}
+            className={`flex items-center justify-center gap-1 py-1.5 rounded-lg transition cursor-pointer ${
               activeTab === 'dimensions'
-                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
-                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
+                ? 'bg-white text-[#FF6B00] font-bold shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
-            <Sliders className="w-3 h-3" />
-            <span>Dimensions</span>
+            <Sliders className="w-3.5 h-3.5" />
+            <span>Size</span>
           </button>
 
           <button
             type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setActiveTab('grid');
-            }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
+            onClick={() => setActiveTab('grid')}
+            className={`flex items-center justify-center gap-1 py-1.5 rounded-lg transition cursor-pointer ${
               activeTab === 'grid'
-                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
-                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
+                ? 'bg-white text-[#FF6B00] font-bold shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
-            <Grid className="w-3 h-3" />
+            <Grid className="w-3.5 h-3.5" />
             <span>Layout</span>
           </button>
 
           <button
             type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setActiveTab('materials');
-            }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
+            onClick={() => setActiveTab('materials')}
+            className={`flex items-center justify-center gap-1 py-1.5 rounded-lg transition cursor-pointer ${
               activeTab === 'materials'
-                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
-                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
+                ? 'bg-white text-[#FF6B00] font-bold shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
-            <Palette className="w-3 h-3" />
-            <span>Colors</span>
+            <Palette className="w-3.5 h-3.5" />
+            <span>Color</span>
           </button>
 
           <button
             type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setActiveTab('inspect');
-            }}
-            className={`relative flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
-              activeTab === 'inspect'
-                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
-                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
+            onClick={() => setActiveTab('text')}
+            className={`flex items-center justify-center gap-1 py-1.5 rounded-lg transition cursor-pointer ${
+              activeTab === 'text'
+                ? 'bg-white text-[#FF6B00] font-bold shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-900'
             }`}
           >
-            <Layers className="w-3 h-3" />
-            <span>Layers</span>
-            {(sliceHeight < 100 || explodedOffset > 0) && (
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              playClickSound('snap');
-              setActiveTab('presets');
-            }}
-            className={`flex items-center justify-center space-x-1 py-1.5 rounded-lg font-medium transition cursor-pointer ${
-              activeTab === 'presets'
-                ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
-                : 'text-slate-500 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-zinc-200'
-            }`}
-          >
-            <Sparkles className="w-3 h-3" />
-            <span>Styles</span>
+            <Type className="w-3.5 h-3.5" />
+            <span>Text</span>
           </button>
         </div>
 
-        {/* Tab Content Panels */}
-        <div className="space-y-3 max-h-[440px] overflow-y-auto pr-1">
-          {activeTab === 'dimensions' && (
-            <div className="space-y-2.5">
-              <DimensionSlider
-                label="Length (Front-to-Back)"
-                axisTag="LENGTH"
-                value={dimensions.length}
-                min={constraints.minLengthMm}
-                max={constraints.maxLengthMm}
-                step={5}
-                onChange={(val) => setDimension('length', val)}
-                description="Exact front-to-back sizing to fit your drawer or desk."
-              />
+        {/* Tab 1: Dimensions */}
+        {activeTab === 'dimensions' && (
+          <div className="space-y-4 py-2">
+            <DimensionSlider
+              label="Length (Front to Back)"
+              value={dimensions.length}
+              min={constraints.minLengthMm}
+              max={constraints.maxLengthMm}
+              step={1}
+              unit="mm"
+              onChange={(val) => setDimension('length', val)}
+            />
+            <DimensionSlider
+              label="Width (Left to Right)"
+              value={dimensions.width}
+              min={constraints.minWidthMm}
+              max={constraints.maxWidthMm}
+              step={1}
+              unit="mm"
+              onChange={(val) => setDimension('width', val)}
+            />
+            <DimensionSlider
+              label="Height (Depth of Tray)"
+              value={dimensions.height}
+              min={constraints.minHeightMm}
+              max={constraints.maxHeightMm}
+              step={1}
+              unit="mm"
+              onChange={(val) => setDimension('height', val)}
+            />
+          </div>
+        )}
 
-              <DimensionSlider
-                label="Width (Side-to-Side)"
-                axisTag="WIDTH"
-                value={dimensions.width}
-                min={constraints.minWidthMm}
-                max={constraints.maxWidthMm}
-                step={5}
-                onChange={(val) => setDimension('width', val)}
-                description="Side-to-side width to eliminate sliding and loose gaps."
-              />
-
-              <DimensionSlider
-                label="Height (Wall Depth)"
-                axisTag="HEIGHT"
-                value={dimensions.height}
-                min={constraints.minHeightMm}
-                max={constraints.maxHeightMm}
-                step={2}
-                onChange={(val) => setDimension('height', val)}
-                description="Wall height to keep watches, pens, and tools safe."
-              />
-
-              <DimensionSlider
-                label="Wall Sturdiness"
-                value={dimensions.wallThickness}
-                min={constraints.minWallThicknessMm}
-                max={5.0}
-                step={0.2}
-                onChange={(val) => setDimension('wallThickness', val)}
-                description="Reinforced perimeter thickness for drop-proof durability."
-              />
+        {/* Tab 2: Layout / Compartments */}
+        {activeTab === 'grid' && (
+          <div className="space-y-4 py-2">
+            <div>
+              <span className="text-xs font-bold text-zinc-800 block mb-1">
+                Compartment Dividers
+              </span>
+              <p className="text-[11px] text-zinc-500 mb-3">
+                Adjust internal dividers to organize pens, tools, or cutlery.
+              </p>
             </div>
-          )}
 
-          {activeTab === 'grid' && (
-            <div className="space-y-2.5">
-              <DimensionSlider
-                label="Columns (Horizontal Compartments)"
-                axisTag="COLS"
-                value={dimensions.cols}
-                min={1}
-                max={constraints.maxCols}
-                step={1}
-                unit="cells"
-                onChange={(val) => setDimension('cols', val)}
-                description="Divides internal cavity along the longitudinal axis."
+            <DimensionSlider
+              label="Rows (Horizontal Bays)"
+              value={dimensions.rows}
+              min={1}
+              max={constraints.maxRows}
+              step={1}
+              unit="bays"
+              onChange={(val) => setDimension('rows', val)}
+            />
+            <DimensionSlider
+              label="Columns (Vertical Bays)"
+              value={dimensions.cols}
+              min={1}
+              max={constraints.maxCols}
+              step={1}
+              unit="bays"
+              onChange={(val) => setDimension('cols', val)}
+            />
+          </div>
+        )}
+
+        {/* Tab 3: Color & Material */}
+        {activeTab === 'materials' && (
+          <div className="py-2">
+            <MaterialSelector
+              selectedFilament={selectedMaterial}
+              selectedResin={selectedResin}
+              onSelectFilament={setMaterial}
+              onSelectResin={setResin}
+            />
+          </div>
+        )}
+
+        {/* Tab 4: Custom Engraving */}
+        {activeTab === 'text' && (
+          <div className="space-y-3 py-2">
+            <div>
+              <label className="text-xs font-bold text-zinc-800 block mb-1">
+                Custom Rim Engraving (Optional)
+              </label>
+              <p className="text-[11px] text-zinc-500 mb-2">
+                Personalize your piece with a name, initials, or label debossed into the front rim.
+              </p>
+              <input
+                type="text"
+                maxLength={24}
+                value={engravedText}
+                onChange={(e) => setEngravedText(e.target.value)}
+                placeholder="e.g. CALEB • DESK 01"
+                className="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-xl text-xs text-zinc-800 font-mono focus:outline-none focus:border-[#FF6B00]"
               />
-
-              <DimensionSlider
-                label="Grid Rows (Width Splits)"
-                axisTag="ROWS"
-                value={dimensions.rows}
-                min={1}
-                max={constraints.maxRows}
-                step={1}
-                unit="cells"
-                onChange={(val) => setDimension('rows', val)}
-                description="Divides internal cavity along the transverse depth."
-              />
-
-              <DimensionSlider
-                label="Corner Fillet Radius"
-                value={dimensions.cornerFilletRadius}
-                min={2}
-                max={16}
-                step={1}
-                onChange={(val) => setDimension('cornerFilletRadius', val)}
-                description="Smooth curved outer corners preventing stress points."
-              />
-
-              <DimensionSlider
-                label="Bottom Floor Base Thickness"
-                value={dimensions.bottomThickness}
-                min={constraints.minBottomThicknessMm}
-                max={6.0}
-                step={0.2}
-                onChange={(val) => setDimension('bottomThickness', val)}
-                description="Rigid flat floor for zero bed-warp print adhesion."
-              />
-            </div>
-          )}
-
-          {activeTab === 'materials' && (
-            <div className="space-y-3">
-              <MaterialSelector
-                selectedFilament={selectedMaterial}
-                selectedResin={selectedResin}
-                onSelectFilament={(fil) => {
-                  playClickSound('snap');
-                  setMaterial(fil);
-                }}
-                onSelectResin={(res) => {
-                  playClickSound('snap');
-                  setResin(res);
-                }}
-              />
-
-              {/* Interactive Lighting Rig Switcher */}
-              <div className="p-3 bg-surface rounded-lg border border-surface-border space-y-2.5">
-                <div className="flex items-center justify-between text-zinc-300 text-xs">
-                  <span className="flex items-center gap-1.5 font-semibold text-zinc-200">
-                    <Sun className="w-3.5 h-3.5 text-signal-orange" />
-                    <span>Studio Lighting Rig</span>
-                  </span>
-                  <span className="px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700/80 text-[9px] font-mono text-signal-orange font-bold uppercase tracking-wider">
-                    {LIGHTING_PRESETS_METADATA[lightingPreset].badge}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 gap-1.5">
-                  {LIGHTING_PRESET_KEYS.map((key) => {
-                    const preset = LIGHTING_PRESETS_METADATA[key];
-                    const isSelected = lightingPreset === key;
-                    return (
-                      <button
-                        key={preset.id}
-                        type="button"
-                        onClick={() => {
-                          playClickSound('snap');
-                          setLightingPreset(preset.id);
-                        }}
-                        className={`w-full text-left p-2 rounded-lg border transition-all flex items-center justify-between group ${
-                          isSelected
-                            ? 'bg-zinc-800/90 border-signal-orange shadow-tactile text-precision-white'
-                            : 'bg-black/40 border-zinc-800/90 hover:border-zinc-700 hover:bg-zinc-900/60 text-zinc-400'
-                        }`}
-                      >
-                        <div className="flex items-center space-x-2.5 min-w-0">
-                          {/* Tactile Dual-Spectrum Swatch Indicator */}
-                          <div
-                            className={`w-5 h-5 rounded-full flex-shrink-0 border p-0.5 overflow-hidden flex items-center justify-center transition-transform ${
-                              isSelected
-                                ? 'border-signal-orange scale-110 shadow-glow-orange'
-                                : 'border-zinc-700 group-hover:scale-105'
-                            }`}
-                          >
-                            <div className="w-full h-full rounded-full flex overflow-hidden">
-                              <div
-                                className="w-1/2 h-full"
-                                style={{ backgroundColor: preset.primaryColor }}
-                              />
-                              <div
-                                className="w-1/2 h-full"
-                                style={{ backgroundColor: preset.accentColor }}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="min-w-0">
-                            <div className="flex items-center space-x-1.5">
-                              <span
-                                className={`text-xs font-bold truncate ${
-                                  isSelected
-                                    ? 'text-precision-white'
-                                    : 'text-zinc-300 group-hover:text-zinc-100'
-                                }`}
-                              >
-                                {preset.name}
-                              </span>
-                            </div>
-                            <p className="text-[10px] text-zinc-500 font-sans truncate">
-                              {preset.subtitle}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-1.5 pl-2 flex-shrink-0">
-                          <span
-                            className={`text-[9px] font-mono px-1 py-0.5 rounded ${
-                              isSelected
-                                ? 'bg-signal-orange/15 text-signal-orange font-semibold'
-                                : 'text-zinc-500 bg-zinc-900'
-                            }`}
-                          >
-                            {preset.cct}
-                          </span>
-                          {isSelected && (
-                            <CheckCircle2 className="w-3.5 h-3.5 text-signal-orange flex-shrink-0" />
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Live Viewport Reflection Technical Readout */}
-                <div className="p-2 rounded bg-black/40 border border-zinc-800/60 text-[10px] text-zinc-400 font-mono space-y-1">
-                  <div className="flex items-center justify-between text-zinc-500 text-[9px]">
-                    <span className="flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-signal-lime animate-pulse" />
-                      LIVE PBR REFLECTION ENGINE
-                    </span>
-                    <span>REALTIME CUBEMAP</span>
-                  </div>
-                  <p className="text-zinc-400 text-[10px] leading-tight font-sans">
-                    {LIGHTING_PRESETS_METADATA[lightingPreset].description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Custom Laser Engraving Input */}
-              <div className="p-3 bg-surface rounded-lg border border-surface-border space-y-1.5">
-                <div className="flex items-center justify-between text-zinc-300 text-xs">
-                  <span className="flex items-center gap-1.5 font-semibold">
-                    <Type className="w-3.5 h-3.5 text-signal-orange" /> Laser Engraving Mark
-                  </span>
-                  <span className="text-[10px] text-zinc-500">MAX 24 CHARS</span>
-                </div>
-                <input
-                  type="text"
-                  maxLength={24}
-                  value={engravedText}
-                  onChange={(e) => setEngravedText(e.target.value)}
-                  placeholder="e.g. STUDIO-01 // RAMS"
-                  className="w-full bg-black/60 px-2.5 py-1.5 rounded border border-zinc-800 text-zinc-200 text-xs uppercase focus:outline-none focus:border-signal-orange"
-                />
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'inspect' && (
-            <div className="space-y-3">
-              {/* Header with Quick Reset */}
-              <div className="flex items-center justify-between pb-1.5 border-b border-surface-border">
-                <div className="flex items-center gap-1.5 text-signal-orange font-mono text-[10px] uppercase font-semibold">
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>CAD SLICING & EXPLODED INSPECT</span>
-                </div>
-                {(sliceHeight < 100 || explodedOffset > 0) && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setSliceHeight(100);
-                      setExplodedOffset(0);
-                    }}
-                    className="text-[9px] text-zinc-400 hover:text-signal-orange transition flex items-center gap-1 font-mono"
-                  >
-                    <RotateCcw className="w-2.5 h-2.5" />
-                    <span>RESET</span>
-                  </button>
-                )}
-              </div>
-
-              {/* 1. Slicing Height Tactile Slider */}
-              <div className="space-y-1.5">
-                <DimensionSlider
-                  label="Layer Slicing Height"
-                  axisTag="Z-CUT"
-                  value={sliceHeight}
-                  min={0}
-                  max={100}
-                  step={1}
-                  unit="%"
-                  onChange={setSliceHeight}
-                  description={`Cut plane at ${((dimensions.height * sliceHeight) / 100).toFixed(1)}mm // Layer ${Math.max(1, Math.round(((dimensions.height * sliceHeight) / 100) / 0.2))} of ${Math.round(dimensions.height / 0.2)} (@ 0.20mm standard).`}
-                />
-
-                <div className="grid grid-cols-3 gap-1">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setSliceHeight(Math.max(5, Math.round((dimensions.bottomThickness / dimensions.height) * 100)));
-                    }}
-                    className={`py-1 px-1.5 rounded border text-[10px] font-mono transition text-center ${
-                      sliceHeight <= Math.round((dimensions.bottomThickness / dimensions.height) * 100)
-                        ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                        : 'border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    Floor Base
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setSliceHeight(50);
-                    }}
-                    className={`py-1 px-1.5 rounded border text-[10px] font-mono transition text-center ${
-                      sliceHeight === 50
-                        ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                        : 'border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    50% Mid
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setSliceHeight(100);
-                    }}
-                    className={`py-1 px-1.5 rounded border text-[10px] font-mono transition text-center ${
-                      sliceHeight === 100
-                        ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                        : 'border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    100% Full
-                  </button>
-                </div>
-              </div>
-
-              {/* 2. Exploded View Offset Tactile Slider */}
-              <div className="space-y-1.5">
-                <DimensionSlider
-                  label="Exploded View Separation"
-                  axisTag="Y-LIFT"
-                  value={explodedOffset}
-                  min={0}
-                  max={60}
-                  step={1}
-                  unit="mm"
-                  onChange={setExplodedOffset}
-                  description="Lifts internal divider matrix (+offset) and resin inlays (+1.5×) above the floor base."
-                />
-
-                <div className="grid grid-cols-3 gap-1">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setExplodedOffset(0);
-                    }}
-                    className={`py-1 px-1.5 rounded border text-[10px] font-mono transition text-center ${
-                      explodedOffset === 0
-                        ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                        : 'border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    Seated (0mm)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setExplodedOffset(24);
-                    }}
-                    className={`py-1 px-1.5 rounded border text-[10px] font-mono transition text-center ${
-                      explodedOffset === 24
-                        ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                        : 'border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    Lift (+24mm)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playClickSound('snap');
-                      setExplodedOffset(48);
-                    }}
-                    className={`py-1 px-1.5 rounded border text-[10px] font-mono transition text-center ${
-                      explodedOffset === 48
-                        ? 'border-signal-orange text-signal-orange bg-signal-orange/10'
-                        : 'border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                    }`}
-                  >
-                    Max (+48mm)
-                  </button>
-                </div>
-              </div>
-
-              {/* 3. Manifold Topology HUD Card */}
-              <div className="p-3 bg-surface rounded-lg border border-surface-border space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="flex items-center gap-1.5 font-semibold text-zinc-200">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-signal-lime" />
-                    Watertight Manifold CAD
-                  </span>
-                  <span className="px-1.5 py-0.5 rounded bg-signal-lime/10 text-[9px] font-mono text-signal-lime font-bold uppercase tracking-wider">
-                    VERIFIED
-                  </span>
-                </div>
-
-                <div className="space-y-1 text-[11px] font-mono text-zinc-400 pt-1 border-t border-zinc-800/60">
-                  <div className="flex justify-between">
-                    <span>Active Bounding:</span>
-                    <span className="text-zinc-200 font-semibold">
-                      {dimensions.length}×{dimensions.width}×{((dimensions.height * sliceHeight) / 100).toFixed(1)}mm
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Floor Sub-Assembly:</span>
-                    <span className="text-zinc-200">
-                      {dimensions.bottomThickness}mm (Y=0)
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Perimeter Walls:</span>
-                    <span className="text-zinc-200">
-                      {Math.max(0, (dimensions.height * sliceHeight) / 100 - dimensions.bottomThickness).toFixed(1)}mm
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Divider Matrix:</span>
-                    <span className={explodedOffset > 0 ? 'text-signal-orange font-bold' : 'text-zinc-200'}>
-                      {dimensions.cols - 1 + (dimensions.rows - 1) * dimensions.cols} elements {explodedOffset > 0 ? `(+${explodedOffset}mm)` : '(Seated)'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Resin Inlays:</span>
-                    <span className={selectedResin && explodedOffset > 0 ? 'text-signal-orange font-bold' : 'text-zinc-200'}>
-                      {selectedResin ? `${dimensions.rows * dimensions.cols} beds ${explodedOffset > 0 ? `(+${(explodedOffset * 1.5).toFixed(0)}mm)` : '(Seated)'}` : 'Disabled'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'presets' && (
-            <div className="space-y-2">
-              <div className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
-                Instant Blueprint Architectures
-              </div>
-              {BLUEPRINT_PRESETS.map((preset) => (
-                <button
-                  key={preset.id}
-                  type="button"
-                  onClick={() => {
-                    playClickSound('snap');
-                    applyPreset(preset.id);
-                  }}
-                  className="w-full text-left p-2.5 rounded-lg bg-surface border border-surface-border hover:border-signal-orange transition-all group"
-                >
-                  <div className="flex items-center justify-between text-xs text-zinc-200 font-bold group-hover:text-signal-orange">
-                    <span>{preset.name}</span>
-                    <span className="text-[10px] font-normal text-zinc-500">
-                      {preset.dimensions.length}×{preset.dimensions.width}mm
-                    </span>
-                  </div>
-                  <p className="text-[10px] text-zinc-400 mt-1 font-sans line-clamp-1">
-                    {preset.description}
-                  </p>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Drawer Action Triggers */}
-      <div className="pt-4 mt-4 border-t border-slate-200/80 dark:border-zinc-800 space-y-2">
-        <div className="flex items-center justify-between font-sans text-xs text-slate-500 dark:text-zinc-400 mb-1">
-          <span>Manufacturing Price:</span>
-          <span className="text-base font-bold text-[#FF6B00]">
-            ${telemetry.finalPriceUsd.toFixed(2)} USD
-          </span>
-        </div>
-
-        <div className="space-y-2">
-          {/* CAM Export Action Triggers */}
-          <div className="grid grid-cols-2 gap-2 relative">
-            {/* Direct 3D Model STL Download */}
-            <button
-              type="button"
-              onClick={handleExportStl}
-              disabled={isExportingStl}
-              className="flex items-center justify-center space-x-1.5 py-2.5 px-2 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white hover:bg-slate-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-[#0F172A] dark:text-zinc-200 font-sans text-[11px] font-medium transition shadow-xs disabled:opacity-50 cursor-pointer"
-              title="Download 3D Print File (.STL)"
-            >
-              {downloadSuccess ? (
-                <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span className="text-emerald-600 truncate">STL SAVED</span>
-                </>
-              ) : (
-                <>
-                  <Download className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-400 shrink-0" />
-                  <span className="truncate">{isExportingStl ? 'PREPARING...' : 'EXPORT .STL'}</span>
-                </>
-              )}
-            </button>
-
-            {/* Export 3D Print Profiles */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => {
-                  playClickSound('snap');
-                  setShowSlicerMenu((prev) => !prev);
-                }}
-                className={`w-full flex items-center justify-between space-x-1 py-2.5 px-2.5 rounded-xl border transition font-sans text-[11px] font-semibold cursor-pointer shadow-xs ${
-                  slicerSuccess
-                    ? 'border-emerald-500/50 bg-emerald-50 text-emerald-600'
-                    : showSlicerMenu
-                    ? 'border-[#FF6B00] bg-orange-50/70 text-[#FF6B00] shadow-xs'
-                    : 'border-orange-200/80 bg-orange-50/50 hover:bg-orange-100/60 text-[#FF6B00]'
-                }`}
-                title="Export 3D Print Settings (Bambu / Prusa / Klipper)"
-              >
-                <div className="flex items-center space-x-1.5 truncate">
-                  {slicerSuccess ? (
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  ) : (
-                    <FileCode className="w-3.5 h-3.5 text-[#FF6B00] shrink-0" />
-                  )}
-                  <span className="truncate">
-                    {slicerSuccess ? 'CAM SAVED' : 'SLICER PROFILES'}
-                  </span>
-                </div>
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
-                    showSlicerMenu ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-
-              {/* Slicer Profile Ecosystem Flyout / Dropdown Menu */}
-              {showSlicerMenu && (
-                <div className="absolute right-0 bottom-full mb-2 w-80 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border border-slate-200 dark:border-zinc-700/80 rounded-2xl p-3 shadow-xl z-50 font-sans space-y-2.5 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-2">
-                    <span className="text-[10px] uppercase font-bold text-[#FF6B00] tracking-wider flex items-center gap-1.5">
-                      <Cpu className="w-3.5 h-3.5" /> 3D Slicer CAM Presets
-                    </span>
-                    <span className="text-[9px] text-slate-400">0.4mm Nozzle // 0.20mm</span>
-                  </div>
-
-                  <div className="space-y-1.5 text-xs">
-                    {/* Complete Bundle ZIP */}
-                    <button
-                      type="button"
-                      onClick={() => handleExportSlicer('all')}
-                      className="w-full text-left p-2 rounded-xl bg-slate-50 dark:bg-zinc-900/90 hover:bg-orange-50/60 dark:hover:bg-zinc-800 border border-slate-200/80 dark:border-zinc-800 hover:border-[#FF6B00]/60 transition group cursor-pointer"
-                    >
-                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-bold group-hover:text-[#FF6B00]">
-                        <span className="flex items-center gap-1.5">
-                          <Download className="w-3.5 h-3.5 text-[#FF6B00]" />
-                          Complete CAM Archive (.zip)
-                        </span>
-                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-orange-100 text-[#FF6B00] font-normal">
-                          All In One
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
-                        Bambu JSON, Prusa INI, Voron Klipper cfg, & CAM print instructions.
-                      </p>
-                    </button>
-
-                    {/* Bambu Lab Profile */}
-                    <button
-                      type="button"
-                      onClick={() => handleExportSlicer('bambu')}
-                      className="w-full text-left p-2 rounded-xl bg-slate-50/60 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200/60 dark:border-zinc-800/80 hover:border-emerald-500/60 transition group cursor-pointer"
-                    >
-                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-semibold group-hover:text-emerald-600">
-                        <span>Bambu Lab (X1C / P1S / A1)</span>
-                        <span className="text-[9px] text-slate-400">.json</span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
-                        0.20mm Standard, 18% gyroid, 3 perimeters, flow 0.98.
-                      </p>
-                    </button>
-
-                    {/* PrusaSlicer Profile */}
-                    <button
-                      type="button"
-                      onClick={() => handleExportSlicer('prusa')}
-                      className="w-full text-left p-2 rounded-xl bg-slate-50/60 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200/60 dark:border-zinc-800/80 hover:border-[#FF6B00]/60 transition group cursor-pointer"
-                    >
-                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-semibold group-hover:text-[#FF6B00]">
-                        <span>PrusaSlicer (MK4 / XL / CoreXY)</span>
-                        <span className="text-[9px] text-slate-400">.ini (IS)</span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
-                        Input Shaping structural profile, 215°C PLA / 55°C bed.
-                      </p>
-                    </button>
-
-                    {/* Voron / RatRig Klipper Profile */}
-                    <button
-                      type="button"
-                      onClick={() => handleExportSlicer('voron')}
-                      className="w-full text-left p-2 rounded-xl bg-slate-50/60 dark:bg-zinc-900/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200/60 dark:border-zinc-800/80 hover:border-cyan-500/60 transition group cursor-pointer"
-                    >
-                      <div className="flex items-center justify-between text-[#0F172A] dark:text-zinc-200 font-semibold group-hover:text-cyan-600">
-                        <span>Voron 2.4 / RatRig (Klipper)</span>
-                        <span className="text-[9px] text-slate-400">.ini</span>
-                      </div>
-                      <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
-                        High-speed CoreXY speeds, tuned pressure advance & fan curves.
-                      </p>
-                    </button>
-                  </div>
-
-                  <div className="pt-2 border-t border-slate-100 dark:border-zinc-800/80 text-[10px] text-slate-500 flex items-center justify-between">
-                    <span>Est. Filament: <strong className="text-[#0F172A] dark:text-zinc-200">{telemetry.totalWeightGrams.toFixed(1)}g</strong></span>
-                    <span>Nozzle: <strong className="text-[#0F172A] dark:text-zinc-200">215°C</strong> | Bed: <strong className="text-[#0F172A] dark:text-zinc-200">55°C</strong></span>
-                  </div>
-                </div>
-              )}
+              <span className="text-[10px] text-zinc-400 mt-1 block text-right">
+                {24 - (engravedText || '').length} characters left
+              </span>
             </div>
           </div>
+        )}
+      </div>
 
-          {/* Add to Unified Cart */}
-          <button
-            type="button"
-            onClick={() => {
-              playClickSound('success');
-              if (onAddToCart) onAddToCart();
-            }}
-            className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF7A00] hover:from-[#FF7A00] hover:to-[#FF851A] text-white font-sans text-xs font-bold tracking-wide shadow-[0_4px_16px_rgba(255,107,0,0.28)] hover:shadow-[0_6px_22px_rgba(255,107,0,0.36)] transition-all cursor-pointer"
-          >
-            <ShoppingCart className="w-4 h-4" />
-            <span>Add Custom Tray to Bag</span>
-          </button>
+      {/* Summary & Add to Cart Area */}
+      <div className="pt-4 mt-4 border-t border-zinc-100 space-y-3">
+        {/* Pricing & Guarantee Callout */}
+        <div className="flex items-center justify-between text-xs">
+          <div>
+            <span className="text-zinc-400 block text-[11px]">Total Price</span>
+            <span className="text-xl font-extrabold text-[#0F172A]">
+              ${telemetry.finalPriceUsd.toFixed(2)}
+            </span>
+          </div>
+          <div className="text-right">
+            <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold text-[11px]">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              100% Fit Guarantee
+            </span>
+            <span className="text-zinc-400 block text-[10px] flex items-center justify-end gap-1">
+              <Truck className="w-3 h-3" /> Ships in 48h
+            </span>
+          </div>
         </div>
+
+        {/* Add to Bag Button */}
+        <button
+          type="button"
+          onClick={handleAdd}
+          className={`w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-2 cursor-pointer ${
+            isAdded
+              ? 'bg-emerald-600 text-white'
+              : 'bg-[#FF6B00] hover:bg-[#ea5f00] text-white active:scale-98'
+          }`}
+        >
+          {isAdded ? (
+            <>
+              <Check className="w-4 h-4 stroke-[3]" />
+              <span>Added to Bag</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-4 h-4" />
+              <span>Add Custom Tray to Bag • ${telemetry.finalPriceUsd.toFixed(2)}</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

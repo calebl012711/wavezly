@@ -1,8 +1,7 @@
 /**
- * WAVEZLY MODERN DTC SLIDE-OUT NAVIGATION DRAWER
- * Clean airy white backdrop with electric orange category highlights (#FF6B00),
- * sleek dark charcoal typography (#0F172A), and streamlined DTC structure celebrating
- * both viral 3D prints and everyday consumer goods.
+ * WAVEZLY CLEAN SLIDE-OUT NAVIGATION DRAWER
+ * Minimalist consumer navigation drawer.
+ * Removed all fake live streams and developer clutter.
  */
 
 import React, { useEffect } from 'react';
@@ -11,18 +10,12 @@ import {
   ChevronRight,
   Sparkles,
   Box,
-  Sliders,
-  Radio,
   Gamepad2,
   Coffee,
   Sparkle,
   Car,
-  Wrench,
   Home,
   ShieldCheck,
-  Flame,
-  Truck,
-  HelpCircle,
   Package,
 } from 'lucide-react';
 import { RoomId } from '../../lib/storefront';
@@ -47,38 +40,33 @@ interface DepartmentItem {
 const DEPARTMENTS: DepartmentItem[] = [
   {
     id: 'trending_3d',
-    label: 'Viral 3D Prints & Toys',
-    badge: 'VIRAL',
+    label: 'Desk Toys & Fidgets',
+    badge: 'HOT',
     icon: <Sparkles className="w-4 h-4 text-[#FF6B00]" />,
   },
   {
+    id: 'home_decor',
+    label: 'Lamps & Home Décor',
+    icon: <Home className="w-4 h-4 text-emerald-600" />,
+  },
+  {
     id: 'kitchen',
-    label: 'Coffee Bar & Kitchen',
+    label: 'Coffee & Kitchen',
     icon: <Coffee className="w-4 h-4 text-amber-700" />,
   },
   {
     id: 'electronics',
-    label: 'Gaming & Tech Accessories',
+    label: 'Gaming & Desk Gear',
     icon: <Gamepad2 className="w-4 h-4 text-indigo-600" />,
   },
   {
-    id: 'home_decor',
-    label: 'Home Décor & Planters',
-    icon: <Home className="w-4 h-4 text-emerald-600" />,
-  },
-  {
     id: 'car_auto',
-    label: 'Car & Automotive Fit',
+    label: 'Car Accessories',
     icon: <Car className="w-4 h-4 text-sky-600" />,
   },
   {
-    id: 'tools_workshop',
-    label: 'Tools & Workshop Organization',
-    icon: <Wrench className="w-4 h-4 text-orange-600" />,
-  },
-  {
     id: 'vanity',
-    label: 'Vanity & Bathroom Organizers',
+    label: 'Bathroom & Vanity',
     icon: <Sparkle className="w-4 h-4 text-pink-500" />,
   },
 ];
@@ -89,7 +77,6 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
   onSelectDepartment,
   onNavigateTracking,
   onOpenCustomizer,
-  onOpenDeskPlanner,
 }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -111,42 +98,54 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex">
-      {/* Frosted Dark Backdrop */}
+      {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modern Slide-out Drawer */}
-      <div className="relative w-80 sm:w-96 max-w-[85vw] h-full bg-white flex flex-col z-10 shadow-2xl animate-in slide-in-from-left duration-250 font-sans border-r border-zinc-100">
-        {/* Clean DTC Header with Brand */}
-        <div className="bg-white border-b border-zinc-100 px-6 py-4 flex items-center justify-between flex-shrink-0">
-          <div className="flex flex-col">
+      {/* Drawer */}
+      <div className="relative w-80 max-w-[85vw] h-full bg-white flex flex-col z-10 shadow-2xl font-sans border-r border-zinc-200">
+        {/* Header */}
+        <div className="border-b border-zinc-100 px-5 py-4 flex items-center justify-between shrink-0">
+          <div>
             <WavezlyLogo theme="light" size="sm" />
-            <span className="text-[11px] text-zinc-400 font-medium mt-1">
-              Boise Craft Studio & General Store
-            </span>
+            <p className="text-[11px] text-zinc-400 font-medium mt-0.5">
+              Everyday Goods, 3D Printed to Order
+            </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full text-zinc-400 hover:text-zinc-800 hover:bg-zinc-100 transition"
+            className="p-1.5 rounded-full text-zinc-400 hover:text-zinc-800 hover:bg-zinc-100 transition cursor-pointer"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Scrollable Navigation Sections */}
-        <div className="flex-1 overflow-y-auto py-2 text-zinc-800 text-sm divide-y divide-zinc-100">
-          {/* SECTION 1: Shop Categories (Viral 3D & Everyday Goods) */}
+        {/* Scrollable Navigation Body */}
+        <div className="flex-1 overflow-y-auto divide-y divide-zinc-100 text-xs">
+          {/* Section 1: Categories */}
           <div className="py-3">
-            <div className="px-6 pb-2">
+            <div className="px-5 pb-2">
               <span className="text-[11px] font-bold text-zinc-400 tracking-wider uppercase">
                 Shop Categories
               </span>
             </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                onSelectDepartment('all');
+                onClose();
+              }}
+              className="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition cursor-pointer"
+            >
+              <span className="font-semibold text-zinc-900">All Products</span>
+              <ChevronRight className="w-4 h-4 text-zinc-300" />
+            </button>
 
             {DEPARTMENTS.map((dept) => (
               <button
@@ -156,29 +155,29 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
                   onSelectDepartment(dept.id);
                   onClose();
                 }}
-                className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
+                className="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition cursor-pointer"
               >
-                <span className="flex items-center gap-3 font-medium text-zinc-800 group-hover:text-[#FF6B00]">
+                <div className="flex items-center gap-3">
                   {dept.icon}
-                  <span>{dept.label}</span>
-                </span>
-                <span className="flex items-center gap-1.5">
+                  <span className="font-medium text-zinc-800">{dept.label}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
                   {dept.badge && (
-                    <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] tracking-wide">
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] font-bold">
                       {dept.badge}
                     </span>
                   )}
-                  <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-[#FF6B00] transition" />
-                </span>
+                  <ChevronRight className="w-4 h-4 text-zinc-300" />
+                </div>
               </button>
             ))}
           </div>
 
-          {/* SECTION 2: Custom Made-to-Order Studio */}
+          {/* Section 2: Custom Sizing & Order Tracking */}
           <div className="py-3">
-            <div className="px-6 pb-2">
+            <div className="px-5 pb-2">
               <span className="text-[11px] font-bold text-zinc-400 tracking-wider uppercase">
-                Custom Made-to-Order Studio
+                Custom Orders & Tracking
               </span>
             </div>
 
@@ -188,37 +187,13 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
                 onOpenCustomizer();
                 onClose();
               }}
-              className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
+              className="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/60 transition cursor-pointer"
             >
-              <span className="flex items-center gap-3 font-medium text-zinc-800 group-hover:text-[#FF6B00]">
+              <span className="flex items-center gap-3 font-semibold text-[#FF6B00]">
                 <Box className="w-4 h-4 text-[#FF6B00]" />
-                <span>3D Parametric Customizer</span>
+                <span>Custom Drawer Sizer (3D)</span>
               </span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#FF6B00] text-white">
-                  3D FIT
-                </span>
-                <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-[#FF6B00]" />
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                if (onOpenDeskPlanner) {
-                  onOpenDeskPlanner();
-                } else {
-                  onOpenCustomizer();
-                }
-                onClose();
-              }}
-              className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
-            >
-              <span className="flex items-center gap-3 font-medium text-zinc-800 group-hover:text-[#FF6B00]">
-                <Sliders className="w-4 h-4 text-[#FF6B00]" />
-                <span>Desk & Space 3D Planner</span>
-              </span>
-              <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-[#FF6B00]" />
+              <ChevronRight className="w-4 h-4 text-zinc-300" />
             </button>
 
             <button
@@ -227,99 +202,35 @@ export const AmazonNavDrawer: React.FC<AmazonNavDrawerProps> = ({
                 onNavigateTracking();
                 onClose();
               }}
-              className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
+              className="w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition cursor-pointer"
             >
-              <span className="flex items-center gap-3 font-medium text-zinc-800 group-hover:text-[#FF6B00]">
-                <Radio className="w-4 h-4 text-emerald-500 animate-pulse" />
-                <span>Boise Workshop Live Stream</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-50 text-emerald-600 font-extrabold uppercase border border-emerald-200">
-                  Live 🔴
-                </span>
-                <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-[#FF6B00]" />
-              </span>
-            </button>
-          </div>
-
-          {/* SECTION 3: Guarantees & Perks */}
-          <div className="py-3">
-            <div className="px-6 pb-2">
-              <span className="text-[11px] font-bold text-zinc-400 tracking-wider uppercase">
-                Perks & Guarantees
-              </span>
-            </div>
-
-            <div className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition">
-              <span className="flex items-center gap-3">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span className="font-medium text-zinc-800">100% Fit Guarantee</span>
-              </span>
-              <span className="text-xs text-emerald-600 font-semibold">Free Remake</span>
-            </div>
-
-            <div className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-zinc-50 transition">
-              <span className="flex items-center gap-3">
-                <Truck className="w-4 h-4 text-sky-600" />
-                <span className="font-medium text-zinc-800">Fast Domestic Shipping</span>
-              </span>
-              <span className="text-xs text-sky-600 font-semibold">48h Dispatch</span>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                onSelectDepartment('deals');
-                onClose();
-              }}
-              className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
-            >
-              <span className="flex items-center gap-3">
-                <Flame className="w-4 h-4 text-red-500" />
-                <span className="font-medium text-red-600">Today's Deals</span>
-              </span>
-              <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-red-500" />
-            </button>
-          </div>
-
-          {/* SECTION 4: Customer Care & Order Tracking */}
-          <div className="py-3">
-            <div className="px-6 pb-2">
-              <span className="text-[11px] font-bold text-zinc-400 tracking-wider uppercase">
-                Orders & Support
-              </span>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                onNavigateTracking();
-                onClose();
-              }}
-              className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
-            >
-              <span className="flex items-center gap-3 font-medium text-zinc-700 group-hover:text-[#FF6B00]">
+              <span className="flex items-center gap-3 font-medium text-zinc-800">
                 <Package className="w-4 h-4 text-[#FF6B00]" />
-                <span>Track Packages & Orders</span>
+                <span>Track Your Order</span>
               </span>
-              <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-[#FF6B00]" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                onNavigateTracking();
-                onClose();
-              }}
-              className="w-full px-6 py-2.5 flex items-center justify-between text-left hover:bg-orange-50/50 transition group"
-            >
-              <span className="flex items-center gap-3 font-medium text-zinc-700 group-hover:text-[#FF6B00]">
-                <HelpCircle className="w-4 h-4 text-zinc-400 group-hover:text-[#FF6B00]" />
-                <span>Help & Customer Care</span>
-              </span>
-              <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-[#FF6B00]" />
+              <ChevronRight className="w-4 h-4 text-zinc-300" />
             </button>
           </div>
+
+          {/* Section 3: Guarantee */}
+          <div className="py-4 px-5 bg-zinc-50/60">
+            <div className="flex items-start gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-[#FF6B00] shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-zinc-800 block text-xs">
+                  100% Fit Guarantee
+                </span>
+                <p className="text-[11px] text-zinc-500 mt-0.5 leading-relaxed">
+                  If your custom drawer piece does not fit your space, we reprint and ship it free.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info */}
+        <div className="p-4 border-t border-zinc-100 bg-white text-[11px] text-zinc-400 text-center">
+          Crafted to order in the USA • Free shipping on orders $35+
         </div>
       </div>
     </div>

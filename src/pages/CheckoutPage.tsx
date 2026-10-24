@@ -509,7 +509,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                To guarantee zero wait time for standard items and metrology-grade tolerances for custom pieces, your order is dispatched across two dedicated logistics streams:
+                Custom made-to-measure orders and in-stock items are packaged carefully for prompt delivery:
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
@@ -518,7 +518,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#FF6B00] uppercase tracking-wide">
                       <Box className="w-3.5 h-3.5" />
-                      <span>Package 1: Handcrafted</span>
+                      <span>Package 1: Made-to-Order 3D</span>
                     </span>
                     <span className="px-2 py-0.5 rounded-full bg-orange-100 text-[#FF6B00] text-[10px] font-bold">
                       Arrives in 4–5 days
@@ -527,12 +527,12 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
 
                   <div className="space-y-1 text-xs text-slate-700">
                     <div className="font-bold text-[#0F172A]">
-                      {pkgA.length > 0 ? pkgA[0].product.title : 'Custom Parametric Desk Organizer'}
+                      {pkgA.length > 0 ? pkgA[0].product.title : 'Custom Drawer Organizer'}
                     </div>
                     <div className="text-[11px] text-slate-500 space-y-0.5">
-                      <div>• Origin: Slant 3D High-Volume Cluster (Boise, ID)</div>
-                      <div>• Fabrication: ISO 2768-m Precision Additive Toolpaths</div>
-                      <div>• Handling: Sliced, manufactured & cured to order</div>
+                      <div>• Origin: Wavezly US Print Studio</div>
+                      <div>• Material: Plant-based durable matte PLA</div>
+                      <div>• Guarantee: 100% Free Replacements</div>
                     </div>
                   </div>
 

@@ -1,6 +1,7 @@
 /**
  * WAVEZLY CUSTOM 3D STUDIO PAGE
- * Real-time continuous 3D organizer customizer with live PBR WebGL viewport and specification controls
+ * Clean, interactive consumer 3D customizer.
+ * Removed developer jargon, raw CAD controls, and fake telemetry.
  */
 
 import React, { useState, useEffect } from 'react';
@@ -12,7 +13,7 @@ import { CustomizerDrawer } from '../components/customizer/CustomizerDrawer';
 import { ConsumerSizingWizard } from '../components/customizer/ConsumerSizingWizard';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { SEED_PRODUCTS } from '../db/seed';
-import { Sliders, Sparkles } from 'lucide-react';
+import { Box, Sparkles } from 'lucide-react';
 
 export const CustomizerPage: React.FC = () => {
   const [isWizardOpen, setIsWizardOpen] = useState(false);
@@ -23,6 +24,7 @@ export const CustomizerPage: React.FC = () => {
       setIsWizardOpen(true);
     }
   }, []);
+
   const {
     currentProduct,
     dimensions,
@@ -51,38 +53,36 @@ export const CustomizerPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-      {/* Studio Model Switcher Ribbon */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200/90 dark:border-zinc-800 gap-4">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6 font-sans">
+      {/* Studio Header & Product Switcher */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-zinc-200/90 gap-4">
         <div>
-          <div className="flex items-center space-x-2 font-sans text-xs font-semibold text-[#FF6B00] dark:text-[#FF7A00] uppercase tracking-wider mb-1">
-            <Sliders className="w-3.5 h-3.5" />
-            <span>WAVEZLY CUSTOM 3D STUDIO</span>
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#FF6B00] uppercase tracking-wider mb-1">
+            <Box className="w-3.5 h-3.5" />
+            <span>Wavezly 3D Studio</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0F172A] dark:text-white font-sans">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0F172A]">
             {currentProduct.title}
           </h1>
-          <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
-            {currentProduct.subtitle || 'Real-time parametric dimensions & tailored fit'}
+          <p className="text-xs text-zinc-500 mt-0.5">
+            Adjust your dimensions in real time. We 3D print and ship in 48 hours.
           </p>
         </div>
 
-        {/* Model Tabs & Quick Sizing Wizard */}
+        {/* Product Model Switcher */}
         <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
           <button
             type="button"
             onClick={() => setIsWizardOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-zinc-900 border border-orange-200 dark:border-orange-800/80 text-[#FF6B00] dark:text-[#FF7A00] text-xs font-semibold hover:bg-orange-50/70 dark:hover:bg-orange-950/50 transition-all shadow-xs hover:shadow-sm cursor-pointer font-sans"
-            title="Launch 3-step sizing wizard"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 border border-orange-200 text-[#FF6B00] text-xs font-semibold hover:bg-orange-100 transition cursor-pointer shadow-xs"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#FF6B00]" />
-            <span>Sizing Wizard</span>
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>3-Step Sizing Guide</span>
           </button>
 
-          <div className="flex items-center p-1 bg-slate-100/90 dark:bg-zinc-900 rounded-xl border border-slate-200/80 dark:border-zinc-800 font-sans text-xs font-medium overflow-x-auto max-w-full sm:max-w-xl scrollbar-none gap-1 shadow-xs">
+          <div className="flex items-center p-1 bg-zinc-100 rounded-xl border border-zinc-200 text-xs font-medium overflow-x-auto max-w-full sm:max-w-xl no-scrollbar gap-1">
             {custom3dProducts.map((prod) => {
               const isSelected = currentProduct.id === prod.id;
-              // Clean short display name
               const shortTitle = prod.title
                 .replace('Wavezly Custom 3D Studio ', '')
                 .replace('Wavezly ', '')
@@ -90,19 +90,17 @@ export const CustomizerPage: React.FC = () => {
                 .replace('SnugFit ', '')
                 .replace('FORMGRID ', '')
                 .replace('Modular Desk ', '')
-                .replace('Parametric ', '')
-                .replace('Precision ', '')
-                .replace('Audiophile ', '');
+                .replace('Parametric ', '');
 
               return (
                 <button
                   key={prod.id}
                   type="button"
                   onClick={() => setProduct(prod)}
-                  className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition cursor-pointer ${
                     isSelected
-                      ? 'bg-white dark:bg-zinc-800 text-[#FF6B00] dark:text-[#FF7A00] font-semibold shadow-xs'
-                      : 'text-slate-600 dark:text-zinc-400 hover:text-[#0F172A] dark:hover:text-white'
+                      ? 'bg-white text-[#FF6B00] font-bold shadow-xs'
+                      : 'text-zinc-600 hover:text-zinc-900'
                   }`}
                 >
                   {shortTitle}
@@ -113,14 +111,14 @@ export const CustomizerPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Studio Viewport & Control Drawer Grid */}
+      {/* Main 3D Viewport & Customizer Controls */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left: 3D Interactive Viewport with Floating Telemetry HUD */}
+        {/* Left: 3D Interactive Viewport */}
         <div className="lg:col-span-8 relative">
-          <ErrorBoundary fallbackTitle="Wavezly Custom 3D Studio Reset">
+          <ErrorBoundary fallbackTitle="Wavezly 3D Studio Reset">
             <TelemetryHUD dimensions={dimensions} telemetry={telemetry} />
 
-            <div className="h-[520px] lg:h-[620px] w-full rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/90 dark:border-zinc-800">
+            <div className="h-[460px] sm:h-[540px] lg:h-[600px] w-full rounded-2xl overflow-hidden shadow-xs border border-zinc-200/90 bg-white">
               <OrganizerCanvas
                 dimensions={dimensions}
                 material={selectedMaterial}
@@ -136,25 +134,22 @@ export const CustomizerPage: React.FC = () => {
             </div>
           </ErrorBoundary>
 
-          {/* Viewport Under-Bar Guidelines */}
-          <div className="mt-3 flex items-center justify-between font-sans text-xs text-slate-500 dark:text-zinc-400 px-2">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00]" />
-              Left Click + Drag to Rotate • Scroll to Zoom • Right Click to Pan
-            </span>
-            <span className="hidden sm:inline text-emerald-600 dark:text-emerald-400 font-medium">
-              100% Manifold 3D Blueprint • Guaranteed Fit
+          {/* Touch/Mouse Guidelines */}
+          <div className="mt-2.5 flex items-center justify-between text-xs text-zinc-400 px-2">
+            <span>Drag to rotate • Pinch/scroll to zoom</span>
+            <span className="hidden sm:inline text-emerald-600 font-semibold">
+              Guaranteed Snug Fit • Free Remakes
             </span>
           </div>
         </div>
 
-        {/* Right: Tactile Dimension & Material Control Drawer */}
+        {/* Right: Tactile Control Drawer */}
         <div className="lg:col-span-4">
           <CustomizerDrawer onAddToCart={handleAddToCart} />
         </div>
       </div>
 
-      {/* Consumer Sizing Wizard Modal */}
+      {/* Sizing Wizard Modal */}
       <ConsumerSizingWizard
         isOpen={isWizardOpen}
         onClose={() => setIsWizardOpen(false)}
