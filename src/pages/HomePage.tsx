@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { AmazonHero } from '../components/landing/AmazonHero';
 import { ProductGrid } from '../components/landing/ProductGrid';
-import { WavezlyBragReels } from '../components/landing/WavezlyBragReels';
 import { Product } from '../types';
 import { ROOMS, RoomId, amazonMetaFor } from '../lib/storefront';
 import { SEED_PRODUCTS } from '../db/seed';
@@ -504,12 +503,6 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </section>
-
-      {/* 4.5. WAVEZLY MOTION STUDIO (5 X/TIKTOK LAUNCH ANIMATIONS) */}
-      <WavezlyBragReels
-        onNavigateToCustomizer={onNavigateToCustomizer}
-        onNavigateToShop={scrollToShop}
-      />
 
       {/* 5. AMAZON VERIFIED CUSTOMER REVIEWS */}
       <section className="max-w-[1520px] mx-auto px-3 sm:px-6 mb-12">
