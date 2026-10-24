@@ -33,6 +33,7 @@ export interface OrganizerCanvasProps {
   resinInlay: MaterialOption | null;
   onMeshReady?: (meshGroup: THREE.Group) => void;
   autoRotate?: boolean;
+  onToggleAutoRotate?: () => void;
   wireframe?: boolean;
   engravedText?: string;
   sliceHeight?: number;
@@ -101,6 +102,7 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   resinInlay,
   onMeshReady,
   autoRotate = false,
+  onToggleAutoRotate: _onToggleAutoRotate,
   wireframe = false,
   engravedText,
   sliceHeight,
@@ -193,6 +195,22 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
       {/* Interactive In-Canvas Viewport Pills (Top-Right) */}
       {showDrawerControls && (
         <div className="absolute top-3 right-3 sm:right-4 z-20 flex flex-wrap items-center gap-2 pointer-events-auto">
+          {/* 360 Spin Toggle */}
+          {onToggleAutoRotate && (
+            <button
+              type="button"
+              onClick={onToggleAutoRotate}
+              title={autoRotate ? 'Pause 360° spin' : 'Auto-spin 360°'}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border ${
+                autoRotate
+                  ? 'bg-orange-50 text-[#FF6B00] border-orange-200 shadow-xs'
+                  : 'bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 border-zinc-200/80 dark:border-zinc-700/80 hover:bg-white'
+              }`}
+            >
+              <span>{autoRotate ? 'Spinning' : '360°'}</span>
+            </button>
+          )}
+
           {/* Pill 1: Open / Close Drawer Button */}
           {enableDrawer && (
             <button

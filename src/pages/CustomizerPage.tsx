@@ -13,7 +13,7 @@ import { CustomizerDrawer } from '../components/customizer/CustomizerDrawer';
 import { ConsumerSizingWizard } from '../components/customizer/ConsumerSizingWizard';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { SEED_PRODUCTS } from '../db/seed';
-import { Box, Sparkles, ShoppingCart, Check, ShieldCheck } from 'lucide-react';
+import { Box, Sparkles, ShoppingCart, Check } from 'lucide-react';
 
 export const CustomizerPage: React.FC = () => {
   const [isWizardOpen, setIsWizardOpen] = useState(false);

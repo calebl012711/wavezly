@@ -16,7 +16,14 @@ import { SEED_MATERIALS, SEED_PRODUCTS } from '../db/seed';
 import { calculateSlicingTelemetry, SlicingTelemetry } from '../lib/parametricMath';
 import { exportMeshToBinarySTL, triggerStlDownload } from '../lib/stlExporter';
 
-export type LightingPreset = 'daylight' | 'laboratory' | 'warm' | 'cyberpunk';
+export type LightingPreset =
+  | 'morning'
+  | 'studio'
+  | 'evening'
+  | 'daylight'
+  | 'laboratory'
+  | 'warm'
+  | 'cyberpunk';
 export type CustomizerViewMode = 'desk' | 'closeup';
 
 export interface DrawerModel {
