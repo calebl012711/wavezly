@@ -1,5 +1,5 @@
 /**
- * SNUGFIT AMAZON PRODUCT DETAIL MODAL (PDP)
+ * WAVEZLY AMAZON PRODUCT DETAIL MODAL (PDP)
  * 3-column Amazon detail view:
  * 1. Left image gallery with interactive thumbnail list & high-res zoom viewport
  * 2. Center product details with brand link, star rating, deal price, color swatches, and "About this item"
@@ -42,6 +42,93 @@ const FINISH_COLORS = [
   { name: 'Forest Sage Green', hex: '#4a5b48', bg: 'bg-[#4a5b48]' },
 ];
 
+/**
+ * Resolve hierarchical Amazon category path dynamically based on product category & tags
+ */
+function getCategoryPath(prod: Product): { primary: string; secondary: string } {
+  const cat = (prod.category || '').toLowerCase();
+  const title = (prod.title || '').toLowerCase();
+
+  // Trending 3D Prints / Toys / Fidgets
+  if (
+    cat === 'trending_3d' ||
+    cat === 'toys' ||
+    cat === 'fidget' ||
+    title.includes('fidget') ||
+    title.includes('dragon') ||
+    title.includes('articulated') ||
+    title.includes('toy') ||
+    title.includes('print')
+  ) {
+    return {
+      primary: 'Trending 3D Prints',
+      secondary: 'Toys & Fidgets',
+    };
+  }
+
+  // Home & Kitchen
+  if (cat === 'kitchen') {
+    return {
+      primary: 'Home & Kitchen',
+      secondary: 'Storage & Organization',
+    };
+  }
+
+  // Vanity & Personal Care
+  if (cat === 'vanity') {
+    return {
+      primary: 'Beauty & Personal Care',
+      secondary: 'Storage & Organization',
+    };
+  }
+
+  // Workspace & Office
+  if (cat === 'workspace') {
+    return {
+      primary: 'Office Products',
+      secondary: 'Storage & Organization',
+    };
+  }
+
+  // Bedside, Living, Home Decor
+  if (cat === 'bedside' || cat === 'living' || cat === 'home_decor') {
+    return {
+      primary: 'Home & Kitchen',
+      secondary: 'Storage & Organization',
+    };
+  }
+
+  // Electronics & Peripherals
+  if (cat === 'electronics') {
+    return {
+      primary: 'Electronics',
+      secondary: 'Accessories & Supplies',
+    };
+  }
+
+  // Automotive
+  if (cat === 'car_auto') {
+    return {
+      primary: 'Automotive',
+      secondary: 'Storage & Organization',
+    };
+  }
+
+  // Workshop & Hardware
+  if (cat === 'tools_workshop') {
+    return {
+      primary: 'Tools & Home Improvement',
+      secondary: 'Storage & Organization',
+    };
+  }
+
+  // Default fallback for made-to-order / organizers
+  return {
+    primary: 'Home & Kitchen',
+    secondary: 'Storage & Organization',
+  };
+}
+
 export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
   onClose,
@@ -76,6 +163,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const meta = amazonMetaFor(product);
   const isCustom = product.type === 'custom_3d';
   const { images, labels: imageLabels } = getAllProductImages(product);
+
+  const cleanProductTitle = (product.title || '').replace(/SnugFit/gi, 'Wavezly');
+  const displayTitle = (friendlyName(product) || product.title).replace(/SnugFit/gi, 'Wavezly');
+  const categoryPath = getCategoryPath(product);
 
   const effectivePrice = isCouponClipped && meta.couponAmount
     ? Math.max(1, product.basePrice - meta.couponAmount)
@@ -126,20 +217,20 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Top Breadcrumb & Close Bar */}
           <div className="px-4 py-2.5 bg-[#f0f2f2] border-b border-[#d5d9d9] flex items-center justify-between text-xs text-[#565959]">
             <div className="flex items-center gap-1.5 truncate">
-              <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                Home & Kitchen
+              <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer font-medium">
+                Wavezly
               </span>
               <span>›</span>
               <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                Storage & Organization
+                {categoryPath.primary}
               </span>
               <span>›</span>
               <span className="text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer">
-                Drawer Organizers
+                {categoryPath.secondary}
               </span>
               <span>›</span>
-              <span className="text-[#0f1111] font-semibold truncate max-w-[200px]">
-                {friendlyName(product)}
+              <span className="text-[#0f1111] font-semibold truncate max-w-[240px]">
+                {cleanProductTitle || displayTitle}
               </span>
             </div>
 
@@ -190,7 +281,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="relative flex-1 aspect-square rounded-sm border border-[#e7e7e7] p-4 flex items-center justify-center bg-white group overflow-hidden">
                   <img
                     src={images[activeImageIdx]}
-                    alt={friendlyName(product)}
+                    alt={displayTitle}
                     className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
                   />
 
@@ -240,12 +331,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="lg:col-span-4 flex flex-col gap-3">
               {/* Brand link */}
               <div className="text-xs text-[#007185] hover:text-[#c7511f] hover:underline cursor-pointer font-medium">
-                Visit the SnugFit Direct Store
+                Visit the Wavezly Direct Store
               </div>
 
               {/* Title */}
               <h1 className="text-lg sm:text-xl font-bold text-[#0f1111] leading-snug">
-                {friendlyName(product)}
+                {displayTitle}
               </h1>
 
               {/* Badges / Rating */}
@@ -362,18 +453,28 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="pt-2">
                 <h3 className="text-sm font-bold text-[#0f1111] mb-2">About this item</h3>
                 <ul className="space-y-1.5 text-xs text-[#0f1111] list-disc list-inside leading-relaxed">
-                  <li>
-                    <strong className="text-zinc-900">Custom Snug Fit:</strong> Precision tailored to eliminate drawer rattle and empty gaps.
-                  </li>
-                  <li>
-                    <strong className="text-zinc-900">Premium Organic Biopolymer:</strong> Velvety matte finish with zero glare, washable with mild soap and water.
-                  </li>
-                  <li>
-                    <strong className="text-zinc-900">100% Guaranteed Fit:</strong> If your custom piece doesn’t slide in perfectly, we remake it free of charge.
-                  </li>
-                  <li>
-                    <strong className="text-zinc-900">Crafted in Boise, Idaho:</strong> Made to order in our domestic solar-powered studio.
-                  </li>
+                  {product.features && product.features.length > 0 ? (
+                    product.features.map((feature, idx) => (
+                      <li key={idx}>
+                        {feature.replace(/SnugFit/gi, 'Wavezly')}
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                      <li>
+                        <strong className="text-zinc-900">Custom Wavezly Fit:</strong> Precision tailored to eliminate drawer rattle and empty gaps.
+                      </li>
+                      <li>
+                        <strong className="text-zinc-900">Premium Organic Biopolymer:</strong> Velvety matte finish with zero glare, washable with mild soap and water.
+                      </li>
+                      <li>
+                        <strong className="text-zinc-900">Wavezly 100% Fit Guarantee:</strong> If your custom piece doesn’t slide in perfectly, we remake it free of charge.
+                      </li>
+                      <li>
+                        <strong className="text-zinc-900">Crafted in Boise, Idaho:</strong> Made to order in our domestic solar-powered studio.
+                      </li>
+                    </>
+                  )}
                 </ul>
               </div>
             </div>
@@ -472,16 +573,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   )}
                 </div>
 
-                {/* Fulfilled by Amazon / SnugFit Table */}
+                {/* Fulfilled by Amazon / Wavezly Table */}
                 <div className="pt-2 text-[11px] text-[#565959] space-y-1 border-t border-[#e7e7e7]">
                   <div className="flex justify-between">
                     <span>Ships from</span>
-                    <span className="text-[#0f1111] font-medium">SnugFit.com</span>
+                    <span className="text-[#0f1111] font-medium">Wavezly.com</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Sold by</span>
                     <span className="text-[#007185] font-medium hover:underline cursor-pointer">
-                      SnugFit Direct
+                      Wavezly Direct
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -502,7 +603,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="mt-1 p-2 rounded bg-[#f7fafa] border border-[#d5d9d9] text-[11px] text-[#0f1111] flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-[#e67a00] shrink-0" />
                   <span>
-                    <strong>100% Fit Guarantee:</strong> Fits your drawer or we remake it free.
+                    <strong>Wavezly 100% Fit Guarantee:</strong> Fits your space or we remake it free.
                   </span>
                 </div>
               </div>

@@ -1,13 +1,13 @@
 /**
- * FORMGRID CONSUMER SIZING WIZARD
- * Approachable, warm, 3-step drawer sizing guide engineered for social media ad traffic.
+ * WAVEZLY CUSTOM 3D STUDIO - UNIVERSAL SIZING WIZARD
+ * Approachable, warm, 3-step sizing guide engineered for all spaces & projects.
  * 
- * Step 1: "Pick Your Drawer or Space" (IKEA Alex, Standard Desk, Nightstand, Valet Tray, Custom IN/MM)
- * Step 2: "What Are You Organizing?" (Pocket Dump, Office/Writing, Cables/Tech, Minimalist Duo)
- * Step 3: "Pick Your Finish & Sound Inlay" (Consumer Color Swatches + Whisper-Quiet Base Inlay)
+ * Step 1: "Pick Your Space or Project" (IKEA Alex, Kitchen Cutlery, Bathroom Vanity, Workshop Gridfinity, Custom MM)
+ * Step 2: "What Are You Organizing?" (Pocket Dump & EDC, Kitchen Silverware, Cosmetics & Skincare, Gaming & Tech, General Storage)
+ * Step 3: "Finish & Resin Inlay" (Obsidian Black, Warm Oat Stone, Terracotta, Nordic Slate, Forest Sage + Liquid Resin Sound Inlay)
  * 
  * Features:
- * - Instant visual validation: "Guaranteed Snug Fit • Hand-crafted in 48 Hours"
+ * - 100% Fit Guarantee badge: "Wavezly 100% Fit Guarantee • Made to Order in Boise, ID • Ships in 48h"
  * - Dynamic live 2D compartment floorplan preview
  * - Seamless bi-directional synchronization with useCustomizerStore.ts
  * - 1-Click "Done! View in 3D" & "Add to Bag"
@@ -70,34 +70,10 @@ export interface SpacePreset {
 
 export const SPACE_PRESETS: SpacePreset[] = [
   {
-    id: "kitchen_drawer",
-    name: "Kitchen Drawer (14×18 in)",
-    badge: "Most Popular for Cooking",
-    description: "Deep, rigid organizer tailored for cutlery, cooking utensils, and spices.",
-    dimensionsMm: { length: 320, width: 220, height: 50 },
-    dimensionsIn: { length: 12.6, width: 8.66, height: 1.97 },
-  },
-  {
-    id: "vanity_counter",
-    name: "Bathroom & Vanity (9×12 in)",
-    badge: "Skincare & Cosmetics",
-    description: "Waterproof, contoured bays for tall serum bottles, perfumes, and brushes.",
-    dimensionsMm: { length: 220, width: 160, height: 45 },
-    dimensionsIn: { length: 8.66, width: 6.3, height: 1.77 },
-  },
-  {
-    id: "nightstand",
-    name: "Bedside Nightstand (8×10 in)",
-    badge: "Quiet Bedroom Fit",
-    description: "Low-profile quiet footprint for sleep essentials, reading glasses, and charging watch.",
-    dimensionsMm: { length: 190, width: 140, height: 38 },
-    dimensionsIn: { length: 7.48, width: 5.51, height: 1.5 },
-  },
-  {
     id: "ikea_alex",
-    name: "IKEA Alex Drawer",
+    name: "IKEA Alex Drawer (Wide or Compact)",
     badge: "99.4% Fit Guarantee",
-    description: "Precision clearance for IKEA Alex drawer runner guides with zero wobble.",
+    description: "Precision clearance engineered for IKEA Alex drawer runner guides with zero wobble.",
     dimensionsMm: { length: 240, width: 140, height: 45 },
     dimensionsIn: { length: 9.45, width: 5.51, height: 1.77 },
     hasSubOptions: true,
@@ -125,18 +101,34 @@ export const SPACE_PRESETS: SpacePreset[] = [
     ],
   },
   {
-    id: "standard_desk",
-    name: "Standard Desk Drawer (12×15 in)",
-    badge: "Workspace Favorite",
-    description: "Modular nesting tray optimized for standard home office and study drawers.",
-    dimensionsMm: { length: 245, width: 175, height: 42 },
-    dimensionsIn: { length: 9.65, width: 6.89, height: 1.65 },
+    id: "kitchen_drawer",
+    name: "Kitchen Cutlery / Utensil Drawer",
+    badge: "Culinary Standard",
+    description: "Deep, rigid organizer tailored for cutlery, cooking utensils, silverware, and knives.",
+    dimensionsMm: { length: 320, width: 220, height: 50 },
+    dimensionsIn: { length: 12.6, width: 8.66, height: 1.97 },
   },
   {
-    id: "custom",
-    name: "Custom Measurement",
-    badge: "Tape Measure Fit",
-    description: "Enter your exact drawer or counter dimensions. We auto-apply a 2mm safety clearance!",
+    id: "bathroom_vanity",
+    name: "Bathroom & Vanity Organizer",
+    badge: "Skincare & Cosmetics",
+    description: "Waterproof, contoured bays for tall serum bottles, perfumes, makeup brushes, and toiletries.",
+    dimensionsMm: { length: 220, width: 160, height: 45 },
+    dimensionsIn: { length: 8.66, width: 6.3, height: 1.77 },
+  },
+  {
+    id: "workshop_gridfinity",
+    name: "Workshop & Hardware Grid (Gridfinity style)",
+    badge: "Maker & Tool Grid",
+    description: "Heavy-duty modular base grid designed for hex bits, machine screws, calipers, and hand tools.",
+    dimensionsMm: { length: 210, width: 168, height: 45 },
+    dimensionsIn: { length: 8.27, width: 6.61, height: 1.77 },
+  },
+  {
+    id: "custom_mm",
+    name: "Custom Millimeter Measurement (Enter your exact dimensions)",
+    badge: "Exact Custom Fit",
+    description: "Enter your exact drawer or space dimensions. We auto-apply a 2mm safety clearance for a drop-in fit!",
     dimensionsMm: { length: 210, width: 150, height: 40 },
     dimensionsIn: { length: 8.27, width: 5.91, height: 1.57 },
   },
@@ -157,34 +149,10 @@ export interface OrganizingPreset {
 
 export const ORGANIZING_PRESETS: OrganizingPreset[] = [
   {
-    id: "kitchen_cutlery",
-    name: "Kitchen Cutlery & Utensils",
-    tagline: "Knives, Spoons, Forks, Gadgets",
-    categoryTag: "Kitchen & Cooking",
-    items: ["Dinner knives & forks", "Teaspoons & tablespoons", "Cooking peelers & openers", "Corn holders & gadgets"],
-    rows: 1,
-    cols: 4,
-    recommendedHeightMm: 48,
-    wallThickness: 3.0,
-    cornerFilletRadius: 10,
-  },
-  {
-    id: "skincare_vanity",
-    name: "Skincare & Vanity Cosmetics",
-    tagline: "Serums, Perfumes, Brushes",
-    categoryTag: "Beauty & Bathroom",
-    items: ["Glass dropper serums", "Luxury fragrances", "Cosmetic brushes", "Lipsticks & balms"],
-    rows: 3,
-    cols: 3,
-    recommendedHeightMm: 44,
-    wallThickness: 2.8,
-    cornerFilletRadius: 10,
-  },
-  {
     id: "pocket_dump",
     name: "Daily Pocket Dump & EDC",
     tagline: "Keys, Watch, Wallet, AirPods",
-    categoryTag: "Bedside & Hallway",
+    categoryTag: "Everyday Carry & Bedside",
     items: ["Wristwatch & rings", "MagSafe wallet", "Keychains & fobs", "AirPods & sunglasses"],
     rows: 2,
     cols: 2,
@@ -193,28 +161,52 @@ export const ORGANIZING_PRESETS: OrganizingPreset[] = [
     cornerFilletRadius: 8,
   },
   {
-    id: "office_writing",
-    name: "Office & Stationery",
-    tagline: "Pens, Sticky Notes, Cables",
-    categoryTag: "Workspace & Study",
-    items: ["Pens & pencils", "3×3 Sticky note pads", "Hard drives & thumb drives", "Charging cables"],
-    rows: 2,
+    id: "kitchen_silverware",
+    name: "Kitchen Silverware & Tools",
+    tagline: "Knives, Spoons, Forks, Gadgets",
+    categoryTag: "Kitchen & Dining",
+    items: ["Dinner knives & forks", "Teaspoons & soup spoons", "Cooking peelers & openers", "Silverware & tongs"],
+    rows: 1,
     cols: 4,
-    recommendedHeightMm: 38,
-    wallThickness: 2.8,
-    cornerFilletRadius: 6,
+    recommendedHeightMm: 48,
+    wallThickness: 3.0,
+    cornerFilletRadius: 10,
   },
   {
-    id: "minimalist_duo",
-    name: "Minimalist Duo Chamber",
-    tagline: "2 Large Open Compartments",
-    categoryTag: "Versatile Open Storage",
-    items: ["Large sunglasses & case", "Notebooks & journals", "Passport & receipts", "Universal catchall"],
-    rows: 1,
-    cols: 2,
-    recommendedHeightMm: 38,
+    id: "cosmetics_skincare",
+    name: "Cosmetics & Skincare",
+    tagline: "Serums, Perfumes, Brushes",
+    categoryTag: "Beauty & Bathroom",
+    items: ["Glass dropper serums", "Luxury fragrances", "Cosmetic brushes", "Lipsticks & compacts"],
+    rows: 3,
+    cols: 3,
+    recommendedHeightMm: 44,
+    wallThickness: 2.8,
+    cornerFilletRadius: 10,
+  },
+  {
+    id: "gaming_tech",
+    name: "Gaming & Tech Gear",
+    tagline: "Controllers, Cables, Dongles, SD Cards",
+    categoryTag: "Desk & Battlestation",
+    items: ["Controllers & gaming mice", "Braided USB-C cables", "Memory cards & dongles", "IEMs & charging docks"],
+    rows: 2,
+    cols: 3,
+    recommendedHeightMm: 42,
     wallThickness: 2.8,
     cornerFilletRadius: 8,
+  },
+  {
+    id: "general_matrix",
+    name: "General Storage Matrix",
+    tagline: "Uniform Multi-Purpose Chambers",
+    categoryTag: "Universal Organization",
+    items: ["Evenly spaced storage cells", "Hardware & craft fasteners", "Stationery & accessories", "Universal catchall compartments"],
+    rows: 2,
+    cols: 4,
+    recommendedHeightMm: 40,
+    wallThickness: 2.8,
+    cornerFilletRadius: 6,
   },
 ];
 
@@ -230,13 +222,13 @@ export interface ConsumerFinish {
 export const CONSUMER_FINISHES: ConsumerFinish[] = [
   {
     id: 'mat_obsidian_black',
-    name: 'Matte Obsidian Black',
+    name: 'Obsidian Black',
     tag: 'Best Seller',
     hexColor: '#18181b',
     description: 'Stealth midnight satin finish. Hides dust and complements every desktop.',
     materialOption: {
       id: 'mat_pla_obsidian',
-      name: 'Matte Obsidian Black',
+      name: 'Obsidian Black',
       category: 'filament',
       hexColor: '#18181b',
       roughness: 0.88,
@@ -248,16 +240,16 @@ export const CONSUMER_FINISHES: ConsumerFinish[] = [
     },
   },
   {
-    id: 'mat_cloud_cream',
-    name: 'Warm Cloud Cream',
-    tag: 'Japandi Luxury',
-    hexColor: '#f5f0eb',
-    description: 'Soft tactile stone-white. Brings warm Scandinavian architectural brightness.',
+    id: 'mat_warm_oat_stone',
+    name: 'Warm Oat Stone',
+    tag: 'Warm Minimalist',
+    hexColor: '#ece5db',
+    description: 'Soft tactile oat-stone porcelain. Brings calm Scandinavian architectural warmth.',
     materialOption: {
-      id: 'mat_pla_studio_white',
-      name: 'Warm Cloud Cream',
+      id: 'mat_pla_warm_oat',
+      name: 'Warm Oat Stone',
       category: 'filament',
-      hexColor: '#f5f0eb',
+      hexColor: '#ece5db',
       roughness: 0.86,
       transmission: 0.0,
       ior: 1.52,
@@ -267,14 +259,14 @@ export const CONSUMER_FINISHES: ConsumerFinish[] = [
     },
   },
   {
-    id: 'mat_terracotta_clay',
-    name: 'Terracotta Clay',
+    id: 'mat_terracotta',
+    name: 'Terracotta',
     tag: 'Artisan Earth',
     hexColor: '#c46849',
     description: 'Rich Mediterranean earthenware tone. Adds warmth and natural clay aesthetics.',
     materialOption: {
-      id: 'mat_pla_signal_orange',
-      name: 'Terracotta Clay',
+      id: 'mat_pla_terracotta',
+      name: 'Terracotta',
       category: 'filament',
       hexColor: '#c46849',
       roughness: 0.84,
@@ -286,14 +278,14 @@ export const CONSUMER_FINISHES: ConsumerFinish[] = [
     },
   },
   {
-    id: 'mat_slate_blue',
-    name: 'Nordic Slate Blue',
+    id: 'mat_nordic_slate',
+    name: 'Nordic Slate',
     tag: 'Modern Slate',
     hexColor: '#3d5066',
     description: 'Muted coastal twilight blue-grey with understated industrial refinement.',
     materialOption: {
-      id: 'mat_pla_concrete',
-      name: 'Nordic Slate Blue',
+      id: 'mat_pla_nordic_slate',
+      name: 'Nordic Slate',
       category: 'filament',
       hexColor: '#3d5066',
       roughness: 0.82,
@@ -305,14 +297,14 @@ export const CONSUMER_FINISHES: ConsumerFinish[] = [
     },
   },
   {
-    id: 'mat_sage_green',
-    name: 'Forest Sage Green',
-    tag: 'Biophilic Design',
+    id: 'mat_forest_sage',
+    name: 'Forest Sage',
+    tag: 'Botanical Earth',
     hexColor: '#4a6353',
-    description: 'Calming botanical green inspired by mossy evergreen woodland desks.',
+    description: 'Calming botanical green inspired by mossy evergreen woodland textures.',
     materialOption: {
-      id: 'mat_pla_concrete',
-      name: 'Forest Sage Green',
+      id: 'mat_pla_forest_sage',
+      name: 'Forest Sage',
       category: 'filament',
       hexColor: '#4a6353',
       roughness: 0.85,
@@ -325,9 +317,9 @@ export const CONSUMER_FINISHES: ConsumerFinish[] = [
   },
 ];
 
-export const WHISPER_INLAY_MATERIAL: MaterialOption = {
+export const LIQUID_RESIN_INLAY_MATERIAL: MaterialOption = {
   id: 'mat_resin_clear',
-  name: 'Whisper-Quiet Optical Dampener',
+  name: 'Liquid Resin Sound-Dampening Inlay',
   category: 'resin',
   hexColor: '#e0f2fe',
   roughness: 0.12,
@@ -386,17 +378,17 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
   // STEP 1 STATE: Space Selection
   const [selectedSpaceId, setSelectedSpaceId] = useState<string>('ikea_alex');
   const [alexSubOption, setAlexSubOption] = useState<'compact' | 'wide'>('compact');
-  const [customUnit, setCustomUnit] = useState<'in' | 'mm'>('in');
-  const [customLength, setCustomLength] = useState<number>(8.5); // inches or mm
-  const [customWidth, setCustomWidth] = useState<number>(6.0);
-  const [customHeight, setCustomHeight] = useState<number>(1.75);
+  const [customUnit, setCustomUnit] = useState<'in' | 'mm'>('mm');
+  const [customLength, setCustomLength] = useState<number>(210); // in or mm
+  const [customWidth, setCustomWidth] = useState<number>(150);
+  const [customHeight, setCustomHeight] = useState<number>(40);
 
   // STEP 2 STATE: Organizing Goal
   const [selectedOrgId, setSelectedOrgId] = useState<string>('pocket_dump');
 
-  // STEP 3 STATE: Finish & Whisper Inlay
+  // STEP 3 STATE: Finish & Liquid Resin Sound Inlay
   const [selectedFinishId, setSelectedFinishId] = useState<string>('mat_obsidian_black');
-  const [hasWhisperInlay, setHasWhisperInlay] = useState<boolean>(true);
+  const [hasResinInlay, setHasResinInlay] = useState<boolean>(true);
 
   // Close on Escape key if modal
   useEffect(() => {
@@ -442,7 +434,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
         width = 140;
         height = 45;
       }
-    } else if (selectedSpaceId === 'custom') {
+    } else if (selectedSpaceId === 'custom_mm') {
       if (customUnit === 'in') {
         length = Math.max(80, Math.min(260, Math.round(customLength * 25.4)));
         width = Math.max(80, Math.min(240, Math.round(customWidth * 25.4)));
@@ -463,7 +455,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
       wallThickness: activeOrg.wallThickness,
       bottomThickness: 2.4,
       cornerFilletRadius: activeOrg.cornerFilletRadius,
-      inlayPocketDepth: hasWhisperInlay ? 2.5 : 0,
+      inlayPocketDepth: hasResinInlay ? 2.5 : 0,
     };
   }, [
     activeSpace,
@@ -474,7 +466,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
     customLength,
     customWidth,
     customHeight,
-    hasWhisperInlay,
+    hasResinInlay,
   ]);
 
   // Synchronize store in real-time as user changes choices
@@ -491,14 +483,14 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
       inlayPocketDepth: resolvedDimensions.inlayPocketDepth,
     });
     setMaterial(activeFinish.materialOption);
-    setResin(hasWhisperInlay ? WHISPER_INLAY_MATERIAL : null);
-  }, [resolvedDimensions, activeFinish, hasWhisperInlay, setDimensions, setMaterial, setResin]);
+    setResin(hasResinInlay ? LIQUID_RESIN_INLAY_MATERIAL : null);
+  }, [resolvedDimensions, activeFinish, hasResinInlay, setDimensions, setMaterial, setResin]);
 
   // Total price display calculation (telemetry price + inlay upgrade)
   const calculatedDisplayPrice = useMemo(() => {
     const base = telemetry.finalPriceUsd > 0 ? telemetry.finalPriceUsd : 32.0;
-    return hasWhisperInlay ? Math.max(base, base + 2.5) : base;
-  }, [telemetry.finalPriceUsd, hasWhisperInlay]);
+    return hasResinInlay ? Math.max(base, base + 2.5) : base;
+  }, [telemetry.finalPriceUsd, hasResinInlay]);
 
   // Step transition handlers with haptic sound feedback
   const handleNextStep = () => {
@@ -561,21 +553,21 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
       <div className="border-b border-zinc-200 dark:border-zinc-800 bg-gradient-to-r from-orange-50/60 via-zinc-50 to-orange-50/40 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900/80 px-6 py-5">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-100 dark:bg-orange-950/80 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800/60">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-100 dark:bg-orange-950/80 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800/60 font-sans">
                 <Sparkles className="w-3 h-3" />
-                60-SECOND DRAWER FIT WIZARD
+                WAVEZLY CUSTOM 3D STUDIO • SIZING WIZARD
               </span>
-              <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/40">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/40">
                 <ShieldCheck className="w-3 h-3" />
-                Guaranteed Snug Fit • Hand-crafted in 48 Hours
+                Wavezly 100% Fit Guarantee • Made to Order in Boise, ID • Ships in 48h
               </span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold font-sans tracking-tight text-zinc-900 dark:text-white">
-              Design Your Perfect Organizer
+              Wavezly Custom 3D Studio
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-              Zero guessing. Just 3 simple choices to get a tailored drawer insert that fits like a glove.
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 font-sans">
+              Zero guessing. 3 tailored choices to fabricate your custom organizer for any drawer, desktop, vanity, or workshop.
             </p>
           </div>
 
@@ -624,7 +616,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             </div>
             <div className="min-w-0">
               <div className="text-[10px] uppercase font-semibold text-zinc-500 dark:text-zinc-400">Step 1</div>
-              <div className="text-xs sm:text-sm font-semibold truncate">Drawer or Space</div>
+              <div className="text-xs sm:text-sm font-semibold truncate">Space or Project</div>
             </div>
           </button>
 
@@ -684,7 +676,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             </div>
             <div className="min-w-0">
               <div className="text-[10px] uppercase font-semibold text-zinc-500 dark:text-zinc-400">Step 3</div>
-              <div className="text-xs sm:text-sm font-semibold truncate">Finish & Sound Inlay</div>
+              <div className="text-xs sm:text-sm font-semibold truncate">Finish & Resin Inlay</div>
             </div>
           </button>
         </div>
@@ -697,7 +689,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
         {/* Left Column: Interactive Step Content (7 cols) */}
         <div className="lg:col-span-7 space-y-5">
           {/* ================================================= */}
-          {/* STEP 1: PICK YOUR DRAWER OR SPACE                 */}
+          {/* STEP 1: PICK YOUR SPACE OR PROJECT                */}
           {/* ================================================= */}
           {currentStep === 1 && (
             <div className="space-y-4">
@@ -706,10 +698,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                   STEP 1 OF 3
                 </span>
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">
-                  Pick Your Drawer or Space
+                  Pick Your Space or Project
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Select your furniture model or enter quick dimensions from your tape measure.
+                  Select your space, furniture model, or enter exact custom dimensions.
                 </p>
               </div>
 
@@ -746,7 +738,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                               {preset.name}
                             </span>
                             {preset.badge && (
-                              <span className="ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-900/60 text-orange-800 dark:text-orange-300">
+                              <span className="ml-2 text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-900/60 text-orange-800 dark:text-orange-300 font-sans">
                                 {preset.badge}
                               </span>
                             )}
@@ -754,7 +746,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                         </div>
 
                         {/* Dimensions Tag */}
-                        {preset.id !== 'custom' && (
+                        {preset.id !== 'custom_mm' && (
                           <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 whitespace-nowrap bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
                             {preset.dimensionsIn.length}″ × {preset.dimensionsIn.width}″ ({preset.dimensionsMm.length}×{preset.dimensionsMm.width}mm)
                           </span>
@@ -785,7 +777,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                   : 'bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
                               }`}
                             >
-                              <div className="font-semibold">Compact (Half)</div>
+                              <div className="font-semibold">Compact (Half-Drawer)</div>
                               <div className="text-[10px] opacity-80">140 × 240 mm (5.5 × 9.4″)</div>
                             </button>
                             <button
@@ -801,7 +793,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                   : 'bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
                               }`}
                             >
-                              <div className="font-semibold">Wide (Front)</div>
+                              <div className="font-semibold">Wide (Front Section)</div>
                               <div className="text-[10px] opacity-80">180 × 240 mm (7.1 × 9.4″)</div>
                             </button>
                           </div>
@@ -809,27 +801,16 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                       )}
 
                       {/* Custom Measurements Input Box */}
-                      {preset.id === 'custom' && isSelected && (
+                      {preset.id === 'custom_mm' && isSelected && (
                         <div
                           className="mt-3 pl-6 pt-3 border-t border-orange-200 dark:border-orange-900/40 space-y-3"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-                              Tape Measure Units:
+                              Measurement Unit:
                             </span>
                             <div className="flex items-center p-0.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg text-xs">
-                              <button
-                                type="button"
-                                onClick={() => handleCustomUnitToggle('in')}
-                                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
-                                  customUnit === 'in'
-                                    ? 'bg-white dark:bg-zinc-700 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
-                                    : 'text-zinc-600 dark:text-zinc-400'
-                                }`}
-                              >
-                                INCHES (in)
-                              </button>
                               <button
                                 type="button"
                                 onClick={() => handleCustomUnitToggle('mm')}
@@ -840,6 +821,17 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                                 }`}
                               >
                                 MILLIMETERS (mm)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleCustomUnitToggle('in')}
+                                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                                  customUnit === 'in'
+                                    ? 'bg-white dark:bg-zinc-700 text-orange-600 dark:text-orange-400 font-semibold shadow-xs'
+                                    : 'text-zinc-600 dark:text-zinc-400'
+                                }`}
+                              >
+                                INCHES (in)
                               </button>
                             </div>
                           </div>
@@ -897,7 +889,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800/80 p-2 rounded-lg">
                             <Ruler className="w-3.5 h-3.5 text-orange-500 shrink-0" />
                             <span>
-                              Tip: Measure the inside floor of your drawer. We automatically apply a 3mm tolerance margin so it drops in effortlessly!
+                              Tip: Measure your inner drawer or shelf footprint. Wavezly applies an automatic tolerance margin for a smooth drop-in fit.
                             </span>
                           </div>
                         </div>
@@ -922,7 +914,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                   What Are You Organizing?
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Select what goes inside. We optimize the grid compartments and wall depths automatically.
+                  Select your items. Wavezly automatically configures grid partitions and wall depths for optimal storage.
                 </p>
               </div>
 
@@ -990,7 +982,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           )}
 
           {/* ================================================= */}
-          {/* STEP 3: PICK YOUR FINISH & SOUND INLAY            */}
+          {/* STEP 3: FINISH & RESIN INLAY                      */}
           {/* ================================================= */}
           {currentStep === 3 && (
             <div className="space-y-5">
@@ -999,10 +991,10 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                   STEP 3 OF 3
                 </span>
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-white mt-0.5">
-                  Pick Your Finish & Sound Inlay
+                  Finish & Resin Inlay
                 </h3>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  Select your tactile exterior color and choose whether to add acoustic dampening.
+                  Select your tactile exterior color and choose optional liquid resin sound-dampening.
                 </p>
               </div>
 
@@ -1035,7 +1027,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                           {isSelected && (
                             <Check
                               className={`w-4 h-4 ${
-                                finish.hexColor === '#f5f0eb' ? 'text-zinc-900' : 'text-white'
+                                finish.hexColor === '#ece5db' ? 'text-zinc-900' : 'text-white'
                               }`}
                             />
                           )}
@@ -1060,19 +1052,19 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                 </div>
               </div>
 
-              {/* Whisper-Quiet Base Inlay Toggle */}
+              {/* Liquid Resin Sound-Dampening Pocket Toggle */}
               <div className="pt-2">
                 <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-2">
-                  2. Acoustic Base Inlay:
+                  2. Sound-Dampening Resin Inlay:
                 </label>
 
                 <div
                   onClick={() => {
                     playClickSound('toggle');
-                    setHasWhisperInlay(!hasWhisperInlay);
+                    setHasResinInlay(!hasResinInlay);
                   }}
                   className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${
-                    hasWhisperInlay
+                    hasResinInlay
                       ? 'border-cyan-500 bg-cyan-50/60 dark:bg-cyan-950/30 ring-2 ring-cyan-500/20'
                       : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 hover:border-zinc-300'
                   }`}
@@ -1081,12 +1073,12 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                     <div className="flex items-start gap-3">
                       <div
                         className={`p-2.5 rounded-xl ${
-                          hasWhisperInlay
+                          hasResinInlay
                             ? 'bg-cyan-500 text-white'
                             : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
                         }`}
                       >
-                        {hasWhisperInlay ? (
+                        {hasResinInlay ? (
                           <Volume2 className="w-5 h-5" />
                         ) : (
                           <VolumeX className="w-5 h-5" />
@@ -1096,15 +1088,15 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-sm text-zinc-900 dark:text-white">
-                            Add Whisper-Quiet Base Inlay (Softens key drops)
+                            Optional Liquid Resin Sound-Dampening Pocket
                           </span>
                           <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-100 dark:bg-cyan-950 px-2 py-0.5 rounded-full">
                             +$7.50
                           </span>
                         </div>
                         <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                          Pours an optical acoustic dampening layer into each pocket floor.
-                          Eliminates hollow clatter when tossing car keys, cushions delicate watches, and adds luxurious heft.
+                          Pours an optical acoustic dampening resin layer into each pocket floor.
+                          Eliminates hollow clatter when tossing car keys, silverware, or metal tools, cushions delicate watches & cosmetics, and adds luxurious heft.
                         </p>
                       </div>
                     </div>
@@ -1112,27 +1104,27 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                     {/* Toggle Switch */}
                     <div
                       className={`w-11 h-6 rounded-full transition-colors relative shrink-0 p-0.5 ${
-                        hasWhisperInlay ? 'bg-cyan-600' : 'bg-zinc-300 dark:bg-zinc-700'
+                        hasResinInlay ? 'bg-cyan-600' : 'bg-zinc-300 dark:bg-zinc-700'
                       }`}
                     >
                       <div
                         className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-transform ${
-                          hasWhisperInlay ? 'translate-x-5' : 'translate-x-0'
+                          hasResinInlay ? 'translate-x-5' : 'translate-x-0'
                         }`}
                       />
                     </div>
                   </div>
 
-                  {hasWhisperInlay && (
+                  {hasResinInlay && (
                     <div className="mt-3 pt-3 border-t border-cyan-200 dark:border-cyan-900/40 flex items-center gap-3 text-[11px] text-cyan-800 dark:text-cyan-300 font-medium">
                       <span className="flex items-center gap-1">
                         <Check className="w-3.5 h-3.5 text-cyan-600" />
-                        -18 dB drop sound reduction
+                        -18 dB acoustic clatter reduction
                       </span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
                         <Check className="w-3.5 h-3.5 text-cyan-600" />
-                        Protects watch crystal backs
+                        Protects watches, tools & glassware
                       </span>
                     </div>
                   )}
@@ -1172,7 +1164,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
               style={{
                 backgroundColor: activeFinish.hexColor,
                 borderColor:
-                  activeFinish.hexColor === '#f5f0eb' ? '#d4d4d8' : '#3f3f46',
+                  activeFinish.hexColor === '#ece5db' ? '#d4d4d8' : '#3f3f46',
               }}
             >
               {/* Internal Compartment Grid */}
@@ -1190,15 +1182,15 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                     key={i}
                     className="rounded-sm flex items-center justify-center border transition-all"
                     style={{
-                      backgroundColor: hasWhisperInlay
+                      backgroundColor: hasResinInlay
                         ? 'rgba(224, 242, 254, 0.35)'
                         : 'rgba(0, 0, 0, 0.15)',
-                      borderColor: hasWhisperInlay
+                      borderColor: hasResinInlay
                         ? 'rgba(2, 132, 199, 0.4)'
                         : 'rgba(255, 255, 255, 0.15)',
                     }}
                   >
-                    {hasWhisperInlay && (
+                    {hasResinInlay && (
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 shadow-xs" />
                     )}
                   </div>
@@ -1255,27 +1247,27 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
               <CheckCircle2
                 className={`w-4 h-4 ${
-                  hasWhisperInlay ? 'text-cyan-500' : 'text-zinc-400'
+                  hasResinInlay ? 'text-cyan-500' : 'text-zinc-400'
                 } shrink-0`}
               />
               <span>
                 <strong>Inlay:</strong>{' '}
-                {hasWhisperInlay
-                  ? 'Whisper-Quiet Resin Included (+$7.50)'
+                {hasResinInlay
+                  ? 'Liquid Resin Sound-Dampening Pocket (+$7.50)'
                   : 'Standard Base Floor'}
               </span>
             </div>
           </div>
 
-          {/* Guaranteed Snug Fit Badge */}
+          {/* 100% Fit Guarantee Badge */}
           <div className="p-3 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/30 rounded-xl border border-emerald-200 dark:border-emerald-800/50 flex items-start gap-2.5">
             <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <div className="text-[11px] leading-snug">
-              <div className="font-bold text-emerald-900 dark:text-emerald-300">
-                Guaranteed Snug Fit • Hand-crafted in 48 Hours
+              <div className="font-bold text-emerald-900 dark:text-emerald-300 font-sans">
+                Wavezly 100% Fit Guarantee • Made to Order in Boise, ID • Ships in 48h
               </div>
-              <div className="text-emerald-700 dark:text-emerald-400 mt-0.5">
-                If your tape measurement is off, we reprint your tray free under our 30-day zero-risk drawer fit policy.
+              <div className="text-emerald-700 dark:text-emerald-400 mt-0.5 font-sans">
+                If your measurement is off, we reprint your custom organizer free under our 30-day zero-risk fit policy.
               </div>
             </div>
           </div>
@@ -1290,14 +1282,14 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
                 <span className="text-2xl font-bold font-sans text-zinc-950 dark:text-white">
                   ${calculatedDisplayPrice.toFixed(2)}
                 </span>
-                <span className="text-xs text-zinc-400">USD</span>
+                <span className="text-xs text-zinc-400 font-mono">USD</span>
               </div>
             </div>
 
-            <div className="text-right text-[11px] text-zinc-500">
+            <div className="text-right text-[11px] text-zinc-500 font-sans">
               <div className="flex items-center gap-1 justify-end font-medium text-zinc-700 dark:text-zinc-300">
                 <Clock className="w-3.5 h-3.5 text-orange-500" />
-                <span>Dispatches in 48h</span>
+                <span>Ships in 48h</span>
               </div>
               <div className="text-[10px]">Free US Shipping over $50</div>
             </div>
@@ -1325,9 +1317,9 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
             <button
               type="button"
               onClick={handleNextStep}
-              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer font-sans"
             >
-              <span>Next: {currentStep === 1 ? 'What You Organize' : 'Finish & Sound'}</span>
+              <span>Next: {currentStep === 1 ? 'What You Organize' : 'Finish & Resin Inlay'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
@@ -1338,7 +1330,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           <button
             type="button"
             onClick={handleDoneView3D}
-            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border-2 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+            className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl border-2 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100 text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer font-sans"
             title="Inspect tailored dimensions in 3D WebGL viewport"
           >
             <Eye className="w-4 h-4 text-orange-600" />
@@ -1348,7 +1340,7 @@ export const ConsumerSizingWizard: React.FC<ConsumerSizingWizardProps> = ({
           <button
             type="button"
             onClick={handleAddToCartClick}
-            className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold transition-all shadow-md hover:shadow-glow-orange flex items-center justify-center gap-1.5 cursor-pointer"
+            className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold transition-all shadow-md hover:shadow-glow-orange flex items-center justify-center gap-1.5 cursor-pointer font-sans"
             title="Add to shopping bag and initiate high-precision manufacturing"
           >
             <ShoppingBag className="w-4 h-4" />

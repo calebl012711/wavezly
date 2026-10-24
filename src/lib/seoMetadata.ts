@@ -1,5 +1,5 @@
 /**
- * FORMGRID SEO & GROWTH ARCHITECTURE ENGINE
+ * WAVEZLY SEO & GROWTH ARCHITECTURE ENGINE
  * Valid Schema.org JSON-LD generators, OpenGraph, Twitter Cards, and dynamic document meta orchestration.
  */
 
@@ -7,16 +7,17 @@ import { Product, ProductType } from '../types';
 import { CustomerReview, SEED_PRODUCTS, SEED_REVIEWS } from '../db/seed';
 
 export const SITE_CONFIG = {
-  name: 'SnugFit',
-  legalName: 'SnugFit Goods Inc.',
-  url: 'https://snugdesk.com',
-  canonicalDomain: 'snugdesk.com',
-  logoUrl: 'https://snugdesk.com/assets/branding/snugdesk-logo.svg',
-  ogImageUrl: 'https://snugdesk.com/assets/products/valet-pro-real.jpg',
-  twitterHandle: '@snugdesk',
+  name: 'Wavezly',
+  legalName: 'Wavezly Direct Inc.',
+  url: 'https://wavezly.com',
+  canonicalDomain: 'wavezly.com',
+  logoUrl: 'https://wavezly.com/assets/logo/wavezly-logo.png',
+  ogImageUrl: '/assets/logo/wavezly-logo.png',
+  twitterHandle: '@wavezly',
   customerServicePhone: '+1-800-367-6474',
+  defaultTitle: 'Wavezly | The Everything 3D Print & Custom Goods Store',
   defaultDescription:
-    'Custom-crafted desk and drawer organizers made to fit your exact measurements. 100% Snug Fit Guarantee with zero dead space and fast domestic shipping.',
+    'The Amazon of 3D printing: custom made-to-measure organizers, trending 3D toys, gaming accessories, home decor, and gadgets.',
   currency: 'USD',
   countryCode: 'US',
 } as const;
@@ -237,7 +238,7 @@ export interface SchemaGraph {
 }
 
 /**
- * Builds the canonical Organization entity for FORMGRID
+ * Builds the canonical Organization entity for Wavezly
  */
 export function generateOrganizationSchema(originUrl?: string): SchemaOrganization & SchemaContext {
   const base = originUrl || SITE_CONFIG.url;
@@ -249,13 +250,13 @@ export function generateOrganizationSchema(originUrl?: string): SchemaOrganizati
     name: SITE_CONFIG.name,
     legalName: SITE_CONFIG.legalName,
     url: base,
-    logo: `${base}/assets/branding/formgrid-logo.svg`,
+    logo: `${base}/assets/logo/wavezly-logo.png`,
     description: SITE_CONFIG.defaultDescription,
     foundingDate: '2024',
     founders: [
       {
         '@type': 'Person',
-        name: 'FORMGRID Engineering Group',
+        name: 'Wavezly Engineering Group',
       },
     ],
     contactPoint: [
@@ -268,9 +269,9 @@ export function generateOrganizationSchema(originUrl?: string): SchemaOrganizati
       },
     ],
     sameAs: [
-      'https://twitter.com/formgrid',
-      'https://github.com/formgrid',
-      'https://instagram.com/formgrid',
+      'https://twitter.com/wavezly',
+      'https://github.com/wavezly',
+      'https://instagram.com/wavezly',
     ],
     address: {
       '@type': 'PostalAddress',
@@ -293,8 +294,8 @@ export function generateMerchantReturnPolicySchema(
     '@type': 'MerchantReturnPolicy',
     '@id': `${base}#return-policy-${productType}`,
     name: isCustom
-      ? 'FORMGRID 30-Day Dimensional Precision Guarantee & Free Replacement Policy'
-      : 'FORMGRID 30-Day Hassle-Free Domestic Return Policy',
+      ? 'Wavezly 30-Day Dimensional Precision Guarantee & Free Replacement Policy'
+      : 'Wavezly 30-Day Hassle-Free Domestic Return Policy',
     applicableCountry: SITE_CONFIG.countryCode,
     returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
     merchantReturnDays: 30,
@@ -437,7 +438,7 @@ export function generateProductSchema(
   const productUrl = `${base}/?product=${encodeURIComponent(product.slug)}`;
 
   const technicalPropertyValues: SchemaPropertyValue[] = Object.entries(
-    product.technicalSpecs
+    (product.technicalSpecs || {}) as Record<string, string>
   ).map(([name, value]) => ({
     '@type': 'PropertyValue',
     name,
@@ -473,13 +474,13 @@ export function generateProductSchema(
     '@id': `${productUrl}#product`,
     name: product.title,
     description: product.description,
-    image: absoluteImages.length > 0 ? absoluteImages : [`${base}/assets/branding/og-preview.png`],
-    sku: product.supplierMeta?.supplierSku || `FG-${product.id.toUpperCase()}`,
-    mpn: `FORMGRID-${product.id.replace('prod_', '').toUpperCase()}`,
+    image: absoluteImages.length > 0 ? absoluteImages : [`${base}/assets/logo/wavezly-logo.png`],
+    sku: product.supplierMeta?.supplierSku || `WVZ-${product.id.toUpperCase()}`,
+    mpn: `WAVEZLY-${product.id.replace('prod_', '').toUpperCase()}`,
     category:
       product.type === 'custom_3d'
-        ? 'Office Supplies > Desk Organizers > Bespoke Parametric Storage'
-        : 'Office Equipment > Computer Accessories > Desktop Hardware',
+        ? 'Home & Living > Custom 3D Prints > Made-to-Measure Organizers & Decor'
+        : 'Electronics & Home > Modern Gadgets & Accessories',
     brand: {
       '@type': 'Brand',
       name: SITE_CONFIG.name,
@@ -526,9 +527,9 @@ export function generateProductCatalogSchema(
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     '@id': `${base}#catalog`,
-    name: 'FORMGRID Precision Parametric Desktop Architecture Catalog',
+    name: 'Wavezly The Everything 3D Print & Custom Goods Catalog',
     description:
-      'Curated index of custom 3D parametric desk organizers and fast-ship domestic hardware accessories.',
+      'Curated index of custom 3D prints, made-to-measure organizers, toys, gadgets, and fast-ship domestic goods.',
     numberOfItems: products.length,
     itemListElement,
   };
@@ -595,7 +596,7 @@ export function generateRouteSchema(
     const homeWebPage: SchemaWebPage = {
       '@type': 'WebPage',
       '@id': `${base}#webpage`,
-      name: 'FORMGRID | Precision Parametric Desktop Architecture',
+      name: SITE_CONFIG.defaultTitle,
       url: base,
       description: SITE_CONFIG.defaultDescription,
       isPartOf: {
@@ -616,16 +617,16 @@ export function generateRouteSchema(
     const customizerWebPage: SchemaWebPage = {
       '@type': 'WebPage',
       '@id': `${base}/?route=customizer#webpage`,
-      name: `${product.title} // Real-Time Parametric Studio | FORMGRID`,
+      name: `${product.title} // Real-Time 3D Studio | Wavezly`,
       url: `${base}/?route=customizer`,
-      description: `Synthesize ${product.title} to exact sub-millimeter tolerances. Real-time 3D parametric CAD modeling and zero-inventory local production.`,
+      description: `Customize ${product.title} to your exact specifications. Real-time 3D parametric CAD modeling and on-demand local production.`,
       isPartOf: {
         '@type': 'WebSite',
         '@id': `${base}#website`,
       },
       breadcrumb: generateBreadcrumbListSchema([
         { name: 'Home', url: base },
-        { name: 'Parametric Studio', url: `${base}/?route=customizer` },
+        { name: 'Customizer Studio', url: `${base}/?route=customizer` },
         { name: product.title, url: `${base}/?product=${encodeURIComponent(product.slug)}` },
       ]),
     };
@@ -634,9 +635,9 @@ export function generateRouteSchema(
     const checkoutWebPage: SchemaWebPage = {
       '@type': 'WebPage',
       '@id': `${base}/?route=checkout#webpage`,
-      name: 'Secure Order Dispatch & Dual Logistics | FORMGRID',
+      name: 'Secure Order Dispatch & Dual Logistics | Wavezly',
       url: `${base}/?route=checkout`,
-      description: 'Review bifurcated domestic hardware dispatch and parametric print farm production queue.',
+      description: 'Review fast domestic dispatch and custom 3D print workshop production queue.',
       isPartOf: {
         '@type': 'WebSite',
         '@id': `${base}#website`,
@@ -651,9 +652,9 @@ export function generateRouteSchema(
     const trackingWebPage: SchemaWebPage = {
       '@type': 'WebPage',
       '@id': `${base}/?route=tracking#webpage`,
-      name: 'Dual-Fulfillment Telemetry & Order Tracking | FORMGRID',
+      name: 'Order Telemetry & Tracking | Wavezly',
       url: `${base}/?route=tracking`,
-      description: 'Track domestic print farm fabrication progress and fast-ship hardware delivery in real time.',
+      description: 'Track domestic print workshop fabrication progress and fast-ship delivery in real time.',
       isPartOf: {
         '@type': 'WebSite',
         '@id': `${base}#website`,
@@ -668,9 +669,9 @@ export function generateRouteSchema(
     const successWebPage: SchemaWebPage = {
       '@type': 'WebPage',
       '@id': `${base}/?route=success#webpage`,
-      name: 'Order Confirmation & Fabrication Queue | FORMGRID',
+      name: 'Order Confirmation & Fabrication Queue | Wavezly',
       url: `${base}/?route=success`,
-      description: 'Your bespoke desktop hardware order is confirmed and queued for domestic fabrication.',
+      description: 'Your custom 3D print and bespoke order is confirmed and queued for domestic fabrication.',
       isPartOf: {
         '@type': 'WebSite',
         '@id': `${base}#website`,
@@ -764,7 +765,7 @@ export function updateDocumentMetadata(payload: DocumentMetadataPayload): void {
 export function injectOrUpdateSchemaScript(schemaData: unknown): void {
   if (typeof document === 'undefined') return;
 
-  const SCRIPT_ID = 'formgrid-schema-jsonld';
+  const SCRIPT_ID = 'wavezly-schema-jsonld';
   let script = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
 
   if (!script) {

@@ -1,5 +1,5 @@
 /**
- * FORMGRID TELEMETRY HUD OVERLAY
+ * WAVEZLY CUSTOM 3D STUDIO - TELEMETRY HUD OVERLAY
  * Floating status pill rendering live physical metrics, extrusion time, and dynamic price
  * Prioritized Light Mode support with crisp backdrop blur
  */

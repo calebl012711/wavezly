@@ -1,5 +1,5 @@
 /**
- * FORMGRID APPLICATION ROOT
+ * WAVEZLY APPLICATION ROOT
  * Routing orchestration, global error boundaries, split-cart drawer, announcement ticker,
  * layout wrapping, and dynamic Schema.org JSON-LD / SEO meta injection.
  */
@@ -76,23 +76,23 @@ export const App: React.FC = () => {
     // Synchronize OpenGraph, Twitter, canonical, and indexing robots directives
     if (currentRoute === 'home') {
       updateDocumentMetadata({
-        title: 'SnugFit | Custom Organizers for Every Room',
+        title: SITE_CONFIG.defaultTitle,
         description: SITE_CONFIG.defaultDescription,
         canonicalUrl: origin,
         ogType: 'website',
-        ogTitle: 'SnugFit | Custom Organizers for Every Room',
+        ogTitle: SITE_CONFIG.defaultTitle,
         ogDescription: SITE_CONFIG.defaultDescription,
         ogImage: SITE_CONFIG.ogImageUrl,
-        twitterTitle: 'SnugFit | Custom Organizers for Every Room',
+        twitterTitle: SITE_CONFIG.defaultTitle,
         twitterDescription: SITE_CONFIG.defaultDescription,
         twitterImage: SITE_CONFIG.ogImageUrl,
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       });
     } else if (currentRoute === 'customizer') {
-      const prodTitle = currentProduct ? currentProduct.title : 'Custom Desk Hardware';
+      const prodTitle = currentProduct ? currentProduct.title : 'Custom 3D Print';
       const prodDesc = currentProduct
-        ? `Customize ${currentProduct.title} to your exact drawer measurements in real-time 3D.`
-        : 'Design custom drawer organizers tailored to your exact measurements in real-time 3D.';
+        ? `Customize ${currentProduct.title} to your exact specifications in real-time 3D.`
+        : 'Design custom 3D prints, made-to-measure organizers, and gadgets in real-time 3D.';
       const prodImage = currentProduct?.images?.[0]
         ? currentProduct.images[0].startsWith('http')
           ? currentProduct.images[0]
@@ -103,30 +103,30 @@ export const App: React.FC = () => {
       }`;
 
       updateDocumentMetadata({
-        title: `${prodTitle} // Custom 3D Studio | SnugFit`,
+        title: `${prodTitle} // Custom 3D Studio | Wavezly`,
         description: prodDesc,
         canonicalUrl: customizerCanonical,
         ogType: 'product',
         ogTitle: `${prodTitle} | Real-Time 3D Customizer`,
         ogDescription: prodDesc,
         ogImage: prodImage,
-        twitterTitle: `${prodTitle} | SnugFit Studio`,
+        twitterTitle: `${prodTitle} | Wavezly Studio`,
         twitterDescription: prodDesc,
         twitterImage: prodImage,
         robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       });
     } else if (currentRoute === 'checkout') {
       updateDocumentMetadata({
-        title: 'Secure Checkout | SnugFit',
+        title: 'Secure Checkout | Wavezly',
         description:
-          'Fast domestic shipping and custom 3D on-demand crafting with 100% Snug Fit Guarantee.',
+          'Fast domestic shipping and custom 3D on-demand crafting with Wavezly 100% Fit Guarantee.',
         canonicalUrl: `${origin}/?route=checkout`,
         ogType: 'website',
         robots: 'noindex, nofollow',
       });
     } else if (currentRoute === 'tracking') {
       updateDocumentMetadata({
-        title: 'Real-Time Order Tracking & Delivery Status | SnugFit',
+        title: 'Real-Time Order Tracking & Delivery Status | Wavezly',
         description:
           'Track your custom workshop craft and USPS Priority fast-ship packages in real time.',
         canonicalUrl: `${origin}/?route=tracking`,
@@ -135,7 +135,7 @@ export const App: React.FC = () => {
       });
     } else if (currentRoute === 'success') {
       updateDocumentMetadata({
-        title: 'Order Confirmed! Your Custom Order is in Our Workshop | SnugFit',
+        title: 'Order Confirmed! Your Custom Order is in Our Workshop | Wavezly',
         description:
           'Your custom order has been received and scheduled for made-to-measure crafting.',
         canonicalUrl: `${origin}/?route=success`,
@@ -172,7 +172,7 @@ export const App: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-[#f7f7f5] text-zinc-900 dark:text-zinc-100 selection:bg-signal-orange selection:text-white transition-colors">
       {/* Schema.org In-DOM JSON-LD Script Tag */}
       <script
-        id="snugfit-schema-vdom"
+        id="wavezly-schema-vdom"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(activeSchemaGraph) }}
       />
@@ -193,7 +193,7 @@ export const App: React.FC = () => {
 
       {/* Main Viewport Enclave */}
       <main className="flex-1">
-        <ErrorBoundary fallbackTitle="SnugFit Viewport Recovery">
+        <ErrorBoundary fallbackTitle="Wavezly Viewport Recovery">
           <Suspense
             fallback={
               <div className="min-h-[500px] flex items-center justify-center font-mono text-xs text-zinc-500 space-x-2">

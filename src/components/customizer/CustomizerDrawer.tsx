@@ -1,5 +1,5 @@
 /**
- * FORMGRID CUSTOMIZER CONTROL DRAWER
+ * WAVEZLY CUSTOM 3D STUDIO - CUSTOMIZER CONTROL DRAWER
  * Precision accordion panels for physical bounding, grid topology, material swatches, curated presets, and cart dispatch
  */
 

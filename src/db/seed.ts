@@ -5,6 +5,7 @@
 
 import { Product, MaterialOption } from '../types';
 import { CJ_PRODUCTS } from './cjProducts';
+import { GENERAL_3D_PRODUCTS } from './general3DProducts';
 
 export interface CustomerReview {
   id: string;
@@ -1482,6 +1483,7 @@ const BASE_PRODUCTS: Product[] = [
 
 export const SEED_PRODUCTS: Product[] = [
   ...BASE_PRODUCTS,
+  ...GENERAL_3D_PRODUCTS,
   ...CJ_PRODUCTS,
 ];
 

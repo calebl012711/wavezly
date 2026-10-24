@@ -1,5 +1,5 @@
 /**
- * FORMGRID TACTILE INDUSTRIAL DIMENSION SLIDER
+ * WAVEZLY CUSTOM 3D STUDIO - TACTILE INDUSTRIAL DIMENSION SLIDER
  * Precision millimeter control with direct numeric input and micro-steppers
  */
 

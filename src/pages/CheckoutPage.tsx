@@ -1,10 +1,10 @@
 /**
- * FORMGRID INTEGRATED CHECKOUT PAGE
+ * WAVEZLY INTEGRATED CHECKOUT PAGE
  * Elite DTC Checkout (Shopify Plus / Stripe Checkout style)
  * Features:
  * - Express Checkout Pills (Apple Pay, Shop Pay, PayPal simulation)
  * - Clear Split Delivery Breakdown (Package 1: Handcrafted to Measure vs Package 2: In-Stock Accessory)
- * - Prominent Consumer Trust Guarantees (30-Day Fit Guarantee, Free Returns, Carbon-Neutral Delivery)
+ * - Prominent Consumer Trust Guarantees (Wavezly 100% Fit Guarantee, 30-Day Free Returns, Fast Domestic Shipping)
  * - Discount / Voucher Code Engine
  * - 100% TypeScript safe & responsive
  */
@@ -28,7 +28,6 @@ import {
   Tag,
   X,
   RotateCcw,
-  Leaf,
   ChevronRight,
   Info,
   Sparkles,
@@ -192,17 +191,16 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
       if (response.isMock) {
         // Cache order details in localStorage for client-side invoice and tracking specs
         try {
-          localStorage.setItem(
-            'snugfit-last-order',
-            JSON.stringify({
-              orderNumber: response.orderNumber,
-              items: orderItems.map(({ stlBlob, ...rest }) => rest),
-              shippingAddress: form,
-              timestamp: new Date().toISOString(),
-              paymentMethod: methodLabel,
-              discountApplied: appliedDiscount,
-            })
-          );
+          const cachedData = JSON.stringify({
+            orderNumber: response.orderNumber,
+            items: orderItems.map(({ stlBlob, ...rest }) => rest),
+            shippingAddress: form,
+            timestamp: new Date().toISOString(),
+            paymentMethod: methodLabel,
+            discountApplied: appliedDiscount,
+          });
+          localStorage.setItem('wavezly-last-order', cachedData);
+          localStorage.setItem('snugfit-last-order', cachedData);
         } catch (e) {
           console.warn('Failed to cache last order to localStorage', e);
         }
@@ -289,7 +287,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                     <span className="font-medium text-zinc-900 dark:text-zinc-100">404 Industrial Pkwy, SF CA</span>
                   </div>
                   <div className="flex justify-between border-t border-zinc-200 dark:border-zinc-700 pt-2 font-bold text-sm">
-                    <span>Pay FORMGRID:</span>
+                    <span>Pay Wavezly:</span>
                     <span className="text-orange-600 dark:text-orange-400">${finalTotal.toFixed(2)} USD</span>
                   </div>
                 </div>
@@ -398,7 +396,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <span className="font-extrabold tracking-tight text-xl text-zinc-950 dark:text-white font-display">
-              FORMGRID
+              Wavezly
             </span>
             <span className="hidden sm:inline-block h-4 w-px bg-zinc-300 dark:bg-zinc-700" />
             <span className="hidden sm:inline-flex items-center text-xs text-zinc-500 space-x-1">
@@ -830,14 +828,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
             {/* 4. PROMINENT CONSUMER TRUST GUARANTEES */}
             <div className="pt-2">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {/* Guarantee 1: 30-Day Fit Guarantee */}
+                {/* Guarantee 1: Wavezly 100% Fit Guarantee */}
                 <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-2">
                   <div className="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-950/50 flex items-center justify-center text-orange-600 dark:text-orange-400">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-zinc-900 dark:text-white">
-                      30-Day Fit Guarantee
+                      Wavezly 100% Fit Guarantee
                     </h3>
                     <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug mt-0.5">
                       Fits your drawer or 100% money back. Guaranteed ±0.2mm tolerance.
@@ -845,14 +843,14 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                   </div>
                 </div>
 
-                {/* Guarantee 2: Free Returns */}
+                {/* Guarantee 2: 30-Day Free Returns */}
                 <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-2">
                   <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <RotateCcw className="w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-zinc-900 dark:text-white">
-                      Free Returns
+                      30-Day Free Returns
                     </h3>
                     <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug mt-0.5">
                       Prepaid return labels on all standard domestic items. Zero questions asked.
@@ -860,17 +858,17 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
                   </div>
                 </div>
 
-                {/* Guarantee 3: Carbon-Neutral Domestic Delivery */}
+                {/* Guarantee 3: Fast Domestic Shipping */}
                 <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-2">
                   <div className="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400">
-                    <Leaf className="w-5 h-5" />
+                    <Truck className="w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-zinc-900 dark:text-white">
-                      Carbon-Neutral Delivery
+                      Fast Domestic Shipping
                     </h3>
                     <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug mt-0.5">
-                      100% carbon-offset domestic transit with certified climate forestry.
+                      Dispatched in &lt;24h with tracked domestic carrier delivery.
                     </p>
                   </div>
                 </div>
@@ -1067,7 +1065,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onSuccess, onCancel 
               <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/80 dark:border-zinc-700/60 space-y-1.5 text-[11px] text-zinc-500">
                 <div className="flex items-center space-x-1.5 text-zinc-900 dark:text-zinc-200 font-semibold">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Backed by SnugFit Metrology Warranty</span>
+                  <span>Backed by Wavezly 100% Fit Guarantee</span>
                 </div>
                 <p className="leading-snug">
                   Every order includes the printable ISO 2768-m Guaranteed Fit Certificate & Spec Sheet directly after checkout.

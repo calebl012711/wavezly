@@ -1,5 +1,5 @@
 /**
- * FORMGRID PARAMETRIC STUDIO PAGE
+ * WAVEZLY CUSTOM 3D STUDIO PAGE
  * Real-time continuous 3D organizer customizer with live PBR WebGL viewport and specification controls
  */
 
@@ -57,7 +57,7 @@ export const CustomizerPage: React.FC = () => {
         <div>
           <div className="flex items-center space-x-2 font-sans text-xs font-semibold text-orange-600 dark:text-orange-400 uppercase tracking-wider mb-1">
             <Sliders className="w-3.5 h-3.5" />
-            <span>3D CUSTOMIZER STUDIO</span>
+            <span>WAVEZLY CUSTOM 3D STUDIO</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white font-sans">
             {currentProduct.title}
@@ -72,8 +72,8 @@ export const CustomizerPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsWizardOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 dark:bg-orange-950/60 border border-orange-200 dark:border-orange-800 text-orange-700 dark:text-orange-400 text-xs font-semibold hover:bg-orange-100 dark:hover:bg-orange-900/80 transition-colors shadow-xs cursor-pointer"
-            title="Launch 3-step drawer sizing guide"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 dark:bg-orange-950/60 border border-orange-200 dark:border-orange-800 text-orange-700 dark:text-orange-400 text-xs font-semibold hover:bg-orange-100 dark:hover:bg-orange-900/80 transition-colors shadow-xs cursor-pointer font-sans"
+            title="Launch 3-step sizing wizard"
           >
             <Sparkles className="w-3.5 h-3.5 text-orange-600" />
             <span>Sizing Wizard</span>
@@ -84,7 +84,11 @@ export const CustomizerPage: React.FC = () => {
               const isSelected = currentProduct.id === prod.id;
               // Clean short display name
               const shortTitle = prod.title
+                .replace('Wavezly Custom 3D Studio ', '')
+                .replace('Wavezly ', '')
+                .replace('SnugDesk ', '')
                 .replace('SnugFit ', '')
+                .replace('FORMGRID ', '')
                 .replace('Modular Desk ', '')
                 .replace('Parametric ', '')
                 .replace('Precision ', '')
@@ -113,7 +117,7 @@ export const CustomizerPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left: 3D Interactive Viewport with Floating Telemetry HUD */}
         <div className="lg:col-span-8 relative">
-          <ErrorBoundary fallbackTitle="Studio 3D Viewport Reset">
+          <ErrorBoundary fallbackTitle="Wavezly Custom 3D Studio Reset">
             <TelemetryHUD dimensions={dimensions} telemetry={telemetry} />
 
             <div className="h-[520px] lg:h-[620px] w-full">

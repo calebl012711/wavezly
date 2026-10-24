@@ -1,6 +1,5 @@
 /**
-/**
- * FORMGRID CLIENT-SIDE PRODUCTION SPECIFICATION SHEET & INVOICE GENERATOR
+ * WAVEZLY DIRECT CLIENT-SIDE PRODUCTION SPECIFICATION SHEET & INVOICE GENERATOR
  * Generates an industrial A4/Letter printable spec sheet and PDF export manifest.
  *
  * Implements:
@@ -143,7 +142,7 @@ export function generateBarcodeSvg(
   options: { height?: number; narrowWidth?: number; wideWidth?: number } = {}
 ): string {
   const { height = 48, narrowWidth = 2, wideWidth = 5 } = options;
-  const sanitized = `*${rawText.toUpperCase().replace(/[^A-Z0-9\-. $/+%]/g, '-') || 'FORMGRID'}*`;
+  const sanitized = `*${rawText.toUpperCase().replace(/[^A-Z0-9\-. $/+%]/g, '-') || 'WAVEZLY'}*`;
 
   let currentX = 8;
   const rects: string[] = [];
@@ -278,7 +277,7 @@ export function generateIsoGuaranteeSealSvg(size: number = 160): string {
       <path id="isoBottomArc" d="M 156 90 A 66 66 0 0 1 24 90" fill="none" />
 
       <text font-size="7.5" font-family="ui-monospace, monospace" font-weight="800" letter-spacing="1.8" fill="#000000">
-        <textPath href="#isoTopArc" startOffset="50%" text-anchor="middle">FORMGRID CRAFTING STUDIO</textPath>
+        <textPath href="#isoTopArc" startOffset="50%" text-anchor="middle">WAVEZLY DIRECT WORKSHOP</textPath>
       </text>
       <text font-size="7.5" font-family="ui-monospace, monospace" font-weight="800" letter-spacing="1.4" fill="#000000">
         <textPath href="#isoBottomArc" startOffset="50%" text-anchor="middle">★ 100% PERFECT FIT GUARANTEE ★</textPath>
@@ -318,7 +317,9 @@ export function resolveProductionSpecOrder(
 
   if (typeof window !== 'undefined') {
     try {
-      const lastOrderRaw = localStorage.getItem('snugfit-last-order');
+      const lastOrderRaw =
+        localStorage.getItem('wavezly-last-order') ||
+        localStorage.getItem('snugfit-last-order');
       if (lastOrderRaw) {
         const parsed = JSON.parse(lastOrderRaw);
         if (parsed.items && Array.isArray(parsed.items)) {
@@ -461,7 +462,7 @@ export function resolveProductionSpecOrder(
       qcInspectorId: 'BOISE STUDIO QC-VERIFIED',
       digitalSignatureHash: `PERFECT-FIT-${orderNumber}-VERIFIED`,
       legalCertificationStatement:
-        'SnugFit certifies that all custom components fabricated under this order are guaranteed to fit your exact specified dimensions within ±0.2mm. Every order is crafted on demand in our Boise, Idaho studio workshop and inspected before packaging. If any custom tray does not fit your space or drawer perfectly, it qualifies for an immediate priority recraft at zero cost under the SnugFit 100% Perfect Fit Guarantee.',
+        'Wavezly Direct certifies that all custom components fabricated under this order are guaranteed to fit your exact specified dimensions within ±0.2mm. Every order is crafted on demand in our Boise, Idaho studio workshop and inspected before packaging. If any custom tray does not fit your space or drawer perfectly, it qualifies for an immediate priority recraft at zero cost under the Wavezly 100% Fit Guarantee.',
     },
   };
 
@@ -486,7 +487,7 @@ export function resolveProductionSpecOrder(
 export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
   const barcodeSvg = generateBarcodeSvg(spec.orderNumber, { height: 44 });
   const qrSvg = generateQrCodeSvg(
-    `https://snugfit.io/track?order=${encodeURIComponent(spec.orderNumber)}`,
+    `https://wavezly.com/track?order=${encodeURIComponent(spec.orderNumber)}`,
     96
   );
   const isoSealSvg = generateIsoGuaranteeSealSvg(150);
@@ -508,7 +509,7 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FORMGRID Spec Sheet - ${spec.orderNumber}</title>
+  <title>Wavezly Direct Spec Sheet - ${spec.orderNumber}</title>
   <style>
     /* CSS RESET & INDUSTRIAL MONOSPACED PALETTE */
     *, *::before, *::after {
@@ -1084,11 +1085,11 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
     <header class="doc-header">
       <div class="header-branding">
         <div class="brand-mark">
-          <div class="brand-name">FORMGRID</div>
-          <div class="brand-sub">CRAFTING STUDIO • BOISE, ID</div>
+          <div class="brand-name">Wavezly Direct</div>
+          <div class="brand-sub">WORKSHOP & CRAFTING STUDIO • BOISE, ID</div>
         </div>
         <div class="doc-title">100% Guaranteed Perfect Fit Certificate & Packing Slip</div>
-        <div class="doc-sub">Crafted on Demand in Boise, ID • Split-Fulfillment Logistics • 100% Guaranteed Fit</div>
+        <div class="doc-sub">Crafted on Demand in Boise, ID • Split-Fulfillment Logistics • Wavezly 100% Fit Guarantee</div>
       </div>
 
       <div class="header-metadata">
@@ -1326,7 +1327,7 @@ export function generateOrderInvoiceHtml(spec: ProductionSpecOrder): string {
 
     <!-- FOOTER CUT LINE -->
     <footer class="doc-footer">
-      <div>FORMGRID TECHNOLOGIES GMBH & INC. • 404 INDUSTRIAL PARKWAY, SAN FRANCISCO CA • METROLOGY DIVISION</div>
+      <div>WAVEZLY DIRECT • 404 INDUSTRIAL PARKWAY, SAN FRANCISCO CA • METROLOGY & WORKSHOP DIVISION</div>
       <div>PAGE 1 OF 1 • VERIFIED PRODUCTION SPECIFICATION MANIFEST</div>
       <div>CONFIDENTIAL & RESTRICTED</div>
     </footer>
@@ -1381,13 +1382,13 @@ export function exportProductionSpecSheet(
 
   // Fallback: If pop-up blockers blocked window.open, print cleanly via hidden iframe
   try {
-    const existingIframe = document.getElementById('snugfit-print-iframe');
+    const existingIframe = document.getElementById('wavezly-print-iframe') || document.getElementById('snugfit-print-iframe');
     if (existingIframe) {
       existingIframe.remove();
     }
 
     const iframe = document.createElement('iframe');
-    iframe.id = 'snugfit-print-iframe';
+    iframe.id = 'wavezly-print-iframe';
     iframe.style.position = 'fixed';
     iframe.style.right = '0';
     iframe.style.bottom = '0';
@@ -1427,7 +1428,7 @@ export function downloadSpecSheetHtml(
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
-  anchor.download = `FORMGRID-SPEC-${spec.orderNumber}.html`;
+  anchor.download = `WAVEZLY-DIRECT-SPEC-${spec.orderNumber}.html`;
   document.body.appendChild(anchor);
   anchor.click();
   document.body.removeChild(anchor);

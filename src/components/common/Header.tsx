@@ -1,7 +1,7 @@
 /**
- * SNUGFIT AMAZON-STYLE STOREFRONT HEADER
- * Iconic Amazon dark navy navigation bar, department search dropdown,
- * zip-code location selector, returns & orders, and subnav ribbon.
+ * WAVEZLY AMAZON-STYLE STOREFRONT HEADER
+ * Authentic Amazon dark navy navigation bar, department search dropdown,
+ * zip-code location selector, returns & orders, and secondary subnav ribbon.
  */
 
 import React, { useState } from 'react';
@@ -13,11 +13,11 @@ import {
   ChevronDown,
   Sparkles,
   Package,
-  ShieldCheck,
 } from 'lucide-react';
 import { useCartStore } from '../../store/useCartStore';
-import { ROOMS, RoomId } from '../../lib/storefront';
+import { RoomId } from '../../lib/storefront';
 import { AmazonNavDrawer } from './AmazonNavDrawer';
+import { WavezlyLogo } from './WavezlyLogo';
 
 interface HeaderProps {
   currentRoute: 'home' | 'customizer' | 'tracking';
@@ -28,6 +28,19 @@ interface HeaderProps {
   activeRoom: RoomId;
   onSelectRoom: (room: RoomId) => void;
 }
+
+const SEARCH_DEPARTMENTS: { id: RoomId; label: string }[] = [
+  { id: 'all', label: 'All Departments' },
+  { id: 'trending_3d', label: 'Trending 3D Prints & Toys' },
+  { id: 'kitchen', label: 'Kitchen & Dining' },
+  { id: 'electronics', label: 'Electronics & Gaming' },
+  { id: 'vanity', label: 'Vanity & Bath' },
+  { id: 'home_decor', label: 'Home Décor & Planters' },
+  { id: 'car_auto', label: 'Car & Automotive' },
+  { id: 'tools_workshop', label: 'Tools & Workshop' },
+  { id: 'custom', label: 'Custom 3D Fit' },
+  { id: 'deals', label: "Today's Deals" },
+];
 
 export const Header: React.FC<HeaderProps> = ({
   currentRoute,
@@ -49,6 +62,10 @@ export const Header: React.FC<HeaderProps> = ({
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedDept === 'custom') {
+      onNavigate('customizer');
+      return;
+    }
     if (selectedDept !== 'all') {
       onSelectRoom(selectedDept);
     }
@@ -61,7 +78,11 @@ export const Header: React.FC<HeaderProps> = ({
   const handleSaveZip = (e: React.FormEvent) => {
     e.preventDefault();
     if (tempZip.trim()) {
-      setZipCode(`ZIP ${tempZip.trim()}`);
+      const trimmed = tempZip.trim();
+      const formatted = trimmed.toLowerCase().startsWith('seattle')
+        ? trimmed
+        : `Seattle ${trimmed}`;
+      setZipCode(formatted);
       setShowLocationModal(false);
     }
   };
@@ -74,45 +95,17 @@ export const Header: React.FC<HeaderProps> = ({
         {/* ============================================================ */}
         <div className="bg-[#131921] text-white">
           <div className="max-w-[1520px] mx-auto px-2 sm:px-4 h-[60px] flex items-center gap-2 sm:gap-4">
-            {/* 1. Brand Logo with Smile Swoosh */}
+            {/* 1. Wavezly Brand Logo */}
             <button
               type="button"
               onClick={() => {
                 onSelectRoom('all');
                 onNavigate('home');
               }}
-              className="flex items-center px-2 py-1.5 rounded-sm hover:outline-1 hover:outline-white transition flex-shrink-0 group text-left"
-              aria-label="SnugFit Home"
+              className="flex items-center px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition flex-shrink-0 text-left"
+              aria-label="Wavezly Home"
             >
-              <div className="flex flex-col items-start leading-none">
-                <div className="flex items-center">
-                  <span className="text-xl sm:text-2xl font-bold tracking-tight text-white font-sans">
-                    SnugFit
-                  </span>
-                  <span className="text-xs text-[#febd69] font-semibold ml-0.5 mt-0.5">.com</span>
-                </div>
-                {/* Amazon Smile Curve */}
-                <svg
-                  className="w-16 h-2.5 text-[#ff9900] -mt-0.5"
-                  viewBox="0 0 100 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M 5 5 Q 50 16 95 3"
-                    stroke="currentColor"
-                    strokeWidth="3.2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M 91 1 L 96 4 L 92 8"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
+              <WavezlyLogo theme="dark" size="md" />
             </button>
 
             {/* 2. Deliver to Location Pill */}
@@ -125,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
               <MapPin className="w-4 h-4 text-white flex-shrink-0 mt-2" />
               <div className="leading-tight">
                 <span className="text-zinc-400 block text-[11px]">Deliver to</span>
-                <span className="text-white font-bold text-xs truncate max-w-[110px] block">
+                <span className="text-white font-bold text-xs truncate max-w-[120px] block">
                   {zipCode}
                 </span>
               </div>
@@ -142,12 +135,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <select
                   value={selectedDept}
                   onChange={(e) => setSelectedDept(e.target.value as RoomId)}
-                  className="appearance-none bg-transparent h-full pl-3 pr-7 cursor-pointer focus:outline-none text-zinc-800 font-medium text-xs"
+                  className="appearance-none bg-transparent h-full pl-3 pr-7 cursor-pointer focus:outline-none text-zinc-800 font-medium text-xs max-w-[170px] truncate"
                   aria-label="Select department"
                 >
-                  {ROOMS.map((r) => (
-                    <option key={r.id} value={r.id} className="text-zinc-900 bg-white">
-                      {r.amazonDept}
+                  {SEARCH_DEPARTMENTS.map((d) => (
+                    <option key={d.id} value={d.id} className="text-zinc-900 bg-white">
+                      {d.label}
                     </option>
                   ))}
                 </select>
@@ -159,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="search"
                 value={searchQuery}
                 onChange={(e) => onSearch(e.target.value)}
-                placeholder="Search SnugFit for custom drawer organizers, vanity grids, trays…"
+                placeholder="Search Wavezly for trending 3D prints, custom fit organizers, car accessories…"
                 className="flex-1 min-w-0 px-3 bg-white text-zinc-900 text-sm placeholder-zinc-500 focus:outline-none"
               />
 
@@ -231,20 +224,21 @@ export const Header: React.FC<HeaderProps> = ({
         {/* ============================================================ */}
         {/* ROW 2: AMAZON SECONDARY SUB-NAV BAR (#232f3e)              */}
         {/* ============================================================ */}
-        <div className="bg-[#232f3e] text-white text-xs sm:text-sm">
+        <div className="bg-[#232f3e] text-white text-xs sm:text-sm border-t border-zinc-700/50">
           <div className="max-w-[1520px] mx-auto px-2 sm:px-4 h-[39px] flex items-center justify-between overflow-x-auto no-scrollbar">
-            <div className="flex items-center space-x-1 sm:space-x-1 whitespace-nowrap">
-              {/* "All" Hamburger Button */}
+            <div className="flex items-center space-x-1 sm:space-x-1.5 whitespace-nowrap">
+              {/* "☰ All" Hamburger Button */}
               <button
                 type="button"
                 onClick={() => setIsNavDrawerOpen(true)}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm hover:outline-1 hover:outline-white font-bold text-white transition mr-1"
+                className="flex items-center gap-1 px-2.5 py-1 rounded-sm hover:outline-1 hover:outline-white font-bold text-white transition mr-1"
+                aria-label="Open All Navigation Menu"
               >
                 <Menu className="w-4 h-4 stroke-[2.5]" />
                 <span>All</span>
               </button>
 
-              {/* Department Buttons */}
+              {/* Today's Deals */}
               <button
                 type="button"
                 onClick={() => {
@@ -262,22 +256,24 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>Today's Deals</span>
               </button>
 
+              {/* Trending 3D Prints */}
               <button
                 type="button"
                 onClick={() => {
-                  onSelectRoom('all');
+                  onSelectRoom('trending_3d');
                   onNavigate('home');
                   setTimeout(() => {
                     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
                   }, 50);
                 }}
                 className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium ${
-                  activeRoom === 'all' ? 'text-white underline font-bold' : 'text-zinc-200'
+                  activeRoom === 'trending_3d' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
                 }`}
               >
-                Best Sellers
+                Trending 3D Prints
               </button>
 
+              {/* Kitchen & Dining */}
               <button
                 type="button"
                 onClick={() => {
@@ -294,89 +290,105 @@ export const Header: React.FC<HeaderProps> = ({
                 Kitchen & Dining
               </button>
 
+              {/* Gaming & Tech */}
               <button
                 type="button"
                 onClick={() => {
-                  onSelectRoom('vanity');
+                  onSelectRoom('electronics');
                   onNavigate('home');
                   setTimeout(() => {
                     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
                   }, 50);
                 }}
                 className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium ${
-                  activeRoom === 'vanity' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
+                  activeRoom === 'electronics' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
                 }`}
               >
-                Vanity & Skincare
+                Gaming & Tech
               </button>
 
+              {/* Car Accessories */}
               <button
                 type="button"
                 onClick={() => {
-                  onSelectRoom('bedside');
+                  onSelectRoom('car_auto');
                   onNavigate('home');
                   setTimeout(() => {
                     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
                   }, 50);
                 }}
                 className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium ${
-                  activeRoom === 'bedside' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
+                  activeRoom === 'car_auto' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
                 }`}
               >
-                Bedroom & Entryway
+                Car Accessories
               </button>
 
+              {/* Home Décor */}
               <button
                 type="button"
                 onClick={() => {
-                  onSelectRoom('living');
+                  onSelectRoom('home_decor');
                   onNavigate('home');
                   setTimeout(() => {
                     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
                   }, 50);
                 }}
                 className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium ${
-                  activeRoom === 'living' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
+                  activeRoom === 'home_decor' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
                 }`}
               >
-                Living Room
+                Home Décor
               </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectRoom('workspace');
-                  onNavigate('home');
-                  setTimeout(() => {
-                    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 50);
-                }}
-                className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium ${
-                  activeRoom === 'workspace' ? 'text-[#febd69] underline font-bold' : 'text-zinc-200'
-                }`}
-              >
-                Home Office
-              </button>
-
+              {/* Custom 3D Studio */}
               <button
                 type="button"
                 onClick={() => onNavigate('customizer')}
-                className={`px-2.5 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-semibold text-[#febd69] flex items-center gap-1 ${
+                className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-semibold text-[#febd69] flex items-center gap-1 ${
                   currentRoute === 'customizer' ? 'underline font-bold' : ''
                 }`}
               >
-                <span>Custom 3D Fit</span>
-                <span className="text-[10px] px-1 py-0.2 rounded bg-orange-500 text-white font-bold">
-                  MADE TO MEASURE
+                <span>Custom 3D Studio</span>
+                <span className="text-[10px] px-1 py-0.2 rounded bg-[#ff9900] text-black font-extrabold uppercase">
+                  3D FIT
                 </span>
+              </button>
+
+              {/* Registry */}
+              <button
+                type="button"
+                onClick={() => {
+                  onSelectRoom('all');
+                  onNavigate('home');
+                  setTimeout(() => {
+                    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
+                }}
+                className="px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium text-zinc-200"
+              >
+                Registry
+              </button>
+
+              {/* Customer Service */}
+              <button
+                type="button"
+                onClick={() => onNavigate('tracking')}
+                className={`px-2 py-1 rounded-sm hover:outline-1 hover:outline-white transition font-medium text-zinc-200 ${
+                  currentRoute === 'tracking' ? 'text-[#febd69] underline font-bold' : ''
+                }`}
+              >
+                Customer Service
               </button>
             </div>
 
-            {/* Right Side Trust Tag */}
-            <div className="hidden xl:flex items-center gap-1.5 text-xs text-zinc-300 whitespace-nowrap pl-4">
-              <ShieldCheck className="w-4 h-4 text-[#00a8e1]" />
-              <span className="font-semibold text-white">100% Fit Guarantee</span>
-              <span className="text-zinc-400">• Free Prime Delivery</span>
+            {/* Right Side Wavezly Prime Tag */}
+            <div className="hidden xl:flex items-center gap-1.5 text-xs whitespace-nowrap pl-4">
+              <span className="font-black text-white tracking-tight">
+                Wave<span className="text-[#ff9900]">zly</span>{' '}
+                <span className="text-[#00a8e1] font-bold">Prime</span>
+              </span>
+              <span className="text-zinc-300 font-normal">: Fast, Free Delivery</span>
             </div>
           </div>
         </div>
@@ -407,7 +419,7 @@ export const Header: React.FC<HeaderProps> = ({
                 value={tempZip}
                 onChange={(e) => setTempZip(e.target.value)}
                 placeholder="Enter a 5-digit ZIP"
-                maxLength={10}
+                maxLength={12}
                 className="flex-1 h-10 px-3 border border-zinc-300 rounded text-sm text-zinc-900 focus:outline-none focus:border-[#f3a847] focus:ring-1 focus:ring-[#f3a847]"
                 autoFocus
               />

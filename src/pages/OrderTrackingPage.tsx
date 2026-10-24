@@ -1,5 +1,5 @@
 /**
- * FORMGRID REAL-TIME SPLIT ORDER TRACKING PORTAL
+ * WAVEZLY REAL-TIME SPLIT ORDER TRACKING PORTAL
  * Dual telemetry timeline monitoring both 3D Print Farm fabrication and domestic warehouse courier transit
  * Prioritized Light Mode
  */
@@ -37,10 +37,10 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({
           <span>DUAL DELIVERY TRACKER</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white">
-          Track Your Orders
+          Wavezly Real-Time Delivery Telemetry & Workshop Tracking
         </h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-          Enter your SnugFit order number to monitor made-to-order 3D fabrication and domestic courier transit in real-time.
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto">
+          Enter your Wavezly order number to monitor made-to-order 3D fabrication and domestic courier transit in real-time.
         </p>
 
         {/* Input Bar */}

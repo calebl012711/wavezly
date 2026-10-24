@@ -1,10 +1,10 @@
 /**
- * SNUGFIT AMAZON HOME PAGE
- * 1. Amazon Hero carousel with the 4 iconic department quad-cards
+ * WAVEZLY AMAZON HOME PAGE
+ * 1. Amazon Hero carousel with iconic department quad-cards
  * 2. Amazon Lightning Deals row with countdown timer & claim progress
  * 3. Amazon Product Grid (departments, search results, filters, coupons)
- * 4. "Frequently repurchased in Home & Kitchen" recommendations row
- * 5. Amazon Verified Customer Reviews with review ratings & helpful votes
+ * 4. Wavezly Precision 3D Crafting A+ Merchandising Banner
+ * 5. Wavezly Verified Customer Reviews with review ratings & helpful votes
  */
 
 import React, { useState, useEffect } from 'react';
@@ -18,7 +18,7 @@ import {
 import { AmazonHero } from '../components/landing/AmazonHero';
 import { ProductGrid } from '../components/landing/ProductGrid';
 import { Product } from '../types';
-import { ROOMS, RoomId, friendlyName, amazonMetaFor } from '../lib/storefront';
+import { ROOMS, RoomId, amazonMetaFor } from '../lib/storefront';
 import { SEED_PRODUCTS } from '../db/seed';
 import { getProductDisplayImage } from '../lib/productImages';
 import { useCartStore } from '../store/useCartStore';
@@ -32,33 +32,193 @@ interface HomePageProps {
   onSelectRoom: (room: RoomId) => void;
 }
 
+// 6 Iconic General 3D Printing Lightning Deals
+const LIGHTNING_DEAL_ITEMS: Product[] = [
+  {
+    id: 'prod_crystal_gem_dragon',
+    category: 'trending_3d',
+    slug: 'wavezly-articulated-crystal-gem-dragon',
+    title: 'Wavezly Articulated Crystal Gem Dragon',
+    subtitle: 'Flexible Sensory Fidget Toy with Multi-Segment Articulation',
+    description: 'Bestselling articulated crystal dragon 3D printed with silk tri-color PLA biopolymer. Smooth tactile movement and intricate geometric facet scales.',
+    type: 'dropship',
+    basePrice: 24.99,
+    images: ['/assets/products/crystal-dragon-hero.svg'],
+    features: [
+      'Fully articulated print-in-place joints',
+      'Silk rainbow multi-extrusion shine',
+      'Child-safe non-toxic biopolymer',
+    ],
+    inventoryCount: 42,
+    technicalSpecs: {
+      'Material': 'Silk Multi-Color PLA Biopolymer',
+      'Manufacturing': 'Print-in-Place Multi-Segment Articulation',
+      'Origin': 'USA 3D Print Farm Network',
+      'Dimensions': '450mm Length Extended',
+    },
+    active: true,
+  },
+  {
+    id: 'prod_lowpoly_planter',
+    category: 'home_decor',
+    slug: 'wavezly-geometric-low-poly-planter',
+    title: 'Wavezly Geometric Low-Poly Planter',
+    subtitle: 'Modern Faceted Succulent Pot with Hidden Drainage Reservoir',
+    description: 'Minimalist low-poly geometric planter pot engineered with dual-chamber self-watering sub-irrigation to keep indoor succulents and herbs thriving.',
+    type: 'dropship',
+    basePrice: 19.99,
+    images: ['/assets/products/low-poly-planter-hero.svg'],
+    features: [
+      'Hidden internal overflow reservoir',
+      'Matte sandstone tactile finish',
+      'UV-stabilized waterproof biopolymer',
+    ],
+    inventoryCount: 35,
+    technicalSpecs: {
+      'Material': 'Matte Sandstone Eco-Biopolymer',
+      'Drainage': 'Dual-Chamber Self-Watering Sub-Irrigation',
+      'Origin': 'USA 3D Print Farm Network',
+      'Finish': 'Matte Low-Poly Voronoi Facets',
+    },
+    active: true,
+  },
+  {
+    id: 'prod_pourover_coffee_tray',
+    category: 'kitchen',
+    slug: 'wavezly-barista-espresso-station',
+    title: 'Wavezly Barista Espresso & Pour-Over Station',
+    subtitle: 'Heat-Resistant Tamper, 58mm Portafilter & Dosing Cup Valet',
+    description: 'Dedicated countertop barista station with precision recesses for 54mm/58mm portafilters, tampers, WDT distribution needles, and puck screens.',
+    type: 'custom_3d',
+    basePrice: 38.00,
+    images: [
+      '/assets/products/pourover-coffee-tray-real.jpg',
+      '/assets/products/pourover-coffee-tray-hero.svg',
+    ],
+    features: [
+      'Custom portafilter diameter selector',
+      'Hydrophobic spill catchment channels',
+      'High-density solid anti-vibration base',
+    ],
+    inventoryCount: 18,
+    technicalSpecs: {
+      'Material': 'Heat-Resistant Food-Safe PETG',
+      'Compatibility': '54mm & 58mm Portafilters',
+      'Origin': 'USA 3D Print Farm Network',
+      'Tolerances': '± 0.20 mm Precision Cavity',
+    },
+    active: true,
+  },
+  {
+    id: 'prod_magsafe_orbit_dock',
+    category: 'electronics',
+    slug: 'wavezly-magsafe-floating-orbit-charging-stand',
+    title: 'Wavezly MagSafe Floating Orbit Charging Stand',
+    subtitle: 'Weighted Desktop Stand with Magnetic Ring Pass-Through',
+    description: 'Sculptural floating ring dock for Apple MagSafe and Qi2 pucks. Features concealed cable routing and anti-skid micro-suction silicon footings.',
+    type: 'dropship',
+    basePrice: 34.99,
+    images: ['/assets/products/magsafe-orbit-hero.svg'],
+    features: [
+      'Precision snap-fit for official MagSafe puck',
+      'Concealed internal cable channel',
+      'Heavy ballast weighted base',
+    ],
+    inventoryCount: 29,
+    technicalSpecs: {
+      'Material': 'Reinforced High-Density Biopolymer & Weighted Base',
+      'Compatibility': 'Apple MagSafe & Qi2 Wireless Pucks',
+      'Origin': 'USA 3D Print Farm Network',
+      'Footing': 'Micro-Suction Silicone Anti-Skid',
+    },
+    active: true,
+  },
+  {
+    id: 'prod_kitchen_cutlery_matrix',
+    category: 'kitchen',
+    slug: 'wavezly-custom-cutlery-utensil-matrix',
+    title: 'Wavezly Custom Cutlery & Utensil Matrix',
+    subtitle: 'Modular Non-Slip Kitchen Drawer Divider for Silverware & Knives',
+    description: 'Tailor-made parametric drawer insert that locks flush into your kitchen drawer with zero sliding gaps. Antimicrobial food-safe biopolymer.',
+    type: 'custom_3d',
+    basePrice: 42.00,
+    images: ['/assets/products/kitchen-cutlery-matrix-hero.svg'],
+    features: [
+      'Sub-millimeter custom fit to any drawer',
+      'Curved scoop cavities for easy utensil lifting',
+      'Dishwasher safe eco-biopolymer',
+    ],
+    inventoryCount: 50,
+    technicalSpecs: {
+      'Material': 'Antimicrobial Food-Safe PLA',
+      'Fit': '100% Guaranteed Custom Millimeter Fit',
+      'Origin': 'USA 3D Print Farm Network',
+      'Tolerances': '± 0.25 mm Flush Perimeter',
+    },
+    active: true,
+  },
+  {
+    id: 'prod_gyro_cube',
+    category: 'trending_3d',
+    slug: 'wavezly-kinetic-gyro-bearing-fidget-cube',
+    title: 'Wavezly Dual-Axis Kinetic Gyro Bearing Fidget Cube',
+    subtitle: 'Precision Mechanical EDC Desk Toy with Smooth Dual-Gimbal Spin',
+    description: 'Hypnotic desk sculpture featuring dual nested concentric gimbal rings riding on ceramic ball bearings for frictionless multi-axis rotation.',
+    type: 'dropship',
+    basePrice: 16.99,
+    images: ['/assets/products/gyro-cube-hero.svg'],
+    features: [
+      'Dual-axis concentric gimbal rotation',
+      'Ceramic ball bearings for 3+ minute spin',
+      'Machined tactile chamfered edges',
+    ],
+    inventoryCount: 64,
+    technicalSpecs: {
+      'Material': 'Metallic Silk PLA with Dual Concentric Rings',
+      'Bearings': 'Zero-Friction Ceramic Ball Bearings',
+      'Origin': 'USA 3D Print Farm Network',
+      'Rotation': 'Dual-Axis Gyroscopic Multi-Plane',
+    },
+    active: true,
+  },
+];
+
 const AMAZON_REVIEWS = [
   {
     name: 'Jessica Miller',
     badge: 'Verified Purchase',
     date: 'Reviewed in the United States on October 18, 2026',
-    variation: 'Color: Matte Obsidian Black | Size: IKEA Alex Wide (Custom)',
-    title: 'Finally an organizer that fits with literally ZERO gap!',
-    text: 'I have tried 4 different generic organizer sets from big box stores and they always slide back and forth every time you open the drawer. I put my exact dimensions into the 3D tool, ordered, and four days later this dropped right in like a glove. The matte biopolymer feels like velvet stone. Absolutely worth every penny.',
+    variation: 'Color: Matte Obsidian Black | Style: Custom Drawer Matrix',
+    title: 'Wavezly delivered the exact snug fit I couldn\'t find anywhere else!',
+    text: 'I have tried 4 different generic organizer sets from big box stores and they always slide back and forth every time you open the drawer. I put my exact dimensions into Wavezly\'s 3D tool, ordered, and four days later this dropped right in like a glove. The matte biopolymer feels like velvet stone. Fast delivery and zero plastic odor—worth every penny.',
     helpful: 142,
   },
   {
     name: 'Daniel Ramirez',
     badge: 'Verified Purchase',
     date: 'Reviewed in the United States on October 12, 2026',
-    variation: 'Color: Warm Oat & Stone | Style: Barista Espresso Valet',
-    title: 'Elevated our whole morning espresso routine',
-    text: 'The portafilter and WDT tool recess are engineered perfectly. Water beads right off and my countertop looks like a specialty café instead of a messy science lab. High quality, heavy solid feel, no cheap plastic clatter.',
-    helpful: 89,
+    variation: 'Color: Warm Oat & Stone | Style: Barista Espresso Station',
+    title: 'Super fast delivery and flawless biopolymer craftsmanship',
+    text: 'The portafilter and WDT tool recess are engineered perfectly to the millimeter. Water beads right off and my countertop looks like a specialty café instead of a messy science lab. High-density biopolymer feels heavy and solid with a snug fit—no cheap plastic clatter. Wavezly shipped in under 48 hours.',
+    helpful: 98,
+  },
+  {
+    name: 'Marcus Vance',
+    badge: 'Verified Purchase',
+    date: 'Reviewed in the United States on October 8, 2026',
+    variation: 'Color: Silk Dual-Tone Emerald | Style: Articulated Crystal Gem Dragon',
+    title: 'The Amazon of 3D printing—unbeatable quality & packaging',
+    text: 'Ordered the crystal gem dragon and low-poly planter for my home office, plus a custom car console organizer. Every single piece fits with zero wobble. Wavezly\'s high-density biopolymers have zero visible seam defects and the articulated joints move like liquid silk. Fast tracked shipping and premium unboxing.',
+    helpful: 84,
   },
   {
     name: 'Priya Sharma',
     badge: 'Verified Purchase',
     date: 'Reviewed in the United States on October 5, 2026',
-    variation: 'Color: Terracotta Clay | Style: Skincare & Beauty Vanity Matrix',
-    title: 'Saved my bathroom sanity. Ordered two more for my sisters.',
-    text: 'Holds my tall serum bottles, lipsticks, and brushes upright without toppling over. Super easy to wipe clean. The shipping was surprisingly fast for a custom piece. 10/10.',
-    helpful: 63,
+    variation: 'Color: Terracotta Matte | Style: Skincare & Beauty Vanity Matrix',
+    title: 'Wavezly 100% Fit Guarantee is real. Saved my bathroom sanity.',
+    text: 'Holds my tall serum bottles, lipsticks, and brushes upright without toppling over when opening the vanity drawer. Super easy to wipe clean. The shipping was surprisingly fast for a custom 3D piece (arrived in 3 days via Wavezly Direct). The biopolymer is silky smooth, stain resistant, and sturdy. 10/10.',
+    helpful: 67,
   },
 ];
 
@@ -90,7 +250,19 @@ export const HomePage: React.FC<HomePageProps> = ({
     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const lightningDealProducts = SEED_PRODUCTS.slice(0, 6);
+  // Combine curated lightning deal definitions with any matching seed catalog items
+  const lightningDealProducts: Product[] = LIGHTNING_DEAL_ITEMS.map((deal) => {
+    const seedMatch = SEED_PRODUCTS.find((p) => p.id === deal.id);
+    return seedMatch
+      ? {
+          ...deal,
+          ...seedMatch,
+          title: deal.title,
+          subtitle: deal.subtitle,
+          images: seedMatch.images?.length ? seedMatch.images : deal.images,
+        }
+      : deal;
+  });
 
   const handleQuickAddDeal = (e: React.MouseEvent, p: Product) => {
     e.stopPropagation();
@@ -166,7 +338,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <div className="relative aspect-square w-full flex items-center justify-center bg-white overflow-hidden p-2">
                     <img
                       src={img}
-                      alt={friendlyName(p)}
+                      alt={p.title}
                       loading="lazy"
                       className="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300"
                     />
@@ -183,11 +355,22 @@ export const HomePage: React.FC<HomePageProps> = ({
                       <span className="text-sm font-bold text-[#0f1111]">
                         ${p.basePrice.toFixed(2)}
                       </span>
+                      {meta.listPrice && (
+                        <span className="text-[11px] text-[#565959] line-through">
+                          ${meta.listPrice.toFixed(2)}
+                        </span>
+                      )}
                     </div>
 
-                    <h3 className="text-xs text-[#0f1111] group-hover:text-[#c7511f] line-clamp-1 mt-1 leading-snug">
-                      {friendlyName(p)}
+                    <h3 className="text-xs font-medium text-[#0f1111] group-hover:text-[#c7511f] line-clamp-1 mt-1 leading-snug">
+                      {p.title}
                     </h3>
+
+                    {p.subtitle && (
+                      <p className="text-[10px] text-[#565959] line-clamp-1 mt-0.5">
+                        {p.subtitle}
+                      </p>
+                    )}
 
                     {/* Claimed progress bar */}
                     <div className="mt-2 space-y-1">
@@ -197,12 +380,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                           style={{ width: `${percentClaimed}%` }}
                         />
                       </div>
-                      <div className="text-[10px] text-[#565959]">
-                        {percentClaimed}% claimed
+                      <div className="text-[10px] text-[#565959] flex items-center justify-between">
+                        <span>{percentClaimed}% claimed</span>
+                        <span className="text-[#007600] font-semibold text-[9px]">Wavezly Prime</span>
                       </div>
                     </div>
 
-                    {/* Quick Button */}
+                    {/* Quick Action Button */}
                     <div className="mt-2 pt-1">
                       {p.type === 'custom_3d' ? (
                         <button
@@ -211,9 +395,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                             e.stopPropagation();
                             onCustomizeProduct(p);
                           }}
-                          className="w-full py-1 text-[11px] font-bold rounded-full bg-[#ffa41c] hover:bg-[#fa8900] text-zinc-950 border border-[#ff8f00] shadow-xs cursor-pointer"
+                          className="w-full py-1 text-[11px] font-bold rounded-full bg-[#ffa41c] hover:bg-[#fa8900] text-zinc-950 border border-[#ff8f00] shadow-xs cursor-pointer flex items-center justify-center gap-1"
                         >
-                          Customize
+                          <span>Customize 3D</span>
                         </button>
                       ) : (
                         <button
@@ -256,16 +440,17 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="bg-white border border-[#d5d9d9] rounded-sm p-6 sm:p-8 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#e7e7e7]">
             <div className="max-w-2xl">
-              <span className="text-xs font-bold text-[#c45500] uppercase tracking-wider">
-                SnugFit Precision Crafting
+              <span className="text-xs font-bold text-[#c45500] uppercase tracking-wider block">
+                Wavezly Precision 3D Crafting • Made-to-Measure for Any Space in Your Home, Car, or Workshop
               </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#0f1111] mt-1">
-                Custom Made to Measure for Your Exact Drawers & Counters
+              <h2 className="text-xl sm:text-2xl font-bold text-[#0f1111] mt-1.5">
+                Precision 3D Crafting • Custom Sized for Any Space in Your Home, Car, or Workshop
               </h2>
               <p className="text-sm text-[#565959] mt-2 leading-relaxed">
-                No two drawers are identical. Standard store-bought organizers leave sliding gaps,
-                rattling cutlery, and wasted space. We craft bespoke modular organizer grids to your
-                exact millimeters in Boise, Idaho, and ship directly to your door in 48 hours.
+                No two spaces are identical. Standard store-bought organizers leave sliding gaps,
+                rattling cutlery, and wasted space. Wavezly engineers bespoke modular organizers, automotive inserts,
+                and workshop fixtures to your exact millimeters—crafted from high-grade industrial biopolymers
+                and shipped directly to your door in 48 hours.
               </p>
             </div>
 
@@ -287,7 +472,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div>
                 <h3 className="font-bold">Measure in Seconds</h3>
                 <p className="text-xs text-[#565959] mt-1 leading-relaxed">
-                  Enter your drawer dimensions with a tape measure or select an IKEA drawer preset.
+                  Enter your exact dimensions for kitchen drawers, car consoles, or tool drawers with a tape measure.
                 </p>
               </div>
             </div>
@@ -299,7 +484,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div>
                 <h3 className="font-bold">Live 3D Customizer</h3>
                 <p className="text-xs text-[#565959] mt-1 leading-relaxed">
-                  Add dividers, pick your velvet-matte finish, and inspect the exact fit in real-time 3D.
+                  Add modular dividers, select high-grade matte biopolymer finishes, and inspect the snug fit in real-time 3D.
                 </p>
               </div>
             </div>
@@ -309,9 +494,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                 3
               </div>
               <div>
-                <h3 className="font-bold">100% Fit Guarantee</h3>
+                <h3 className="font-bold">Wavezly 100% Fit Guarantee</h3>
                 <p className="text-xs text-[#565959] mt-1 leading-relaxed">
-                  Ships in 48 hours. If it does not slide in snugly, we remake it free or refund 100%.
+                  Fast 48-hour domestic shipping. If it does not slide in snugly with zero gap, Wavezly remakes it free or refunds 100%.
                 </p>
               </div>
             </div>
@@ -348,7 +533,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6">
             {AMAZON_REVIEWS.map((r, i) => (
               <div key={i} className="flex flex-col justify-between bg-white space-y-3">
                 <div className="space-y-2">

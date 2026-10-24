@@ -1,11 +1,11 @@
 /**
- * FORMGRID POST-CHECKOUT SPLIT FULFILLMENT HUD & CELEBRATION
+ * WAVEZLY POST-CHECKOUT SPLIT FULFILLMENT HUD & CELEBRATION
  * Features:
  * - Celebration Confetti Burst Animation on Mount
- * - Warm Welcome: "Your custom order is on its way to the workshop!"
- * - Printable "100% Guaranteed Fit Certificate & Spec Sheet" button using orderInvoiceGenerator.ts
+ * - Warm Welcome: "Your order has been received by the Wavezly workshop!"
+ * - Printable "Wavezly 100% Fit Guarantee Certificate & Spec Sheet" button using orderInvoiceGenerator.ts
  * - Direct link to track both packages in real-time
- * - Consumer Trust Guarantees: 30-Day Fit Guarantee, Free Returns, Carbon-Neutral Delivery
+ * - Consumer Trust Guarantees: Wavezly 100% Fit Guarantee, 30-Day Free Returns, Fast Domestic Shipping
  */
 
 import React, { useEffect, useState } from 'react';
@@ -21,7 +21,6 @@ import {
   Sparkles,
   ExternalLink,
   RotateCcw,
-  Leaf,
   Compass,
 } from 'lucide-react';
 import { exportProductionSpecSheet, downloadSpecSheetHtml, resolveProductionSpecOrder } from '../lib/orderInvoiceGenerator';
@@ -119,7 +118,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
 
             {/* WARM WELCOME MESSAGE */}
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white font-display">
-              Your custom order is on its way to the workshop!
+              Your order has been received by the Wavezly workshop!
             </h1>
 
             <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
@@ -144,7 +143,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
               className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs tracking-wider flex items-center justify-center space-x-2.5 shadow-lg shadow-orange-500/20 active:scale-95 transition cursor-pointer"
             >
               <Printer className="w-4 h-4" />
-              <span>PRINT 100% GUARANTEED FIT CERTIFICATE & SPEC SHEET</span>
+              <span>PRINT WAVEZLY 100% FIT GUARANTEE CERTIFICATE & SPEC SHEET</span>
             </button>
 
             <button
@@ -332,7 +331,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
             </div>
             <div>
               <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                30-Day Fit Guarantee
+                Wavezly 100% Fit Guarantee
               </h4>
               <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
                 Fits your drawer perfectly or 100% money back. Guaranteed.
@@ -346,7 +345,7 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
             </div>
             <div>
               <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                Free Returns
+                30-Day Free Returns
               </h4>
               <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
                 30-day hassle-free return window with prepaid domestic labels.
@@ -356,14 +355,14 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
 
           <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 shadow-xs flex items-start space-x-3">
             <div className="w-9 h-9 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400 flex-shrink-0">
-              <Leaf className="w-5 h-5" />
+              <Truck className="w-5 h-5" />
             </div>
             <div>
               <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                Carbon-Neutral Delivery
+                Fast Domestic Shipping
               </h4>
               <p className="text-[11px] text-zinc-500 leading-snug mt-0.5">
-                Every mile offset through verified reforestation and climate programs.
+                Dispatched in &lt;24h with tracked domestic carrier delivery.
               </p>
             </div>
           </div>

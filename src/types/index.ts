@@ -95,11 +95,22 @@ export interface Product {
   subtitle?: string;
   description: string;
   type: ProductType;
-  category?: 'kitchen' | 'vanity' | 'bedside' | 'living' | 'workspace';
+  category?:
+    | 'kitchen'
+    | 'vanity'
+    | 'bedside'
+    | 'living'
+    | 'workspace'
+    | 'trending_3d'
+    | 'electronics'
+    | 'home_decor'
+    | 'car_auto'
+    | 'tools_workshop'
+    | string;
   basePrice: number; // Base USD price
   images: string[];
   features: string[];
-  technicalSpecs: Record<string, string>;
+  technicalSpecs?: Record<string, string>;
   active: boolean;
   pipelineStage?: 'prototype' | 'voting' | 'production';
   communityVotes?: number;

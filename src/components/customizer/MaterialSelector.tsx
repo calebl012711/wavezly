@@ -1,5 +1,5 @@
 /**
- * FORMGRID TACTILE MATERIAL & RESIN INLAY SELECTOR
+ * WAVEZLY CUSTOM 3D STUDIO - TACTILE MATERIAL & RESIN INLAY SELECTOR
  * High-fidelity PBR swatch picker with polymer density and optical transmission metrics
  */
 
