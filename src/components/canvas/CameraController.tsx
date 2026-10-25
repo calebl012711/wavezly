@@ -28,16 +28,21 @@ export const CameraController: React.FC<CameraControllerProps> = ({
   controlsRef,
 }) => {
   const { camera } = useThree();
-  const isTransitioning = useRef(false);
+  const isTransitioning = useRef(true);
   const prevViewMode = useRef<CameraViewMode>(viewMode);
+  const prevOffsetZ = useRef<number>(drawerOffsetZ);
 
-  // Trigger smooth transition whenever viewMode changes
+  // Trigger smooth transition on mount and whenever viewMode or drawer open state changes
   useEffect(() => {
-    if (prevViewMode.current !== viewMode) {
+    if (
+      prevViewMode.current !== viewMode ||
+      Math.abs(prevOffsetZ.current - drawerOffsetZ) > 5
+    ) {
       isTransitioning.current = true;
       prevViewMode.current = viewMode;
+      prevOffsetZ.current = drawerOffsetZ;
     }
-  }, [viewMode]);
+  }, [viewMode, drawerOffsetZ]);
 
   // Release control if user manually starts dragging OrbitControls
   useEffect(() => {
@@ -59,32 +64,33 @@ export const CameraController: React.FC<CameraControllerProps> = ({
     const maxDim = Math.max(dimensions.length, dimensions.width);
 
     if (viewMode === 'closeup') {
-      const closeDist = Math.max(130, maxDim * 0.95);
+      const closeDist = Math.max(155, maxDim * 0.92);
       return {
         camPos: new THREE.Vector3(
-          0,
-          closeDist * 0.72,
-          closeDist * 0.95 + drawerOffsetZ
+          -closeDist * 0.22,
+          closeDist * 0.85,
+          closeDist * 0.78 + drawerOffsetZ
         ),
         lookAt: new THREE.Vector3(
           0,
-          dimensions.height * 0.65,
+          dimensions.height * 0.45,
           drawerOffsetZ
         ),
       };
     }
 
-    // 'desk' view: 45-degree perspective showing warm desk, glowing lamp, mug, and open drawer
-    const deskDist = Math.max(300, maxDim * 2.1);
+    // 'desk' view: Editorial 3/4 front-left perspective matching desk_3d_customizer_concept.jpg
+    // Shows open oak drawer + custom two-tone organizer in foreground, Voronoi lamp & stoneware mug on right desktop
+    const deskDist = Math.max(365, maxDim * 1.68);
     return {
       camPos: new THREE.Vector3(
+        -deskDist * 0.52,
         deskDist * 0.72,
-        deskDist * 0.78,
-        deskDist * 0.92 + drawerOffsetZ * 0.4
+        deskDist * 0.94 + drawerOffsetZ * 0.82
       ),
       lookAt: new THREE.Vector3(
-        -15,
-        dimensions.height * 0.4,
+        48,
+        dimensions.height * 0.98,
         drawerOffsetZ * 0.35
       ),
     };

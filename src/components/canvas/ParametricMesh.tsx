@@ -265,8 +265,8 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     };
   }, [fdmTextures]);
 
-  // Luxury 3D Printed Finish Shaders for the Organizer Tray
-  const shellMaterial = useMemo(() => {
+  // Luxury 3D Printed Finish Shaders for the Organizer Tray (Outer Shell, Contrasting Dividers & Acoustic Floor)
+  const { shellMaterial, dividerMaterial, floorMaterial } = useMemo(() => {
     const matId = (material.id || '').toLowerCase();
     const matName = (material.name || '').toLowerCase();
     const hex = (material.hexColor || '').toLowerCase();
@@ -275,89 +275,112 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
     const isObsidian =
       matId.includes('obsidian') || matName.includes('obsidian') || hex === '#18181b' || hex === '#1c1c1e';
     const isTerracotta =
-      matId.includes('terracotta') || matName.includes('terracotta') || matName.includes('clay') || hex === '#c46849';
+      matId.includes('terracotta') || matName.includes('terracotta') || matName.includes('clay') || hex === '#c46849' || hex === '#c86a4b';
     const isAlabaster =
       matId.includes('white') ||
       matId.includes('alabaster') ||
+      matId.includes('stone') ||
       matName.includes('white') ||
       matName.includes('alabaster') ||
+      matName.includes('stone') ||
       hex === '#f4f4f5' ||
       hex === '#f8f6f0' ||
-      hex === '#ece5db';
+      hex === '#ece5db' ||
+      hex === '#d6cec2';
     const isSage =
       matId.includes('sage') ||
       matId.includes('olive') ||
       matName.includes('sage') ||
       matName.includes('olive') ||
       hex === '#5c6d5d' ||
-      hex === '#4a6353';
+      hex === '#4a6353' ||
+      hex === '#4a5d4e';
 
     let baseColor = material.hexColor;
-    let roughness = material.roughness ?? 0.82;
-    let metalness = 0.04;
-    let clearcoat = 0.0;
-    let clearcoatRoughness = 0.4;
-    let transmission = 0.0;
-    let thickness = 0.0;
-    let ior = 1.54;
-    let attenuationColor: THREE.Color | undefined;
-    let attenuationDistance: number | undefined;
-    let bumpScale = 0.05;
+    let dividerHex = '#B86B4B'; // Signature warm terracotta/walnut divider accent (as in concept render)
+    let floorHex = '#24272D';   // Tactile dark charcoal compartment floor
+    let roughness = material.roughness ?? 0.72;
+    let metalness = 0.06;
+    let clearcoat = 0.08;
+    let clearcoatRoughness = 0.38;
+    let bumpScale = 0.045;
 
     if (isObsidian) {
-      // Matte Obsidian Black: roughness 0.62, subtle graphite sheen
-      baseColor = '#18181b';
-      roughness = 0.62;
-      metalness = 0.16; // subtle graphite sheen specular reflection
-      clearcoat = 0.12;
-      clearcoatRoughness = 0.38;
-      bumpScale = 0.048;
-    } else if (isTerracotta) {
-      // Terracotta Clay: warm matte organic earthenware
-      baseColor = '#c46849';
-      roughness = 0.88; // rich matte earthenware
-      metalness = 0.02;
-      clearcoat = 0.0;
-      bumpScale = 0.065;
-    } else if (isAlabaster) {
-      // Studio White / Alabaster: clean translucent subsurface scattering look
-      baseColor = '#f8f6f0';
-      roughness = 0.50;
-      transmission = 0.12; // soft optical translucency
-      thickness = 2.4;
-      ior = 1.48;
-      attenuationColor = new THREE.Color('#fff7eb');
-      attenuationDistance = 5.0;
-      clearcoat = 0.08;
+      // Matte Obsidian Black outer shell + Warm Terracotta/Walnut chamfered dividers + Slate acoustic floor
+      baseColor = '#18191C';
+      dividerHex = '#BA6847';
+      floorHex = '#23262C';
+      roughness = 0.58;
+      metalness = 0.14;
+      clearcoat = 0.14;
       clearcoatRoughness = 0.35;
-      metalness = 0.01;
       bumpScale = 0.042;
-    } else if (isSage) {
-      // Sage Green / Olive: contemporary Scandinavian muted hue
-      baseColor = '#5c6d5d';
-      roughness = 0.74;
-      metalness = 0.03;
-      clearcoat = 0.0;
+    } else if (isTerracotta) {
+      // Terracotta Clay outer shell + Warm Obsidian dividers + Deep Earth floor
+      baseColor = '#C46849';
+      dividerHex = '#272524';
+      floorHex = '#2E2826';
+      roughness = 0.76;
+      metalness = 0.04;
+      clearcoat = 0.06;
       bumpScale = 0.055;
+    } else if (isAlabaster) {
+      // Warm Stone / Alabaster outer shell + Warm Walnut/Terracotta dividers + Charcoal felt floor
+      baseColor = hex === '#d6cec2' ? '#D6CEC2' : '#F4F1EA';
+      dividerHex = '#9E5E42';
+      floorHex = '#2B2D31';
+      roughness = 0.52;
+      metalness = 0.03;
+      clearcoat = 0.10;
+      clearcoatRoughness = 0.32;
+      bumpScale = 0.038;
+    } else if (isSage) {
+      // Forest Sage outer shell + Warm Natural Oak/Terracotta dividers + Dark Slate floor
+      baseColor = '#4E6151';
+      dividerHex = '#C27A58';
+      floorHex = '#232925';
+      roughness = 0.68;
+      metalness = 0.05;
+      clearcoat = 0.08;
+      bumpScale = 0.048;
     }
 
-    return new THREE.MeshPhysicalMaterial({
+    const shell = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(baseColor),
-      roughness: roughness,
-      metalness: metalness,
-      clearcoat: clearcoat,
-      clearcoatRoughness: clearcoatRoughness,
-      transmission: transmission,
-      thickness: thickness,
-      ior: ior,
-      attenuationColor: attenuationColor,
-      attenuationDistance: attenuationDistance,
+      roughness,
+      metalness,
+      clearcoat,
+      clearcoatRoughness,
       bumpMap: fdmTextures?.bumpMap || null,
-      bumpScale: bumpScale,
+      bumpScale,
       roughnessMap: fdmTextures?.roughnessMap || null,
-      wireframe: wireframe,
+      wireframe,
       shadowSide: THREE.DoubleSide,
     });
+
+    const divider = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(dividerHex),
+      roughness: 0.56,
+      metalness: 0.08,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.35,
+      bumpMap: fdmTextures?.bumpMap || null,
+      bumpScale: 0.035,
+      roughnessMap: fdmTextures?.roughnessMap || null,
+      wireframe,
+      shadowSide: THREE.DoubleSide,
+    });
+
+    const floor = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(floorHex),
+      roughness: 0.92,
+      metalness: 0.02,
+      bumpMap: fdmTextures?.bumpMap || null,
+      bumpScale: 0.025,
+      wireframe,
+    });
+
+    return { shellMaterial: shell, dividerMaterial: divider, floorMaterial: floor };
   }, [material, wireframe, fdmTextures]);
 
   // Translucent Resin Material (MeshPhysicalMaterial with optical transmission & clearcoat)
@@ -588,7 +611,7 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
         <mesh
           name={floorBaseName}
           geometry={floorGeometry}
-          material={shellMaterial}
+          material={floorMaterial}
           castShadow
           receiveShadow
         />
@@ -610,7 +633,7 @@ export const ParametricMesh: React.FC<ParametricMeshProps> = ({
             key={`divider-${idx}`}
             name={`Divider-${idx}`}
             geometry={geom}
-            material={shellMaterial}
+            material={dividerMaterial}
             castShadow
             receiveShadow
           />

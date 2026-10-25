@@ -308,7 +308,6 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
     setMaterial,
     resetDefaults,
     setEngravedText,
-    setExplodedOffset,
   } = useCustomizerStore();
 
   const constraints = currentProduct.parametricConstraints || {
@@ -333,8 +332,6 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
   const handleToggleDrawerSlide = () => {
     const nextOpen = !isDrawerOpen;
     toggleDrawerOpen();
-    // When drawer slides open, offset exploded dividers/tray by 32mm in 3D scene
-    setExplodedOffset(nextOpen ? 32 : 0);
     playDrawerSlideSound(nextOpen);
   };
 
@@ -748,7 +745,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
               </div>
 
               <DimensionSlider
-                label="Length (Front to Back)"
+                label="Width (Left to Right)"
                 value={dimensions.length}
                 min={constraints.minLengthMm}
                 max={constraints.maxLengthMm}
@@ -756,11 +753,11 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
                 unit="mm"
                 secondaryDisplay={`${lenFormatted.fractionalInches} (${lenFormatted.decimalInches})`}
                 onChange={(val) => setDimension('length', val)}
-                description={`Custom fit: ${lenFormatted.combinedDetailed} for drawer depth`}
+                description={`Custom fit: ${lenFormatted.combinedDetailed} drawer width`}
               />
 
               <DimensionSlider
-                label="Width (Left to Right)"
+                label="Depth (Front to Back)"
                 value={dimensions.width}
                 min={constraints.minWidthMm}
                 max={constraints.maxWidthMm}
@@ -768,7 +765,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
                 unit="mm"
                 secondaryDisplay={`${widFormatted.fractionalInches} (${widFormatted.decimalInches})`}
                 onChange={(val) => setDimension('width', val)}
-                description={`Custom fit: ${widFormatted.combinedDetailed} for drawer width`}
+                description={`Custom fit: ${widFormatted.combinedDetailed} drawer depth`}
               />
 
               <DimensionSlider

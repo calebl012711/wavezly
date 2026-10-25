@@ -9,7 +9,6 @@ import React, { useState, useEffect } from 'react';
 import { useCustomizerStore } from '../store/useCustomizerStore';
 import { useCartStore } from '../store/useCartStore';
 import { OrganizerCanvas } from '../components/canvas/OrganizerCanvas';
-import { TelemetryHUD } from '../components/customizer/TelemetryHUD';
 import { CustomizerDrawer } from '../components/customizer/CustomizerDrawer';
 import { ConsumerSizingWizard } from '../components/customizer/ConsumerSizingWizard';
 import { ARViewModal } from '../components/customizer/ARViewModal';
@@ -25,7 +24,6 @@ import {
   SlidersHorizontal,
   ChevronUp,
   ChevronDown,
-  Eye,
   Volume2,
   VolumeX,
 } from 'lucide-react';
@@ -334,21 +332,7 @@ export const CustomizerPage: React.FC<CustomizerPageProps> = ({ onNavigateHome }
         {/* Left / Full: 3D Interactive Viewport */}
         <div className="lg:col-span-8 relative w-full">
           <ErrorBoundary fallbackTitle="Wavezly 3D Studio Reset">
-            <TelemetryHUD dimensions={dimensions} telemetry={telemetry} />
-
-            <div className="h-[44vh] min-h-[330px] xs:h-[48vh] sm:h-[500px] lg:h-[580px] w-full rounded-2xl overflow-hidden shadow-xs border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 relative">
-              {/* Floating AR View Pill Button */}
-              <button
-                type="button"
-                onClick={() => setIsARModalOpen(true)}
-                className="absolute top-3 right-3 z-20 min-h-[38px] px-3.5 py-1.5 rounded-full bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border border-zinc-200/90 dark:border-zinc-700 text-zinc-900 dark:text-white text-xs font-bold shadow-md hover:bg-white dark:hover:bg-zinc-800 transition flex items-center gap-1.5 cursor-pointer active:scale-95 group"
-                title="View in your physical desk drawer with AR"
-              >
-                <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
-                <Eye className="w-3.5 h-3.5 text-[#FF6B00]" />
-                <span>AR View in Drawer</span>
-              </button>
-
+            <div className="h-[46vh] min-h-[360px] xs:h-[50vh] sm:h-[520px] lg:h-[600px] w-full rounded-2xl overflow-hidden shadow-xs border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-950 relative">
               <OrganizerCanvas
                 dimensions={dimensions}
                 material={selectedMaterial}
@@ -361,13 +345,15 @@ export const CustomizerPage: React.FC<CustomizerPageProps> = ({ onNavigateHome }
                 sliceHeight={sliceHeight}
                 explodedOffset={explodedOffset}
                 lightingPreset={lightingPreset}
+                onRequestARModal={() => setIsARModalOpen(true)}
+                priceUsd={displayPriceUsd}
               />
             </div>
           </ErrorBoundary>
 
           {/* Touch/Mouse Guidelines */}
           <div className="mt-2 flex items-center justify-between text-xs text-zinc-400 px-1">
-            <span>Tap "Touch to Rotate 3D" to orbit • Page scrolls freely</span>
+            <span>Drag to orbit 360° • Scroll to zoom • Click drawer handle to slide</span>
             <span className="hidden sm:inline text-emerald-600 font-semibold">
               Guaranteed Snug Fit • Free Remakes
             </span>

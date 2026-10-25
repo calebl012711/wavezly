@@ -49,6 +49,8 @@ export interface RealisticDeskModelProps {
   centerOnDrawer?: boolean;
   /** When true, omits internal left drawer so an external SlidingDrawerUnit can be placed */
   hideLeftDrawer?: boolean;
+  /** External SlidingDrawerUnit depth (mm) so the desk front edge aligns flush with the closed drawer */
+  activeDrawerDepth?: number;
   /** Custom 3D meshes (e.g. Wavezly Parametric Organizer) mounted inside the left pull-out drawer */
   children?: React.ReactNode;
 }
@@ -348,6 +350,7 @@ export const RealisticDeskModel: React.FC<RealisticDeskModelProps> = ({
   showShadows = true,
   centerOnDrawer = false,
   hideLeftDrawer = false,
+  activeDrawerDepth,
   children,
 }) => {
   const rootGroupRef = useRef<THREE.Group>(null);
@@ -489,25 +492,28 @@ export const RealisticDeskModel: React.FC<RealisticDeskModelProps> = ({
   }, [desktopGeometry, drawerFaceGeometry]);
 
   // 3. Proportions & Coordinates
-  const housingWidth = deskWidth - 100;
-  const housingDepth = deskDepth - 100;
+  const housingWidth = deskWidth - 64;
+  const housingDepth = deskDepth - 36;
   const housingY = deskHeight - topThickness - drawerHousingHeight / 2;
-  const housingFrontZ = housingDepth / 2 - 20;
+  const housingFrontZ = housingDepth / 2 - 4;
 
   const leftBayX = -housingWidth / 4;
   const rightBayX = housingWidth / 4;
   const drawerBayWidth = housingWidth / 2 - 24;
-  const drawerBoxDepth = housingDepth - 30;
+  const drawerBoxDepth = housingDepth - 24;
   const drawerBoxHeight = drawerHousingHeight - 20;
 
   // Slide displacement along +Z (forward towards camera/user)
-  const leftSlideOffset = drawerBoxDepth * drawerOpenRatio;
+  const leftSlideOffset = hideLeftDrawer ? 0 : drawerBoxDepth * drawerOpenRatio;
   const rightSlideOffset = drawerBoxDepth * rightDrawerOpenRatio;
 
-  // Calculate drawer interior center in world coordinates
+  // Calculate drawer interior center in world coordinates:
+  // When centerOnDrawer is true, [0, 0, 0] is the CLOSED left drawer interior floor center,
+  // and the closed drawer front face (+effectiveDrawerDepth / 2) aligns flush with housingFrontZ.
+  const effectiveDrawerDepth = activeDrawerDepth ?? drawerBoxDepth;
   const drawerInteriorWorldX = leftBayX;
-  const drawerInteriorWorldY = deskHeight - topThickness - drawerHousingHeight + DRAWER_INTERIOR_BOUNDS.floorThickness;
-  const drawerInteriorWorldZ = housingFrontZ + leftSlideOffset - drawerBoxDepth / 2;
+  const drawerInteriorWorldY = deskHeight - topThickness - drawerHousingHeight + 26;
+  const drawerInteriorWorldZ = housingFrontZ - effectiveDrawerDepth / 2;
 
   // Center offset if centerOnDrawer is requested
   const rootOffset: [number, number, number] = centerOnDrawer

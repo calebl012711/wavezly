@@ -826,8 +826,6 @@ export const OrganizerGearLoadout: React.FC<OrganizerGearLoadoutProps> = ({
   dimensions,
   visible = true,
 }) => {
-  if (!visible) return null;
-
   const {
     length, // X-axis
     width,  // Z-axis
@@ -839,13 +837,13 @@ export const OrganizerGearLoadout: React.FC<OrganizerGearLoadoutProps> = ({
   } = dimensions;
 
   // Compartment internal dimensions and spacing
-  const innerLength = length - 2 * wallThickness;
-  const innerWidth = width - 2 * wallThickness;
-  const cellLength = (innerLength - (cols - 1) * wallThickness) / cols;
-  const cellWidth = (innerWidth - (rows - 1) * wallThickness) / rows;
+  const innerLength = Math.max(10, length - 2 * wallThickness);
+  const innerWidth = Math.max(10, width - 2 * wallThickness);
+  const cellLength = Math.max(8, (innerLength - (cols - 1) * wallThickness) / cols);
+  const cellWidth = Math.max(8, (innerWidth - (rows - 1) * wallThickness) / rows);
 
   // Floor level in local coordinate space: objects sit directly on tray floor
-  const floorY = bottomThickness;
+  const floorY = bottomThickness + 0.2;
 
   // Compute all individual compartment slots
   const slots = useMemo(() => {
@@ -878,6 +876,8 @@ export const OrganizerGearLoadout: React.FC<OrganizerGearLoadoutProps> = ({
     }
     return list;
   }, [rows, cols, innerLength, innerWidth, cellLength, cellWidth, wallThickness]);
+
+  if (!visible) return null;
 
   // Compute adaptive uniform scales to ensure items never clip through divider walls
   const penBaseLen = 130;

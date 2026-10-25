@@ -27,7 +27,7 @@ import { ParametricOrganizerDimensions, MaterialOption } from '../../types';
 import { LightingPreset, useCustomizerStore } from '../../store/useCustomizerStore';
 import { playDrawerSlideSound, playSnapPresetSound } from '../../lib/soundEffects';
 import { LightingPresetSwitcher } from './StudioEnvironment';
-import { Eye, ZoomIn, Rotate3d, Lock, Sparkles } from 'lucide-react';
+import { Eye, ZoomIn, Rotate3d, Lock, Sparkles, QrCode, Box } from 'lucide-react';
 
 export interface OrganizerCanvasProps {
   dimensions: ParametricOrganizerDimensions;
@@ -50,6 +50,8 @@ export interface OrganizerCanvasProps {
   onToggleDrawer?: () => void;
   onViewModeChange?: (mode: CameraViewMode) => void;
   onToggleGearLoadout?: () => void;
+  onRequestARModal?: () => void;
+  priceUsd?: number;
 }
 
 /**
@@ -121,6 +123,8 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
   onToggleDrawer,
   onViewModeChange,
   onToggleGearLoadout,
+  onRequestARModal,
+  priceUsd,
 }) => {
   const controlsRef = useRef<OrbitControlsImpl>(null);
   const [isTouchActive, setIsTouchActive] = useState(false);
@@ -184,13 +188,25 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
     playSnapPresetSound();
   }, [onToggleGearLoadout, storeToggleGearLoadout]);
 
-  const slideDistance = dimensions.width * 0.82 + 45;
-  const [drawerSlideZ, setDrawerSlideZ] = useState(drawerOpen ? slideDistance : 0);
+  // Precision-locked drawer & desk geometry coordinates (in mm)
+  const drawerWidth = dimensions.length + 12;
+  const drawerDepth = dimensions.width + 16;
+  const drawerHeight = dimensions.height + 8;
+  const drawerWallThickness = 12;
+  const drawerBottomThickness = 8;
+  const totalBoxWidth = drawerWidth + 2 * drawerWallThickness;
+  const slideDistance = Math.round(drawerDepth * 0.86);
+  const targetSlideZ = drawerOpen ? slideDistance : 0;
 
-  // Keep slide offset synced when drawer state changes externally
-  useEffect(() => {
-    setDrawerSlideZ(drawerOpen ? slideDistance : 0);
-  }, [drawerOpen, slideDistance]);
+  // Desk carcass proportions locked to the drawer cavity
+  const topThickness = 25;
+  const drawerHousingHeight = drawerHeight + 34;
+  const deskWidth = Math.max(760, 2 * (totalBoxWidth + 32) + 80);
+  const deskDepth = Math.max(420, drawerDepth + 140);
+  // Top surface of the solid white-oak desktop slab in world coordinates
+  const deskTopSurfaceY = drawerHeight + 8 + topThickness;
+  // Center Z of the desktop slab in world coordinates (since front edge is at +drawerDepth/2 + 22)
+  const deskCenterZ = -(deskDepth / 2 - 22 - drawerDepth / 2);
 
   const toggleDrawer = useCallback(() => {
     const nextState = !drawerOpen;
@@ -218,22 +234,31 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
     [onViewModeChange, storeSetViewMode]
   );
 
-  const handleSlideChange = useCallback((offsetZ: number) => {
-    setDrawerSlideZ(offsetZ);
-  }, []);
-
   // Dynamic shadow scale based on longest dimension & desk footprint
   const maxDim = Math.max(dimensions.length, dimensions.width);
   const shadowScale = Math.max(420, maxDim * 2.8);
 
+  const inchesLen = (dimensions.length / 25.4).toFixed(1);
+  const inchesWid = (dimensions.width / 25.4).toFixed(1);
+  const inchesHgt = (dimensions.height / 25.4).toFixed(1);
+
   return (
-    <div className="relative w-full h-full min-h-[340px] xs:min-h-[380px] sm:min-h-[460px] bg-gradient-to-b from-[#FFFFFF] via-[#F8F9FA] to-[#EFF1F5] dark:from-[#111317] dark:to-[#090A0D] rounded-2xl overflow-hidden border border-slate-200/90 dark:border-zinc-800 select-none">
-      {/* Precision Grid Coordinates Overlay (Top-Left) */}
-      <div className="absolute top-3 left-3 sm:left-4 z-10 pointer-events-none flex items-center space-x-2 font-sans text-xs text-slate-500 dark:text-zinc-400 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-slate-200/60 dark:border-zinc-800 shadow-xs hidden xs:flex">
-        <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
-        <span className="font-semibold text-[#0F172A] dark:text-zinc-200">
-          3D Studio
+    <div className="relative w-full h-full min-h-[340px] xs:min-h-[380px] sm:min-h-[460px] bg-gradient-to-b from-[#FAF7F2] via-[#F2ECE1] to-[#E6DEC8] dark:from-[#161514] dark:via-[#11100F] dark:to-[#0B0A09] rounded-2xl overflow-hidden border border-stone-200/90 dark:border-zinc-800 select-none">
+      {/* Unified Top-Left Live Spec & Price Pill */}
+      <div className="absolute top-3 left-3 sm:left-4 z-20 pointer-events-none flex items-center gap-2 font-sans text-xs bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-stone-200/80 dark:border-zinc-800 shadow-xs">
+        <Box className="w-3.5 h-3.5 text-[#FF6B00] shrink-0" />
+        <span className="font-bold text-[#0F172A] dark:text-zinc-100">
+          {dimensions.length}×{dimensions.width}×{dimensions.height} mm
         </span>
+        <span className="text-zinc-400 hidden md:inline font-normal">
+          ({inchesLen}″ × {inchesWid}″ × {inchesHgt}″)
+        </span>
+        {priceUsd !== undefined && (
+          <>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <span className="font-extrabold text-[#FF6B00]">${priceUsd.toFixed(2)}</span>
+          </>
+        )}
       </div>
 
       {/* Cinematic Lighting Atmosphere Switcher (Bottom-Left) */}
@@ -266,74 +291,16 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
         </div>
       )}
 
-      {/* Interactive In-Canvas Viewport Pills (Top-Right) */}
+      {/* Unified Top-Right Interactive In-Canvas Viewport Toolbar */}
       {showDrawerControls && (
-        <div className="absolute top-3 right-3 sm:right-4 z-20 flex flex-wrap items-center gap-1.5 sm:gap-2 pointer-events-auto max-w-[calc(100%-1rem)]">
-          {/* 360 Spin Toggle */}
-          {onToggleAutoRotate && (
-            <button
-              type="button"
-              onClick={onToggleAutoRotate}
-              title={autoRotate ? 'Pause 360° spin' : 'Auto-spin 360°'}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[38px] ${
-                autoRotate
-                  ? 'bg-orange-50 text-[#FF6B00] border-orange-200 shadow-xs'
-                  : 'bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 border-zinc-200/80 dark:border-zinc-700/80 hover:bg-white'
-              }`}
-            >
-              <span>{autoRotate ? 'Spinning' : '360°'}</span>
-            </button>
-          )}
-
-          {/* Pill 1: Open / Close Drawer Button */}
-          {enableDrawer && (
-            <button
-              type="button"
-              onClick={toggleDrawer}
-              title={drawerOpen ? 'Click to close drawer' : 'Click to open drawer'}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[38px] ${
-                drawerOpen
-                  ? 'bg-white/95 dark:bg-zinc-900/95 text-zinc-900 dark:text-zinc-100 border-zinc-200/90 dark:border-zinc-700/90 hover:bg-zinc-50'
-                  : 'bg-zinc-900/90 dark:bg-zinc-100/95 text-white dark:text-zinc-900 border-zinc-800 hover:bg-zinc-800'
-              }`}
-            >
-              <DrawerSlideIcon
-                isOpen={drawerOpen}
-                className={`w-3.5 h-3.5 ${
-                  drawerOpen ? 'text-[#FF6B00]' : 'text-zinc-300 dark:text-zinc-600'
-                }`}
-              />
-              <span className="hidden xs:inline">{drawerOpen ? 'Close Drawer' : 'Open Drawer'}</span>
-              <span
-                className={`w-1.5 h-1.5 rounded-full ${
-                  drawerOpen ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'
-                }`}
-              />
-            </button>
-          )}
-
-          {/* Pill 2: Staged EDC Gear Loadout Toggle */}
-          <button
-            type="button"
-            onClick={toggleGearLoadout}
-            title={showGearLoadout ? 'Hide staged EDC gear items' : 'Stage EDC gear items in tray compartments'}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[38px] ${
-              showGearLoadout
-                ? 'bg-[#FF6B00]/10 dark:bg-[#FF6B00]/20 text-[#FF6B00] border-[#FF6B00]/40 shadow-xs'
-                : 'bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 border-zinc-200/80 dark:border-zinc-700/80 hover:bg-white'
-            }`}
-          >
-            <Sparkles className={`w-3.5 h-3.5 ${showGearLoadout ? 'text-[#FF6B00]' : 'text-zinc-400'}`} />
-            <span>✦ Staged EDC Gear ({showGearLoadout ? 'On' : 'Off'})</span>
-          </button>
-
-          {/* Pill 3: View Mode Switcher (Desk Environment vs Close-up Product) */}
-          <div className="flex items-center p-0.5 rounded-full bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-700/80 shadow-xs">
+        <div className="absolute top-3 right-3 sm:right-4 z-20 flex flex-wrap items-center justify-end gap-1.5 pointer-events-auto max-w-[calc(100%-10rem)] sm:max-w-none">
+          {/* View Mode Switcher (Desk Environment vs Close-up Product) */}
+          <div className="flex items-center p-0.5 rounded-full bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border border-stone-200/90 dark:border-zinc-700/90 shadow-xs">
             <button
               type="button"
               onClick={() => handleViewModeChange('desk')}
-              title="Desk Environment View (45° warm desk perspective)"
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer min-h-[36px] ${
+              title="Scandinavian Desk View (shows oak desk, open drawer, lamp & mug)"
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer min-h-[34px] ${
                 viewMode === 'desk'
                   ? 'bg-[#FF6B00] text-white shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white'
@@ -346,17 +313,89 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
             <button
               type="button"
               onClick={() => handleViewModeChange('closeup')}
-              title="Close-up Product View (360° millimeter inspection)"
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer min-h-[36px] ${
+              title="Close-up Tray View (360° macro inspection)"
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer min-h-[34px] ${
                 viewMode === 'closeup'
                   ? 'bg-[#FF6B00] text-white shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white'
               }`}
             >
               <ZoomIn className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Close-up View</span>
+              <span className="hidden sm:inline">Close-up</span>
             </button>
           </div>
+
+          {/* Open / Close Drawer Button */}
+          {enableDrawer && (
+            <button
+              type="button"
+              onClick={toggleDrawer}
+              title={drawerOpen ? 'Slide drawer closed' : 'Slide drawer open'}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[36px] ${
+                drawerOpen
+                  ? 'bg-white/95 dark:bg-zinc-900/95 text-zinc-900 dark:text-zinc-100 border-stone-200/90 dark:border-zinc-700/90 hover:bg-stone-50'
+                  : 'bg-zinc-900/95 dark:bg-zinc-100/95 text-white dark:text-zinc-900 border-zinc-800 hover:bg-zinc-800'
+              }`}
+            >
+              <DrawerSlideIcon
+                isOpen={drawerOpen}
+                className={`w-3.5 h-3.5 ${
+                  drawerOpen ? 'text-[#FF6B00]' : 'text-zinc-300 dark:text-zinc-600'
+                }`}
+              />
+              <span className="hidden xs:inline">{drawerOpen ? 'Slide Close' : 'Slide Open'}</span>
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  drawerOpen ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'
+                }`}
+              />
+            </button>
+          )}
+
+          {/* Staged EDC Gear Loadout Toggle */}
+          <button
+            type="button"
+            onClick={toggleGearLoadout}
+            title={showGearLoadout ? 'Hide staged EDC gear items' : 'Stage EDC gear items in tray compartments'}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[36px] ${
+              showGearLoadout
+                ? 'bg-white/95 dark:bg-zinc-900/95 text-[#FF6B00] border-[#FF6B00]/40 shadow-xs'
+                : 'bg-white/90 dark:bg-zinc-900/90 text-zinc-600 dark:text-zinc-300 border-stone-200/80 dark:border-zinc-700/80 hover:bg-white'
+            }`}
+          >
+            <Sparkles className={`w-3.5 h-3.5 ${showGearLoadout ? 'text-[#FF6B00]' : 'text-zinc-400'}`} />
+            <span className="hidden md:inline">EDC Gear: {showGearLoadout ? 'On' : 'Off'}</span>
+          </button>
+
+          {/* 360 Spin Toggle */}
+          {onToggleAutoRotate && (
+            <button
+              type="button"
+              onClick={onToggleAutoRotate}
+              title={autoRotate ? 'Pause 360° spin' : 'Auto-spin 360°'}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[36px] ${
+                autoRotate
+                  ? 'bg-orange-50 text-[#FF6B00] border-orange-300 shadow-xs'
+                  : 'bg-white/95 dark:bg-zinc-900/95 text-zinc-700 dark:text-zinc-300 border-stone-200/80 dark:border-zinc-700/80 hover:bg-white'
+              }`}
+            >
+              <Rotate3d className="w-3.5 h-3.5 text-[#FF6B00]" />
+              <span className="hidden lg:inline">{autoRotate ? 'Spinning' : '360°'}</span>
+            </button>
+          )}
+
+          {/* AR Quick Look Button */}
+          {onRequestARModal && (
+            <button
+              type="button"
+              onClick={onRequestARModal}
+              title="Preview in your physical drawer with AR Quick Look"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-md transition-all active:scale-95 cursor-pointer shadow-xs border min-h-[36px] bg-zinc-900/95 dark:bg-white/95 text-white dark:text-zinc-900 border-zinc-800 hover:bg-[#FF6B00] hover:border-[#FF6B00]"
+            >
+              <QrCode className="w-3.5 h-3.5 text-[#FF6B00]" />
+              <span className="hidden sm:inline">AR View</span>
+            </button>
+          )}
         </div>
       )}
 
@@ -375,13 +414,13 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
             antialias: true,
             alpha: true,
             toneMapping: THREE.ACESFilmicToneMapping,
-            toneMappingExposure: 1.1,
+            toneMappingExposure: 1.08,
             powerPreference: 'high-performance',
           }}
           camera={{
-            position: [180, 260, 360],
-            fov: 42,
-            near: 1,
+            position: [-165, 225, 365],
+            fov: 38,
+            near: 2,
             far: 2500,
           }}
         >
@@ -389,45 +428,54 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
             {/* 1. Photorealistic Studio Environment Lighting */}
             <StudioEnvironment shadowScale={shadowScale} preset={lightingPreset} />
 
-            {/* 2. Realistic Scandinavian Wood Desk Setup */}
-            <RealisticDeskModel
-              deskWidth={Math.max(840, dimensions.length * 2.2)}
-              deskDepth={Math.max(560, dimensions.width * 1.5)}
-              woodFinish="whiteOak"
-              centerOnDrawer={true}
-              hideLeftDrawer={true}
-              showAccessories={false}
-              showShadows={true}
-            />
+            {/* 2. Realistic Scandinavian White-Oak Desk (Visible in Desk View or when drawer is enabled) */}
+            {enableDrawer && (
+              <RealisticDeskModel
+                deskWidth={deskWidth}
+                deskDepth={deskDepth}
+                topThickness={topThickness}
+                drawerHousingHeight={drawerHousingHeight}
+                woodFinish="whiteOak"
+                centerOnDrawer={true}
+                hideLeftDrawer={true}
+                activeDrawerDepth={drawerDepth}
+                showAccessories={false}
+                showShadows={false}
+              />
+            )}
 
             {/* 3. Interactive Sliding Drawer Unit holding the Parametric Organizer Mesh */}
             {enableDrawer ? (
               <SlidingDrawerUnit
                 isOpen={drawerOpen}
                 onToggle={toggleDrawer}
-                onSlideChange={handleSlideChange}
-                drawerWidth={Math.max(dimensions.length + 24, 280)}
-                drawerDepth={Math.max(dimensions.width + 32, 320)}
-                drawerHeight={Math.max(dimensions.height + 16, 60)}
+                drawerWidth={drawerWidth}
+                drawerDepth={drawerDepth}
+                drawerHeight={drawerHeight}
+                wallThickness={drawerWallThickness}
+                bottomThickness={drawerBottomThickness}
                 slideDistance={slideDistance}
                 showDeskHousing={false}
                 finish="oak"
                 handleStyle="anodized_lip"
+                handleColor="#6E5B4B"
               >
-                <ParametricMesh
-                  dimensions={dimensions}
-                  material={material}
-                  resinInlay={resinInlay}
-                  wireframe={wireframe}
-                  engravedText={engravedText}
-                  sliceHeight={sliceHeight}
-                  explodedOffset={explodedOffset}
-                  onMeshReady={onMeshReady}
-                />
-                <OrganizerGearLoadout
-                  dimensions={dimensions}
-                  visible={showGearLoadout}
-                />
+                <group position={[0, 0.5, 0]}>
+                  <ParametricMesh
+                    dimensions={dimensions}
+                    material={material}
+                    resinInlay={resinInlay}
+                    wireframe={wireframe}
+                    engravedText={engravedText}
+                    sliceHeight={sliceHeight}
+                    explodedOffset={explodedOffset}
+                    onMeshReady={onMeshReady}
+                  />
+                  <OrganizerGearLoadout
+                    dimensions={dimensions}
+                    visible={showGearLoadout}
+                  />
+                </group>
               </SlidingDrawerUnit>
             ) : (
               <>
@@ -448,61 +496,59 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
               </>
             )}
 
-            {/* 4. Desk Lifestyle Props (Glowing Voronoi Lamp, Ceramic Mug, Notebook, Pen) */}
-            <DeskLifestyleProps
-              organizerDimensions={dimensions}
-              showLamp={true}
-              showMug={true}
-              showNotebook={true}
-              showPen={true}
-              showDeskMat={true}
-              showEarbuds={true}
-              lampIntensity={
-                lightingPreset === 'evening'
-                  ? 5.5
-                  : lightingPreset === 'warm'
-                  ? 4.6
-                  : lightingPreset === 'cyberpunk'
-                  ? 2.4
-                  : 3.8
-              }
-              lampLightColor={
-                lightingPreset === 'evening'
-                  ? '#FFA858'
-                  : lightingPreset === 'warm'
-                  ? '#F59E0B'
-                  : lightingPreset === 'cyberpunk'
-                  ? '#FB923C'
-                  : '#FFA858'
-              }
-              visible={true}
-            />
+            {/* 4. Desk Lifestyle Props Sitting Flush ON TOP of the Solid White-Oak Desktop Surface */}
+            {enableDrawer && (
+              <DeskLifestyleProps
+                position={[0, deskTopSurfaceY, deskCenterZ * 0.65]}
+                organizerDimensions={dimensions}
+                showLamp={true}
+                showMug={true}
+                showNotebook={true}
+                showPen={true}
+                showDeskMat={true}
+                showEarbuds={true}
+                lampIntensity={
+                  lightingPreset === 'evening'
+                    ? 6.0
+                    : lightingPreset === 'warm'
+                    ? 5.0
+                    : lightingPreset === 'cyberpunk'
+                    ? 2.8
+                    : 4.5
+                }
+                lampLightColor={
+                  lightingPreset === 'evening'
+                    ? '#FFA858'
+                    : lightingPreset === 'warm'
+                    ? '#F59E0B'
+                    : lightingPreset === 'cyberpunk'
+                    ? '#FB923C'
+                    : '#FFA84C'
+                }
+                visible={true}
+              />
+            )}
 
             {/* 5. Smooth Camera Controller */}
             <CameraController
               viewMode={viewMode}
-              drawerOffsetZ={enableDrawer ? drawerSlideZ : 0}
+              drawerOffsetZ={enableDrawer ? targetSlideZ : 0}
               dimensions={dimensions}
               controlsRef={controlsRef}
             />
 
-            {/* 6. OrbitControls for 360-degree rotation */}
+            {/* 6. OrbitControls for 360-degree rotation (target managed by CameraController) */}
             <OrbitControls
               ref={controlsRef}
               enabled={!isTouchDevice || isTouchActive}
               enableDamping
-              dampingFactor={0.06}
-              minDistance={80}
-              maxDistance={700}
-              maxPolarAngle={Math.PI / 2.05}
-              minPolarAngle={0.05}
+              dampingFactor={0.07}
+              minDistance={90}
+              maxDistance={850}
+              maxPolarAngle={Math.PI / 2.04}
+              minPolarAngle={0.08}
               autoRotate={autoRotate}
               autoRotateSpeed={1.2}
-              target={[
-                0,
-                dimensions.height / 2,
-                enableDrawer && drawerOpen ? drawerSlideZ * 0.35 : 0,
-              ]}
               touches={{
                 ONE: THREE.TOUCH.ROTATE,
                 TWO: THREE.TOUCH.DOLLY_PAN,
@@ -513,11 +559,11 @@ export const OrganizerCanvas: React.FC<OrganizerCanvasProps> = ({
       </div>
 
       {/* Viewport Scale & Interaction Guidance (Bottom) */}
-      <div className="absolute bottom-3 left-4 right-4 z-10 pointer-events-none flex items-center justify-between font-sans text-xs text-zinc-400 dark:text-zinc-500">
+      <div className="absolute bottom-3 left-4 right-4 z-10 pointer-events-none flex items-center justify-between font-sans text-[11px] text-stone-500 dark:text-zinc-400">
         <span className="hidden sm:inline">
-          Click 3D drawer handle or use top button to slide open/close • 45° Desk & 360° Macro Views
+          Click drawer handle to slide • Click lamp to toggle glow • Drag to orbit 360°
         </span>
-        <span className="ml-auto">1:1 Millimeter Scale • Guaranteed Fit</span>
+        <span className="ml-auto font-medium">1:1 Millimeter Scale • Guaranteed Fit</span>
       </div>
     </div>
   );

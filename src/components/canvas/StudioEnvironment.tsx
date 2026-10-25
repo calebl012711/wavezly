@@ -416,55 +416,47 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* 1. MORNING SUN */}
       {normalizedPreset === 'morning' && (
         <>
-          <ambientLight intensity={0.6} color="#E8F0FE" />
+          <ambientLight intensity={0.68} color="#FFF8F0" />
           <directionalLight
-            position={[130, 220, 140]}
-            intensity={1.8}
-            color="#FFF6EC"
+            position={[-180, 260, 220]}
+            intensity={2.1}
+            color="#FFF4E4"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
           <directionalLight
-            position={[-150, 120, -100]}
-            intensity={0.4}
+            position={[180, 160, -120]}
+            intensity={0.55}
             color="#E8F0FE"
           />
           <directionalLight
-            position={[0, -60, 60]}
-            intensity={0.25}
-            color="#FEF3C7"
+            position={[0, 120, 240]}
+            intensity={0.45}
+            color="#FFFDF9"
           />
           <spotLight
-            position={[20, 260, 20]}
-            intensity={0.6}
-            angle={0.65}
-            penumbra={0.8}
+            position={[20, 280, 80]}
+            intensity={0.75}
+            angle={0.75}
+            penumbra={0.85}
             color="#FFF6EC"
           />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.45}
-            scale={shadowScale}
-            blur={2.0}
-            far={80}
-            resolution={1024}
-            color="#292524"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.45}
+            position={[0, -240, 0]}
+            opacity={0.35}
             scale={shadowScale * 1.8}
-            blur={2.0}
-            far={120}
-            resolution={1024}
+            blur={2.4}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#1C1917"
           />
         </>
@@ -473,50 +465,42 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* 2. MINIMALIST STUDIO */}
       {normalizedPreset === 'studio' && (
         <>
-          <ambientLight intensity={0.65} color="#F8FAFC" />
+          <ambientLight intensity={0.72} color="#F8FAFC" />
           <directionalLight
-            position={[110, 240, 130]}
-            intensity={1.75}
+            position={[120, 260, 180]}
+            intensity={1.85}
             color="#FFFFFF"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
           <directionalLight
-            position={[-140, 140, 80]}
-            intensity={0.6}
+            position={[-160, 160, 120]}
+            intensity={0.65}
             color="#F1F5F9"
           />
           <spotLight
             position={[0, 280, -180]}
             intensity={0.85}
-            angle={0.5}
-            penumbra={0.7}
+            angle={0.55}
+            penumbra={0.75}
             color="#FFFFFF"
           />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.42}
-            scale={shadowScale}
-            blur={2.2}
-            far={80}
-            resolution={1024}
-            color="#1E293B"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.42}
+            position={[0, -240, 0]}
+            opacity={0.32}
             scale={shadowScale * 1.8}
-            blur={2.2}
-            far={120}
-            resolution={1024}
+            blur={2.4}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#0F172A"
           />
         </>
@@ -525,68 +509,49 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* 3. COZY EVENING */}
       {normalizedPreset === 'evening' && (
         <>
-          <ambientLight intensity={0.38} color="#1E293B" />
+          <ambientLight intensity={0.45} color="#1E293B" />
           <directionalLight
-            position={[90, 180, 100]}
-            intensity={1.5}
+            position={[90, 210, 160]}
+            intensity={1.55}
             color="#FED7AA"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
-          {/* Cozy warm desk lamp spot light creating radiant task pool */}
           <spotLight
-            position={[75, 160, 65]}
-            intensity={2.8}
-            angle={0.75}
-            penumbra={0.7}
+            position={[75, 190, 85]}
+            intensity={2.6}
+            angle={0.85}
+            penumbra={0.75}
             color="#FED7AA"
-            castShadow
-            shadow-mapSize-width={2048}
-            shadow-mapSize-height={2048}
-            shadow-bias={-0.0001}
           />
-          {/* Warm incandescent lamp bulb omni-glow */}
           <pointLight
-            position={[75, 150, 65]}
+            position={[75, 160, 65]}
             intensity={1.8}
             color="#F59E0B"
-            distance={450}
+            distance={520}
             decay={2}
           />
           <directionalLight
-            position={[-180, 110, -130]}
-            intensity={0.45}
+            position={[-180, 120, -130]}
+            intensity={0.5}
             color="#38BDF8"
           />
-          <directionalLight
-            position={[0, 100, 100]}
-            intensity={0.2}
-            color="#E8F0FE"
-          />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.48}
-            scale={shadowScale}
-            blur={2.0}
-            far={80}
-            resolution={1024}
-            color="#1C1917"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.48}
+            position={[0, -240, 0]}
+            opacity={0.42}
             scale={shadowScale * 1.8}
-            blur={2.0}
-            far={120}
-            resolution={1024}
+            blur={2.4}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#0C0A09"
           />
         </>
@@ -595,56 +560,42 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* 4. CALIFORNIA DAYLIGHT */}
       {normalizedPreset === 'daylight' && (
         <>
-          <ambientLight intensity={0.72} color="#E0F2FE" />
-          {/* Steep midday sun with 6000K crisp white highlights */}
+          <ambientLight intensity={0.75} color="#E0F2FE" />
           <directionalLight
-            position={[90, 270, 80]}
-            intensity={2.3}
+            position={[110, 280, 150]}
+            intensity={2.2}
             color="#F0F9FF"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
           <directionalLight
             position={[-160, 160, -90]}
-            intensity={0.55}
+            intensity={0.6}
             color="#BAE6FD"
           />
           <spotLight
             position={[40, 290, -120]}
-            intensity={1.1}
-            angle={0.45}
-            penumbra={0.5}
-            color="#FFFFFF"
-          />
-          <directionalLight
-            position={[0, -50, 50]}
-            intensity={0.28}
+            intensity={1.0}
+            angle={0.5}
+            penumbra={0.6}
             color="#FFFFFF"
           />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.52}
-            scale={shadowScale}
-            blur={1.4}
-            far={80}
-            resolution={1024}
-            color="#0F172A"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.52}
+            position={[0, -240, 0]}
+            opacity={0.38}
             scale={shadowScale * 1.8}
-            blur={1.4}
-            far={120}
-            resolution={1024}
+            blur={2.0}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#090D16"
           />
         </>
@@ -654,60 +605,39 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {normalizedPreset === 'laboratory' && (
         <>
           <ambientLight intensity={0.82} color="#F8FAFC" />
-          {/* Dual balanced surgical inspection white key lights */}
           <directionalLight
-            position={[-80, 250, 90]}
+            position={[-90, 260, 140]}
             intensity={1.45}
             color="#FFFFFF"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
           <directionalLight
-            position={[80, 250, 90]}
+            position={[90, 260, 140]}
             intensity={1.45}
             color="#FFFFFF"
-            castShadow
-            shadow-mapSize-width={2048}
-            shadow-mapSize-height={2048}
-            shadow-bias={-0.0001}
           />
-          {/* Front ring inspection fill */}
           <directionalLight
-            position={[0, 110, 160]}
-            intensity={0.5}
+            position={[0, 120, 180]}
+            intensity={0.55}
             color="#F1F5F9"
           />
-          <spotLight
-            position={[0, 260, 0]}
-            intensity={0.75}
-            angle={0.85}
-            penumbra={0.9}
-            color="#FFFFFF"
-          />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.36}
-            scale={shadowScale}
-            blur={2.6}
-            far={80}
-            resolution={1024}
-            color="#334155"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.36}
+            position={[0, -240, 0]}
+            opacity={0.3}
             scale={shadowScale * 1.8}
             blur={2.6}
-            far={120}
-            resolution={1024}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#1E293B"
           />
         </>
@@ -716,56 +646,42 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* 6. HEARTH & WALNUT / WARM */}
       {normalizedPreset === 'warm' && (
         <>
-          <ambientLight intensity={0.52} color="#451A03" />
-          {/* Warm 3000K amber hearth key light */}
+          <ambientLight intensity={0.58} color="#451A03" />
           <directionalLight
-            position={[110, 190, 120]}
-            intensity={1.7}
+            position={[120, 220, 160]}
+            intensity={1.8}
             color="#FDE68A"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
           <directionalLight
             position={[-120, 130, -80]}
-            intensity={0.5}
+            intensity={0.55}
             color="#FED7AA"
           />
           <spotLight
-            position={[80, 220, 60]}
+            position={[80, 220, 80]}
             intensity={1.8}
-            angle={0.7}
+            angle={0.75}
             penumbra={0.8}
             color="#F59E0B"
           />
-          <directionalLight
-            position={[0, -60, 60]}
-            intensity={0.35}
-            color="#D97706"
-          />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.48}
-            scale={shadowScale}
-            blur={2.2}
-            far={80}
-            resolution={1024}
-            color="#261205"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.48}
+            position={[0, -240, 0]}
+            opacity={0.4}
             scale={shadowScale * 1.8}
-            blur={2.2}
-            far={120}
-            resolution={1024}
+            blur={2.4}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#160803"
           />
         </>
@@ -774,61 +690,49 @@ export const StudioEnvironment: React.FC<StudioEnvironmentProps> = ({
       {/* 7. NEON MAKER ACCENT / CYBERPUNK */}
       {normalizedPreset === 'cyberpunk' && (
         <>
-          <ambientLight intensity={0.32} color="#090D16" />
-          {/* Electric orange directional key */}
+          <ambientLight intensity={0.42} color="#090D16" />
           <directionalLight
-            position={[120, 200, 110]}
-            intensity={1.8}
+            position={[120, 220, 160]}
+            intensity={1.85}
             color="#FF6B00"
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
             shadow-camera-near={10}
-            shadow-camera-far={800}
-            shadow-camera-left={-250}
-            shadow-camera-right={250}
-            shadow-camera-top={250}
-            shadow-camera-bottom={-250}
-            shadow-bias={-0.0001}
+            shadow-camera-far={1100}
+            shadow-camera-left={-460}
+            shadow-camera-right={460}
+            shadow-camera-top={460}
+            shadow-camera-bottom={-460}
+            shadow-bias={-0.0002}
           />
-          {/* Subtle violet rim light */}
           <spotLight
-            position={[-160, 150, -120]}
-            intensity={3.4}
+            position={[-160, 160, -120]}
+            intensity={3.2}
             angle={0.65}
             penumbra={0.6}
             color="#A855F7"
           />
-          {/* Electric orange edge kicker */}
           <spotLight
-            position={[160, 150, -120]}
-            intensity={3.0}
+            position={[160, 160, -120]}
+            intensity={2.8}
             angle={0.65}
             penumbra={0.6}
             color="#FB923C"
           />
-          {/* Cyan front ambient fill */}
           <directionalLight
-            position={[0, 140, 120]}
-            intensity={0.6}
+            position={[0, 140, 140]}
+            intensity={0.65}
             color="#38BDF8"
           />
           <ContactShadows
-            position={[0, -0.05, 0]}
-            opacity={0.56}
-            scale={shadowScale}
-            blur={1.8}
-            far={80}
-            resolution={1024}
-            color="#020617"
-          />
-          <ContactShadows
-            position={[0, -220, 0]}
-            opacity={0.56}
+            position={[0, -240, 0]}
+            opacity={0.45}
             scale={shadowScale * 1.8}
-            blur={1.8}
-            far={120}
-            resolution={1024}
+            blur={2.0}
+            far={260}
+            resolution={512}
+            frames={1}
             color="#010208"
           />
         </>

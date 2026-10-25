@@ -887,10 +887,10 @@ export const DeskLifestyleProps: React.FC<DeskLifestylePropsOptions> = ({
   showPen = true,
   showDeskMat = true,
   showEarbuds = true,
-  lampIntensity = 4.2,
-  lampColor = '#FFFDF9',
-  lampLightColor = '#FFA858',
-  mugColor = '#D4A373',
+  lampIntensity = 4.5,
+  lampColor = '#1F2024', // Matte Obsidian Voronoi Lattice (matches concept photo)
+  lampLightColor = '#FFA84C',
+  mugColor = '#E2DBD0', // Speckled Stoneware Ceramic (matches concept photo)
   penColor = '#5A5D64',
   position = [0, 0, 0],
   scale = 1,
@@ -898,57 +898,60 @@ export const DeskLifestyleProps: React.FC<DeskLifestylePropsOptions> = ({
 }) => {
   if (!visible) return null;
 
-  // Compute responsive layout coordinates framing the customizer organizer
+  // Compute responsive layout coordinates on top of the right-hand desktop surface
   const halfL = organizerDimensions.length / 2;
   const halfW = organizerDimensions.width / 2;
 
-  // Safe boundary offsets so lifestyle props never collide with custom organizer
-  const rightFlankX = halfL + 48;
-  const backZ = -halfW - 20;
+  // Right-hand desktop zone (above the closed right drawer)
+  const rightZoneX = halfL + 42;
+  const backZ = -halfW * 0.45;
 
   return (
     <group position={position} scale={scale} name="DeskLifestyleProps">
-      {/* 1. Warm Woven Felt Desk Mat under accessories */}
+      {/* 1. Large Woven Oatmeal Linen Desk Mat on Right Desktop */}
       {showDeskMat && (
         <DeskFeltMat
-          position={[rightFlankX + 38, 0, 18]}
-          width={155}
-          length={130}
+          position={[rightZoneX + 115, 0, 12]}
+          width={250}
+          length={180}
         />
       )}
 
-      {/* 2. Voronoi Ambient Table Lamp (Back-Right Corner) */}
+      {/* 2. Voronoi Ambient Table Lamp (Back-Center / Right of Desk, casting warm 2700K pool) */}
       {showLamp && (
         <VoronoiTableLamp
-          position={[rightFlankX + 42, 0, backZ - 8]}
+          position={[rightZoneX + 18, 0, backZ - 28]}
           lampColor={lampColor}
           lightColor={lampLightColor}
           intensity={lampIntensity}
         />
       )}
 
-      {/* 3. Minimalist Ceramic Coffee Mug (Mid-Right on Desk Mat) */}
+      {/* 3. Speckled Stoneware Ceramic Coffee Mug (Front-Left Corner of Linen Desk Mat) */}
       {showMug && (
         <CeramicCoffeeMug
-          position={[rightFlankX + 16, 0, -12]}
+          position={[rightZoneX + 34, 0, 10]}
           mugColor={mugColor}
-          rotationY={0.35}
+          rotationY={2.75}
         />
       )}
 
-      {/* 4. Subtle Linen Notebook (Foreground-Right on Desk Mat) */}
+      {/* 4. Space-Grey Unibody Laptop / Folio on Linen Desk Mat */}
       {showNotebook && (
         <LinenNotebook
-          position={[rightFlankX + 48, 0, 42]}
-          rotationY={0.07}
+          position={[rightZoneX + 148, 0, 22]}
+          rotationY={-0.06}
+          width={145}
+          length={105}
+          height={6.5}
         />
       )}
 
-      {/* 5. Sleek Anodized Metal Pen (Resting gracefully near Notebook) */}
+      {/* 5. Sleek Anodized Metal Pen */}
       {showPen && (
         <SleekMetalPen
-          position={[rightFlankX + 40, 3.8, 64]}
-          rotation={[0, 0.14, 0]}
+          position={[rightZoneX + 68, 3.8, 66]}
+          rotation={[0, 0.18, 0]}
           color={penColor}
         />
       )}
@@ -956,10 +959,42 @@ export const DeskLifestyleProps: React.FC<DeskLifestylePropsOptions> = ({
       {/* 6. EDC Pebble Earbuds Case */}
       {showEarbuds && (
         <EdcPebbleEarbuds
-          position={[rightFlankX + 78, 0, 12]}
-          rotationY={0.22}
+          position={[rightZoneX + 86, 0, -34]}
+          rotationY={0.28}
         />
       )}
+
+      {/* 7. Scandinavian Potted Fiddle-Leaf Plant in Back-Left Corner */}
+      <group position={[-halfL - 95, -145, -halfW - 65]}>
+        {/* Matte Ceramic Planter Pot */}
+        <mesh position={[0, 42, 0]} castShadow receiveShadow>
+          <cylinderGeometry args={[36, 28, 84, 28]} />
+          <meshStandardMaterial color="#EFECE6" roughness={0.78} metalness={0.02} />
+        </mesh>
+        {/* Dark Potting Soil Disc */}
+        <mesh position={[0, 82.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <circleGeometry args={[34, 24]} />
+          <meshStandardMaterial color="#2B2118" roughness={0.95} />
+        </mesh>
+        {/* Woody Plant Stem */}
+        <mesh position={[0, 125, 0]} castShadow>
+          <cylinderGeometry args={[2.2, 3.5, 95, 12]} />
+          <meshStandardMaterial color="#4A3728" roughness={0.85} />
+        </mesh>
+        {/* Sculptural Botanical Leaves */}
+        {[
+          { pos: [-18, 148, 12] as [number, number, number], rot: [0.35, 0.4, 0.25] as [number, number, number], s: [1.3, 0.15, 0.9] as [number, number, number] },
+          { pos: [20, 158, 8] as [number, number, number], rot: [0.25, -0.5, -0.3] as [number, number, number], s: [1.4, 0.15, 0.95] as [number, number, number] },
+          { pos: [-8, 174, -14] as [number, number, number], rot: [-0.3, 0.2, 0.15] as [number, number, number], s: [1.35, 0.15, 0.9] as [number, number, number] },
+          { pos: [14, 186, -6] as [number, number, number], rot: [0.15, -0.3, -0.2] as [number, number, number], s: [1.2, 0.15, 0.85] as [number, number, number] },
+          { pos: [-22, 166, -4] as [number, number, number], rot: [0.2, 0.8, 0.35] as [number, number, number], s: [1.25, 0.15, 0.88] as [number, number, number] },
+        ].map((leaf, i) => (
+          <mesh key={i} position={leaf.pos} rotation={leaf.rot} scale={leaf.s} castShadow receiveShadow>
+            <sphereGeometry args={[22, 16, 12]} />
+            <meshStandardMaterial color={i % 2 === 0 ? '#2D4F38' : '#3A6347'} roughness={0.62} metalness={0.04} />
+          </mesh>
+        ))}
+      </group>
     </group>
   );
 };
